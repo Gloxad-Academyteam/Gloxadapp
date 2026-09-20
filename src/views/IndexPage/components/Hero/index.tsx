@@ -61,13 +61,13 @@ const Hero = () => {
         `}
       </style>
 
-      <div className="relative mx-auto flex min-h-[340px] w-full max-w-[1512px] flex-col justify-center max-[399px]:min-h-0 sm:min-h-[400px] lg:min-h-0 lg:flex-row lg:justify-between items-center px-5 pb-10 pt-8 sm:px-8 sm:pb-14 sm:pt-12 md:px-10 lg:px-[120px] lg:pt-[120px] lg:pb-32">
+      <div className="relative mx-auto flex min-h-[340px] w-full max-w-[1512px] flex-col justify-center max-[359px]:min-h-0 sm:min-h-[400px] lg:min-h-0 lg:flex-row lg:justify-between items-center px-5 pb-10 pt-8 sm:px-8 sm:pb-14 sm:pt-12 md:px-10 lg:px-[120px] lg:pt-[120px] lg:pb-32">
         {/* ===================== MOBILE / TABLET (below lg) — cut-out photo, no background box.
-            Hidden on very small phones (< 400px) so only the text shows. ===================== */}
+            Hidden on very small phones (< 360px) so only the text shows. ===================== */}
         <img
           src={HeroCutout.src}
           alt="Smiling student with a backpack"
-          className="pointer-events-none absolute right-0 top-6 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[399px]:hidden sm:top-8 lg:hidden"
+          className="pointer-events-none absolute right-0 top-6 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[359px]:hidden sm:top-8 lg:hidden"
           style={{
             WebkitMaskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
             maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
@@ -81,15 +81,15 @@ const Hero = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="relative z-10 flex w-full flex-col items-start pb-[8px] text-left lg:w-auto lg:max-w-[640px] lg:pb-0"
         >
-          <p className="pr-[34vw] max-[399px]:pr-0 sm:pr-[200px] lg:pr-0 text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 sm:text-[14px] lg:text-[24px] lg:normal-case lg:tracking-normal lg:text-white">
+          <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 sm:text-[14px] lg:text-[24px] lg:normal-case lg:tracking-normal lg:text-white">
             Gloxad Academy
           </p>
-          <h1 className="pr-[34vw] max-[399px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-6 lg:text-[64px] lg:tracking-[-2.5px] lg:leading-[1.05]">
+          <h1 className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-6 lg:text-[64px] lg:tracking-[-2.5px] lg:leading-[1.05]">
             Where Learning Meets Opportunity
           </h1>
           <div className="mt-3 w-full max-w-[600px] lg:mt-8">
             {/* MOBILE: one short line */}
-            <p className="pr-[34vw] max-[399px]:pr-0 sm:pr-[200px] lg:pr-0 text-[13px] leading-[1.55] text-white/90 sm:text-[15px] lg:hidden">
+            <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[13px] leading-[1.55] text-white/90 sm:text-[15px] lg:hidden">
               Expert-led courses, hands-on projects and recognised certificates. Start learning today.
             </p>
             {/* DESKTOP: full copy */}

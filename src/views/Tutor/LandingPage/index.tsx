@@ -148,14 +148,14 @@ const TutorLandingPage = () => {
             transition={{ duration: 0.6 }}
             className="z-10 w-full max-w-[620px] flex-1 text-left lg:w-auto"
           >
-            <h2 className="mb-3 pr-[34vw] text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 max-[399px]:pr-0 sm:pr-[200px] sm:text-[14px] lg:mb-4 lg:pr-0 lg:text-[18px] lg:normal-case lg:tracking-normal lg:text-white">
+            <h2 className="mb-3 pr-[34vw] text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 max-[359px]:pr-0 sm:pr-[200px] sm:text-[14px] lg:mb-4 lg:pr-0 lg:text-[18px] lg:normal-case lg:tracking-normal lg:text-white">
               Gloxad Academy
             </h2>
-            <h1 className="mb-4 pr-[34vw] text-[26px] font-bold leading-[1.15] max-[399px]:pr-0 sm:pr-[200px] sm:text-[38px] md:text-[46px] lg:mb-6 lg:pr-0 lg:text-[64px] lg:leading-[1.2]">
+            <h1 className="mb-4 pr-[34vw] text-[26px] font-bold leading-[1.15] max-[359px]:pr-0 sm:pr-[200px] sm:text-[38px] md:text-[46px] lg:mb-6 lg:pr-0 lg:text-[64px] lg:leading-[1.2]">
               Join Africa&apos;s Most<br className="hidden lg:block" /> Impact-Driven<br className="hidden lg:block" /> Teaching Platform.
             </h1>
             {/* MOBILE: one short line */}
-            <p className="mb-6 pr-[34vw] text-[13px] leading-[1.55] text-white/90 max-[399px]:pr-0 sm:pr-[200px] sm:text-[15px] lg:hidden">
+            <p className="mb-6 pr-[34vw] text-[13px] leading-[1.55] text-white/90 max-[359px]:pr-0 sm:pr-[200px] sm:text-[15px] lg:hidden">
               Teach, mentor and grow your personal brand with Africa&apos;s career-focused learning platform.
             </p>
             {/* DESKTOP: full copy */}
@@ -171,11 +171,11 @@ const TutorLandingPage = () => {
           </motion.div>
 
           {/* ===================== MOBILE / TABLET (below lg) — one photo, like the student hero.
-              Hidden on very small phones (< 400px) so only the text shows. ===================== */}
+              Hidden on very small phones (< 360px) so only the text shows. ===================== */}
           <img
             src={tutorGridImages[3].image.src}
             alt="Smiling instructor in a blue blazer"
-            className="pointer-events-none absolute right-5 top-16 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[399px]:hidden sm:right-10 sm:top-20 lg:hidden"
+            className="pointer-events-none absolute right-5 top-16 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[359px]:hidden sm:right-10 sm:top-20 lg:hidden"
             style={{
               WebkitMaskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
               maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
