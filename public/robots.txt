@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /student/
+Disallow: /tutor/dashboard/
+
+Sitemap: https://www.gloxadacademy.com/sitemap.xml

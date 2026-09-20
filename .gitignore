@@ -1,0 +1,58 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Next.js build output
+.next
+out
+next-env.d.ts
+
+# Production / builds
+dist
+dist-ssr
+build
+
+# Testing
+coverage
+
+# Environment files (keep the example)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.local
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor / OS files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.vim
+.hintrc
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Deployment
+.vercel
