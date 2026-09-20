@@ -32,7 +32,7 @@ const AuthCard = ({ headline, image, imageAlt = "", panel, headlineHidden = fals
       {/* Top row (mobile + desktop), OUTSIDE the card: logo on the left, animated "Back to home" pill on the right */}
       <div className="flex w-full max-w-[1080px] items-center justify-between gap-3 px-5 pb-4 pt-5 sm:px-0 sm:pt-0">
         <Link href="/" aria-label="Gloxad Academy home" className="shrink-0">
-          <img src="/gloxadlogo.png" alt="Gloxad Academy" className="h-7 w-[84px] object-contain object-left sm:h-8 sm:w-[96px]" />
+          <img src="/gloxadlogo.png" alt="Gloxad Academy" className="h-10 w-[124px] object-contain object-left sm:h-12 sm:w-[150px]" />
         </Link>
         <Link
           href="/"

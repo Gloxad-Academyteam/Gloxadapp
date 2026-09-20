@@ -110,7 +110,7 @@ const TutorLandingPage = () => {
     <div className="w-full overflow-x-hidden bg-white font-sans">
       
       {/* 1. Hero Section */}
-      <section className="relative min-h-[720px] overflow-hidden bg-[#122b7a] text-white lg:min-h-[798px] font-sans perspective-[1000px] flex items-center">
+      <section className="relative min-h-[520px] overflow-hidden bg-[#122b7a] text-white sm:min-h-[600px] lg:min-h-[798px] font-sans perspective-[1000px] flex items-center">
         <style>
           {`
             @keyframes scrollUp {
@@ -140,69 +140,47 @@ const TutorLandingPage = () => {
 
         <div className="absolute top-[-20%] left-[-10%] h-[500px] w-[500px] rounded-full bg-[#1e27a6] opacity-30 blur-[100px] pointer-events-none" />
         <div className="absolute -right-[100px] top-[20%] h-[616px] w-[621px] rounded-full bg-[#3E92CC] opacity-40 blur-[150px] pointer-events-none" />
-        <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center justify-between px-5 pb-24 md:px-10 lg:flex-row lg:px-[120px] lg:pb-[120px]">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center justify-between px-5 pb-20 pt-16 sm:pt-20 md:px-10 lg:flex-row lg:px-[120px] lg:pb-[120px] lg:pt-0">
           {/* Text Content */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex-1 text-center lg:text-left max-w-[620px] z-10"
+            className="z-10 w-full max-w-[620px] flex-1 text-left lg:w-auto"
           >
-            <h2 className="text-[18px] font-bold text-white mb-4">Gloxad Academy</h2>
-            <h1 className="text-[36px] font-bold leading-[1.2] md:text-[52px] lg:text-[64px] mb-6">
-              Join Africa's Most<br className="hidden lg:block" /> Impact-Driven<br className="hidden lg:block" /> Teaching Platform.
+            <h2 className="mb-3 pr-[34vw] text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 max-[399px]:pr-0 sm:pr-[200px] sm:text-[14px] lg:mb-4 lg:pr-0 lg:text-[18px] lg:normal-case lg:tracking-normal lg:text-white">
+              Gloxad Academy
+            </h2>
+            <h1 className="mb-4 pr-[34vw] text-[26px] font-bold leading-[1.15] max-[399px]:pr-0 sm:pr-[200px] sm:text-[38px] md:text-[46px] lg:mb-6 lg:pr-0 lg:text-[64px] lg:leading-[1.2]">
+              Join Africa&apos;s Most<br className="hidden lg:block" /> Impact-Driven<br className="hidden lg:block" /> Teaching Platform.
             </h1>
-            <p className="text-[15px] leading-[1.6] text-white/90 mb-8 md:text-[16px] max-w-[600px] mx-auto lg:mx-0 pr-4">
-              Africa's career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Thousands of learners are looking for mentors, not just instructors. Join Gloxad and transform careers while growing your personal brand.
+            {/* MOBILE: one short line */}
+            <p className="mb-6 pr-[34vw] text-[13px] leading-[1.55] text-white/90 max-[399px]:pr-0 sm:pr-[200px] sm:text-[15px] lg:hidden">
+              Teach, mentor and grow your personal brand with Africa&apos;s career-focused learning platform.
+            </p>
+            {/* DESKTOP: full copy */}
+            <p className="mx-0 mb-8 hidden max-w-[600px] pr-4 text-[16px] leading-[1.6] text-white/90 lg:block">
+              Africa&apos;s career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Thousands of learners are looking for mentors, not just instructors. Join Gloxad and transform careers while growing your personal brand.
             </p>
             <button
               onClick={() => router.push("/auth/signup/instructor")}
-              className="h-[52px] rounded-full bg-[#4aa3df] px-8 text-[16px] font-medium text-white transition hover:bg-[#3e92cc] shadow-md"
+              className="h-[40px] whitespace-nowrap rounded-full bg-[#4aa3df] px-5 text-[13px] font-medium text-white shadow-md transition hover:bg-[#3e92cc] sm:h-[46px] sm:px-7 sm:text-[15px] lg:h-[52px] lg:px-8 lg:text-[16px]"
             >
               Become an Instructor
             </button>
           </motion.div>
 
-          {/* Mobile Premium Image Grid (Visible only on < lg) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative mt-12 flex w-full justify-center lg:hidden z-0 pb-[150px]"
-          >
-            <div className="grid w-full max-w-[400px] grid-cols-2 gap-3 sm:gap-4">
-              {/* Left Column (Shifted down for stagger effect) */}
-              <div className="flex flex-col gap-3 sm:gap-4 mt-8">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  className={`h-[180px] w-full overflow-hidden rounded-[24px] shadow-2xl ${tutorGridImages[0].bgClass}`}
-                >
-                  <img src={tutorGridImages[0].image.src} alt={tutorGridImages[0].alt} className="h-full w-full object-cover object-center" />
-                </motion.div>
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  className={`h-[220px] w-full overflow-hidden rounded-[24px] shadow-2xl ${tutorGridImages[1].bgClass}`}
-                >
-                  <img src={tutorGridImages[1].image.src} alt={tutorGridImages[1].alt} className="h-full w-full object-cover object-center" />
-                </motion.div>
-              </div>
-              {/* Right Column */}
-              <div className="flex flex-col gap-3 sm:gap-4">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  className={`h-[240px] w-full overflow-hidden rounded-[24px] shadow-2xl ${tutorGridImages[2].bgClass}`}
-                >
-                  <img src={tutorGridImages[2].image.src} alt={tutorGridImages[2].alt} className="h-full w-full object-cover object-center" />
-                </motion.div>
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  className={`h-[160px] w-full overflow-hidden rounded-[24px] shadow-2xl ${tutorGridImages[3].bgClass}`}
-                >
-                  <img src={tutorGridImages[3].image.src} alt={tutorGridImages[3].alt} className="h-full w-full object-cover object-center" />
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+          {/* ===================== MOBILE / TABLET (below lg) — one photo, like the student hero.
+              Hidden on very small phones (< 400px) so only the text shows. ===================== */}
+          <img
+            src={tutorGridImages[3].image.src}
+            alt="Smiling instructor in a blue blazer"
+            className="pointer-events-none absolute right-5 top-16 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[399px]:hidden sm:right-10 sm:top-20 lg:hidden"
+            style={{
+              WebkitMaskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
+              maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
+            }}
+          />
 
           {/* Desktop Right Side Image Grid (Hidden on Mobile) - 3D Infinite Scroll */}
           <motion.div 

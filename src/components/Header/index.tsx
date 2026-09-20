@@ -153,7 +153,7 @@ const LandingHeader = () => {
                   <button
                     type="button"
                     onClick={() => setIsExploreOpen((value) => !value)}
-                    className="hidden h-[42px] items-center gap-2 rounded-none border border-[#0a1b56] px-5 text-[14px] font-bold text-[#0a1b56] md:flex hover:bg-gray-50 transition-colors"
+                    className="hidden h-[42px] items-center gap-2 rounded-full border border-[#0a1b56] px-5 text-[14px] font-bold text-[#0a1b56] md:flex hover:bg-gray-50 transition-colors"
                   >
                     Explore
                     <FaChevronDown className="text-[12px] text-[#0a1b56]" />
@@ -336,7 +336,7 @@ const Header = () => {
               <button
                 type="button"
                 onClick={() => setIsExploreOpen(!isExploreOpen)}
-                className="hidden h-[42px] items-center gap-2 rounded-none border border-[#1e4ed8] px-5 text-[14px] font-medium text-[#202127] md:flex hover:bg-gray-50 transition-colors"
+                className="hidden h-[42px] items-center gap-2 rounded-full border border-[#1e4ed8] px-5 text-[14px] font-medium text-[#202127] md:flex hover:bg-gray-50 transition-colors"
               >
                 <span className="text-[#1e4ed8] font-bold">Explore</span>
                 <FaChevronDown className="text-[12px] text-[#1e4ed8]" />
