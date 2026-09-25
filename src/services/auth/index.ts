@@ -40,6 +40,35 @@ const resetPasswdServiceRoute = handleUseRoute(
   false
 );
 
+const verifyEmailServiceRoute = handleUseRoute(
+  ERouteId["auth.verify.email"],
+  false
+);
+
+const resendVerificationServiceRoute = handleUseRoute(
+  ERouteId["auth.resend.verification"],
+  false
+);
+
+/**
+ * The auth API (Render) doesn't name fields identically on every endpoint
+ * (e.g. /me uses `isVerified`, `bio` and `socials`; signup uses `isEmailVerified`,
+ * `biography` and `socialLinks`). Map them to one shape in one place.
+ */
+function normalizeUser(user: any): TUser {
+  if (!user) return user;
+  const isEmailVerified = user.isEmailVerified ?? user.isVerified;
+  return {
+    ...user,
+    _id: user._id ?? user.id,
+    name: user.name ?? [user.firstName, user.lastName].filter(Boolean).join(" "),
+    avatar: user.avatar ?? user.avatarUrl ?? "",
+    biography: user.biography ?? user.bio,
+    socialLinks: user.socialLinks ?? user.socials,
+    ...(isEmailVerified !== undefined && { isEmailVerified }),
+  };
+}
+
 async function forgetPasswd({
   email,
 }: {
@@ -71,10 +100,29 @@ async function verifyEmail({
 }: {
   email: string;
   otp: string;
-}): Promise<TService<true>> {
-  await axiosInstance.post("/auth/verify-email", {
+}): Promise<TService<TUser | null>> {
+  const { data } = await axiosInstance.post(verifyEmailServiceRoute, {
     email,
     otp,
+  });
+
+  // Signed in (signup returns a session): the API returns the now-verified user
+  if (!localStorage.getItem("token")) return { data: null };
+  if (data?.user) return { data: normalizeUser(data.user) };
+  try {
+    return await getMe();
+  } catch {
+    return { data: null };
+  }
+}
+
+async function resendVerification({
+  email,
+}: {
+  email: string;
+}): Promise<TService<true>> {
+  await axiosInstance.post(resendVerificationServiceRoute, {
+    email,
   });
   return { data: true };
 }
@@ -126,7 +174,7 @@ async function signIn({
     localStorage.setItem("token", response.data.token);
   }
 
-  return { data: response.data };
+  return { data: { ...response.data, user: normalizeUser(response.data?.user) } };
 }
 
 async function signUp({
@@ -169,7 +217,11 @@ async function signUp({
     localStorage.setItem("token", response.data.token);
   }
 
-  return { data: response.data };
+  // New accounts always start unverified, whatever field name the API uses
+  const user = normalizeUser(response.data?.user);
+  if (user && user.isEmailVerified === undefined) user.isEmailVerified = false;
+
+  return { data: { ...response.data, user } };
 }
 
 async function signOut(): Promise<TService<true>> {
@@ -188,7 +240,7 @@ async function getMe(): Promise<TService<TUser>> {
 
   const { data } = await axiosInstance.get(getMeServiceRoute);
 
-  return { data: data.user };
+  return { data: normalizeUser(data.user) };
 }
 
 async function updateProfile(payload: {
@@ -199,13 +251,15 @@ async function updateProfile(payload: {
   avatar?: string;
   university?: string;
   level?: string;
-  skills?: string;
+  skills?: string | string[];
   biography?: string;
+  title?: string;
+  phoneNumber?: string;
   socialLinks?: any;
   notificationPreferences?: any;
 }): Promise<TService<TUser>> {
   const { data } = await axiosInstance.put(updateProfileServiceRoute, payload);
-  return { data: data.user };
+  return { data: normalizeUser(data.user) };
 }
 
 export {
@@ -219,6 +273,9 @@ export {
   signUpServiceRoute,
   verifyOtp,
   verifyEmail,
+  verifyEmailServiceRoute,
+  resendVerification,
+  resendVerificationServiceRoute,
   verifyOtpServiceRoute,
   resetPasswd,
   resetPasswdServiceRoute,

@@ -163,7 +163,10 @@ const SignUpPage = () => {
         <PasswordInput variant="pill"
           label="Password"
           placeholder="Enter Password"
-          {...formFieldRegister("password", { required: "Password is required" })}
+          {...formFieldRegister("password", {
+            required: "Password is required",
+            minLength: { value: 8, message: "Password must be at least 8 characters" },
+          })}
           error={formErrors.password?.message}
         />
 

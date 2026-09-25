@@ -20,7 +20,7 @@ const DashboardPage = () => {
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-[calc(100vh-136px)] pb-24">
-      {tab === "home" && <IndexPage />}
+      {tab === "home" && <IndexPage variant="dashboard" />}
       {tab === "my-courses" && <MyCoursesTab />}
       {tab === "free" && <FreeCoursesTab />}
       {tab === "trimester" && <TrimesterCoursesTab />}
@@ -28,7 +28,7 @@ const DashboardPage = () => {
 
       {/* Fallback for anything else */}
       {tab !== "home" && tab !== "my-courses" && tab !== "free" && tab !== "trimester" && tab !== "settings" && (
-        <IndexPage />
+        <IndexPage variant="dashboard" />
       )}
     </div>
   );

@@ -93,7 +93,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
+        <div data-lenis-prevent className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
           <SidebarItem
             icon={HiOutlineSquares2X2}
             label="Overview"
@@ -223,7 +223,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </header>
 
         {/* Scrollable Content */}
-        <main className={`flex-1 overflow-y-auto bg-[#ffffff] w-full relative ${pathname.includes('/messages') ? '' : 'p-6 lg:p-10'}`}>
+        {/* data-lenis-prevent: let this panel scroll natively instead of the page-level Lenis scroll */}
+        <main data-lenis-prevent className={`flex-1 overflow-y-auto bg-[#ffffff] w-full relative ${pathname.includes('/messages') ? '' : 'p-6 lg:p-10'}`}>
           {children}
         </main>
       </div>

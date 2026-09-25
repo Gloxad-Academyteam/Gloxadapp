@@ -43,12 +43,8 @@ const useResetPasswd = () => {
         });
       };
 
-      if (err?.response?.status === 401) {
-        handleToast("Invalid email or password");
-        return;
-      }
-
-      handleToast("Login failed! Try again later");
+      const message = (err?.response?.data as { error?: string } | undefined)?.error;
+      handleToast(message || "Could not send reset code. Try again later");
     },
   });
 

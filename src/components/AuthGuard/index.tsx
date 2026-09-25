@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useAuth from "@hooks/useAuth";
+import { getPostAuthRoute } from "@utils/getPostAuthRoute";
 
 /**
  * Redirects an already-signed-in user away from an auth page (signin/signup/etc.)
@@ -13,31 +14,17 @@ import useAuth from "@hooks/useAuth";
 const AuthGuard = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading, authenticatedUser } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isLoading || !isAuthenticated) return;
 
-    if (authenticatedUser?.role === "admin") {
-      router.replace("/admin");
-      return;
-    }
+    // A freshly signed-up user is signed in but must stay on the verify page to enter the code
+    // and see the success screen; the page itself routes them onward afterwards.
+    if (pathname === "/auth/verify-otp") return;
 
-    if (authenticatedUser?.role === "instructor") {
-      const hasCertifications = Array.isArray(authenticatedUser?.certifications) && authenticatedUser.certifications.length > 0;
-      const status = (authenticatedUser?.approvalStatus || "").toLowerCase();
-      const isApproved = status === "approved";
-      const isPendingReview = status === "pending" && hasCertifications;
-
-      if (isApproved || isPendingReview) {
-        router.replace("/dashboard");
-      } else {
-        router.replace("/tutor/onboarding");
-      }
-      return;
-    }
-
-    router.replace("/dashboard");
-  }, [isAuthenticated, isLoading, authenticatedUser, router]);
+    router.replace(getPostAuthRoute(authenticatedUser));
+  }, [isAuthenticated, isLoading, authenticatedUser, pathname, router]);
 
   return <>{children}</>;
 };

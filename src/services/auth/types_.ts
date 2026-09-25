@@ -7,6 +7,7 @@ type TUser = {
   avatar: string;
   avatarUrl?: string;
   role?: string;
+  isEmailVerified?: boolean;
   biography?: string;
   approvalStatus?: string;
   certifications?: string[];

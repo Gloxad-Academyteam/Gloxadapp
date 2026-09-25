@@ -1,6 +1,7 @@
 "use client";
 
 import { signUp } from "@services/auth";
+import { getPostAuthRoute } from "@utils/getPostAuthRoute";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -52,13 +53,12 @@ const useSignUpPage = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: signUp,
     onSuccess: async (response) => {
-      // Directly seed the auth cache from the signup response
-      if (response?.data?.user) {
+      // Only treat the user as signed in if signup actually produced a session
+      if (response?.data?.token && response?.data?.user) {
         queryClient.setQueryData(["auth.me"], { data: response.data.user });
       }
-      await queryClient.invalidateQueries({ queryKey: ["auth.me"] });
 
-      toast.success("Sign-up successfully", {
+      toast.success("Account created! Check your email for a verification code.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -70,16 +70,8 @@ const useSignUpPage = () => {
         transition: Bounce,
       });
 
-      // Redirect to Verify OTP or Onboarding if tutor, otherwise dashboard for student
-      if (role === "instructor") {
-        if (response?.data?.otpSkipped) {
-          router.push("/tutor/onboarding");
-        } else {
-          router.push(`/auth/verify-otp?email=${encodeURIComponent(watch("email"))}&type=verify`);
-        }
-      } else {
-        router.push("/dashboard");
-      }
+      // New accounts start unverified, so this sends everyone to the email verification step first
+      router.push(getPostAuthRoute(response?.data?.user));
     },
 
     onError: (error: any) => {

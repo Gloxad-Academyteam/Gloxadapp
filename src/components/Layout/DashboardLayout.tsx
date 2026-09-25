@@ -159,7 +159,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             ${!isSidebarOpen && 'md:w-[80px] -left-full md:left-0'}
           `}
         >
-          <nav className="flex-1 py-4 flex flex-col overflow-y-auto overflow-x-hidden">
+          <nav data-lenis-prevent className="flex-1 py-4 flex flex-col overflow-y-auto overflow-x-hidden">
             {user?.role === "instructor" ? (
               <>
                 <div className="px-6 py-4 pb-6">
@@ -274,8 +274,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           onClick={() => setIsSidebarOpen(false)}
         />
 
-        {/* Scrollable Content */}
-        <main className="flex-1 overflow-y-auto bg-[#f8fafc] relative w-full">
+        {/* Scrollable Content. data-lenis-prevent: the page-level Lenis smooth scroll (Providers)
+            swallows wheel events, so inner scroll containers must opt out to scroll natively. */}
+        <main data-lenis-prevent className="flex-1 overflow-y-auto bg-[#f8fafc] relative w-full">
            {children}
         </main>
       </div>

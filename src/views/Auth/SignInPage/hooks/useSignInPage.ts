@@ -1,6 +1,7 @@
 "use client";
 
-import { signIn } from "@services/auth";
+import { resendVerification, signIn } from "@services/auth";
+import { getPostAuthRoute, needsEmailVerification, verifyEmailRoute } from "@utils/getPostAuthRoute";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {AxiosError} from "axios";
 import { useForm } from "react-hook-form";
@@ -27,13 +28,21 @@ const useSignInPage = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: signIn,
     onSuccess: async (data) => {
-      // Directly seed the auth cache from the login response so the dashboard
-      // sees the user as authenticated instantly — no second network call needed.
-      if (data?.data?.user) {
-        queryClient.setQueryData(["auth.me"], { data: data.data.user });
+      const user = data?.data?.user;
+
+      // Seed the auth cache from the login response (the backend returns the same user shape as /auth/me)
+      // so guards see the user as authenticated instantly — no second network call needed.
+      queryClient.setQueryData(["auth.me"], { data: user });
+
+      // Tutor who never entered their signup code: send a fresh one and finish verification first
+      if (needsEmailVerification(user)) {
+        resendVerification({ email: user.email })
+          .then(() => toast.info("Please verify your email. We've sent you a new code."))
+          .catch(() => toast.info("Please verify your email with the code we sent when you signed up."));
+        router.push(verifyEmailRoute(user.email));
+        return;
       }
-      await queryClient.invalidateQueries({ queryKey: ["auth.me"] });
-      
+
       toast.success("Login successfully", {
         position: "top-right",
         autoClose: 5000,
@@ -46,31 +55,7 @@ const useSignInPage = () => {
         transition: Bounce,
       });
 
-      const user = data?.data?.user;
-      const userRole = user?.role;
-
-      // Update auth cache with fresh logged in user object
-      queryClient.setQueryData(["auth.me"], { data: user });
-      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
-
-      if (userRole === "admin") {
-        router.push("/admin");
-      } else if (userRole === "instructor") {
-        const hasCertifications = Array.isArray(user?.certifications) && user.certifications.length > 0;
-        const status = (user?.approvalStatus || "").toLowerCase();
-        const isApproved = status === "approved";
-        const isPendingReview = status === "pending" && hasCertifications;
-
-        if (isApproved) {
-          router.push(redirectUrl || "/dashboard");
-        } else if (!isApproved && !isPendingReview && (redirectUrl === "/dashboard" || !redirectUrl)) {
-          router.push("/tutor/onboarding");
-        } else {
-          router.push(redirectUrl || "/dashboard");
-        }
-      } else {
-        router.push(redirectUrl || "/dashboard");
-      }
+      router.push(getPostAuthRoute(user, redirectUrl));
     },
 
     onError: (error) => {
@@ -95,7 +80,9 @@ const useSignInPage = () => {
         return;
       }
 
-      handleToast("Login failed! Try again later");
+      // e.g. 429 "Too many attempts, please try again later" from the auth API's rate limiter
+      const apiMessage = (err?.response?.data as { error?: string } | undefined)?.error;
+      handleToast(apiMessage || "Login failed! Try again later");
     },
   });
 

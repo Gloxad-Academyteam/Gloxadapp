@@ -9,10 +9,15 @@ import Testimonials from "./components/Testimonials";
 import FAQSection from "./components/FAQSection";
 import FutureStartsHere from "./components/FutureStartsHere";
 
-const IndexPage = () => {
+type IndexPageProps = {
+  /** "dashboard" renders the slim, text-only hero used inside the signed-in student dashboard. */
+  variant?: "public" | "dashboard";
+};
+
+const IndexPage = ({ variant = "public" }: IndexPageProps) => {
   return (
     <div className="w-full overflow-x-hidden bg-[#181C7B] font-sans">
-      <Hero />
+      <Hero compact={variant === "dashboard"} />
 
       <main className="bg-white rounded-t-[40px] relative z-10 -mt-[40px] pt-8 md:pt-14 pb-16 shadow-[0_-20px_60px_rgba(0,0,0,0.25)] border-t border-white/10">
         <ExploreCourses />

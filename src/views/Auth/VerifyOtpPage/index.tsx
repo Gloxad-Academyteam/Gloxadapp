@@ -9,10 +9,8 @@ import useVerifyOtpPage from "./hooks/useVerifyOtpPage";
 import SignupHeroImage from "@assets/images/Frame 2147227544.png";
 import { HiOutlineMail } from "react-icons/hi";
 import { FiCheck } from "react-icons/fi";
-import { useRouter } from "next/navigation";
 
 const VerifyOtpPage = () => {
-  const router = useRouter();
   const {
     isVerified,
     otp,
@@ -24,6 +22,7 @@ const VerifyOtpPage = () => {
     onOtpComplete,
     handleVerify,
     handleResend,
+    handleContinue,
   } = useVerifyOtpPage();
 
   const isReset = type === "reset";
@@ -52,7 +51,7 @@ const VerifyOtpPage = () => {
 
             <Button
               text="Continue"
-              onClick={() => router.push(isReset ? `/auth/reset-password?email=${encodeURIComponent(email)}&otp=${otp}` : `/tutor/onboarding`)}
+              onClick={handleContinue}
               isBlock
               className="!h-[46px] !rounded-full bg-[#07004d] !text-[14px]"
             />

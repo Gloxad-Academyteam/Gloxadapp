@@ -152,7 +152,7 @@ const SettingsPage = () => {
         lastName: formData.lastName,
         username: formData.username,
         phoneNumber: formData.phoneNumber,
-        skills: formData.title,
+        title: formData.title,
         biography: formData.biography,
         avatarUrl: formData.avatarUrl,
         avatar: formData.avatarUrl, // Send as avatar to ensure backend compatibility

@@ -29,8 +29,53 @@ const infiniteCol1 = [...col1, ...col1];
 const infiniteCol2 = [...col2, ...col2];
 const infiniteCol3 = [...col3, ...col3];
 
-const Hero = () => {
+type HeroProps = {
+  /** Slim hero for the signed-in student dashboard: smaller text, no photos, dashboard shortcuts. */
+  compact?: boolean;
+};
+
+const Hero = ({ compact = false }: HeroProps) => {
   const router = useRouter();
+
+  // ===================== DASHBOARD variant (compact) — text only, no image =====================
+  if (compact) {
+    return (
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0d0a6b] via-[#07004d] to-[#040030] font-sans text-white">
+        <div className="mx-auto w-full max-w-[1512px] px-5 pb-14 pt-8 sm:px-8 sm:pb-16 sm:pt-10 md:px-10 lg:px-8 lg:pb-16 xl:px-[120px]">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="max-w-[560px]"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-white/70 sm:text-[12px]">Gloxad Academy</p>
+            <h1 className="mt-2 text-[22px] font-bold leading-[1.2] tracking-[-0.3px] sm:text-[28px] lg:text-[34px]">
+              Where Learning Meets Opportunity
+            </h1>
+            <p className="mt-2 text-[13px] leading-[1.55] text-white/85 sm:text-[14px]">
+              Pick up where you left off, or explore something new today.
+            </p>
+            <div className="mt-5 flex flex-row flex-nowrap gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={() => router.push("/dashboard?tab=my-courses")}
+                className="btn-interactive flex h-[36px] items-center justify-center whitespace-nowrap rounded-full bg-[#4aa3df] px-4 text-[12px] font-medium text-white transition-colors hover:bg-[#3e92cc] sm:h-[40px] sm:px-5 sm:text-[13px]"
+              >
+                My Courses
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push("/dashboard/explore")}
+                className="btn-interactive flex h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-white bg-transparent px-4 text-[12px] font-medium text-white transition-colors hover:bg-white hover:text-[#181C7B] sm:h-[40px] sm:px-5 sm:text-[13px]"
+              >
+                Explore Courses
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative min-h-0 overflow-hidden bg-gradient-to-br from-[#0d0a6b] via-[#07004d] to-[#040030] text-white lg:min-h-[798px] font-sans perspective-[1000px]">
