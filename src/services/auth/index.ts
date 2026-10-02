@@ -50,6 +50,11 @@ const resendVerificationServiceRoute = handleUseRoute(
   false
 );
 
+const updatePasswordServiceRoute = handleUseRoute(
+  ERouteId["auth.update.password"],
+  false
+);
+
 /**
  * The auth API (Render) doesn't name fields identically on every endpoint
  * (e.g. /me uses `isVerified`, `bio` and `socials`; signup uses `isEmailVerified`,
@@ -262,6 +267,20 @@ async function updateProfile(payload: {
   return { data: normalizeUser(data.user) };
 }
 
+async function updatePassword({
+  currentPassword,
+  newPassword,
+}: {
+  currentPassword: string;
+  newPassword: string;
+}): Promise<TService<true>> {
+  await axiosInstance.post(updatePasswordServiceRoute, {
+    currentPassword,
+    newPassword,
+  });
+  return { data: true };
+}
+
 export {
   signIn,
   signInServiceRoute,
@@ -282,4 +301,6 @@ export {
   forgetPasswdServiceRoute,
   updateProfile,
   updateProfileServiceRoute,
+  updatePassword,
+  updatePasswordServiceRoute,
 };

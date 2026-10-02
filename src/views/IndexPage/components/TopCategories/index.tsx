@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "@components/ScrollReveal";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@utils/axiosInstance";
+import { getCategories, isImageIcon } from "@services/categories";
 
 const categoryIcons: Record<string, string> = {
   "web-development": "💻",
@@ -21,11 +21,8 @@ const getIconForCategory = (slug: string) => {
 
 const TopCategories = () => {
   const { data: categories, isLoading } = useQuery({
-    queryKey: ["homepage-categories"],
-    queryFn: async () => {
-      const res = await axiosInstance.get("/categories");
-      return res.data;
-    }
+    queryKey: ["categories"],
+    queryFn: async () => (await getCategories()).data,
   });
 
   if (isLoading) {
@@ -64,7 +61,11 @@ const TopCategories = () => {
                 }}
                 transition={{ duration: 0.25 }}
               >
-                <span className="text-[40px]">{getIconForCategory(category.slug)}</span>
+                {isImageIcon(category.icon) ? (
+                  <img src={category.icon} alt="" className="w-[48px] h-[48px] object-cover rounded-[8px]" />
+                ) : (
+                  <span className="text-[40px]">{getIconForCategory(category.slug)}</span>
+                )}
                 <h3 className="font-medium text-title-medium text-neutral-11 text-center">
                   {category.name}
                 </h3>

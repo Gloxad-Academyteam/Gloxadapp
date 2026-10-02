@@ -2,20 +2,22 @@
 
 import { useState, useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { uploadExpertise } from "@services/tutor";
+import { submitExpertise as submitExpertiseService } from "@services/tutor";
+import useAuth from "@hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { toast, Bounce } from "react-toastify";
 
 export const useShowcaseExpertisePage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { authenticatedUser } = useAuth();
   const [certifications, setCertifications] = useState<File[]>([]);
   const [experienceProofs, setExperienceProofs] = useState<File[]>([]);
   const [teachingExperienceBio, setTeachingExperienceBio] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { mutate: submitExpertise, isPending: isSubmitting } = useMutation({
-    mutationFn: uploadExpertise,
+    mutationFn: submitExpertiseService,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth.me"] });
       setIsModalOpen(true);
@@ -71,12 +73,13 @@ export const useShowcaseExpertisePage = () => {
       return;
     }
 
-    const formData = new FormData();
-    certifications.forEach((file) => formData.append("certifications", file));
-    experienceProofs.forEach((file) => formData.append("experienceProofs", file));
-    formData.append("teachingExperienceBio", teachingExperienceBio);
-    
-    submitExpertise(formData);
+    const user: any = authenticatedUser;
+    submitExpertise({
+      files: [...certifications, ...experienceProofs],
+      // Tutors give their area of expertise at sign-up
+      areaOfExpertise: user?.areaOfExpertise || user?.title || "General",
+      expertiseBio: teachingExperienceBio.trim() || `Tutor specializing in ${user?.areaOfExpertise || "teaching"}.`,
+    });
   };
 
   return {

@@ -17,6 +17,7 @@ enum ERouteId {
   "auth.verify.email" = "auth.verify.email",
   "auth.resend.verification" = "auth.resend.verification",
   "auth.refresh" = "auth.refresh",
+  "auth.update.password" = "auth.update.password",
 }
 
 // Path can be different for each environment
@@ -41,6 +42,7 @@ const devRoutes: TRoute = {
   "auth.verify.email": "/auth/verify-email",
   "auth.resend.verification": "/auth/resend-verification",
   "auth.refresh": "/auth/refresh",
+  "auth.update.password": "/auth/update-password",
 };
 const prodRoutes: TRoute = {
   "courses.list": "/courses",
@@ -60,6 +62,7 @@ const prodRoutes: TRoute = {
   "auth.verify.email": "/auth/verify-email",
   "auth.resend.verification": "/auth/resend-verification",
   "auth.refresh": "/auth/refresh",
+  "auth.update.password": "/auth/update-password",
 };
 
 const getRoutes = (env: string) => {

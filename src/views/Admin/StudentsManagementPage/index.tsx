@@ -6,6 +6,7 @@ import { AiOutlineUndo, AiOutlineRedo } from "react-icons/ai";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
+import { sendBroadcast } from "@services/admin/users";
 
 const StudentsManagementPage = () => {
   const [broadcastMessage, setBroadcastMessage] = useState("");
@@ -29,7 +30,7 @@ const StudentsManagementPage = () => {
 
   const broadcastMutation = useMutation({
     mutationFn: async (message: string) => {
-      const res = await axiosInstance.post("/admin/broadcast", { role: "student", message });
+      const res = await sendBroadcast({ targetRole: "student", title: "Announcement", message });
       return res.data;
     },
     onSuccess: () => {

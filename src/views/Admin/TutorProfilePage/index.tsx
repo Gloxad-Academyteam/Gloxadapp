@@ -114,11 +114,11 @@ const TutorProfilePage = () => {
         <div className="xl:col-span-2 space-y-6">
 
           {/* Biography */}
-          {(tutor.teachingExperienceBio || tutor.areaOfExpertise) && (
+          {(tutor.expertiseBio || tutor.teachingExperienceBio || tutor.areaOfExpertise) && (
             <div className="bg-white border border-[#e2e8f0] rounded-[12px] p-6 shadow-sm">
               <h3 className="font-bold text-[18px] text-[#202127] mb-4">Tutor Biography</h3>
               <p className="text-[#4e515c] text-[14px] leading-relaxed">
-                {tutor.teachingExperienceBio || `Tutor specializing in ${tutor.areaOfExpertise}.`}
+                {tutor.expertiseBio || tutor.teachingExperienceBio || `Tutor specializing in ${tutor.areaOfExpertise}.`}
               </p>
             </div>
           )}

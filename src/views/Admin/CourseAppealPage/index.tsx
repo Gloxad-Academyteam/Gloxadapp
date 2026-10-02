@@ -6,7 +6,7 @@ import { HiOutlineSpeakerphone } from "react-icons/hi";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { getAppeals, resolveAppeal } from "@services/admin/courses";
+import { getAppeals, resolveAppeal, updateCourseStatus } from "@services/admin/courses";
 
 const CourseAppealPage = () => {
   const router = useRouter();
@@ -36,10 +36,12 @@ const CourseAppealPage = () => {
     try {
       setIsProcessing(true);
       await resolveAppeal(appeal._id, {
-        status: actionStatus,
-        adminNotes: "Resolved from dashboard.",
-        publishCourse: publish,
+        status: actionStatus as "resolved" | "dismissed",
+        resolutionNotes: publish ? "Appeal accepted. Course has been published." : "Resolved from dashboard.",
       });
+      // Resolving an appeal doesn't change the course, so publish it explicitly
+      const courseId = appeal.courseId?._id ?? appeal.courseId;
+      if (publish && courseId) await updateCourseStatus(courseId, { status: "published" });
       await queryClient.invalidateQueries({ queryKey: ["admin.appeals"] });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.all"] });
       alert(`Appeal ${actionStatus} successfully!`);
@@ -130,7 +132,7 @@ const CourseAppealPage = () => {
             <FiRefreshCw /> {isProcessing ? "Processing..." : "Re-review Course (Approve)"}
           </button>
           <button 
-            onClick={() => handleResolve("rejected", false)}
+            onClick={() => handleResolve("dismissed", false)}
             disabled={isProcessing}
             className="bg-white border border-[#e02b2b] text-[#e02b2b] hover:bg-[#fff5f5] font-bold text-[14px] py-3 rounded-[8px] flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           >

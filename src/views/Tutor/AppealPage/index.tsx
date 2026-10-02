@@ -33,7 +33,7 @@ export default function AppealPage() {
     if (!reason) return alert("Please provide a justification statement.");
     try {
       setIsSubmitting(true);
-      await fileAppeal(id as string, { reason });
+      await fileAppeal(id as string, { message: reason });
       alert("Appeal submitted successfully.");
       router.push("/dashboard/courses");
     } catch (err) {

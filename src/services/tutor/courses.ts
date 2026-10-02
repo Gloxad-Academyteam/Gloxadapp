@@ -26,7 +26,7 @@ export async function submitCourseForReview(courseId: string): Promise<TService<
   return { data };
 }
 
-export async function fileAppeal(courseId: string, payload: { reason: string; evidenceUrl?: string }): Promise<TService<any>> {
+export async function fileAppeal(courseId: string, payload: { message: string }): Promise<TService<any>> {
   const { data } = await axiosInstance.post(`/tutor/courses/${courseId}/appeal`, payload);
   return { data };
 }

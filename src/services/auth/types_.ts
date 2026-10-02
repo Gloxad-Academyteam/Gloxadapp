@@ -3,12 +3,16 @@ type TUser = {
   name: string;
   firstName?: string;
   lastName?: string;
+  username?: string;
   email: string;
   avatar: string;
   avatarUrl?: string;
   role?: string;
   isEmailVerified?: boolean;
   biography?: string;
+  title?: string;
+  phoneNumber?: string;
+  skills?: string[];
   approvalStatus?: string;
   certifications?: string[];
   socialLinks?: {

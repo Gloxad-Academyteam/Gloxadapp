@@ -69,7 +69,8 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      const url = await uploadFile(file, folder);
+      // Lesson videos live under "courses"; notes and other attachments under "resources"
+      const url = await uploadFile(file, folder === "videos" ? "courses" : "resources");
       setUploadedUrl(url);
       if (folder === "videos") setIsVideoUploaded(true);
     } catch {
@@ -81,7 +82,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
     const file = e.target.files?.[0];
     if (!file) return;
     try {
-      const url = await uploadFile(file, "captions");
+      const url = await uploadFile(file, "resources");
       setCaptionUrl(url);
       setCaptionFileName(file.name);
     } catch {

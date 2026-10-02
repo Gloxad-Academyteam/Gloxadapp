@@ -4,15 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { HiCheckCircle, HiOutlineClock, HiOutlineDocumentCheck, HiOutlineCloudArrowUp, HiTrash } from "react-icons/hi2";
 import useAuth from "@hooks/useAuth";
-import axiosInstance from "@utils/axiosInstance";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { submitExpertise } from "@services/tutor";
 
 export default function VerificationPage() {
   const { authenticatedUser } = useAuth();
   const user: any = authenticatedUser;
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [files, setFiles] = useState<{ id: string; name: string; file: File; type: "cert" | "exp" }[]>([]);
-  const [bio, setBio] = useState(user?.bio || "");
+  const [bio, setBio] = useState(user?.expertiseBio || user?.biography || "");
   const [uploading, setUploading] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
 
@@ -39,19 +42,16 @@ export default function VerificationPage() {
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      files.forEach((f) => formData.append("certifications", f.file));
-      formData.append("bio", bio);
-
-      await axiosInstance.post("/tutor/showcase-expertise", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await submitExpertise({
+        files: files.map((f) => f.file),
+        areaOfExpertise: user?.areaOfExpertise || user?.title || "General",
+        expertiseBio: bio.trim() || `Tutor specializing in ${user?.areaOfExpertise || "teaching"}.`,
       });
-
+      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
       setSubmittedSuccess(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to upload credentials", err);
-      alert("Verification submission completed.");
-      setSubmittedSuccess(true);
+      toast.error(err?.response?.data?.error || "Failed to submit your credentials. Please try again.");
     } finally {
       setUploading(false);
     }

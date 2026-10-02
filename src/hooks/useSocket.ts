@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import useAuth from "@hooks/useAuth";
 
-const SOCKET_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+const SOCKET_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://gloxard-backend.onrender.com";
 
 let socketInstance: Socket | null = null;
 
@@ -26,6 +26,8 @@ export const useSocket = () => {
     }
 
     const socket = io(SOCKET_URL, {
+      // The server authenticates the handshake with the JWT and joins room user:<userId>
+      auth: { token: localStorage.getItem("token") },
       query: { userId: authenticatedUser._id },
       withCredentials: true,
       transports: ["websocket", "polling"],

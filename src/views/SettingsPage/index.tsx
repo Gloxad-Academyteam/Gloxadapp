@@ -10,8 +10,7 @@ import { toast } from "react-toastify";
 import useAuth from "@hooks/useAuth";
 import { useS3Upload } from "@hooks/useS3Upload";
 import { useQueryClient } from "@tanstack/react-query";
-import { updateProfile } from "@services/auth";
-import axiosInstance from "@utils/axiosInstance";
+import { updatePassword, updateProfile } from "@services/auth";
 import AvatarPlaceholder from "@assets/images/image.png";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -35,6 +34,7 @@ const SettingsPage = () => {
     phoneCode: "+880",
     phoneNumber: "",
     title: "",
+    skills: "",
     biography: "",
     avatarUrl: "",
     website: "",
@@ -74,7 +74,8 @@ const SettingsPage = () => {
         username: user.username || "",
         phoneCode: "+880",
         phoneNumber: user.phoneNumber || "",
-        title: user.title || user.skills || "",
+        title: user.title || "",
+        skills: Array.isArray(user.skills) ? user.skills.join(", ") : user.skills || "",
         biography: user.biography || "",
         avatarUrl: user.avatarUrl || user.avatar || "",
         website: user?.socialLinks?.website || "",
@@ -125,20 +126,28 @@ const SettingsPage = () => {
       return;
     }
     
+    e.target.value = "";
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please choose an image file");
+      return;
+    }
+
     // Immediately reveal the picture so tutors see their photo right away!
+    const previousUrl = formData.avatarUrl;
     const previewUrl = URL.createObjectURL(file);
     setFormData((prev) => ({ ...prev, avatarUrl: previewUrl }));
 
     try {
-      const url = await uploadFile(file, "profile-pictures");
-      if (url) {
-        setFormData((prev) => ({ ...prev, avatarUrl: url }));
-        await updateProfile({ avatarUrl: url, avatar: url });
-        queryClient.invalidateQueries({ queryKey: ["auth.me"] });
-        toast.success("Profile picture saved!");
-      }
-    } catch (error) {
-      toast.error("Failed to save profile picture. Please try again.");
+      const url = await uploadFile(file, "avatars");
+      setFormData((prev) => ({ ...prev, avatarUrl: url }));
+      await updateProfile({ avatarUrl: url });
+      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
+      toast.success("Profile picture saved!");
+    } catch (error: any) {
+      setFormData((prev) => ({ ...prev, avatarUrl: previousUrl }));
+      toast.error(error?.response?.data?.error || "Failed to save profile picture. Please try again.");
+    } finally {
+      URL.revokeObjectURL(previewUrl);
     }
   };
 
@@ -153,9 +162,8 @@ const SettingsPage = () => {
         username: formData.username,
         phoneNumber: formData.phoneNumber,
         title: formData.title,
+        skills: formData.skills.split(",").map((skill) => skill.trim()).filter(Boolean),
         biography: formData.biography,
-        avatarUrl: formData.avatarUrl,
-        avatar: formData.avatarUrl, // Send as avatar to ensure backend compatibility
       };
 
       await updateProfile(payload);
@@ -177,7 +185,7 @@ const SettingsPage = () => {
 
     setIsPasswordLoading(true);
     try {
-      await axiosInstance.post("/auth/update-password", {
+      await updatePassword({
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword,
       });
@@ -206,6 +214,7 @@ const SettingsPage = () => {
         }
       };
       await updateProfile(payload);
+      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
       toast.success("Social profile updated successfully!");
     } catch (error: any) {
       toast.error(error?.response?.data?.error || "Failed to update social profile");
@@ -222,6 +231,7 @@ const SettingsPage = () => {
         notificationPreferences
       };
       await updateProfile(payload);
+      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
       toast.success("Notification preferences updated successfully!");
     } catch (error: any) {
       toast.error(error?.response?.data?.error || "Failed to update notification preferences");
@@ -276,6 +286,13 @@ const SettingsPage = () => {
               </div>
             </div>
 
+            {/* Skills */}
+            <div>
+              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Skills</label>
+              <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} placeholder="e.g. UI/UX, Figma, React" className="w-full h-11 px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+              <p className="text-[12px] text-[#717480] mt-1">Separate skills with commas</p>
+            </div>
+
             {/* Biography */}
             <div>
               <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Biography</label>
@@ -325,7 +342,7 @@ const SettingsPage = () => {
               <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" disabled={isUploadingAvatar} />
             </div>
             <p className="text-[10px] text-[#717480] text-center leading-[1.6]">
-              Image size should be under 1MB<br/>and image ration needs to be 1:1
+              Image size should be under 5MB<br/>and image ration needs to be 1:1
             </p>
           </div>
         </div>

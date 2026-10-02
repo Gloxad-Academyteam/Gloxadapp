@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomSelect from "./CustomSelect";
-import axiosInstance from "../../../../utils/axiosInstance";
+import { getCategories, TCategory } from "@services/categories";
 
 const LANGUAGES = [
   "English", "French", "Spanish", "German", "Chinese", "Hindi", "Italian", "Japanese"
@@ -12,20 +12,17 @@ const PRESET_DURATIONS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12
 const COURSE_TYPES = ["regular", "free", "trimester"];
 
 export default function BasicInformation({ data, updateData, onNext, isLoading, errors = {} }: any) {
-  const [categories, setCategories] = useState<{name: string, slug: string}[]>([]);
-  const [subCategories, setSubCategories] = useState<string[]>([
-    "Web Development", "Mobile App Development", "Programming Languages", 
-    "Game Development", "Database Design & Development", "Software Engineering", 
-    "Software Testing & QA", "DevOps & Deployment"
-  ]);
+  const [categories, setCategories] = useState<TCategory[]>([]);
 
   useEffect(() => {
-    axiosInstance.get("/categories")
-      .then(res => setCategories(res.data || []))
+    getCategories()
+      .then(res => setCategories(res.data))
       .catch(err => console.error("Failed to load categories", err));
   }, []);
 
   const categoryNames = categories.map(c => c.name);
+  const subCategories =
+    categories.find(c => c.name === data.category)?.subCategories.map(s => s.name) ?? [];
   return (
     <div className="bg-white rounded-[20px] border border-[#e2e8f0] p-6 shadow-sm">
       <h2 className="text-[20px] font-bold mb-6 text-[#202127]">Basic Information</h2>
@@ -56,7 +53,8 @@ export default function BasicInformation({ data, updateData, onNext, isLoading, 
             <label className="block text-[13px] font-semibold text-[#202127] mb-2">Course Category</label>
             <CustomSelect
               value={data.category}
-              onChange={(val) => updateData({ category: val })}
+              // A sub-category only belongs to the category it was picked under
+              onChange={(val) => updateData({ category: val, subCategory: "" })}
               options={categoryNames.length > 0 ? categoryNames : ["Loading..."]}
               hasSearch={true}
               searchPlaceholder="Course Category"
@@ -69,6 +67,7 @@ export default function BasicInformation({ data, updateData, onNext, isLoading, 
               value={data.subCategory}
               onChange={(val) => updateData({ subCategory: val })}
               options={subCategories}
+              placeholder={data.category ? "Select..." : "Select a category first"}
               hasSearch={true}
               searchPlaceholder="Course Sub-Category"
             />
