@@ -16,7 +16,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onViewSubCategori
       {/* Top Section */}
       <div className="p-5 flex items-start justify-between">
         <div className="flex items-start gap-4">
-          <CategoryIcon icon={category.icon} />
+          <CategoryIcon category={category} />
           <div>
             <h3 className="text-[16px] font-bold text-[#181C7B]">{category.name}</h3>
             <p className="text-[13px] text-[#3b82f6] font-medium mt-1">

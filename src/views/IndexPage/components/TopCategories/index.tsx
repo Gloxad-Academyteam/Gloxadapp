@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import ScrollReveal from "@components/ScrollReveal";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { getCategories, isImageIcon } from "@services/categories";
+import CategoryImage from "@components/CategoryImage";
+import { getCategories, getCategoryImage } from "@services/categories";
 
 const categoryIcons: Record<string, string> = {
   "web-development": "💻",
@@ -61,11 +62,11 @@ const TopCategories = () => {
                 }}
                 transition={{ duration: 0.25 }}
               >
-                {isImageIcon(category.icon) ? (
-                  <img src={category.icon} alt="" className="w-[48px] h-[48px] object-cover rounded-[8px]" />
-                ) : (
-                  <span className="text-[40px]">{getIconForCategory(category.slug)}</span>
-                )}
+                <CategoryImage
+                  src={getCategoryImage(category)}
+                  className="w-[48px] h-[48px] object-cover rounded-[8px]"
+                  fallback={<span className="text-[40px]">{getIconForCategory(category.slug)}</span>}
+                />
                 <h3 className="font-medium text-title-medium text-neutral-11 text-center">
                   {category.name}
                 </h3>

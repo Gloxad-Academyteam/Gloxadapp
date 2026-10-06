@@ -101,7 +101,7 @@ const SubCategoryModal: React.FC<SubCategoryModalProps> = ({
         {/* Header */}
         <div className="p-6 border-b border-[#f0f4f8] flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <CategoryIcon icon={category.icon} />
+            <CategoryIcon category={category} />
             <div>
               <h2 className="text-[18px] font-bold text-[#181C7B]">{category.name}</h2>
               <p className="text-[13px] text-[#3b82f6] font-medium">

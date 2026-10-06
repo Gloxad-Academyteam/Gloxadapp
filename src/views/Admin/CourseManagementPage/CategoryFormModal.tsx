@@ -3,7 +3,8 @@ import { FiX, FiTrash2, FiUploadCloud } from "react-icons/fi";
 import { MdOutlineCategory } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useS3Upload } from "@hooks/useS3Upload";
-import { TCategory, TCategoryPayload, isImageIcon } from "@services/categories";
+import CategoryImage from "@components/CategoryImage";
+import { TCategory, TCategoryPayload, getCategoryImage, isImageIcon } from "@services/categories";
 
 interface CategoryFormModalProps {
   // Editing when set, creating otherwise
@@ -32,7 +33,9 @@ const CategoryFormModal: React.FC<CategoryFormModalProps> = ({ category, isSavin
 
   const [name, setName] = useState(category?.name ?? "");
   const [order, setOrder] = useState(String(category?.order ?? 0));
-  const [icon, setIcon] = useState(category?.icon ?? "");
+  // An image URL that older categories kept in icon moves to imageUrl when saved
+  const icon = isImageIcon(category?.icon) ? "" : category?.icon ?? "";
+  const [imageUrl, setImageUrl] = useState(getCategoryImage(category) ?? "");
   const [subCategories, setSubCategories] = useState<TSubCategoryRow[]>(
     category?.subCategories.map((s) => ({ name: s.name, topics: s.topics.join(", ") })) ?? []
   );
@@ -45,7 +48,7 @@ const CategoryFormModal: React.FC<CategoryFormModalProps> = ({ category, isSavin
     if (file.size > 2 * 1024 * 1024) return toast.error("Image size should be under 2MB");
 
     try {
-      setIcon(await uploadFile(file, "resources"));
+      setImageUrl(await uploadFile(file, "resources"));
     } catch (error: any) {
       toast.error(error?.response?.data?.error || "Failed to upload image");
     }
@@ -62,6 +65,7 @@ const CategoryFormModal: React.FC<CategoryFormModalProps> = ({ category, isSavin
     onSubmit({
       name: name.trim(),
       icon,
+      imageUrl,
       order: Number(order) || 0,
       subCategories: subCategories
         .filter((row) => row.name.trim())
@@ -93,11 +97,11 @@ const CategoryFormModal: React.FC<CategoryFormModalProps> = ({ category, isSavin
               <label className={labelClassName}>Category Image</label>
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-[10px] bg-[#f0f4ff] border border-[#e2e8f0] flex items-center justify-center overflow-hidden shrink-0 text-[#3b82f6]">
-                  {isImageIcon(icon) ? (
-                    <img src={icon} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <MdOutlineCategory className="text-[28px]" />
-                  )}
+                  <CategoryImage
+                    src={imageUrl}
+                    className="w-full h-full object-cover"
+                    fallback={<MdOutlineCategory className="text-[28px]" />}
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
@@ -108,12 +112,12 @@ const CategoryFormModal: React.FC<CategoryFormModalProps> = ({ category, isSavin
                       className="flex items-center gap-2 px-4 py-2 rounded-[8px] border border-[#e2e8f0] text-[13px] font-bold text-[#202127] hover:bg-[#f8fafc] disabled:opacity-60"
                     >
                       <FiUploadCloud />
-                      {isUploading ? `Uploading ${uploadProgress}%` : isImageIcon(icon) ? "Replace" : "Upload"}
+                      {isUploading ? `Uploading ${uploadProgress}%` : imageUrl ? "Replace" : "Upload"}
                     </button>
-                    {isImageIcon(icon) && !isUploading && (
+                    {imageUrl && !isUploading && (
                       <button
                         type="button"
-                        onClick={() => setIcon("")}
+                        onClick={() => setImageUrl("")}
                         className="text-[13px] font-medium text-[#A0AEC0] hover:text-red-500"
                       >
                         Remove

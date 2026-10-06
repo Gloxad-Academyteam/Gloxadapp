@@ -12,8 +12,9 @@ export type TCategory = {
   _id: string;
   name: string;
   slug: string;
-  // Icon identifier (e.g. "code") or the URL of an uploaded image
+  // Icon identifier, e.g. "code". Older categories may hold the uploaded image URL here instead
   icon?: string;
+  imageUrl?: string;
   order?: number;
   subCategories: TSubCategory[];
 };
@@ -21,6 +22,7 @@ export type TCategory = {
 export type TCategoryPayload = {
   name?: string;
   icon?: string;
+  imageUrl?: string;
   order?: number;
   subCategories?: { name: string; topics: string[] }[];
 };
@@ -34,6 +36,10 @@ const toPayload = (payload: TCategoryPayload): TCategoryPayload => ({
 });
 
 export const isImageIcon = (icon?: string) => !!icon && /^(https?:)?\/\//.test(icon);
+
+// The category's uploaded image: imageUrl, or an image URL saved in icon before imageUrl existed
+export const getCategoryImage = (category?: Pick<TCategory, "imageUrl" | "icon"> | null) =>
+  category?.imageUrl || (isImageIcon(category?.icon) ? category?.icon : undefined);
 
 export async function getCategories(): Promise<TService<TCategory[]>> {
   const { data } = await axiosInstance.get("/categories");
