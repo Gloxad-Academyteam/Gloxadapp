@@ -325,3 +325,25 @@ html {
 .pincode-input-text:focus {
   border-color: #07004d !important;
 }
+
+/* Institution section and partner admin: Manrope headings and Inter body, overriding the site-wide DM Sans rule above */
+.inst-scope :is(h1, h2, h3, h4, h5, h6)[class],
+.inst-scope :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-manrope), sans-serif !important;
+}
+
+.inst-scope .font-bold,
+.inst-scope .font-semibold,
+.inst-scope b,
+.inst-scope strong {
+  font-family: var(--font-inter), sans-serif !important;
+}
+
+.inst-scope .font-display {
+  font-family: var(--font-manrope), sans-serif !important;
+}
+
+/* Hide the floating scroll-to-top button while a drawer or dialog covers the page */
+body[data-overlay-open] button[aria-label="Scroll to top"] {
+  display: none;
+}

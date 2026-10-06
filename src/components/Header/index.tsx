@@ -92,7 +92,7 @@ const LandingHeader = () => {
                 Tutors
               </Link>
               <Link
-                href="/auth/signin"
+                href="/institution"
                 className={`hidden sm:block rounded-[16px] px-4 py-1 transition-colors ${
                   isInstitutionActive
                     ? "bg-[#0a1b56] text-white"
@@ -567,7 +567,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
               <>
                 <Link href={authenticatedUser?.role === "admin" ? "/admin" : "/dashboard"} onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isStudentActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>{authenticatedUser?.role === "admin" ? "Admin Dashboard" : authenticatedUser?.role === "instructor" ? "Tutor Dashboard" : "Students (Home)"}</Link>
                 <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
-                <Link href="/auth/signin" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
+                <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
                 <Link href="/dashboard?tab=my-courses" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">My Courses</Link>
                 <Link href="/dashboard/explore" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link>
                 <Link href="/dashboard?tab=trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
@@ -580,7 +580,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
               <>
                 <Link href="/" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isStudentActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Students (Home)</Link>
                 <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
-                <Link href="/auth/signin" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
+                <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
                 <Link href="/courses" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link>
                 <Link href="/free" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Free Courses</Link>
                 <Link href="/trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
