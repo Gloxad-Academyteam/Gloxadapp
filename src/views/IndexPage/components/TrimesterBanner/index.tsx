@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import useAuth from "@hooks/useAuth";
+import { trimesterHref } from "@utils/trimesterHref";
 import TrimesterUiux from "@assets/images/trimester-uiux.png";
 import CourseUiuxBeginner from "@assets/images/course-uiux-beginner.png";
 import CourseBrandDesign from "@assets/images/course-brand-design.png";
@@ -39,6 +41,9 @@ const trimesterCourses = [
 
 const TrimesterBanner = () => {
   const router = useRouter();
+  // Signed-out visitors go to sign-in first; signed-in students go straight to the trimester LMS
+  const { isAuthenticated } = useAuth();
+  const target = trimesterHref(isAuthenticated);
 
   return (
     <div className="relative flex min-h-[420px] w-full flex-col overflow-hidden rounded-[24px] md:rounded-[36px] bg-gradient-to-r from-[#0a1b56] to-[#80a4e3] shadow-sm px-6 pb-10 pt-14 lg:flex-row lg:px-14 lg:pb-14 lg:pt-16">
@@ -64,7 +69,7 @@ const TrimesterBanner = () => {
         {/* ===================== DESKTOP (lg and up) — CTA ===================== */}
         <button
           type="button"
-          onClick={() => router.push("/trimester")}
+          onClick={() => router.push(target)}
           className="mt-8 hidden h-[46px] w-[220px] rounded-full border border-white text-[14px] font-medium text-white transition hover:bg-white hover:text-[#07004d] lg:block"
         >
           View All Trimester Courses
@@ -78,7 +83,7 @@ const TrimesterBanner = () => {
         {trimesterCourses.map((course) => (
           <article
             key={course.title}
-            onClick={() => router.push(course.to)}
+            onClick={() => router.push(target)}
             className="card-interactive flex w-[260px] lg:w-[300px] shrink-0 snap-center cursor-pointer flex-col rounded-[16px] bg-white p-5 shadow-xl"
           >
             <img src={course.image.src} alt={course.title} className="h-[160px] lg:h-[180px] w-full rounded-[12px] object-cover" />
@@ -89,7 +94,7 @@ const TrimesterBanner = () => {
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
-                router.push("/auth/signin");
+                router.push(target);
               }}
               className="btn-interactive mt-4 h-[36px] lg:h-[40px] w-full rounded-full bg-[#0a1b56] text-[13px] lg:text-[14px] font-medium text-white transition hover:bg-[#07004d]"
             >
@@ -102,7 +107,7 @@ const TrimesterBanner = () => {
       {/* ===================== MOBILE (below lg) — view all button ===================== */}
       <button
         type="button"
-        onClick={() => router.push("/trimester")}
+        onClick={() => router.push(target)}
         className="mt-6 mx-auto h-[46px] rounded-full border border-white px-8 text-[14px] font-medium text-white transition hover:bg-white hover:text-[#07004d] lg:hidden"
       >
         View All Trimester Courses

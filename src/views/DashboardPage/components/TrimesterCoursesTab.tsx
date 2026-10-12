@@ -49,12 +49,20 @@ const TrimesterCoursesTab = () => {
               Enroll in our structured trimester courses before the deadline.
               Stay ahead and learn with a cohort of motivated students.
             </p>
-            <button
-              onClick={() => router.push("/courses")}
-              className="mt-8 w-fit h-[44px] px-8 rounded-full border border-white text-[14px] font-medium text-white transition hover:bg-white hover:text-[#07004d]"
-            >
-              Browse All Courses
-            </button>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button
+                onClick={() => router.push("/lms")}
+                className="h-[44px] px-8 rounded-full bg-white text-[14px] font-bold text-[#07004d] transition hover:bg-[#e8edf8]"
+              >
+                Open Trimester LMS
+              </button>
+              <button
+                onClick={() => router.push("/courses")}
+                className="h-[44px] px-8 rounded-full border border-white text-[14px] font-medium text-white transition hover:bg-white hover:text-[#07004d]"
+              >
+                Browse All Courses
+              </button>
+            </div>
           </div>
           <div className="lg:w-[50%] text-white/50 text-center text-[120px] font-black leading-none hidden lg:block select-none">
             T

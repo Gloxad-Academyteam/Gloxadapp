@@ -18,6 +18,7 @@ import {
   PiMagnifyingGlass,
   PiCompass,
   PiCertificate,
+  PiStudent,
   PiGear
 } from "react-icons/pi";
 import useAuth from "@hooks/useAuth";
@@ -239,6 +240,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   label="Our Courses"
                   to="/dashboard/explore"
                   active={pathname.includes("/dashboard/explore")}
+                  isOpen={isSidebarOpen}
+                />
+                <SidebarItem
+                  icon={PiStudent}
+                  label="Trimester Courses"
+                  to="/lms"
+                  active={pathname.startsWith("/lms")}
                   isOpen={isSidebarOpen}
                 />
                 <SidebarItem
