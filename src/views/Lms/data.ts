@@ -20,7 +20,7 @@ export const STUDENT_PROGRESS = {
 };
 
 export const UPCOMING_ACTIVITIES = [
-  { kind: "Reading", title: "Advanced Hooks Concept", due: "Due today at 11:59 PM", href: "/lms/curriculum", tone: "reading" },
+  { kind: "Reading", title: "Advanced Hooks Concept", due: "Due today at 11:59 PM", href: "/lms/curriculum/lesson", tone: "reading" },
   { kind: "Assignment", title: "Build a Todo App", due: "Due tomorrow at 5:00 PM", href: "/lms/assignments", tone: "assignment" },
   { kind: "Live Class", title: "Weekly Code Review", due: "Thursday, 10:00 AM", href: "/lms/live", tone: "live" },
   { kind: "Milestone", title: "Project Phase 1 Submit", due: "Friday, EOD", href: "/lms/assignments", tone: "milestone" },
@@ -43,8 +43,8 @@ export const LESSON = {
     { text: "Design a basic load-balanced system topology.", done: false },
   ],
   upNext: [
-    { title: "4.3 Database Sharding", meta: "18 mins", kind: "video", href: "/lms/curriculum" },
-    { title: "4.4 Event-Driven Design", meta: "Reading", kind: "reading", href: "/lms/curriculum" },
+    { title: "4.3 Database Sharding", meta: "18 mins", kind: "video", href: "/lms/curriculum/lesson" },
+    { title: "4.4 Event-Driven Design", meta: "Reading", kind: "reading", href: "/lms/curriculum/lesson" },
     { title: "Module 4 Quiz", meta: "10 questions", kind: "quiz", href: "/lms/quiz" },
   ],
   intro:
@@ -422,3 +422,124 @@ export const ADMIN_USERS: TAdminUser[] = Array.from({ length: 45 }, (_, index) =
     lastLogin: index % 4 === 0 ? `Oct ${(index % 27) + 1}, 2023` : index % 3 === 0 ? "Yesterday, 10:05 AM" : "Today, 08:30 AM",
   };
 });
+
+
+/* ---------- Weekly learning path (Curriculum) ---------- */
+export type TDayItem = { kind: "video" | "reading" | "code" | "check" | "live" | "problems" | "review" | "submission"; label: string };
+export type TDayStatus = "done" | "today" | "upcoming" | "locked";
+export type TPathDay = {
+  day: string;
+  status: TDayStatus;
+  module?: string;
+  title?: string;
+  items?: TDayItem[];
+  // Today's card shows how far through the day's work the student is
+  progress?: number;
+};
+export type TPathWeek = {
+  week: number;
+  objective: { title: string; text: string; progress: number };
+  estimatedHours: number;
+  concepts: string[];
+  days: TPathDay[];
+};
+
+export const PATH_PROGRAM = { trimester: "TRIMESTER 2", course: "Data Structures & Algorithms" };
+
+export const PATH_WEEKS: TPathWeek[] = [
+  {
+    week: 1,
+    objective: {
+      title: "Complexity & Core Data Structures",
+      text: "By the end of this week, you will analyse algorithm complexity with Big-O, and implement arrays, linked lists, stacks and queues from scratch.",
+      progress: 100,
+    },
+    estimatedHours: 10,
+    concepts: ["Big-O", "Arrays", "Linked Lists", "Stacks & Queues"],
+    days: [
+      { day: "Monday", status: "done", module: "Module 1.1", title: "Algorithm Analysis & Big-O", items: [{ kind: "video", label: "50m Video" }, { kind: "reading", label: "Reading (15m)" }] },
+      { day: "Tuesday", status: "done", module: "Module 1.2", title: "Arrays & Linked Lists", items: [{ kind: "code", label: "Coding Lab (1h)" }, { kind: "check", label: "Knowledge Check" }] },
+      { day: "Wednesday", status: "done", module: "Module 1.3", title: "Stacks & Queues", items: [{ kind: "live", label: "Live Lecture (2h)" }, { kind: "problems", label: "Problem Set 1" }] },
+      { day: "Thursday", status: "done", module: "Module 1.4", title: "Recursion Patterns", items: [{ kind: "code", label: "Coding Lab (1.5h)" }, { kind: "review", label: "Peer Review" }] },
+      { day: "Friday", status: "done", module: "Assessment", title: "Weekly Challenge: Data Structure Toolkit", items: [{ kind: "submission", label: "Project Submission" }] },
+      { day: "Saturday", status: "locked" },
+      { day: "Sunday", status: "locked" },
+    ],
+  },
+  {
+    week: 2,
+    objective: {
+      title: "Mastering Graph Theory Fundamentals",
+      text: "By the end of this week, you will confidently implement directed and undirected graphs, understand adjacency matrices vs. lists, and execute core traversal algorithms (BFS/DFS) to solve complex routing problems.",
+      progress: 40,
+    },
+    estimatedHours: 12,
+    concepts: ["BFS", "DFS", "Dijkstra's", "Adjacency List"],
+    days: [
+      { day: "Monday", status: "done", module: "Module 2.1", title: "Introduction to Graphs & Terminology", items: [{ kind: "video", label: "45m Video" }, { kind: "reading", label: "Reading (15m)" }] },
+      { day: "Tuesday", status: "done", module: "Module 2.2", title: "Graph Representations (Code)", items: [{ kind: "code", label: "Coding Lab (1h)" }, { kind: "check", label: "Knowledge Check" }] },
+      { day: "Wednesday", status: "today", module: "Module 2.3", title: "Breadth-First Search (BFS) Deep Dive", progress: 50, items: [{ kind: "live", label: "Live Lecture (2h)" }, { kind: "problems", label: "Problem Set 1" }] },
+      { day: "Thursday", status: "upcoming", module: "Module 2.4", title: "Depth-First Search (DFS) Variations", items: [{ kind: "code", label: "Coding Lab (1.5h)" }, { kind: "review", label: "Peer Review" }] },
+      { day: "Friday", status: "upcoming", module: "Assessment", title: "Weekly Challenge: Graph Routing Project", items: [{ kind: "submission", label: "Project Submission" }] },
+      { day: "Saturday", status: "locked" },
+      { day: "Sunday", status: "locked" },
+    ],
+  },
+  {
+    week: 3,
+    objective: {
+      title: "Shortest Paths & Greedy Algorithms",
+      text: "By the end of this week, you will apply Dijkstra's algorithm and greedy strategies to weighted graphs and justify when each approach is correct.",
+      progress: 0,
+    },
+    estimatedHours: 12,
+    concepts: ["Dijkstra's", "Greedy", "Priority Queue", "Heaps"],
+    days: [
+      { day: "Monday", status: "locked", module: "Module 3.1", title: "Weighted Graphs & Priority Queues" },
+      { day: "Tuesday", status: "locked", module: "Module 3.2", title: "Dijkstra's Algorithm" },
+      { day: "Wednesday", status: "locked", module: "Module 3.3", title: "Greedy Strategies" },
+      { day: "Thursday", status: "locked", module: "Module 3.4", title: "Minimum Spanning Trees" },
+      { day: "Friday", status: "locked", module: "Assessment", title: "Weekly Challenge: Network Cost Optimiser" },
+      { day: "Saturday", status: "locked" },
+      { day: "Sunday", status: "locked" },
+    ],
+  },
+  {
+    week: 4,
+    objective: {
+      title: "Dynamic Programming & Review",
+      text: "By the end of this week, you will recognise overlapping subproblems, build bottom-up solutions, and consolidate the trimester's topics for the final assessment.",
+      progress: 0,
+    },
+    estimatedHours: 14,
+    concepts: ["Memoisation", "Tabulation", "Knapsack", "Revision"],
+    days: [
+      { day: "Monday", status: "locked", module: "Module 4.1", title: "Overlapping Subproblems" },
+      { day: "Tuesday", status: "locked", module: "Module 4.2", title: "Tabulation Patterns" },
+      { day: "Wednesday", status: "locked", module: "Module 4.3", title: "Knapsack & Sequences" },
+      { day: "Thursday", status: "locked", module: "Module 4.4", title: "Trimester Revision" },
+      { day: "Friday", status: "locked", module: "Assessment", title: "Final Assessment" },
+      { day: "Saturday", status: "locked" },
+      { day: "Sunday", status: "locked" },
+    ],
+  },
+];
+
+export const OFFICE_HOURS = { title: "Office Hours Available Today", text: "Stuck on BFS? Prof. Davis has open slots from 3 PM - 5 PM." };
+
+/* ---------- Help Center / inquiries ---------- */
+export type TInquiryCategory = "academics" | "technical" | "billing";
+export const INQUIRY_CATEGORIES: { key: TInquiryCategory; label: string; text: string }[] = [
+  { key: "academics", label: "Academics", text: "Coursework, grades, professors" },
+  { key: "technical", label: "Technical", text: "Platform access, bugs, integrations" },
+  { key: "billing", label: "Billing", text: "Invoices, payment plans, aid" },
+];
+
+export type TInquiry = { id: string; status: "pending" | "resolved"; ago: string; subject: string; category: string };
+export const INQUIRIES: TInquiry[] = [
+  { id: "i1", status: "pending", ago: "2d ago", subject: "Cannot access Week 3 Module", category: "Technical" },
+  { id: "i2", status: "resolved", ago: "1w ago", subject: "Invoice #4402 Correction", category: "Billing" },
+  { id: "i3", status: "resolved", ago: "2w ago", subject: "Extension for Assignment 1", category: "Academics" },
+];
+
+export const PRIORITY_HOTLINE = "+1 (800) 555-0199";

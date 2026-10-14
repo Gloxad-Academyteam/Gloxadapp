@@ -87,7 +87,7 @@ const StudentDashboard = () => {
                 <p className="mt-3 max-w-[360px] text-[14px] leading-relaxed text-[#c9cbf5]">Resume your guided journey. Estimated time: 45 mins.</p>
               </div>
               <Link
-                href="/lms/curriculum"
+                href="/lms/curriculum/lesson"
                 className="inline-flex w-fit shrink-0 items-center gap-3 rounded-[8px] bg-white px-6 py-4 text-[14px] font-bold text-[#1a1a7a] transition-colors hover:bg-[#eceefd]"
               >
                 <MdOutlinePlayCircle size={28} /> Continue

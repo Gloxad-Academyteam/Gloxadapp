@@ -7,6 +7,7 @@ import {
   MdAssignment,
   MdDashboard,
   MdForum,
+  MdHelp,
   MdLogout,
   MdMenuBook,
   MdOutlineAccountCircle,
@@ -30,7 +31,7 @@ import useAuth from "@hooks/useAuth";
 import { TOP_TABS, TTopTab } from "../data";
 import { primaryButton } from "./ui";
 
-export type TNavKey = "dashboard" | "curriculum" | "live" | "assignments" | "community" | "settings";
+export type TNavKey = "dashboard" | "curriculum" | "live" | "assignments" | "community" | "help" | "settings";
 
 const NAV: { key: TNavKey; label: string; href: string; Icon: IconType; ActiveIcon: IconType }[] = [
   { key: "dashboard", label: "Dashboard", href: "/lms", Icon: MdOutlineDashboard, ActiveIcon: MdDashboard },
@@ -38,6 +39,7 @@ const NAV: { key: TNavKey; label: string; href: string; Icon: IconType; ActiveIc
   { key: "live", label: "Live Class", href: "/lms/live", Icon: MdOutlineVideoCall, ActiveIcon: MdVideoCall },
   { key: "assignments", label: "Assignments", href: "/lms/assignments", Icon: MdOutlineAssignment, ActiveIcon: MdAssignment },
   { key: "community", label: "Community", href: "/lms/community", Icon: MdOutlineForum, ActiveIcon: MdForum },
+  { key: "help", label: "Help Center", href: "/lms/help", Icon: MdOutlineHelpOutline, ActiveIcon: MdHelp },
   { key: "settings", label: "Settings", href: "/dashboard/settings", Icon: MdOutlineSettings, ActiveIcon: MdSettings },
 ];
 
@@ -93,13 +95,13 @@ const LmsShell = ({ active, topTab = null, search, topBrand, bellDot, topBar, sh
   }, [isMenuOpen]);
 
   const inquiry = (
-    <button
-      type="button"
-      onClick={() => soon("Inquiries")}
+    <Link
+      href="/lms/help"
+      onClick={() => setIsMenuOpen(false)}
       className={`${primaryButton} w-full !rounded-[8px] !py-3.5 shadow-[0_10px_20px_-10px_rgba(2,0,96,0.7)]`}
     >
       <LuPlus size={16} /> New Inquiry
-    </button>
+    </Link>
   );
 
   const sidebar = (
@@ -110,7 +112,7 @@ const LmsShell = ({ active, topTab = null, search, topBrand, bellDot, topBar, sh
       </div>
       {inquiryOnTop && <div className="px-4 pb-6">{inquiry}</div>}
       <nav aria-label="LMS" className="flex flex-col gap-1">
-        {NAV.map(({ key, label, href, Icon, ActiveIcon }) => {
+        {NAV.filter(({ key }) => key !== "help" || active === "help").map(({ key, label, href, Icon, ActiveIcon }) => {
           const isActive = key === active;
           const Glyph = isActive ? ActiveIcon : Icon;
           return (
@@ -133,9 +135,11 @@ const LmsShell = ({ active, topTab = null, search, topBrand, bellDot, topBar, sh
       <div className="mt-auto px-4 pb-5">
         {!inquiryOnTop && inquiry}
         <div className={`${inquiryOnTop ? "" : "mt-5 border-t border-[#dedcec] pt-4"} flex flex-col`}>
-          <Link href="/#faqs" className="flex items-center gap-3 px-1 py-2.5 text-[13px] text-[#4a4d66] hover:text-[#1a1a7a]">
-            <MdOutlineHelpOutline size={20} /> Help Center
-          </Link>
+          {active !== "help" && (
+            <Link href="/lms/help" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 px-1 py-2.5 text-[13px] text-[#4a4d66] hover:text-[#1a1a7a]">
+              <MdOutlineHelpOutline size={20} /> Help Center
+            </Link>
+          )}
           <button type="button" onClick={() => handleLogout()} className="flex items-center gap-3 px-1 py-2.5 text-left text-[13px] text-[#4a4d66] hover:text-[#c62828]">
             <MdLogout size={20} /> Logout
           </button>
