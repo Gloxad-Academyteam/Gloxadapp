@@ -543,3 +543,90 @@ export const INQUIRIES: TInquiry[] = [
 ];
 
 export const PRIORITY_HOTLINE = "+1 (800) 555-0199";
+
+/* ---------- Coding lab ---------- */
+export type TLabFile = { name: string; language: "javascript" | "python" | "json" | "html" | "css"; content: string; readOnly?: boolean };
+
+export const CODE_LAB = {
+  id: "graph-representations",
+  trimester: "TRIMESTER 2",
+  module: "Module 2.2",
+  title: "Coding Lab: Graph Representations",
+  estimate: "1h",
+  steps: [
+    "Implement buildAdjacencyList(edges, directed) so it returns an object that maps every node to the list of nodes it connects to.",
+    "For undirected graphs, add the edge in both directions. For directed graphs, still create an empty list for nodes that have no outgoing edges.",
+    "Implement bfs(graph, start) so it returns the nodes in the order a breadth-first search visits them.",
+    "Press Run (or Ctrl/Cmd + Enter) to check your work against the tests.",
+  ],
+  hints: [
+    "Use an array as a queue: push to add, shift to take from the front.",
+    "Keep a Set of visited nodes so you never visit a node twice.",
+    "Nodes can appear only as the target of an edge, so create their entry too.",
+  ],
+  files: [
+    {
+      name: "graph.js",
+      language: "javascript",
+      content: `// Module 2.2: Graph Representations
+// 1) Build an adjacency list from an edge list.
+// 2) Implement breadth-first search on it.
+
+function buildAdjacencyList(edges, directed = false) {
+  // TODO: return an object like { A: ["B", "C"], B: ["A"], C: ["A"] }
+}
+
+function bfs(graph, start) {
+  // TODO: return the nodes in the order BFS visits them
+}
+
+// Try things out here. console.log output shows in the Console tab.
+console.log(buildAdjacencyList([["A", "B"], ["A", "C"]]));
+`,
+    },
+    {
+      name: "tests.js",
+      language: "javascript",
+      readOnly: true,
+      content: `// These tests run against your graph.js. You can read them but not edit them.
+
+test("builds an undirected adjacency list", () => {
+  assertEqual(buildAdjacencyList([["A", "B"], ["A", "C"]]), { A: ["B", "C"], B: ["A"], C: ["A"] });
+});
+
+test("builds a directed adjacency list", () => {
+  assertEqual(buildAdjacencyList([["A", "B"]], true), { A: ["B"], B: [] });
+});
+
+test("bfs visits nodes level by level", () => {
+  const graph = { A: ["B", "C"], B: ["D"], C: ["D"], D: [] };
+  assertEqual(bfs(graph, "A"), ["A", "B", "C", "D"]);
+});
+
+test("bfs skips unreachable nodes", () => {
+  assertEqual(bfs({ A: ["B"], B: [], C: [] }, "A"), ["A", "B"]);
+});
+`,
+    },
+  ] as TLabFile[],
+};
+
+// Code the instructor is sharing during the live class (shown read-only in the class's Code tab)
+export const LIVE_SHARED_CODE = `function bfs(graph, start) {
+  const visited = new Set([start]);
+  const queue = [start];
+  const order = [];
+
+  while (queue.length > 0) {
+    const node = queue.shift();
+    order.push(node);
+
+    for (const next of graph[node] ?? []) {
+      if (!visited.has(next)) {
+        visited.add(next);
+        queue.push(next);
+      }
+    }
+  }
+  return order; // O(V + E)
+}`;

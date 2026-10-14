@@ -5,6 +5,7 @@ import Link from "next/link";
 import { IconType } from "react-icons";
 import {
   MdAssignment,
+  MdCode,
   MdDashboard,
   MdForum,
   MdHelp,
@@ -12,6 +13,7 @@ import {
   MdMenuBook,
   MdOutlineAccountCircle,
   MdOutlineAssignment,
+  MdOutlineCode,
   MdOutlineDashboard,
   MdOutlineForum,
   MdOutlineHelpOutline,
@@ -31,7 +33,7 @@ import useAuth from "@hooks/useAuth";
 import { TOP_TABS, TTopTab } from "../data";
 import { primaryButton } from "./ui";
 
-export type TNavKey = "dashboard" | "curriculum" | "live" | "assignments" | "community" | "help" | "settings";
+export type TNavKey = "dashboard" | "curriculum" | "live" | "assignments" | "community" | "code" | "help" | "settings";
 
 const NAV: { key: TNavKey; label: string; href: string; Icon: IconType; ActiveIcon: IconType }[] = [
   { key: "dashboard", label: "Dashboard", href: "/lms", Icon: MdOutlineDashboard, ActiveIcon: MdDashboard },
@@ -39,6 +41,7 @@ const NAV: { key: TNavKey; label: string; href: string; Icon: IconType; ActiveIc
   { key: "live", label: "Live Class", href: "/lms/live", Icon: MdOutlineVideoCall, ActiveIcon: MdVideoCall },
   { key: "assignments", label: "Assignments", href: "/lms/assignments", Icon: MdOutlineAssignment, ActiveIcon: MdAssignment },
   { key: "community", label: "Community", href: "/lms/community", Icon: MdOutlineForum, ActiveIcon: MdForum },
+  { key: "code", label: "Coding Lab", href: "/lms/code", Icon: MdOutlineCode, ActiveIcon: MdCode },
   { key: "help", label: "Help Center", href: "/lms/help", Icon: MdOutlineHelpOutline, ActiveIcon: MdHelp },
   { key: "settings", label: "Settings", href: "/dashboard/settings", Icon: MdOutlineSettings, ActiveIcon: MdSettings },
 ];

@@ -18,10 +18,11 @@ import { toast } from "react-toastify";
 import CategoryImage from "@components/CategoryImage";
 import useAuth from "@hooks/useAuth";
 import LmsShell from "./components/LmsShell";
+import SharedCodePanel from "./components/SharedCodePanel";
 import { LIVE_CLASS } from "./data";
 import { lmsImages } from "./images";
 
-type TTab = "chat" | "polls" | "people";
+type TTab = "chat" | "polls" | "code" | "people";
 type TMessage = { id: string; author: string; time: string; text: string; self?: boolean; system?: boolean };
 
 const mmss = (total: number) => `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
@@ -165,6 +166,7 @@ const LiveClassPage = () => {
             {([
               ["chat", "Live Chat"],
               ["polls", "Polls"],
+              ["code", "Code"],
               ["people", `People (${LIVE_CLASS.people.length})`],
             ] as [TTab, string][]).map(([key, label]) => (
               <button
@@ -173,7 +175,7 @@ const LiveClassPage = () => {
                 role="tab"
                 aria-selected={tab === key}
                 onClick={() => setTab(key)}
-                className={`-mb-px flex-1 border-b-2 px-3 py-4 text-[14px] transition-colors ${tab === key ? "border-[#1a1a7a] font-bold text-[#1a1a7a]" : "border-transparent text-[#4a4d66] hover:text-[#1a1a7a]"}`}
+                className={`-mb-px flex-1 whitespace-nowrap border-b-2 px-1.5 py-4 text-[13px] sm:text-[14px] transition-colors ${tab === key ? "border-[#1a1a7a] font-bold text-[#1a1a7a]" : "border-transparent text-[#4a4d66] hover:text-[#1a1a7a]"}`}
               >
                 {label}
               </button>
@@ -229,6 +231,8 @@ const LiveClassPage = () => {
                 {vote !== null && <p className="mt-4 text-[12px] text-[#4a4d66]">Results are shared by your instructor when the poll closes.</p>}
               </div>
             )}
+
+            {tab === "code" && <SharedCodePanel />}
 
             {tab === "people" && (
               <ul className="flex flex-col divide-y divide-[#eceaf5]">

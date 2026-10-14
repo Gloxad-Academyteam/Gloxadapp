@@ -88,9 +88,19 @@ const DayCard = ({ day }: { day: TPathDay }) => {
         <ul className="mt-4 flex flex-col gap-2.5">
           {day.items.map((item) => {
             const Icon = ITEM_ICON[item.kind];
-            return (
-              <li key={item.label} className={`flex items-center gap-2.5 text-[13px] ${isToday ? "font-medium text-[#14162b]" : "text-[#4a4d66]"}`}>
+            const content = (
+              <>
                 <Icon size={18} className={`shrink-0 ${isToday ? "text-[#00658f]" : "text-[#6a6d83]"}`} aria-hidden /> {item.label}
+              </>
+            );
+            const className = `flex items-center gap-2.5 text-[13px] ${isToday ? "font-medium text-[#14162b]" : "text-[#4a4d66]"}`;
+            return (
+              <li key={item.label}>
+                {item.kind === "code" && !isLocked ? (
+                  <Link href="/lms/code" className={`${className} hover:text-[#00658f] hover:underline`}>{content}</Link>
+                ) : (
+                  <span className={className}>{content}</span>
+                )}
               </li>
             );
           })}
