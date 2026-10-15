@@ -14,10 +14,14 @@ const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
 });
 
 // Read-only view of the code the instructor is sharing in the live class
-const SharedCodePanel = () => {
+type TProps = { code?: string; instructor?: string };
+
+const SharedCodePanel = ({ code, instructor }: TProps = {}) => {
+  const live = typeof code === "string";
+  const value = live ? code : LIVE_SHARED_CODE;
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(LIVE_SHARED_CODE);
+      await navigator.clipboard.writeText(value);
       toast.success("Code copied to your clipboard.");
     } catch {
       toast.error("Could not copy. Select the code and copy it manually.");
@@ -27,11 +31,11 @@ const SharedCodePanel = () => {
   return (
     <div className="flex flex-col gap-3">
       <p className="flex items-center gap-2 text-[13px] text-[#4a4d66]">
-        <span aria-hidden className="h-2 w-2 rounded-full bg-[#e5322d]" /> Dr. Emily Chen is sharing code
+        <span aria-hidden className="h-2 w-2 rounded-full bg-[#e5322d]" /> {live ? (code ? `${instructor ?? "Your instructor"} is sharing code` : "No code has been shared yet") : "Dr. Emily Chen is sharing code"}
       </p>
       <div className="overflow-hidden rounded-[8px] border border-[#2b2b3a]">
         <CodeMirror
-          value={LIVE_SHARED_CODE}
+          value={value}
           height="300px"
           theme={vscodeDark}
           extensions={[javascript()]}
@@ -50,7 +54,7 @@ const SharedCodePanel = () => {
           <MdOutlineOpenInNew size={16} aria-hidden /> Coding Lab
         </Link>
       </div>
-      <p className="text-[11px] text-[#6a6d83]">The code updates here as the instructor types once live sessions are connected.</p>
+      <p className="text-[11px] text-[#6a6d83]">{live ? "The code refreshes here every few seconds while the instructor shares it." : "The code updates here as the instructor types once live sessions are connected."}</p>
     </div>
   );
 };

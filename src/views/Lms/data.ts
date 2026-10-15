@@ -425,8 +425,15 @@ export const ADMIN_USERS: TAdminUser[] = Array.from({ length: 45 }, (_, index) =
 
 
 /* ---------- Weekly learning path (Curriculum) ---------- */
-export type TDayItem = { kind: "video" | "reading" | "code" | "check" | "live" | "problems" | "review" | "submission"; label: string };
-export type TDayStatus = "done" | "today" | "upcoming" | "locked";
+export type TDayItem = {
+  kind: "video" | "reading" | "code" | "check" | "live" | "problems" | "review" | "submission";
+  label: string;
+  // Set when the item comes from the API: lets a student tick it off, and opens the right coding lab
+  id?: string;
+  done?: boolean;
+  labSlug?: string | null;
+};
+export type TDayStatus = "done" | "today" | "available" | "upcoming" | "locked";
 export type TPathDay = {
   day: string;
   status: TDayStatus;

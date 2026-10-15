@@ -13,9 +13,13 @@ import {
   MdOutlinePhone,
 } from "react-icons/md";
 import { LuX } from "react-icons/lu";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { lmsApi, TApiInquiry, uploadAttachment } from "@services/lms";
 import { toast } from "react-toastify";
 import LmsShell, { soon } from "./components/LmsShell";
 import { cardClass, inputClass, outlineButton, primaryButton } from "./components/ui";
+import useDemoMode from "./useDemoMode";
 import { INQUIRIES, INQUIRY_CATEGORIES, PRIORITY_HOTLINE, TInquiry, TInquiryCategory } from "./data";
 
 const CATEGORY_ICON: Record<TInquiryCategory, IconType> = {
@@ -32,7 +36,28 @@ type TErrors = { subject?: string; description?: string };
 
 const formatSize = (bytes: number) => (bytes >= 1024 * 1024 ? `${(bytes / (1024 * 1024)).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`);
 
+const agoLabel = (iso: string) => {
+  const minutes = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.round(hours / 24);
+  return days < 14 ? `${days}d ago` : `${Math.round(days / 7)}w ago`;
+};
+
+const toInquiry = (item: TApiInquiry): TInquiry => ({
+  id: item._id,
+  status: item.status === "resolved" ? "resolved" : "pending",
+  ago: agoLabel(item.createdAt),
+  subject: item.subject,
+  category: INQUIRY_CATEGORIES.find((entry) => entry.key === item.category)?.label ?? item.category,
+});
+
 const HelpCenterPage = () => {
+  const demo = useDemoMode();
+  const queryClient = useQueryClient();
+  const inquiriesQuery = useQuery({ queryKey: ["lms", "inquiries"], queryFn: lmsApi.inquiries, enabled: demo === false });
   const [category, setCategory] = useState<TInquiryCategory>("academics");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
@@ -40,8 +65,9 @@ const HelpCenterPage = () => {
   const [errors, setErrors] = useState<TErrors>({});
   const [isDragging, setIsDragging] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // Inquiries are kept in memory until the inquiries endpoint exists (see data.ts)
-  const [inquiries, setInquiries] = useState<TInquiry[]>(INQUIRIES);
+  // Demo logins keep their inquiries in memory; real accounts use the inquiries API
+  const [demoInquiries, setDemoInquiries] = useState<TInquiry[]>(INQUIRIES);
+  const inquiries: TInquiry[] = demo ? demoInquiries : (inquiriesQuery.data ?? []).map(toInquiry);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const addFiles = (incoming: FileList | File[]) => {
@@ -90,14 +116,36 @@ const HelpCenterPage = () => {
     if (Object.keys(next).length) return;
 
     setIsSubmitting(true);
-    const categoryLabel = INQUIRY_CATEGORIES.find((entry) => entry.key === category)?.label ?? "";
-    window.setTimeout(() => {
-      setInquiries((list) => [{ id: `local-${Date.now()}`, status: "pending", ago: "Just now", subject: subject.trim(), category: categoryLabel }, ...list]);
+    if (demo) {
+      const categoryLabel = INQUIRY_CATEGORIES.find((entry) => entry.key === category)?.label ?? "";
+      window.setTimeout(() => {
+        setDemoInquiries((list) => [{ id: `local-${Date.now()}`, status: "pending", ago: "Just now", subject: subject.trim(), category: categoryLabel }, ...list]);
+        toast.success("Inquiry submitted. We'll get back to you shortly.");
+        reset();
+        setIsSubmitting(false);
+      }, 500);
+      return;
+    }
+    createInquiry.mutate();
+  };
+
+  const createInquiry = useMutation({
+    mutationFn: async () => {
+      const attachments = await Promise.all(files.map(uploadAttachment));
+      return lmsApi.createInquiry({ category, subject: subject.trim(), description: description.trim(), attachments });
+    },
+    onSuccess: () => {
       toast.success("Inquiry submitted. We'll get back to you shortly.");
       reset();
-      setIsSubmitting(false);
-    }, 500);
-  };
+      queryClient.invalidateQueries({ queryKey: ["lms", "inquiries"] });
+    },
+    onError: (error) => {
+      const data = (error as AxiosError<{ error?: string; fields?: TErrors }>).response?.data;
+      if (data?.fields) setErrors({ subject: data.fields.subject, description: data.fields.description });
+      toast.error(data?.error ?? "We couldn't send your inquiry. Please try again.");
+    },
+    onSettled: () => setIsSubmitting(false),
+  });
 
   return (
     <LmsShell active="help" inquiryOnTop search="Search...">
@@ -224,6 +272,8 @@ const HelpCenterPage = () => {
         <aside className="flex flex-col gap-6 xl:mt-[4px]">
           <section aria-labelledby="recent-title" className={`${cardClass} p-6`}>
             <h2 id="recent-title" className="border-b border-[#e1dff0] pb-4 text-[22px] font-bold text-[#1a1a7a]">Recent Inquiries</h2>
+            {!demo && inquiriesQuery.isLoading && <p className="mt-5 text-[14px] text-[#4a4d66]">Loading...</p>}
+            {!demo && !inquiriesQuery.isLoading && inquiries.length === 0 && <p className="mt-5 text-[14px] text-[#4a4d66]">No inquiries yet. Anything you send shows up here.</p>}
             <ul className="mt-5 flex flex-col gap-4">
               {inquiries.slice(0, 3).map((item) => (
                 <li key={item.id} className="rounded-[8px] border border-[#e1dff0] bg-white p-4">

@@ -21,10 +21,16 @@ import {
 } from "react-icons/md";
 import { LuFileCode2 } from "react-icons/lu";
 import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { AxiosError } from "axios";
+import axiosInstance from "@utils/axiosInstance";
+import { lmsApi } from "@services/lms";
+import useDemoMode from "./useDemoMode";
 import LmsShell from "./components/LmsShell";
 import { cardClass, outlineButton } from "./components/ui";
 import { runCode, TRunResult } from "./components/runCode";
-import { CODE_LAB, TLabFile } from "./data";
+import { CODE_LAB as CODE_LAB_DEMO, TLabFile } from "./data";
 
 const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
   ssr: false,
@@ -46,8 +52,11 @@ const languageExtension = (language: TLabFile["language"]): Extension => {
   }
 };
 
-const storageKey = (file: string) => `gloxad-lab:${CODE_LAB.id}:${file}`;
-const DONE_KEY = `gloxad-lab:${CODE_LAB.id}:done`;
+type TLab = { id: string; trimester: string; module: string; title: string; estimate: string; steps: string[]; hints: string[]; files: TLabFile[] };
+type TSubmitFn = (files: { name: string; content: string }[], passed: number, total: number) => Promise<void>;
+
+const storageKey = (labId: string, file: string) => `gloxad-lab:${labId}:${file}`;
+const doneKey = (labId: string) => `gloxad-lab:${labId}:done`;
 
 const readStored = (key: string): string | null => {
   try {
@@ -69,8 +78,20 @@ type TPanel = "console" | "tests";
 
 const LOG_COLOR: Record<string, string> = { log: "text-[#d4d4d4]", info: "text-[#9cdcfe]", warn: "text-[#dcdcaa]", error: "text-[#f48771]" };
 
-const CodingLabPage = () => {
-  const initial = useMemo(() => Object.fromEntries(CODE_LAB.files.map((file) => [file.name, file.content])), []);
+type TViewProps = {
+  lab: TLab;
+  // Work saved on the server (live accounts); demo accounts keep theirs in the browser
+  savedFiles?: Record<string, string>;
+  savedSolved?: boolean;
+  onSubmit?: TSubmitFn;
+};
+
+const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) => {
+  const CODE_LAB = lab;
+  const DONE_KEY = doneKey(lab.id);
+  const storageKey_ = (file: string) => storageKey(lab.id, file);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const initial = useMemo(() => Object.fromEntries(CODE_LAB.files.map((file) => [file.name, file.content])), [CODE_LAB]);
   const [contents, setContents] = useState<Record<string, string>>(initial);
   const [activeFile, setActiveFile] = useState(CODE_LAB.files[0].name);
   const [panel, setPanel] = useState<TPanel>("console");
@@ -86,13 +107,15 @@ const CodingLabPage = () => {
       const next = { ...current };
       for (const file of CODE_LAB.files) {
         if (file.readOnly) continue;
-        const stored = readStored(storageKey(file.name));
+        const stored = readStored(storageKey_(file.name));
         if (stored !== null) next[file.name] = stored;
+        else if (savedFiles?.[file.name] !== undefined) next[file.name] = savedFiles[file.name];
       }
       return next;
     });
-    setIsSolved(readStored(DONE_KEY) === "1");
-  }, []);
+    setIsSolved(Boolean(savedSolved) || readStored(DONE_KEY) === "1");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lab.id, savedFiles, savedSolved]);
 
   const file = CODE_LAB.files.find((entry) => entry.name === activeFile) ?? CODE_LAB.files[0];
   const testsFile = CODE_LAB.files.find((entry) => entry.readOnly);
@@ -105,7 +128,7 @@ const CodingLabPage = () => {
     (value: string) => {
       if (file.readOnly) return;
       setContents((current) => ({ ...current, [file.name]: value }));
-      writeStored(storageKey(file.name), value);
+      writeStored(storageKey_(file.name), value);
     },
     [file]
   );
@@ -125,7 +148,7 @@ const CodingLabPage = () => {
   }, [code, testsFile]);
 
   const reset = () => {
-    for (const entry of CODE_LAB.files) if (!entry.readOnly) writeStored(storageKey(entry.name), null);
+    for (const entry of CODE_LAB.files) if (!entry.readOnly) writeStored(storageKey_(entry.name), null);
     writeStored(DONE_KEY, null);
     setContents(initial);
     setResult(null);
@@ -133,8 +156,19 @@ const CodingLabPage = () => {
     toast.info("Your code was reset to the starter files.");
   };
 
-  const submit = () => {
-    // The submission endpoint doesn't exist yet; this records completion in the browser only.
+  const submit = async () => {
+    if (isSubmitting) return;
+    if (onSubmit && result) {
+      setIsSubmitting(true);
+      try {
+        await onSubmit(CODE_LAB.files.filter((entry) => !entry.readOnly).map((entry) => ({ name: entry.name, content: contents[entry.name] })), passed, total);
+      } catch (error) {
+        toast.error((error as AxiosError<{ error?: string }>).response?.data?.error ?? "We couldn't save your solution. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+      setIsSubmitting(false);
+    }
     writeStored(DONE_KEY, "1");
     setIsSolved(true);
     toast.success("Solution submitted. Nice work!");
@@ -218,10 +252,10 @@ const CodingLabPage = () => {
               <button
                 type="button"
                 onClick={submit}
-                disabled={!allPassed && !isSolved}
+                disabled={(!allPassed && !isSolved) || isSubmitting}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-[8px] bg-[#020060] px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#10107a] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {isSolved ? "Submitted" : "Submit solution"}
+                {isSolved ? "Submitted" : isSubmitting ? "Submitting..." : "Submit solution"}
               </button>
               {!allPassed && !isSolved && <p className="mt-2 text-center text-[12px] text-[#6a6d83]">Pass every check to submit.</p>}
               <Link href="/lms/curriculum" className="mt-4 block text-center text-[13px] font-medium text-[#1a1a7a] hover:underline">Back to the weekly path</Link>
@@ -314,6 +348,81 @@ const CodingLabPage = () => {
       </div>
     </LmsShell>
   );
+};
+
+const LabState = ({ title, text }: { title: string; text: string }) => (
+  <LmsShell active="code" topTab="trimesters" search="Search curriculum...">
+    <div className="mx-auto max-w-[460px] py-24 text-center">
+      <h1 className="text-[22px] font-bold text-[#14162b]">{title}</h1>
+      <p className="mt-2 text-[14px] text-[#4a4d66]">{text}</p>
+      <Link href="/lms/curriculum" className="mt-5 inline-block rounded-[6px] bg-[#020060] px-5 py-2.5 text-[14px] font-medium text-white hover:bg-[#10107a]">Back to the weekly path</Link>
+    </div>
+  </LmsShell>
+);
+
+const LiveCodingLab = () => {
+  const params = useSearchParams();
+  const requested = params.get("lab");
+
+  const meQuery = useQuery({ queryKey: ["lms", "me"], queryFn: lmsApi.me });
+  const activeCohort = meQuery.data?.cohorts.find((cohort) => cohort._id === meQuery.data?.activeCohortId) ?? meQuery.data?.cohorts[0];
+  const labsQuery = useQuery({ queryKey: ["lms", "labs"], queryFn: lmsApi.labs });
+  const slug = requested ?? labsQuery.data?.find((entry) => !entry.submitted)?.slug ?? labsQuery.data?.[0]?.slug;
+
+  const labQuery = useQuery({
+    queryKey: ["lms", "lab", slug],
+    queryFn: async () => (await axiosInstance.get(`/lms/code-labs/${slug}`)).data.lab,
+    enabled: Boolean(slug),
+  });
+  const submissionsQuery = useQuery({
+    queryKey: ["lms", "lab-submissions", slug],
+    queryFn: async () => (await axiosInstance.get(`/lms/code-labs/${slug}/submissions/me`)).data.submissions as { files: { name: string; content: string }[]; reportedPassed: number; reportedTotal: number }[],
+    enabled: Boolean(slug),
+  });
+
+  const submit = useMutation({
+    mutationFn: async ({ files, passed, total }: { files: { name: string; content: string }[]; passed: number; total: number }) =>
+      axiosInstance.post(`/lms/code-labs/${slug}/submissions`, { files, passed, total }),
+  });
+
+  const lab = useMemo<TLab | null>(() => {
+    const raw = labQuery.data;
+    if (!raw) return null;
+    return {
+      id: raw.slug,
+      trimester: (activeCohort?.trimester.name ?? "Trimester").toUpperCase(),
+      module: raw.module || "Coding Lab",
+      title: raw.title,
+      estimate: raw.estimate || "",
+      steps: raw.steps ?? [],
+      hints: raw.hints ?? [],
+      files: raw.files ?? [],
+    };
+  }, [labQuery.data, activeCohort]);
+
+  const latest = submissionsQuery.data?.[0];
+  const savedFiles = useMemo(() => (latest ? Object.fromEntries(latest.files.map((file) => [file.name, file.content])) : undefined), [latest]);
+  const solved = Boolean(submissionsQuery.data?.some((entry) => entry.reportedTotal > 0 && entry.reportedPassed === entry.reportedTotal));
+
+  if (meQuery.isLoading || labsQuery.isLoading || labQuery.isLoading || submissionsQuery.isLoading) return <LabState title="Loading your lab..." text="One moment." />;
+  if (!slug || !lab) return <LabState title="No coding lab yet" text="Your instructor hasn't published a lab for this week. Check back soon." />;
+  return (
+    <CodingLabView
+      key={lab.id}
+      lab={lab}
+      savedFiles={savedFiles}
+      savedSolved={solved}
+      onSubmit={async (files, passed, total) => {
+        await submit.mutateAsync({ files, passed, total });
+      }}
+    />
+  );
+};
+
+const CodingLabPage = () => {
+  const demo = useDemoMode();
+  if (demo === null) return null;
+  return demo ? <CodingLabView lab={CODE_LAB_DEMO} /> : <LiveCodingLab />;
 };
 
 export default CodingLabPage;

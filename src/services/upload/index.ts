@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosInstance from "@utils/axiosInstance";
 
 // S3 folder prefixes accepted by POST /upload/presigned-url
-export type TUploadFolder = "avatars" | "courses" | "certifications" | "resources";
+export type TUploadFolder = "avatars" | "courses" | "certifications" | "resources" | "documents";
 
 type TPresignedUrl = {
   uploadUrl: string;
