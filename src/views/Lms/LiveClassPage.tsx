@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import useAuth from "@hooks/useAuth";
 import { lmsApi, TLiveSession, TStream } from "@services/lms";
 import LmsShell from "./components/LmsShell";
-import SharedCodePanel from "./components/SharedCodePanel";
+import LiveCodePanel from "./components/LiveCodePanel";
 import LiveClassPreview from "./LiveClassPreview";
 import useDemoMode from "./useDemoMode";
 
@@ -82,7 +82,7 @@ const LiveClassLive = () => {
     queryKey: ["lms", "live-session", sessionId],
     queryFn: () => lmsApi.liveSession(sessionId as string),
     enabled: Boolean(sessionId),
-    refetchInterval: 8000,
+    refetchInterval: tab === "code" ? 2500 : 8000,
   });
   const detail = detailQuery.data ?? session;
 
@@ -246,7 +246,7 @@ const LiveClassLive = () => {
 
   return (
     <LmsShell active="live" topBar={topBar} showUser flush>
-      <div className="grid min-h-[calc(100vh-68px)] lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]">
+      <div className={`grid min-h-[calc(100vh-68px)] ${tab === "code" ? "lg:grid-cols-[minmax(0,1fr)_480px] xl:grid-cols-[minmax(0,1fr)_620px]" : "lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]"}`}>
         <section aria-label="Class video" className="min-w-0 p-4 sm:p-6">
           {meQuery.isLoading || sessionsQuery.isLoading ? (
             <p className="py-24 text-center text-[14px] text-[#4a4d66]">Loading your live classes...</p>
@@ -394,7 +394,9 @@ const LiveClassLive = () => {
               </div>
             )}
 
-            {joinable && tab === "code" && <SharedCodePanel code={detailQuery.data?.sharedCode?.content} instructor={detail ? instructorName(detail) : undefined} />}
+            {joinable && tab === "code" && sessionId && (
+              <LiveCodePanel sessionId={sessionId} isTeacher={isTeacher} instructor={detail ? instructorName(detail) : undefined} remote={detailQuery.data?.sharedCode ?? null} canEdit={detail?.status !== "ended" && detail?.status !== "cancelled"} />
+            )}
 
             {joinable && tab === "people" && (
               <ul className="flex flex-col divide-y divide-[#eceaf5]">
