@@ -83,7 +83,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-neutral-2 overflow-hidden w-full">
+    // Students get DM Sans throughout (same as the trimester LMS); the tutor dashboard keeps the site font
+    <div className={`flex flex-col h-screen bg-neutral-2 overflow-hidden w-full ${user?.role === "instructor" ? "" : "student-font"}`}>
       {/* Top Navbar */}
       <header className="h-[80px] bg-white border-b border-neutral-4 flex items-center justify-between px-4 md:px-8 shrink-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)] z-20">
         

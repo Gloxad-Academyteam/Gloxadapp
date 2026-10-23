@@ -73,6 +73,13 @@ h1, h2, h3, h4, h5, h6, .font-bold, .font-semibold, b, strong {
   font-family: var(--font-dm-sans), sans-serif !important;
 }
 
+/* Student dashboard: DM Sans everywhere, matching the trimester LMS. The second selector also overrides
+   marketing sections embedded in the dashboard that set their own `font-sans` (Roboto). */
+.student-font,
+.student-font .font-sans {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
 /* Custom Button Styles */
 button.custom-ghost:hover {
   background-color: var(--color-primary-3) !important;
