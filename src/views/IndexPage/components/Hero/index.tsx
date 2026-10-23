@@ -126,19 +126,19 @@ const Hero = ({ compact = false }: HeroProps) => {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="relative z-10 flex w-full flex-col items-start pb-[8px] text-left lg:w-auto lg:max-w-[640px] lg:pb-0"
         >
-          <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 sm:text-[14px] lg:text-[24px] lg:normal-case lg:tracking-normal lg:text-white">
+          <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 sm:text-[14px] lg:text-[20px] lg:normal-case lg:tracking-normal lg:text-white">
             Gloxad Academy
           </p>
-          <h1 className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-6 lg:text-[64px] lg:tracking-[-2.5px] lg:leading-[1.05]">
+          <h1 className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-4 lg:text-[48px] lg:tracking-[-1.8px] lg:leading-[1.08] xl:text-[54px] xl:tracking-[-2px]">
             Where Learning Meets Opportunity
           </h1>
-          <div className="mt-3 w-full max-w-[600px] lg:mt-8">
+          <div className="mt-3 w-full max-w-[600px] lg:mt-6">
             {/* MOBILE: one short line */}
             <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[13px] leading-[1.55] text-white/90 sm:text-[15px] lg:hidden">
               Expert-led courses, hands-on projects and recognised certificates. Start learning today.
             </p>
             {/* DESKTOP: full copy */}
-            <p className="hidden text-[16px] leading-[1.6] text-white/90 lg:block">
+            <p className="hidden text-[15px] leading-[1.6] text-white/90 lg:block">
               Develop future-ready skills through expert-led courses, hands-on
               projects, and industry-recognized certifications. Whether you're
               building a career in technology, business, data analytics,
@@ -146,11 +146,11 @@ const Hero = ({ compact = false }: HeroProps) => {
               knowledge, experience, and opportunities you need to thrive in a
               rapidly evolving world.
             </p>
-            <p className="mt-3 hidden text-[16px] leading-[1.6] text-white/90 lg:block">
+            <p className="mt-3 hidden text-[15px] leading-[1.6] text-white/90 lg:block">
               Start learning today and unlock your full potential.
             </p>
 
-            <div className="mt-6 flex flex-row flex-nowrap gap-2 sm:gap-4 lg:mt-8">
+            <div className="mt-6 flex flex-row flex-nowrap gap-2 sm:gap-4 lg:mt-7">
               <button
                 type="button"
                 onClick={() => router.push("/auth/signin")}

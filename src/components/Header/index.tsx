@@ -4,12 +4,19 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
-import { FaTimes, FaSearch } from "react-icons/fa";
+import { FaTimes, FaSearch, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import Button from "@components/Button";
-import { PiGlobeLight, PiUserCircleLight } from "react-icons/pi";
+import { PiUserCircleLight } from "react-icons/pi";
 import useAuth from "@hooks/useAuth";
 import { trimesterHref } from "@utils/trimesterHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
+
+const LANDING_SOCIALS = [
+  { label: "LinkedIn", Icon: FaLinkedin, color: "#0A66C2" },
+  { label: "Twitter", Icon: FaTwitter, color: "#1DA1F2" },
+  { label: "Instagram", Icon: FaInstagram, color: "#262626" },
+  { label: "Facebook", Icon: FaFacebook, color: "#1877F2" },
+];
 
 const exploreColumns = [
   {
@@ -71,7 +78,7 @@ const LandingHeader = () => {
         {/* Row 1 */}
         <div className="relative z-20 h-[48px] border-b border-[#efeff5] bg-white">
           <div className="mx-auto flex h-full w-full max-w-[1512px] items-center px-5 md:px-10 lg:px-8 xl:px-[120px]">
-            <nav className="flex items-center gap-3 text-[14px] font-bold text-[#4e515c] xl:gap-6">
+            <nav className="flex items-center gap-3 text-[16px] font-medium text-[#4e515c] xl:gap-6">
               <Link
                 href="/"
                 className={`rounded-[16px] px-4 py-1 transition-colors ${
@@ -114,16 +121,20 @@ const LandingHeader = () => {
               </Link>
             </nav>
             <div className="flex flex-1 items-center justify-end gap-4 text-[#202127]">
-              <button aria-label="Language" className="flex h-8 w-8 items-center justify-center rounded-full text-[24px] transition-colors hover:bg-[#f2f3f8]">
-                <PiGlobeLight />
-              </button>
-              <Link
-                href={isAuthenticated ? (authenticatedUser?.role === "admin" ? "/admin" : "/dashboard") : "/auth/signin"}
-                aria-label={isAuthenticated ? "Go to dashboard" : "Sign in"}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-[24px] transition-colors hover:bg-[#f2f3f8]"
-              >
-                <PiUserCircleLight />
-              </Link>
+              {/* Same social links, sizes and brand colours as the institution page's top bar */}
+              <div className="flex items-center gap-4">
+                {LANDING_SOCIALS.map(({ label, Icon, color }) => (
+                  <a
+                    key={label}
+                    href="#"
+                    aria-label={label}
+                    className="transition-transform hover:scale-110"
+                    style={{ color }}
+                  >
+                    <Icon size={28} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -136,7 +147,7 @@ const LandingHeader = () => {
                 <img
                   src="/gloxadlogo.png"
                   alt="GLOXAD Logo"
-                  className="h-[40px] w-[124px] object-contain"
+                  className="h-[56px] w-auto object-contain"
                 />
               </Link>
 
@@ -486,6 +497,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
   const isInstitutionActive = pathname.startsWith("/auth") || pathname.startsWith("/institution");
   const isNexusActive = pathname.startsWith("/courses");
   const isStudentActive = !isTutorActive && !isInstitutionActive && !isNexusActive;
+  const isLanding = pathname === "/" || pathname === "/teach";
 
   // Close on route change / Escape, and lock page scroll while the drawer is open
   useEffect(() => {
@@ -531,7 +543,12 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
       {/* MOBILE bar: logo on the left, menu button on the right */}
       <div className="relative z-50 flex h-[56px] items-center justify-between border-b border-[#efeff5] bg-white px-4 sm:h-[60px] sm:px-6">
         <Link href="/" onClick={() => setIsOpen(false)} className="shrink-0" aria-label="Gloxad Academy home">
-          <ImageComponent width="80px" height="auto" src="/gloxadlogo.png" alt="Logo" />
+          {isLanding ? (
+            // Home and Tutors pages: same 40px logo as the institution page on phones
+            <img src="/gloxadlogo.png" alt="Logo" className="h-[40px] w-auto object-contain" />
+          ) : (
+            <ImageComponent width="80px" height="auto" src="/gloxadlogo.png" alt="Logo" />
+          )}
         </Link>
 
         <button
