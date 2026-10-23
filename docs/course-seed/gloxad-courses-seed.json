@@ -369,6 +369,30 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: n8n Tutorial – Zero to Hero Course",
+            "lessons": [
+              {
+                "title": "n8n Tutorial – Zero to Hero Course",
+                "duration": "3:35:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UIf-SlmMays"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: How to Add Email to Your Apps – Tutorial",
+            "lessons": [
+              {
+                "title": "How to Add Email to Your Apps – Tutorial",
+                "duration": "40:29",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=h_mk2Uci9o0"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Digital Marketing at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -453,6 +477,42 @@
                 "duration": "7:38:43",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=RYDiDpW2VkM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Figma Course - Web Design Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Course - Web Design Tutorial for Beginners",
+                "duration": "3:14:27",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=D56hs0Twfco"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: UI Design Tutorial - Website From Wireframe",
+            "lessons": [
+              {
+                "title": "UI Design Tutorial - Website From Wireframe",
+                "duration": "36:34",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_P3CrgFlXhg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: The Business of Building Apps - App Product Management Course for Developers",
+            "lessons": [
+              {
+                "title": "The Business of Building Apps - App Product Management Course for Developers",
+                "duration": "7:59:57",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=poLzjLt2yqU"
               }
             ],
             "quizzes": []
@@ -543,6 +603,66 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 5: Ethical Hacking 101: Web App Penetration Testing - a full course for beginners",
+            "lessons": [
+              {
+                "title": "Ethical Hacking 101: Web App Penetration Testing - a full course for beginners",
+                "duration": "2:47:57",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=2_lswM1S264"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: API Security Fundamentals – Course for Beginners",
+            "lessons": [
+              {
+                "title": "API Security Fundamentals – Course for Beginners",
+                "duration": "1:49:04",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=R-4_DbV1Su4"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: OWASP API Security Top 10 Course – Secure Your Web Apps",
+            "lessons": [
+              {
+                "title": "OWASP API Security Top 10 Course – Secure Your Web Apps",
+                "duration": "1:27:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=YYe0FdfdgDU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: Web App Vulnerabilities - DevSecOps Course for Beginners",
+            "lessons": [
+              {
+                "title": "Web App Vulnerabilities - DevSecOps Course for Beginners",
+                "duration": "1:28:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=F5KJVuii0Yw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 9: Linux Operating System - Crash Course for Beginners",
+            "lessons": [
+              {
+                "title": "Linux Operating System - Crash Course for Beginners",
+                "duration": "2:47:56",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ROjZy1WbCIA"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Cybersecurity at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -627,6 +747,54 @@
                 "duration": "1:31:56",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=kF0UBL1eHeQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: HTML Full Course - Build a Website Tutorial",
+            "lessons": [
+              {
+                "title": "HTML Full Course - Build a Website Tutorial",
+                "duration": "2:02:32",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=pQN-pnXPaVg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: How to Make a WordPress Blog and Website – Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "How to Make a WordPress Blog and Website – Tutorial for Beginners",
+                "duration": "1:19:41",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=9VPq1JxMfkA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Build a Website from Start to Finish using WordPress [Full Course]",
+            "lessons": [
+              {
+                "title": "Build a Website from Start to Finish using WordPress [Full Course]",
+                "duration": "5:10:13",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=IPo71JPKUmg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: Low-Code for Freelance Developers & Startups – Tutorial",
+            "lessons": [
+              {
+                "title": "Low-Code for Freelance Developers & Startups – Tutorial",
+                "duration": "1:44:06",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=hDzgO2FB_ms"
               }
             ],
             "quizzes": []
@@ -717,6 +885,66 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 5: Learn HTML – Full Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Learn HTML – Full Tutorial for Beginners",
+                "duration": "4:07:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kUMe1FH4CHE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: CSS Tutorial – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "CSS Tutorial – Full Course for Beginners",
+                "duration": "11:08:10",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=OXGznpKZ_sA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: JavaScript Programming - Full Course",
+            "lessons": [
+              {
+                "title": "JavaScript Programming - Full Course",
+                "duration": "7:44:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jS4aFq5-91M"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: JavaScript DOM Manipulation – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "JavaScript DOM Manipulation – Full Course for Beginners",
+                "duration": "2:41:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=5fb2aPlgoys"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 9: React Course for Beginners w/ Tailwind CSS [2025]",
+            "lessons": [
+              {
+                "title": "React Course for Beginners w/ Tailwind CSS [2025]",
+                "duration": "4:42:59",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=IJ85kCdqWao"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Front-End Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -801,6 +1029,66 @@
                 "duration": "4:20:39",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Learn Node.js - Full Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Learn Node.js - Full Tutorial for Beginners",
+                "duration": "2:48:44",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=RLtyhwFtXQA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Node.js / Express Course - Build 4 Projects",
+            "lessons": [
+              {
+                "title": "Node.js / Express Course - Build 4 Projects",
+                "duration": "10:00:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=qwfE7fSVaZM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: CRUD API Tutorial – Node, Express, MongoDB",
+            "lessons": [
+              {
+                "title": "CRUD API Tutorial – Node, Express, MongoDB",
+                "duration": "1:33:14",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_7UQPve99r4"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: SQL For Web Developers - Complete Database Course",
+            "lessons": [
+              {
+                "title": "SQL For Web Developers - Complete Database Course",
+                "duration": "4:44:43",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=KBDSJU3cGkc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 9: APIs for Beginners - How to use an API (Full Course / Tutorial)",
+            "lessons": [
+              {
+                "title": "APIs for Beginners - How to use an API (Full Course / Tutorial)",
+                "duration": "3:07:07",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=WXsD0ZgxjRw"
               }
             ],
             "quizzes": []
@@ -892,6 +1180,66 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 5: Data Analysis with Python Course - Numpy, Pandas, Data Visualization",
+            "lessons": [
+              {
+                "title": "Data Analysis with Python Course - Numpy, Pandas, Data Visualization",
+                "duration": "9:56:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=GPVsHOlRBBI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Microsoft Excel Tutorial for Beginners - Full Course",
+            "lessons": [
+              {
+                "title": "Microsoft Excel Tutorial for Beginners - Full Course",
+                "duration": "2:26:10",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Vl0H-qTclOg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Excel Formulas & Functions – Full Course",
+            "lessons": [
+              {
+                "title": "Excel Formulas & Functions – Full Course",
+                "duration": "1:41:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=gvhsKtjAmgc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: SQL Tutorial - Full Database Course for Beginners",
+            "lessons": [
+              {
+                "title": "SQL Tutorial - Full Database Course for Beginners",
+                "duration": "4:20:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 9: Intuitive SQL For Data Analytics - Tutorial",
+            "lessons": [
+              {
+                "title": "Intuitive SQL For Data Analytics - Tutorial",
+                "duration": "11:00:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=mXW7JHJM34k"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Data Analysis at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -964,6 +1312,18 @@
                 "duration": "31:54:31",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=gyMwXuJrbJQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Solidity, Blockchain, and Smart Contract Course – Beginner to Expert Python Tutorial",
+            "lessons": [
+              {
+                "title": "Solidity, Blockchain, and Smart Contract Course – Beginner to Expert Python Tutorial",
+                "duration": "16:22:12",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=M576WGiDBdQ"
               }
             ],
             "quizzes": []
@@ -1051,6 +1411,54 @@
                 "duration": "7:29:48",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=rjjES5IsPdg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: AWS Certified Cloud Practitioner Certification Course 2026 (CLF-C02) - Pass the Exam!",
+            "lessons": [
+              {
+                "title": "AWS Certified Cloud Practitioner Certification Course 2026 (CLF-C02) - Pass the Exam!",
+                "duration": "13:46:27",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=7HKot-brXFE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Microsoft Azure Fundamentals Certification Course (AZ-900) - Pass the exam in 3 hours!",
+            "lessons": [
+              {
+                "title": "Microsoft Azure Fundamentals Certification Course (AZ-900) - Pass the exam in 3 hours!",
+                "duration": "3:10:26",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=NKEFWyqJ5XA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Docker Tutorial for Beginners - A Full DevOps Course on How to Run Applications in Containers",
+            "lessons": [
+              {
+                "title": "Docker Tutorial for Beginners - A Full DevOps Course on How to Run Applications in Containers",
+                "duration": "2:10:19",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=fqMOX6JJhGo"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: Docker Containers and Kubernetes Fundamentals – Full Hands-On Course",
+            "lessons": [
+              {
+                "title": "Docker Containers and Kubernetes Fundamentals – Full Hands-On Course",
+                "duration": "5:56:37",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kTp5xUtcalw"
               }
             ],
             "quizzes": []
@@ -1216,6 +1624,42 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Computer Networking Fundamentals Course",
+            "lessons": [
+              {
+                "title": "Computer Networking Fundamentals Course",
+                "duration": "12:18:40",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=fQbBPa0ADvs"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Command Line Basics for Beginners - Full Course",
+            "lessons": [
+              {
+                "title": "Command Line Basics for Beginners - Full Course",
+                "duration": "45:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=mABpAI-pCw0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: AI Foundations for Absolute Beginners",
+            "lessons": [
+              {
+                "title": "AI Foundations for Absolute Beginners",
+                "duration": "52:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=tchN4xa4pfg"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Fundamental & Basic Computing at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1290,6 +1734,42 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: AI Foundations Course – Python, Machine Learning, Deep Learning, Data Science",
+            "lessons": [
+              {
+                "title": "AI Foundations Course – Python, Machine Learning, Deep Learning, Data Science",
+                "duration": "10:22:26",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=0oyDqO8PjIg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+            "lessons": [
+              {
+                "title": "Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+                "duration": "41:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: RAG & MCP Fundamentals – A Hands-On Crash Course",
+            "lessons": [
+              {
+                "title": "RAG & MCP Fundamentals – A Hands-On Crash Course",
+                "duration": "1:39:53",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=I7_WXKhyGms"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Artificial Intelligence (AI) at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1349,6 +1829,42 @@
                 "duration": "3:13:14",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=ScKCy2udln8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: ChatGPT Course – Use The OpenAI API to Code 5 Projects",
+            "lessons": [
+              {
+                "title": "ChatGPT Course – Use The OpenAI API to Code 5 Projects",
+                "duration": "5:17:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=uRQH2CFvedY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+            "lessons": [
+              {
+                "title": "Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+                "duration": "4:46:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=dJhlMn2otxA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Learn RAG From Scratch – Python AI Tutorial from a LangChain Engineer",
+            "lessons": [
+              {
+                "title": "Learn RAG From Scratch – Python AI Tutorial from a LangChain Engineer",
+                "duration": "2:33:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=sVcwVQRHIc8"
               }
             ],
             "quizzes": []
@@ -1427,6 +1943,66 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Building Agentic AI Workloads – Crash Course",
+            "lessons": [
+              {
+                "title": "Building Agentic AI Workloads – Crash Course",
+                "duration": "1:40:24",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=tr5Fapv80Cw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Guide to Agentic AI – Build a Python Coding Agent with Gemini",
+            "lessons": [
+              {
+                "title": "Guide to Agentic AI – Build a Python Coding Agent with Gemini",
+                "duration": "2:14:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=YtHdaXuOAks"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: n8n Tutorial – Zero to Hero Course",
+            "lessons": [
+              {
+                "title": "n8n Tutorial – Zero to Hero Course",
+                "duration": "3:35:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UIf-SlmMays"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Intro to MCP Servers – Model Context Protocol with Python Course",
+            "lessons": [
+              {
+                "title": "Intro to MCP Servers – Model Context Protocol with Python Course",
+                "duration": "1:12:43",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=DosHnyq78xY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: RAG Fundamentals and Advanced Techniques – Full Course",
+            "lessons": [
+              {
+                "title": "RAG Fundamentals and Advanced Techniques – Full Course",
+                "duration": "1:36:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ea2W8IogX80"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to AI Agentic Engineering / AI Agents at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1501,6 +2077,42 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Machine Learning in 2024 – Beginner's Course",
+            "lessons": [
+              {
+                "title": "Machine Learning in 2024 – Beginner's Course",
+                "duration": "4:19:33",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=bmmQA8A-yUA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Scikit-learn Crash Course - Machine Learning Library for Python",
+            "lessons": [
+              {
+                "title": "Scikit-learn Crash Course - Machine Learning Library for Python",
+                "duration": "2:09:22",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=0B5eIE_1vpU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Scikit-Learn Course - Machine Learning in Python Tutorial",
+            "lessons": [
+              {
+                "title": "Scikit-Learn Course - Machine Learning in Python Tutorial",
+                "duration": "2:54:25",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=pqNCD_5r0IU"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Machine Learning at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1559,6 +2171,42 @@
                 "duration": "13:40:10",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=8DvywoWv6fI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Learn Python – Interactive Course 2026",
+            "lessons": [
+              {
+                "title": "Learn Python – Interactive Course 2026",
+                "duration": "4:08:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kLZgQWjnUz0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Python Tutorial for Beginners (with mini-projects)",
+            "lessons": [
+              {
+                "title": "Python Tutorial for Beginners (with mini-projects)",
+                "duration": "8:41:54",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=qwAFL1597eM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Algorithms and Data Structures Tutorial - Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "Algorithms and Data Structures Tutorial - Full Course for Beginners",
+                "duration": "5:22:09",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=8hly31xKli0"
               }
             ],
             "quizzes": []
@@ -1624,6 +2272,54 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 3: Learn HTML – Full Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Learn HTML – Full Tutorial for Beginners",
+                "duration": "4:07:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kUMe1FH4CHE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn HTML & CSS – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "Learn HTML & CSS – Full Course for Beginners",
+                "duration": "5:21:44",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=a_iQb1lnAEQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: CSS Full Course - Includes Flexbox and CSS Grid Tutorials",
+            "lessons": [
+              {
+                "title": "CSS Full Course - Includes Flexbox and CSS Grid Tutorials",
+                "duration": "1:25:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ieTHC78giGQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Intro to Backend Web Development – Node.js & Express Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Intro to Backend Web Development – Node.js & Express Tutorial for Beginners",
+                "duration": "2:26:22",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=KOutPbKc9UM"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Website Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1683,6 +2379,42 @@
                 "duration": "3:14:27",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=D56hs0Twfco"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+            "lessons": [
+              {
+                "title": "UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+                "duration": "1:26:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Figma Tutorial for UI Design - Course for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Tutorial for UI Design - Course for Beginners",
+                "duration": "10:16:51",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Create a Design System with Figma - Full Course",
+            "lessons": [
+              {
+                "title": "Create a Design System with Figma - Full Course",
+                "duration": "7:38:43",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=RYDiDpW2VkM"
               }
             ],
             "quizzes": []
@@ -1773,6 +2505,54 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 5: Excel Formulas & Functions – Full Course",
+            "lessons": [
+              {
+                "title": "Excel Formulas & Functions – Full Course",
+                "duration": "1:41:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=gvhsKtjAmgc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: 33 Spreadsheet Projects Course for Beginners – Excel and Google Sheets",
+            "lessons": [
+              {
+                "title": "33 Spreadsheet Projects Course for Beginners – Excel and Google Sheets",
+                "duration": "4:27:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=BBk3DXgodmI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Google Sheets - Full Course",
+            "lessons": [
+              {
+                "title": "Google Sheets - Full Course",
+                "duration": "3:03:32",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=N2opj8XzYBY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 8: VS Code Tutorial – Become More Productive",
+            "lessons": [
+              {
+                "title": "VS Code Tutorial – Become More Productive",
+                "duration": "5:55:51",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=heXQnM99oAI"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Digital Tools & Productivity at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1844,6 +2624,18 @@
                 "duration": "3:59:46",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=6nz8GXjxiHg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: How to make money as a freelance developer - business tips from an expert",
+            "lessons": [
+              {
+                "title": "How to make money as a freelance developer - business tips from an expert",
+                "duration": "35:17",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=fsTzLgra5dQ"
               }
             ],
             "quizzes": []
@@ -1921,6 +2713,42 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Ultimate Freelancing Guide for Web Developers (Make money through freelance programming!)",
+            "lessons": [
+              {
+                "title": "Ultimate Freelancing Guide for Web Developers (Make money through freelance programming!)",
+                "duration": "3:00:41",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=4TIvB8zDFio"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Fundamentals of Finance & Economics for Businesses – Crash Course",
+            "lessons": [
+              {
+                "title": "Fundamentals of Finance & Economics for Businesses – Crash Course",
+                "duration": "1:38:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=EJHPltmAULA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: The Business of Building Apps - App Product Management Course for Developers",
+            "lessons": [
+              {
+                "title": "The Business of Building Apps - App Product Management Course for Developers",
+                "duration": "7:59:57",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=poLzjLt2yqU"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Skills Monetisation at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -1992,6 +2820,30 @@
                 "duration": "7:59:57",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=poLzjLt2yqU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: How to Build an MVP for Your App – Full Course on Minimum Viable Product Development",
+            "lessons": [
+              {
+                "title": "How to Build an MVP for Your App – Full Course on Minimum Viable Product Development",
+                "duration": "1:14:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ChTGbmR2NeM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Low-Code Tutorial – Build 3 Financial Apps (Full Course)",
+            "lessons": [
+              {
+                "title": "Low-Code Tutorial – Build 3 Financial Apps (Full Course)",
+                "duration": "2:44:07",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=skq7E2xS1Bo"
               }
             ],
             "quizzes": []
@@ -2069,6 +2921,54 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Getting Started with Freelancing (web development and design)",
+            "lessons": [
+              {
+                "title": "Getting Started with Freelancing (web development and design)",
+                "duration": "44:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=0M7SaSsGCMQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: How to make money as a freelance developer - business tips from an expert",
+            "lessons": [
+              {
+                "title": "How to make money as a freelance developer - business tips from an expert",
+                "duration": "35:17",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=fsTzLgra5dQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Low-Code for Freelance Developers & Startups – Tutorial",
+            "lessons": [
+              {
+                "title": "Low-Code for Freelance Developers & Startups – Tutorial",
+                "duration": "1:44:06",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=hDzgO2FB_ms"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Technical Writing Course for Beginners",
+            "lessons": [
+              {
+                "title": "Technical Writing Course for Beginners",
+                "duration": "1:16:05",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=vT5pcc30Ffw"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Freelancing, Remote Work & Digital Service Entrepreneurship at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2140,6 +3040,42 @@
                 "duration": "1:31:56",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=kF0UBL1eHeQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn React by Building an eCommerce Site - Tutorial",
+            "lessons": [
+              {
+                "title": "Learn React by Building an eCommerce Site - Tutorial",
+                "duration": "5:55:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=1DklrGoAxDE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+            "lessons": [
+              {
+                "title": "Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+                "duration": "41:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: n8n Tutorial – Zero to Hero Course",
+            "lessons": [
+              {
+                "title": "n8n Tutorial – Zero to Hero Course",
+                "duration": "3:35:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UIf-SlmMays"
               }
             ],
             "quizzes": []
@@ -2217,6 +3153,54 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Python Automation Tutorial – How to Automate Tasks for Beginners [Full Course]",
+            "lessons": [
+              {
+                "title": "Python Automation Tutorial – How to Automate Tasks for Beginners [Full Course]",
+                "duration": "3:10:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=s8XjEuplx_U"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Combine Vibe Coding & n8n to Build Real AI Apps",
+            "lessons": [
+              {
+                "title": "Combine Vibe Coding & n8n to Build Real AI Apps",
+                "duration": "1:33:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=qDtVzumlb8M"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Python Essentials for AI Agents – Tutorial",
+            "lessons": [
+              {
+                "title": "Python Essentials for AI Agents – Tutorial",
+                "duration": "6:18:43",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UsfpzxZNsPo"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Guide to Agentic AI – Build a Python Coding Agent with Gemini",
+            "lessons": [
+              {
+                "title": "Guide to Agentic AI – Build a Python Coding Agent with Gemini",
+                "duration": "2:14:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=YtHdaXuOAks"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to AI-Powered Productivity, Automation & AI Agents at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2289,6 +3273,54 @@
                 "duration": "5:24:31",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=FTpmwX94_Yo"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+            "lessons": [
+              {
+                "title": "Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+                "duration": "19:23:46",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=PSNXoAs2FtQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Data Analysis with Python - Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn)",
+            "lessons": [
+              {
+                "title": "Data Analysis with Python - Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn)",
+                "duration": "4:22:13",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=r-uOLxNrNk8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: SQL Tutorial - Full Database Course for Beginners",
+            "lessons": [
+              {
+                "title": "SQL Tutorial - Full Database Course for Beginners",
+                "duration": "4:20:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: Excel Data Visualization Course – Guide to Charts & Dashboards",
+            "lessons": [
+              {
+                "title": "Excel Data Visualization Course – Guide to Charts & Dashboards",
+                "duration": "1:10:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=VV8iRJ-DS0A"
               }
             ],
             "quizzes": []
@@ -2415,6 +3447,30 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: College Algebra – Full Course with Python Code",
+            "lessons": [
+              {
+                "title": "College Algebra – Full Course with Python Code",
+                "duration": "15:08:48",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=i7vOAcUo5iA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Linear Algebra Course – Mathematics for Machine Learning and Generative AI",
+            "lessons": [
+              {
+                "title": "Linear Algebra Course – Mathematics for Machine Learning and Generative AI",
+                "duration": "6:05:12",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=rSjt1E9WHaQ"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to GRE Preparation at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2488,6 +3544,54 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn HTML – Full Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Learn HTML – Full Tutorial for Beginners",
+                "duration": "4:07:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kUMe1FH4CHE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+            "lessons": [
+              {
+                "title": "Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+                "duration": "4:46:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=dJhlMn2otxA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Codex Essentials – AI Assisted Agentic Development Course",
+            "lessons": [
+              {
+                "title": "Codex Essentials – AI Assisted Agentic Development Course",
+                "duration": "4:34:57",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=u-Jl7bzab8A"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 7: AI Foundations for Absolute Beginners",
+            "lessons": [
+              {
+                "title": "AI Foundations for Absolute Beginners",
+                "duration": "52:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=tchN4xa4pfg"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to AI + Website Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2548,6 +3652,54 @@
                 "duration": "4:57:59",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=gtjxAH8uaP0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Data Analysis with Python - Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn)",
+            "lessons": [
+              {
+                "title": "Data Analysis with Python - Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn)",
+                "duration": "4:22:13",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=r-uOLxNrNk8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: SQL Tutorial - Full Database Course for Beginners",
+            "lessons": [
+              {
+                "title": "SQL Tutorial - Full Database Course for Beginners",
+                "duration": "4:20:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+            "lessons": [
+              {
+                "title": "Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+                "duration": "28:42",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=TPMlZxRRaBQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Excel Data Visualization Course – Guide to Charts & Dashboards",
+            "lessons": [
+              {
+                "title": "Excel Data Visualization Course – Guide to Charts & Dashboards",
+                "duration": "1:10:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=VV8iRJ-DS0A"
               }
             ],
             "quizzes": []
@@ -2612,6 +3764,30 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 3: Solidity Tutorial - A Full Course on Ethereum, Blockchain Development, Smart Contracts, and the EVM",
+            "lessons": [
+              {
+                "title": "Solidity Tutorial - A Full Course on Ethereum, Blockchain Development, Smart Contracts, and the EVM",
+                "duration": "1:30:02",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ipwxYa-F1uY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course",
+            "lessons": [
+              {
+                "title": "Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course",
+                "duration": "31:54:31",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=gyMwXuJrbJQ"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to Basic Blockchain Technology Programme (BBTP) at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2671,6 +3847,54 @@
                 "duration": "41:36",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Figma Tutorial for UI Design - Course for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Tutorial for UI Design - Course for Beginners",
+                "duration": "10:16:51",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: How to Design a Website – A UX Wireframe Tutorial",
+            "lessons": [
+              {
+                "title": "How to Design a Website – A UX Wireframe Tutorial",
+                "duration": "30:00",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=pN92rnO_n5U"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Figma Course - Web Design Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Course - Web Design Tutorial for Beginners",
+                "duration": "3:14:27",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=D56hs0Twfco"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: AI Foundations for Absolute Beginners",
+            "lessons": [
+              {
+                "title": "AI Foundations for Absolute Beginners",
+                "duration": "52:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=tchN4xa4pfg"
               }
             ],
             "quizzes": []
@@ -2748,6 +3972,42 @@
               }
             ],
             "quizzes": []
+          },
+          {
+            "title": "Module 4: UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+            "lessons": [
+              {
+                "title": "UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+                "duration": "1:26:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Figma Tutorial for UI Design - Course for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Tutorial for UI Design - Course for Beginners",
+                "duration": "10:16:51",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: AI Foundations for Absolute Beginners",
+            "lessons": [
+              {
+                "title": "AI Foundations for Absolute Beginners",
+                "duration": "52:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=tchN4xa4pfg"
+              }
+            ],
+            "quizzes": []
           }
         ],
         "welcomeMessage": "Welcome to NYSC Tech Training: Graphics Design + AI at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
@@ -2806,6 +4066,54 @@
                 "duration": "1:04:16",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=g3X8JauSWTM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Learn HTML – Full Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Learn HTML – Full Tutorial for Beginners",
+                "duration": "4:07:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kUMe1FH4CHE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: HTML Full Course - Build a Website Tutorial",
+            "lessons": [
+              {
+                "title": "HTML Full Course - Build a Website Tutorial",
+                "duration": "2:02:32",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=pQN-pnXPaVg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Intro to Backend Web Development – Node.js & Express Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "Intro to Backend Web Development – Node.js & Express Tutorial for Beginners",
+                "duration": "2:26:22",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=KOutPbKc9UM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+            "lessons": [
+              {
+                "title": "Learn to Code using AI - ChatGPT Programming Tutorial (Full Course)",
+                "duration": "4:46:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=dJhlMn2otxA"
               }
             ],
             "quizzes": []
@@ -2880,6 +4188,42 @@
                 "duration": "2:09:15",
                 "isFreePreview": false,
                 "videoUrl": "https://www.youtube.com/watch?v=kMT54MPz9oE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: HTML Tutorial - How to Make a Super Simple Website",
+            "lessons": [
+              {
+                "title": "HTML Tutorial - How to Make a Super Simple Website",
+                "duration": "33:24",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=PlxWf493en4"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Learn Python – Interactive Course 2026",
+            "lessons": [
+              {
+                "title": "Learn Python – Interactive Course 2026",
+                "duration": "4:08:36",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kLZgQWjnUz0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 6: Command Line Basics for Beginners - Full Course",
+            "lessons": [
+              {
+                "title": "Command Line Basics for Beginners - Full Course",
+                "duration": "45:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=mABpAI-pCw0"
               }
             ],
             "quizzes": []

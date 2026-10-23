@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaChevronLeft, FaChevronRight, FaBullseye, FaBitcoin, FaCloud, FaRobot } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaBullseye, FaBitcoin, FaCloud, FaRobot, FaLayerGroup, FaLaptop, FaGraduationCap } from "react-icons/fa6";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { MdOutlineDeveloperMode } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
@@ -11,8 +11,10 @@ import { PiBriefcase } from "react-icons/pi";
 import ScrollReveal from "@components/ScrollReveal";
 import { catalogCourses, categorySlug } from "@services/catalog";
 
-// Tabs map onto the catalog categories (services/catalog); each shows its first four courses
+// Tabs map onto the catalog categories (services/catalog); "All Courses" lists the full catalog
+const ALL_COURSES = "All Courses";
 const courseTabs = [
+  { id: ALL_COURSES, title: ALL_COURSES, icon: FaLayerGroup },
   { id: "Software Development", title: "Software Development", icon: MdOutlineDeveloperMode },
   { id: "Design", title: "Design", icon: IoColorPaletteOutline },
   { id: "Data Science & Analytics", title: "Data Science & Analytics", icon: FaChartSimple },
@@ -21,6 +23,8 @@ const courseTabs = [
   { id: "Marketing & Sales", title: "Marketing & Sales", icon: FaBullseye },
   { id: "Business & Entrepreneurship", title: "Business & Entrepreneurship", icon: PiBriefcase },
   { id: "Blockchain", title: "Blockchain", icon: FaBitcoin },
+  { id: "Foundations", title: "Foundations", icon: FaLaptop },
+  { id: "Test Preparation", title: "Test Preparation", icon: FaGraduationCap },
 ];
 
 const ExploreCourses = () => {
@@ -33,9 +37,8 @@ const ExploreCourses = () => {
   const activeTabId = courseTabs.find((t) => t.title === activeTabTitle)?.id || courseTabs[0].id;
   // Academic programmes first, then short courses and bootcamps
   const featuredCourses = catalogCourses
-    .filter((course) => course.category === activeTabId)
-    .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"))
-    .slice(0, 4);
+    .filter((course) => activeTabId === ALL_COURSES || course.category === activeTabId)
+    .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"));
 
   const checkScroll = () => {
     if (tabsRef.current) {
@@ -125,7 +128,7 @@ const ExploreCourses = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ amount: 0.15, once: true }}
-        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        variants={{ visible: { transition: { staggerChildren: 0.03 } } }}
         className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-[20px] sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
       >
         {featuredCourses.map((course) => (
@@ -160,10 +163,10 @@ const ExploreCourses = () => {
       <div className="w-full max-w-[1272px] flex justify-start">
         <button
           type="button"
-          onClick={() => router.push(`/courses?category=${categorySlug(activeTabId)}`)}
+          onClick={() => router.push(activeTabId === ALL_COURSES ? "/courses" : `/courses?category=${categorySlug(activeTabId)}`)}
           className="btn-interactive mt-10 h-[46px] rounded-full bg-[#07004d] px-7 text-[15px] font-medium text-white transition hover:bg-[#111456]"
         >
-          Browse All {activeTabTitle} Courses
+          {activeTabId === ALL_COURSES ? `Browse All ${catalogCourses.length} Courses` : `Browse All ${activeTabTitle} Courses`}
         </button>
       </div>
     </ScrollReveal>
