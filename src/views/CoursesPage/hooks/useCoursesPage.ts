@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axiosInstance from "@utils/axiosInstance";
 import { searchCatalog } from "@services/catalog";
 
@@ -22,13 +22,22 @@ export const useCoursesPage = () => {
 
   const search = searchQuery.trim();
 
+  // The built-in catalog filters on every keystroke; the API waits until typing pauses
+  const [apiSearch, setApiSearch] = useState(search);
+  useEffect(() => {
+    const timer = setTimeout(() => setApiSearch(search), 350);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const { data: apiCourses, isLoading: isLoadingCourses, error } = useQuery({
-    queryKey: ["courses", search, category, subjects, languages, products, levels, durations],
+    queryKey: ["courses", apiSearch, category, subjects, languages, products, levels, durations],
     queryFn: async () => {
       try {
         const { data } = await axiosInstance.get("/courses", {
+          // A sleeping Render instance can take a minute to wake; the catalog covers the page meanwhile
+          timeout: 8000,
           params: {
-            search: search ? search.replace(/-/g, " ") : undefined,
+            search: apiSearch ? apiSearch.replace(/-/g, " ") : undefined,
             category: category || undefined,
             subjects: subjects.length ? subjects.join(",") : undefined,
             languages: languages.length ? languages.join(",") : undefined,
@@ -46,6 +55,8 @@ export const useCoursesPage = () => {
         return [];
       }
     },
+    staleTime: 60_000,
+    placeholderData: keepPreviousData,
   });
 
   // Database courses first; catalog courses fill in any title the database doesn't have yet
@@ -65,7 +76,8 @@ export const useCoursesPage = () => {
     category,
     search,
     courses: [...fromApi, ...fromCatalog],
-    isLoading: isLoadingCourses,
+    // Only show the loading state when there's nothing from the catalog to show yet
+    isLoading: isLoadingCourses && fromCatalog.length === 0,
     error,
   };
 };

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import useAuth from "../../../hooks/useAuth";
-import { usePaystackPayment } from "react-paystack";
 import axiosInstance from "../../../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { FaCheck, FaClipboardList, FaLinkedin, FaStar, FaThumbsUp } from "react-icons/fa";
@@ -13,6 +13,9 @@ import CourseTestimonials from "./CourseTestimonials";
 import CourseReviews from "./CourseReviews";
 import LessonVideo from "@components/LessonVideo";
 import { CATALOG_VIDEO_CREDIT, isEnrollmentClosed } from "@services/catalog";
+
+// Paystack only loads in the browser (see PaystackLauncher)
+const PaystackLauncher = dynamic(() => import("./PaystackLauncher"), { ssr: false });
 
 type TProps = {
   course: any;
@@ -73,7 +76,10 @@ const NormalCourseLayout = ({ course }: TProps) => {
     }
   };
 
-  const initializePayment = usePaystackPayment(config as any);
+  const initializePaymentRef = useRef<((options: any) => void) | null>(null);
+  const handlePaystackReady = useCallback((initialize: (options: any) => void) => {
+    initializePaymentRef.current = initialize;
+  }, []);
 
   const onSuccess = async (reference: any) => {
     try {
@@ -117,12 +123,17 @@ const NormalCourseLayout = ({ course }: TProps) => {
         });
     } else {
       // Paid course via Paystack
-      initializePayment({ onSuccess, onClose } as any);
+      if (!initializePaymentRef.current) {
+        toast.info("Payment is still loading. Please try again in a moment.");
+        return;
+      }
+      initializePaymentRef.current({ onSuccess, onClose });
     }
   };
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-screen">
+      <PaystackLauncher config={config} onReady={handlePaystackReady} />
       {/* Premium Hero Section */}
       <div className="relative w-full bg-[#f0f4f8] pt-12 pb-32 px-5 md:px-10 lg:px-[120px] overflow-hidden">
         <div className="mx-auto max-w-[1512px] flex flex-col lg:flex-row items-center justify-between relative z-10">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useAuth from "@hooks/useAuth";
@@ -16,6 +16,15 @@ const CoursesPageGate = () => {
   const searchParams = useSearchParams();
   const { isAuthenticated, isLoading } = useAuth();
   const needsSignIn = pathname.startsWith("/courses") && !isLoading && !isAuthenticated;
+  // A returning user with a stored session sees the courses while /auth/me is still answering
+  const [hasStoredSession, setHasStoredSession] = useState(false);
+  useEffect(() => {
+    try {
+      setHasStoredSession(!!localStorage.getItem("token"));
+    } catch {
+      // Storage blocked: wait for /auth/me as before
+    }
+  }, []);
 
   useEffect(() => {
     if (!needsSignIn) return;
@@ -23,7 +32,7 @@ const CoursesPageGate = () => {
     router.replace(`/auth/signin?redirect=${encodeURIComponent(query ? `${pathname}?${query}` : pathname)}`);
   }, [needsSignIn, pathname, router, searchParams]);
 
-  if (isLoading || needsSignIn) {
+  if ((isLoading && !hasStoredSession) || needsSignIn) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-5 text-center">
         <p className="text-[15px] text-[#4e515c]">{needsSignIn ? "Sign in to explore our courses…" : "Loading…"}</p>

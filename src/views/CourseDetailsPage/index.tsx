@@ -11,21 +11,22 @@ import { Skeleton } from "../../components/Skeleton";
 
 const CourseDetailsPage = () => {
   const { slug } = useParams()!;
-  const [course, setCourse] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Catalog courses render straight away; the database copy replaces it when the API answers
+  const [course, setCourse] = useState<any>(() => (slug ? findCatalogCourse(String(slug)) : null));
+  const [isLoading, setIsLoading] = useState(() => !course);
 
   useEffect(() => {
+    const catalogCourse = findCatalogCourse(String(slug));
     const fetchCourse = async () => {
       try {
-        setIsLoading(true);
-        const res = await axiosInstance.get(`/courses/${slug}`);
+        setCourse(catalogCourse);
+        setIsLoading(!catalogCourse);
+        const res = await axiosInstance.get(`/courses/${slug}`, { timeout: catalogCourse ? 15000 : 60000 });
         // GET /courses/:slugOrId answers { course, isEnrolled }
         setCourse(normaliseApiCourse(res.data?.course ?? res.data));
       } catch (error) {
-        // Not in the database (yet): show the built-in catalog copy if there is one
-        const catalogCourse = findCatalogCourse(String(slug));
-        if (catalogCourse) setCourse(catalogCourse);
-        else console.error("Failed to fetch course details", error);
+        // Not in the database (yet): keep the built-in catalog copy if there is one
+        if (!catalogCourse) console.error("Failed to fetch course details", error);
       } finally {
         setIsLoading(false);
       }

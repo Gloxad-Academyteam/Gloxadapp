@@ -23,6 +23,23 @@
             "Social commerce",
             "AI sales tools"
           ]
+        },
+        {
+          "name": "Short Course",
+          "topics": [
+            "WordPress",
+            "Websites",
+            "Themes",
+            "E-commerce",
+            "WooCommerce",
+            "Online stores",
+            "Email marketing",
+            "Mailchimp",
+            "n8n",
+            "Content creation",
+            "YouTube",
+            "Writing"
+          ]
         }
       ]
     },
@@ -48,7 +65,19 @@
           "topics": [
             "Typography",
             "Layout",
-            "Figma"
+            "Figma",
+            "UI design",
+            "UX research",
+            "Design systems",
+            "CSS",
+            "Responsive design",
+            "Landing pages",
+            "Blender",
+            "Three.js",
+            "3D design",
+            "AutoCAD",
+            "Revit",
+            "Technical drawing"
           ]
         },
         {
@@ -79,6 +108,26 @@
             "DevOps",
             "Docker"
           ]
+        },
+        {
+          "name": "Short Course",
+          "topics": [
+            "Penetration testing",
+            "Web security",
+            "Kali Linux",
+            "Linux",
+            "Command line",
+            "Servers",
+            "DevOps",
+            "Docker",
+            "Kubernetes",
+            "AWS",
+            "Azure",
+            "Certification",
+            "Networking",
+            "TCP/IP",
+            "Network+"
+          ]
         }
       ]
     },
@@ -106,7 +155,19 @@
             "Programming fundamentals",
             "HTML",
             "CSS",
-            "Web development"
+            "Web development",
+            "JavaScript",
+            "DOM",
+            "Asynchronous code",
+            "React",
+            "Components",
+            "Tailwind CSS",
+            "Flutter",
+            "React Native",
+            "Mobile UI",
+            "Git",
+            "GitHub",
+            "Version control"
           ]
         },
         {
@@ -144,7 +205,21 @@
           "topics": [
             "Machine learning",
             "Python",
-            "scikit-learn"
+            "scikit-learn",
+            "Excel",
+            "Formulas",
+            "Dashboards",
+            "SQL",
+            "MySQL",
+            "Databases",
+            "Statistics",
+            "Probability",
+            "R",
+            "Tableau",
+            "D3.js",
+            "Power BI",
+            "Power Platform",
+            "Reporting"
           ]
         },
         {
@@ -186,6 +261,20 @@
             "Blockchain",
             "Smart contracts"
           ]
+        },
+        {
+          "name": "Short Course",
+          "topics": [
+            "Solidity",
+            "Ethereum",
+            "Smart contracts",
+            "Web3",
+            "dApps",
+            "JavaScript",
+            "Rust",
+            "Systems programming",
+            "Memory safety"
+          ]
         }
       ]
     },
@@ -214,7 +303,17 @@
             "Remote work",
             "Pricing services",
             "Personal brand",
-            "Selling digital products"
+            "Selling digital products",
+            "Entrepreneurship",
+            "Finance",
+            "MVP",
+            "Product management",
+            "Strategy",
+            "Leadership",
+            "Formulas",
+            "Career change",
+            "Job search",
+            "Interviews"
           ]
         },
         {
@@ -250,6 +349,20 @@
             "Programming",
             "Web basics"
           ]
+        },
+        {
+          "name": "Short Course",
+          "topics": [
+            "Computer basics",
+            "Internet",
+            "Digital literacy",
+            "Programming",
+            "Python",
+            "C",
+            "IT support",
+            "Command line",
+            "Hardware"
+          ]
         }
       ]
     },
@@ -269,7 +382,12 @@
             "AI agents",
             "Automation",
             "RAG",
-            "MCP"
+            "MCP",
+            "Deep learning",
+            "Neural networks",
+            "PyTorch",
+            "LangChain",
+            "LangGraph"
           ]
         },
         {
@@ -294,6 +412,20 @@
             "Quantitative reasoning",
             "Statistics",
             "Algebra"
+          ]
+        },
+        {
+          "name": "Short Course",
+          "topics": [
+            "Algebra",
+            "Precalculus",
+            "Functions",
+            "Calculus",
+            "Derivatives",
+            "Integrals",
+            "Coding interviews",
+            "System design",
+            "Mock interviews"
           ]
         }
       ]
@@ -4231,6 +4363,2976 @@
         ],
         "welcomeMessage": "Welcome to Secondary School Technology Programme at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
         "congratsMessage": "Congratulations on completing Secondary School Technology Programme!"
+      }
+    },
+    {
+      "slug": "javascript-programming",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "JavaScript Programming",
+        "subtitle": "Core JavaScript for the web: syntax, functions, the DOM and the harder concepts behind modern apps.",
+        "category": "Software Development",
+        "subCategory": "Short Course",
+        "topic": "JavaScript",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/jS4aFq5-91M/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=jS4aFq5-91M",
+        "description": "Core JavaScript for the web: syntax, functions, the DOM and the harder concepts behind modern apps.",
+        "skills": [
+          "JavaScript",
+          "DOM",
+          "Asynchronous code"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: JavaScript Programming - Full Course",
+            "lessons": [
+              {
+                "title": "JavaScript Programming - Full Course",
+                "duration": "7:44:20",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=jS4aFq5-91M"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: JavaScript Course for Beginners",
+            "lessons": [
+              {
+                "title": "JavaScript Course for Beginners",
+                "duration": "3:35:38",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Zi-Q0t4gMC8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: JavaScript DOM Manipulation – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "JavaScript DOM Manipulation – Full Course for Beginners",
+                "duration": "2:41:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=5fb2aPlgoys"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Learn how to THINK in code – The Hard & Conceptual Parts of JavaScript (Full Course)",
+            "lessons": [
+              {
+                "title": "Learn how to THINK in code – The Hard & Conceptual Parts of JavaScript (Full Course)",
+                "duration": "4:40:37",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=x7u2c0DhWEU"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to JavaScript Programming at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing JavaScript Programming!"
+      }
+    },
+    {
+      "slug": "react-development",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "React Development",
+        "subtitle": "Build modern user interfaces with React, from components and state to complete projects.",
+        "category": "Software Development",
+        "subCategory": "Short Course",
+        "topic": "React",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/bMknfKXIFA8/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8",
+        "description": "Build modern user interfaces with React, from components and state to complete projects.",
+        "skills": [
+          "React",
+          "Components",
+          "Tailwind CSS"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: React Course - Beginner's Tutorial for React JavaScript Library [2022]",
+            "lessons": [
+              {
+                "title": "React Course - Beginner's Tutorial for React JavaScript Library [2022]",
+                "duration": "11:55:28",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: React Course for Beginners w/ Tailwind CSS [2025]",
+            "lessons": [
+              {
+                "title": "React Course for Beginners w/ Tailwind CSS [2025]",
+                "duration": "4:42:59",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=IJ85kCdqWao"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Learn React JS - Full Beginner’s Tutorial & Practice Projects",
+            "lessons": [
+              {
+                "title": "Learn React JS - Full Beginner’s Tutorial & Practice Projects",
+                "duration": "15:40:54",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=x4rFhThSX04"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to React Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing React Development!"
+      }
+    },
+    {
+      "slug": "mobile-app-development",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Mobile App Development",
+        "subtitle": "Build Android and iOS apps from one codebase with Flutter and React Native.",
+        "category": "Software Development",
+        "subCategory": "Short Course",
+        "topic": "Flutter",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/pTJJsmejUOQ/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=pTJJsmejUOQ",
+        "description": "Build Android and iOS apps from one codebase with Flutter and React Native.",
+        "skills": [
+          "Flutter",
+          "React Native",
+          "Mobile UI"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Flutter Course - Full Tutorial for Beginners (Build iOS and Android Apps)",
+            "lessons": [
+              {
+                "title": "Flutter Course - Full Tutorial for Beginners (Build iOS and Android Apps)",
+                "duration": "1:45:53",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=pTJJsmejUOQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: React Native Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "React Native Full Course for Beginners",
+                "duration": "4:23:53",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=sm5Y7Vtuihg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: React Native Course – Android and iOS App Development",
+            "lessons": [
+              {
+                "title": "React Native Course – Android and iOS App Development",
+                "duration": "4:40:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=obH0Po_RdWk"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Flutter Course for Beginners – 37-hour Cross Platform App Development Tutorial",
+            "lessons": [
+              {
+                "title": "Flutter Course for Beginners – 37-hour Cross Platform App Development Tutorial",
+                "duration": "36:39:22",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=VPvVD8t02U8"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Mobile App Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Mobile App Development!"
+      }
+    },
+    {
+      "slug": "git-and-github",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Git & GitHub",
+        "subtitle": "Version control for every developer: track changes, branch, collaborate and contribute on GitHub.",
+        "category": "Software Development",
+        "subCategory": "Short Course",
+        "topic": "Git",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/RGOj5yH7evk/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        "description": "Version control for every developer: track changes, branch, collaborate and contribute on GitHub.",
+        "skills": [
+          "Git",
+          "GitHub",
+          "Version control"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Git and GitHub for Beginners - Crash Course",
+            "lessons": [
+              {
+                "title": "Git and GitHub for Beginners - Crash Course",
+                "duration": "1:08:30",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=RGOj5yH7evk"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn Git – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "Learn Git – Full Course for Beginners",
+                "duration": "3:43:34",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=zTjRZNkhiEU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Git for Professionals Tutorial - Tools & Concepts for Mastering Version Control with Git",
+            "lessons": [
+              {
+                "title": "Git for Professionals Tutorial - Tools & Concepts for Mastering Version Control with Git",
+                "duration": "40:42",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Uszj_k0DGsg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Advanced Git Tutorial - Interactive Rebase, Cherry-Picking, Reflog, Submodules and more",
+            "lessons": [
+              {
+                "title": "Advanced Git Tutorial - Interactive Rebase, Cherry-Picking, Reflog, Submodules and more",
+                "duration": "34:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=qsTthZi23VE"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Git & GitHub at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Git & GitHub!"
+      }
+    },
+    {
+      "slug": "ui-ux-design-with-figma",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "UI/UX Design with Figma",
+        "subtitle": "Design apps and websites in Figma: research, wireframes, mockups and reusable components.",
+        "category": "Design",
+        "subCategory": "Short Course",
+        "topic": "Figma",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/c9Wg6Cb_YlU/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU",
+        "description": "Design apps and websites in Figma: research, wireframes, mockups and reusable components.",
+        "skills": [
+          "Figma",
+          "UI design",
+          "UX research"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+            "lessons": [
+              {
+                "title": "UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+                "duration": "1:26:21",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Figma Tutorial for UI Design - Course for Beginners",
+            "lessons": [
+              {
+                "title": "Figma Tutorial for UI Design - Course for Beginners",
+                "duration": "10:16:51",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Great Design With User Research - Design a Mobile App Using Figma",
+            "lessons": [
+              {
+                "title": "Great Design With User Research - Design a Mobile App Using Figma",
+                "duration": "3:40:22",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=YD0egXpd-Y0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Figma Variants – Design a Scalable Mobile App [Full Course]",
+            "lessons": [
+              {
+                "title": "Figma Variants – Design a Scalable Mobile App [Full Course]",
+                "duration": "4:59:09",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=stQ1IZEB2xk"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to UI/UX Design with Figma at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing UI/UX Design with Figma!"
+      }
+    },
+    {
+      "slug": "design-systems",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Design Systems",
+        "subtitle": "Create a consistent design system in Figma and code: colours, type, spacing and components.",
+        "category": "Design",
+        "subCategory": "Short Course",
+        "topic": "Design systems",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/RYDiDpW2VkM/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=RYDiDpW2VkM",
+        "description": "Create a consistent design system in Figma and code: colours, type, spacing and components.",
+        "skills": [
+          "Design systems",
+          "Figma",
+          "CSS"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Create a Design System with Figma - Full Course",
+            "lessons": [
+              {
+                "title": "Create a Design System with Figma - Full Course",
+                "duration": "7:38:43",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=RYDiDpW2VkM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Create a Design System with CSS - Web Development Course",
+            "lessons": [
+              {
+                "title": "Create a Design System with CSS - Web Development Course",
+                "duration": "6:45:14",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=lRaL-8qZ0mM"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Design Systems at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Design Systems!"
+      }
+    },
+    {
+      "slug": "responsive-web-design",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Responsive Web Design",
+        "subtitle": "Design websites that look good on every screen, from layout principles to landing pages.",
+        "category": "Design",
+        "subCategory": "Short Course",
+        "topic": "Responsive design",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/FBUJYEQ7OGY/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=FBUJYEQ7OGY",
+        "description": "Design websites that look good on every screen, from layout principles to landing pages.",
+        "skills": [
+          "Responsive design",
+          "Layout",
+          "Landing pages"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Intro to Web Design",
+            "lessons": [
+              {
+                "title": "Intro to Web Design",
+                "duration": "47:37",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=FBUJYEQ7OGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Introduction To Responsive Web Design - HTML & CSS Tutorial",
+            "lessons": [
+              {
+                "title": "Introduction To Responsive Web Design - HTML & CSS Tutorial",
+                "duration": "4:11:04",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=srvUrASNj0s"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: How to Make a Landing Page using HTML, SCSS, and JavaScript - Full Course",
+            "lessons": [
+              {
+                "title": "How to Make a Landing Page using HTML, SCSS, and JavaScript - Full Course",
+                "duration": "5:05:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=aoQ6S1a32j8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: 24 CSS Projects: Loading Animations, Progress Bars, Flashcards & More!",
+            "lessons": [
+              {
+                "title": "24 CSS Projects: Loading Animations, Progress Bars, Flashcards & More!",
+                "duration": "2:34:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=TzuWIHGFKCQ"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Responsive Web Design at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Responsive Web Design!"
+      }
+    },
+    {
+      "slug": "3d-design-for-the-web",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "3D Design for the Web",
+        "subtitle": "Model 3D scenes in Blender and bring them to the browser with Three.js.",
+        "category": "Design",
+        "subCategory": "Short Course",
+        "topic": "Blender",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/ozWrlHQGuvI/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=ozWrlHQGuvI",
+        "description": "Model 3D scenes in Blender and bring them to the browser with Three.js.",
+        "skills": [
+          "Blender",
+          "Three.js",
+          "3D design"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: 3D Web Development with Blender and Three.js – Create a Cozy Café Portfolio",
+            "lessons": [
+              {
+                "title": "3D Web Development with Blender and Three.js – Create a Cozy Café Portfolio",
+                "duration": "5:24:28",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=ozWrlHQGuvI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn Three.js by Building 5 Projects",
+            "lessons": [
+              {
+                "title": "Learn Three.js by Building 5 Projects",
+                "duration": "1:19:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UMqNHi1GDAE"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to 3D Design for the Web at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing 3D Design for the Web!"
+      }
+    },
+    {
+      "slug": "cad-and-architectural-design",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "CAD & Architectural Design",
+        "subtitle": "Technical drawing and building design with AutoCAD and Revit.",
+        "category": "Design",
+        "subCategory": "Short Course",
+        "topic": "AutoCAD",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/VtLXKU1PpRU/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=VtLXKU1PpRU",
+        "description": "Technical drawing and building design with AutoCAD and Revit.",
+        "skills": [
+          "AutoCAD",
+          "Revit",
+          "Technical drawing"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: AutoCAD for Beginners - Full University Course",
+            "lessons": [
+              {
+                "title": "AutoCAD for Beginners - Full University Course",
+                "duration": "6:18:16",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=VtLXKU1PpRU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Revit Tutorial for Beginners - Building Information Modeling [3D Design Course]",
+            "lessons": [
+              {
+                "title": "Revit Tutorial for Beginners - Building Information Modeling [3D Design Course]",
+                "duration": "4:40:28",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=hEAg47jdYMs"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to CAD & Architectural Design at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing CAD & Architectural Design!"
+      }
+    },
+    {
+      "slug": "excel-for-data-analysis",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Excel for Data Analysis",
+        "subtitle": "Analyse data in Excel: formulas, functions, charts, dashboards and real spreadsheet projects.",
+        "category": "Data Science & Analytics",
+        "subCategory": "Short Course",
+        "topic": "Excel",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/Vl0H-qTclOg/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=Vl0H-qTclOg",
+        "description": "Analyse data in Excel: formulas, functions, charts, dashboards and real spreadsheet projects.",
+        "skills": [
+          "Excel",
+          "Formulas",
+          "Dashboards"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Microsoft Excel Tutorial for Beginners - Full Course",
+            "lessons": [
+              {
+                "title": "Microsoft Excel Tutorial for Beginners - Full Course",
+                "duration": "2:26:10",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=Vl0H-qTclOg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Excel Formulas & Functions – Full Course",
+            "lessons": [
+              {
+                "title": "Excel Formulas & Functions – Full Course",
+                "duration": "1:41:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=gvhsKtjAmgc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Excel Data Visualization Course – Guide to Charts & Dashboards",
+            "lessons": [
+              {
+                "title": "Excel Data Visualization Course – Guide to Charts & Dashboards",
+                "duration": "1:10:23",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=VV8iRJ-DS0A"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: 33 Spreadsheet Projects Course for Beginners – Excel and Google Sheets",
+            "lessons": [
+              {
+                "title": "33 Spreadsheet Projects Course for Beginners – Excel and Google Sheets",
+                "duration": "4:27:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=BBk3DXgodmI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 5: Data Analysis with Python for Excel Users - Full Course",
+            "lessons": [
+              {
+                "title": "Data Analysis with Python for Excel Users - Full Course",
+                "duration": "3:57:46",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=WcDaZ67TVRo"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Excel for Data Analysis at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Excel for Data Analysis!"
+      }
+    },
+    {
+      "slug": "sql-for-data-analysis",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "SQL for Data Analysis",
+        "subtitle": "Query databases with SQL to answer business questions, from first SELECT to analytics.",
+        "category": "Data Science & Analytics",
+        "subCategory": "Short Course",
+        "topic": "SQL",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/HXV3zeQKqGY/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+        "description": "Query databases with SQL to answer business questions, from first SELECT to analytics.",
+        "skills": [
+          "SQL",
+          "MySQL",
+          "Databases"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: SQL Tutorial - Full Database Course for Beginners",
+            "lessons": [
+              {
+                "title": "SQL Tutorial - Full Database Course for Beginners",
+                "duration": "4:20:39",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Intuitive SQL For Data Analytics - Tutorial",
+            "lessons": [
+              {
+                "title": "Intuitive SQL For Data Analytics - Tutorial",
+                "duration": "11:00:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=mXW7JHJM34k"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: MySQL Course for Beginners",
+            "lessons": [
+              {
+                "title": "MySQL Course for Beginners",
+                "duration": "1:54:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=uWkcxasFWzQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: NoSQL Database Tutorial – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "NoSQL Database Tutorial – Full Course for Beginners",
+                "duration": "2:54:53",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=xh4gy1lbL2k"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to SQL for Data Analysis at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing SQL for Data Analysis!"
+      }
+    },
+    {
+      "slug": "statistics-for-data-science",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Statistics for Data Science",
+        "subtitle": "The statistics behind data analysis: distributions, probability, testing and R.",
+        "category": "Data Science & Analytics",
+        "subCategory": "Short Course",
+        "topic": "Statistics",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/xxpc-HPKN28/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=xxpc-HPKN28",
+        "description": "The statistics behind data analysis: distributions, probability, testing and R.",
+        "skills": [
+          "Statistics",
+          "Probability",
+          "R"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Statistics - A Full University Course on Data Science Basics",
+            "lessons": [
+              {
+                "title": "Statistics - A Full University Course on Data Science Basics",
+                "duration": "8:15:04",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=xxpc-HPKN28"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: R Programming Tutorial - Learn the Basics of Statistical Computing",
+            "lessons": [
+              {
+                "title": "R Programming Tutorial - Learn the Basics of Statistical Computing",
+                "duration": "2:10:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_V8eKsto3Ug"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Statistics for Data Science at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Statistics for Data Science!"
+      }
+    },
+    {
+      "slug": "data-visualization",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Data Visualization",
+        "subtitle": "Turn data into clear charts and dashboards with Tableau, Excel and D3.",
+        "category": "Data Science & Analytics",
+        "subCategory": "Short Course",
+        "topic": "Tableau",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/TPMlZxRRaBQ/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=TPMlZxRRaBQ",
+        "description": "Turn data into clear charts and dashboards with Tableau, Excel and D3.",
+        "skills": [
+          "Tableau",
+          "D3.js",
+          "Dashboards"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+            "lessons": [
+              {
+                "title": "Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+                "duration": "28:42",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=TPMlZxRRaBQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Let's learn D3.js - D3 for data visualization (full course)",
+            "lessons": [
+              {
+                "title": "Let's learn D3.js - D3 for data visualization (full course)",
+                "duration": "27:16",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=C4t6qfHZ6Tw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Data Visualization with D3.js - Full Tutorial Course",
+            "lessons": [
+              {
+                "title": "Data Visualization with D3.js - Full Tutorial Course",
+                "duration": "12:57:37",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=_8V5o2UHG0E"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Data Visualization at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Data Visualization!"
+      }
+    },
+    {
+      "slug": "power-bi-and-business-intelligence",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Power BI & Business Intelligence",
+        "subtitle": "Business intelligence with Power BI and the Microsoft Power Platform, plus a full analyst toolkit.",
+        "category": "Data Science & Analytics",
+        "subCategory": "Short Course",
+        "topic": "Power BI",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/jcTj6FgWOpo/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=jcTj6FgWOpo",
+        "description": "Business intelligence with Power BI and the Microsoft Power Platform, plus a full analyst toolkit.",
+        "skills": [
+          "Power BI",
+          "Power Platform",
+          "Reporting"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Data Analytics Crash Course: Teach Yourself in 30 Days",
+            "lessons": [
+              {
+                "title": "Data Analytics Crash Course: Teach Yourself in 30 Days",
+                "duration": "38:19",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=jcTj6FgWOpo"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Microsoft Power Platform Fundamentals (PL-900) — Full Course Pass the Exam!",
+            "lessons": [
+              {
+                "title": "Microsoft Power Platform Fundamentals (PL-900) — Full Course Pass the Exam!",
+                "duration": "3:26:00",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ZTPcRWK0ytE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+            "lessons": [
+              {
+                "title": "Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+                "duration": "19:23:46",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=PSNXoAs2FtQ"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Power BI & Business Intelligence at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Power BI & Business Intelligence!"
+      }
+    },
+    {
+      "slug": "generative-ai",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Generative AI",
+        "subtitle": "How generative AI works and how to use it: models, prompting, tools and real applications.",
+        "category": "Artificial Intelligence",
+        "subCategory": "Short Course",
+        "topic": "Generative AI",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/nJ25yl34Uqw/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=nJ25yl34Uqw",
+        "description": "How generative AI works and how to use it: models, prompting, tools and real applications.",
+        "skills": [
+          "Generative AI",
+          "LLMs",
+          "AI tools"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: GenAI Essentials – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "GenAI Essentials – Full Course for Beginners",
+                "duration": "22:53:55",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=nJ25yl34Uqw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Google Generative AI Leader Certification Course – Pass the Exam!",
+            "lessons": [
+              {
+                "title": "Google Generative AI Leader Certification Course – Pass the Exam!",
+                "duration": "3:24:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=30diF8dKpAY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Generative AI for Developers – Comprehensive Course",
+            "lessons": [
+              {
+                "title": "Generative AI for Developers – Comprehensive Course",
+                "duration": "21:11:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=F0GQ0l2NfHA"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Generative AI at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Generative AI!"
+      }
+    },
+    {
+      "slug": "deep-learning",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Deep Learning",
+        "subtitle": "Neural networks from the ground up with PyTorch: training, evaluation and real models.",
+        "category": "Artificial Intelligence",
+        "subCategory": "Short Course",
+        "topic": "Deep learning",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/VyWAvY2CF9c/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=VyWAvY2CF9c",
+        "description": "Neural networks from the ground up with PyTorch: training, evaluation and real models.",
+        "skills": [
+          "Deep learning",
+          "Neural networks",
+          "PyTorch"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Deep Learning Crash Course for Beginners",
+            "lessons": [
+              {
+                "title": "Deep Learning Crash Course for Beginners",
+                "duration": "1:25:39",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=VyWAvY2CF9c"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Deep Learning Course for Beginners",
+            "lessons": [
+              {
+                "title": "Deep Learning Course for Beginners",
+                "duration": "13:48:42",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=HJd1I3FdSnY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: PyTorch for Deep Learning & Machine Learning – Full Course",
+            "lessons": [
+              {
+                "title": "PyTorch for Deep Learning & Machine Learning – Full Course",
+                "duration": "25:37:26",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=V_xro1bcAuA"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Deep Learning at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Deep Learning!"
+      }
+    },
+    {
+      "slug": "llm-apps-with-langchain",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Building LLM Apps with LangChain",
+        "subtitle": "Build chatbots, RAG systems and agents on large language models with LangChain and LangGraph.",
+        "category": "Artificial Intelligence",
+        "subCategory": "Short Course",
+        "topic": "LangChain",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/lG7Uxts9SXs/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=lG7Uxts9SXs",
+        "description": "Build chatbots, RAG systems and agents on large language models with LangChain and LangGraph.",
+        "skills": [
+          "LangChain",
+          "RAG",
+          "LangGraph"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: LangChain Crash Course for Beginners",
+            "lessons": [
+              {
+                "title": "LangChain Crash Course for Beginners",
+                "duration": "1:05:30",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=lG7Uxts9SXs"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn RAG From Scratch – Python AI Tutorial from a LangChain Engineer",
+            "lessons": [
+              {
+                "title": "Learn RAG From Scratch – Python AI Tutorial from a LangChain Engineer",
+                "duration": "2:33:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=sVcwVQRHIc8"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: LLM Course – Build a Semantic Book Recommender (Python, OpenAI, LangChain, Gradio)",
+            "lessons": [
+              {
+                "title": "LLM Course – Build a Semantic Book Recommender (Python, OpenAI, LangChain, Gradio)",
+                "duration": "2:15:04",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Q7mS1VHm3Yw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: LangGraph Complete Course for Beginners – Complex AI Agents with Python",
+            "lessons": [
+              {
+                "title": "LangGraph Complete Course for Beginners – Complex AI Agents with Python",
+                "duration": "3:09:52",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=jGg_1h0qzaM"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Building LLM Apps with LangChain at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Building LLM Apps with LangChain!"
+      }
+    },
+    {
+      "slug": "ethical-hacking",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Ethical Hacking",
+        "subtitle": "Find and fix security weaknesses the way attackers would: networks, web apps and Linux tools.",
+        "category": "Cloud & Cybersecurity",
+        "subCategory": "Short Course",
+        "topic": "Penetration testing",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/ug8W0sFiVJo/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=ug8W0sFiVJo",
+        "description": "Find and fix security weaknesses the way attackers would: networks, web apps and Linux tools.",
+        "skills": [
+          "Penetration testing",
+          "Web security",
+          "Kali Linux"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Hands-On Cybersecurity and Ethical Hacking – Full Course",
+            "lessons": [
+              {
+                "title": "Hands-On Cybersecurity and Ethical Hacking – Full Course",
+                "duration": "3:35:45",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=ug8W0sFiVJo"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Full Ethical Hacking Course - Network Penetration Testing for Beginners (2019)",
+            "lessons": [
+              {
+                "title": "Full Ethical Hacking Course - Network Penetration Testing for Beginners (2019)",
+                "duration": "14:51:14",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=3Kq1MIfTWCE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Ethical Hacking 101: Web App Penetration Testing - a full course for beginners",
+            "lessons": [
+              {
+                "title": "Ethical Hacking 101: Web App Penetration Testing - a full course for beginners",
+                "duration": "2:47:57",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=2_lswM1S264"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Linux Essentials for Ethical Hackers - Full InfoSec Course",
+            "lessons": [
+              {
+                "title": "Linux Essentials for Ethical Hackers - Full InfoSec Course",
+                "duration": "4:41:24",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=1hvVcEhcbLM"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Ethical Hacking at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Ethical Hacking!"
+      }
+    },
+    {
+      "slug": "linux-administration",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Linux Administration",
+        "subtitle": "Run and manage Linux systems: the command line, users, services and server setup.",
+        "category": "Cloud & Cybersecurity",
+        "subCategory": "Short Course",
+        "topic": "Linux",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/ROjZy1WbCIA/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=ROjZy1WbCIA",
+        "description": "Run and manage Linux systems: the command line, users, services and server setup.",
+        "skills": [
+          "Linux",
+          "Command line",
+          "Servers"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Linux Operating System - Crash Course for Beginners",
+            "lessons": [
+              {
+                "title": "Linux Operating System - Crash Course for Beginners",
+                "duration": "2:47:56",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=ROjZy1WbCIA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: The 50 Most Popular Linux & Terminal Commands - Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "The 50 Most Popular Linux & Terminal Commands - Full Course for Beginners",
+                "duration": "5:00:17",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ZtqBQ68cfJc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Linux Crash Course for Beginners with Labs",
+            "lessons": [
+              {
+                "title": "Linux Crash Course for Beginners with Labs",
+                "duration": "2:21:28",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=6WatcfENsOU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Linux Server Course - System Configuration and Operation",
+            "lessons": [
+              {
+                "title": "Linux Server Course - System Configuration and Operation",
+                "duration": "5:26:46",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=WMy3OzvBWc0"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Linux Administration at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Linux Administration!"
+      }
+    },
+    {
+      "slug": "devops-docker-and-kubernetes",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "DevOps with Docker & Kubernetes",
+        "subtitle": "Ship software reliably: containers, Kubernetes and CI/CD pipelines.",
+        "category": "Cloud & Cybersecurity",
+        "subCategory": "Short Course",
+        "topic": "DevOps",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/j5Zsa_eOXeY/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=j5Zsa_eOXeY",
+        "description": "Ship software reliably: containers, Kubernetes and CI/CD pipelines.",
+        "skills": [
+          "DevOps",
+          "Docker",
+          "Kubernetes"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: DevOps Engineering Course for Beginners",
+            "lessons": [
+              {
+                "title": "DevOps Engineering Course for Beginners",
+                "duration": "2:18:19",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=j5Zsa_eOXeY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn Docker – Full DevOps Course for Deploying Containerized Apps",
+            "lessons": [
+              {
+                "title": "Learn Docker – Full DevOps Course for Deploying Containerized Apps",
+                "duration": "7:29:48",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=rjjES5IsPdg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Kubernetes Course - Full Beginners Tutorial (Containerize Your Apps!)",
+            "lessons": [
+              {
+                "title": "Kubernetes Course - Full Beginners Tutorial (Containerize Your Apps!)",
+                "duration": "2:58:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=d6WC5n9G_sM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: DevOps with GitLab CI Course - Build Pipelines and Deploy to AWS",
+            "lessons": [
+              {
+                "title": "DevOps with GitLab CI Course - Build Pipelines and Deploy to AWS",
+                "duration": "4:56:37",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=PGyhBwLyK2U"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to DevOps with Docker & Kubernetes at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing DevOps with Docker & Kubernetes!"
+      }
+    },
+    {
+      "slug": "cloud-certifications-aws-and-azure",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Cloud Certifications: AWS & Azure",
+        "subtitle": "Prepare for entry-level and associate cloud certifications on AWS and Microsoft Azure.",
+        "category": "Cloud & Cybersecurity",
+        "subCategory": "Short Course",
+        "topic": "AWS",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/7HKot-brXFE/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=7HKot-brXFE",
+        "description": "Prepare for entry-level and associate cloud certifications on AWS and Microsoft Azure.",
+        "skills": [
+          "AWS",
+          "Azure",
+          "Certification"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: AWS Certified Cloud Practitioner Certification Course 2026 (CLF-C02) - Pass the Exam!",
+            "lessons": [
+              {
+                "title": "AWS Certified Cloud Practitioner Certification Course 2026 (CLF-C02) - Pass the Exam!",
+                "duration": "13:46:27",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=7HKot-brXFE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Microsoft Azure Fundamentals Certification Course (AZ-900) - Pass the exam in 3 hours!",
+            "lessons": [
+              {
+                "title": "Microsoft Azure Fundamentals Certification Course (AZ-900) - Pass the exam in 3 hours!",
+                "duration": "3:10:26",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=NKEFWyqJ5XA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: AWS Solutions Architect Associate Certification (SAA-C03) – Full Course to PASS the Exam",
+            "lessons": [
+              {
+                "title": "AWS Solutions Architect Associate Certification (SAA-C03) – Full Course to PASS the Exam",
+                "duration": "50:29:19",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=c3Cn4xYfxJY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Cloud Certifications: AWS & Azure at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Cloud Certifications: AWS & Azure!"
+      }
+    },
+    {
+      "slug": "computer-networking",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Computer Networking",
+        "subtitle": "How networks and the internet work, through to Network+ level networking skills.",
+        "category": "Cloud & Cybersecurity",
+        "subCategory": "Short Course",
+        "topic": "Networking",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/zN8YNNHcaZc/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=zN8YNNHcaZc",
+        "description": "How networks and the internet work, through to Network+ level networking skills.",
+        "skills": [
+          "Networking",
+          "TCP/IP",
+          "Network+"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: How does the internet work? (Full Course)",
+            "lessons": [
+              {
+                "title": "How does the internet work? (Full Course)",
+                "duration": "1:42:43",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=zN8YNNHcaZc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Computer Networking Fundamentals Course",
+            "lessons": [
+              {
+                "title": "Computer Networking Fundamentals Course",
+                "duration": "12:18:40",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=fQbBPa0ADvs"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Computer Networking Course - Network Engineering [CompTIA Network+ Exam Prep]",
+            "lessons": [
+              {
+                "title": "Computer Networking Course - Network Engineering [CompTIA Network+ Exam Prep]",
+                "duration": "9:24:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=qiQR5rTSshw"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Computer Networking at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Computer Networking!"
+      }
+    },
+    {
+      "slug": "wordpress-websites-for-business",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "WordPress Websites for Business",
+        "subtitle": "Build and run a business website with WordPress, no coding needed to start.",
+        "category": "Marketing & Sales",
+        "subCategory": "Short Course",
+        "topic": "WordPress",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/O79pJ7qXwoE/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=O79pJ7qXwoE",
+        "description": "Build and run a business website with WordPress, no coding needed to start.",
+        "skills": [
+          "WordPress",
+          "Websites",
+          "Themes"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: How To Make a Website With WordPress (Beginners Tutorial)",
+            "lessons": [
+              {
+                "title": "How To Make a Website With WordPress (Beginners Tutorial)",
+                "duration": "1:45:24",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=O79pJ7qXwoE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Build a Website from Start to Finish using WordPress [Full Course]",
+            "lessons": [
+              {
+                "title": "Build a Website from Start to Finish using WordPress [Full Course]",
+                "duration": "5:10:13",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=IPo71JPKUmg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: How to Create a Custom WordPress Theme - Full Course",
+            "lessons": [
+              {
+                "title": "How to Create a Custom WordPress Theme - Full Course",
+                "duration": "2:32:35",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=-h7gOJbIpmo"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to WordPress Websites for Business at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing WordPress Websites for Business!"
+      }
+    },
+    {
+      "slug": "ecommerce-store-setup",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "E-commerce Store Setup",
+        "subtitle": "Set up an online store, from WooCommerce on WordPress to a custom shopping cart.",
+        "category": "Marketing & Sales",
+        "subCategory": "Short Course",
+        "topic": "E-commerce",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/kF0UBL1eHeQ/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=kF0UBL1eHeQ",
+        "description": "Set up an online store, from WooCommerce on WordPress to a custom shopping cart.",
+        "skills": [
+          "E-commerce",
+          "WooCommerce",
+          "Online stores"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: eCommerce Website Tutorial - Online Store with WooComerce and WordPress",
+            "lessons": [
+              {
+                "title": "eCommerce Website Tutorial - Online Store with WooComerce and WordPress",
+                "duration": "1:31:56",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=kF0UBL1eHeQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn React by Building an eCommerce Site - Tutorial",
+            "lessons": [
+              {
+                "title": "Learn React by Building an eCommerce Site - Tutorial",
+                "duration": "5:55:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=1DklrGoAxDE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: E-Commerce JavaScript Tutorial - Shopping Cart from Scratch",
+            "lessons": [
+              {
+                "title": "E-Commerce JavaScript Tutorial - Shopping Cart from Scratch",
+                "duration": "4:14:30",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=023Psne_-_4"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to E-commerce Store Setup at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing E-commerce Store Setup!"
+      }
+    },
+    {
+      "slug": "email-marketing-and-automation",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Email Marketing & Automation",
+        "subtitle": "Grow and reach an audience with email, landing pages and no-code marketing automation.",
+        "category": "Marketing & Sales",
+        "subCategory": "Short Course",
+        "topic": "Email marketing",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/BK9iHnkr9nM/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=BK9iHnkr9nM",
+        "description": "Grow and reach an audience with email, landing pages and no-code marketing automation.",
+        "skills": [
+          "Email marketing",
+          "Mailchimp",
+          "n8n"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Setting up MailChimp on WordPress with plugins (plus creating a MailChimp landing page)",
+            "lessons": [
+              {
+                "title": "Setting up MailChimp on WordPress with plugins (plus creating a MailChimp landing page)",
+                "duration": "22:34",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=BK9iHnkr9nM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: How to Add Email to Your Apps – Tutorial",
+            "lessons": [
+              {
+                "title": "How to Add Email to Your Apps – Tutorial",
+                "duration": "40:29",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=h_mk2Uci9o0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Easily Automate Business Tasks – No-Code Automation Course",
+            "lessons": [
+              {
+                "title": "Easily Automate Business Tasks – No-Code Automation Course",
+                "duration": "3:00:39",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=5kJv254sebQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: n8n Tutorial – Zero to Hero Course",
+            "lessons": [
+              {
+                "title": "n8n Tutorial – Zero to Hero Course",
+                "duration": "3:35:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=UIf-SlmMays"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Email Marketing & Automation at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Email Marketing & Automation!"
+      }
+    },
+    {
+      "slug": "content-creation-and-personal-brand",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Content Creation & Personal Brand",
+        "subtitle": "Build an audience with YouTube videos, blog posts and clear writing.",
+        "category": "Marketing & Sales",
+        "subCategory": "Short Course",
+        "topic": "Content creation",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/AsTagX5tG4E/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=AsTagX5tG4E",
+        "description": "Build an audience with YouTube videos, blog posts and clear writing.",
+        "skills": [
+          "Content creation",
+          "YouTube",
+          "Writing"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: How to start a coding YouTube channel (with tips from a bunch of successful creators!)",
+            "lessons": [
+              {
+                "title": "How to start a coding YouTube channel (with tips from a bunch of successful creators!)",
+                "duration": "1:02:59",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=AsTagX5tG4E"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: How to write technical blog posts - talk by freeCodeCamp creator Quincy Larson",
+            "lessons": [
+              {
+                "title": "How to write technical blog posts - talk by freeCodeCamp creator Quincy Larson",
+                "duration": "16:01",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Ef07Hhoc5KE"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Technical Writing Course for Beginners",
+            "lessons": [
+              {
+                "title": "Technical Writing Course for Beginners",
+                "duration": "1:16:05",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=vT5pcc30Ffw"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Content Creation & Personal Brand at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Content Creation & Personal Brand!"
+      }
+    },
+    {
+      "slug": "entrepreneurship-foundations",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Entrepreneurship Foundations",
+        "subtitle": "Start and run a business: ideas, finance basics and building a minimum viable product.",
+        "category": "Business & Entrepreneurship",
+        "subCategory": "Short Course",
+        "topic": "Entrepreneurship",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/UEngvxZ11sw/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=UEngvxZ11sw",
+        "description": "Start and run a business: ideas, finance basics and building a minimum viable product.",
+        "skills": [
+          "Entrepreneurship",
+          "Finance",
+          "MVP"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: The Foundations of Entrepreneurship - Full Course",
+            "lessons": [
+              {
+                "title": "The Foundations of Entrepreneurship - Full Course",
+                "duration": "5:46:30",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=UEngvxZ11sw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Fundamentals of Finance & Economics for Businesses – Crash Course",
+            "lessons": [
+              {
+                "title": "Fundamentals of Finance & Economics for Businesses – Crash Course",
+                "duration": "1:38:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=EJHPltmAULA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: How to Build an MVP for Your App – Full Course on Minimum Viable Product Development",
+            "lessons": [
+              {
+                "title": "How to Build an MVP for Your App – Full Course on Minimum Viable Product Development",
+                "duration": "1:14:21",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=ChTGbmR2NeM"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Entrepreneurship Foundations at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Entrepreneurship Foundations!"
+      }
+    },
+    {
+      "slug": "product-management",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Product Management",
+        "subtitle": "Lead products from idea to launch: strategy, prioritisation, teams and delivery.",
+        "category": "Business & Entrepreneurship",
+        "subCategory": "Short Course",
+        "topic": "Product management",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/poLzjLt2yqU/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=poLzjLt2yqU",
+        "description": "Lead products from idea to launch: strategy, prioritisation, teams and delivery.",
+        "skills": [
+          "Product management",
+          "Strategy",
+          "Leadership"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: The Business of Building Apps - App Product Management Course for Developers",
+            "lessons": [
+              {
+                "title": "The Business of Building Apps - App Product Management Course for Developers",
+                "duration": "7:59:57",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=poLzjLt2yqU"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Become a Great Engineering Manager – Course",
+            "lessons": [
+              {
+                "title": "Become a Great Engineering Manager – Course",
+                "duration": "1:36:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=kZdFRXeuCuY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Scrum in 16 minutes",
+            "lessons": [
+              {
+                "title": "Scrum in 16 minutes",
+                "duration": "16:02",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=vuBFzAdaHDY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Product Management at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Product Management!"
+      }
+    },
+    {
+      "slug": "excel-and-google-sheets-for-business",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Excel & Google Sheets for Business",
+        "subtitle": "Spreadsheet skills for everyday business work in Excel and Google Sheets.",
+        "category": "Business & Entrepreneurship",
+        "subCategory": "Short Course",
+        "topic": "Excel",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/cWGQncQxaHI/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=cWGQncQxaHI",
+        "description": "Spreadsheet skills for everyday business work in Excel and Google Sheets.",
+        "skills": [
+          "Excel",
+          "Google Sheets",
+          "Formulas"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Learn Google Sheets – Full Course for Beginners",
+            "lessons": [
+              {
+                "title": "Learn Google Sheets – Full Course for Beginners",
+                "duration": "1:35:15",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=cWGQncQxaHI"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Google Sheets - Full Course",
+            "lessons": [
+              {
+                "title": "Google Sheets - Full Course",
+                "duration": "3:03:32",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=N2opj8XzYBY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Excel Formulas & Functions You Should Know [Full Course]",
+            "lessons": [
+              {
+                "title": "Excel Formulas & Functions You Should Know [Full Course]",
+                "duration": "1:12:49",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=O3m9m6Ie4gY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Excel & Google Sheets for Business at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Excel & Google Sheets for Business!"
+      }
+    },
+    {
+      "slug": "tech-career-and-job-readiness",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Tech Career & Job Readiness",
+        "subtitle": "Move into a tech career: choosing a path, building a portfolio and landing the job.",
+        "category": "Business & Entrepreneurship",
+        "subCategory": "Short Course",
+        "topic": "Career change",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/YdWkUdMxMvM/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=YdWkUdMxMvM",
+        "description": "Move into a tech career: choosing a path, building a portfolio and landing the job.",
+        "skills": [
+          "Career change",
+          "Job search",
+          "Interviews"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Career Change to Code - The Complete Guide [Full Course for Aspiring Developers]",
+            "lessons": [
+              {
+                "title": "Career Change to Code - The Complete Guide [Full Course for Aspiring Developers]",
+                "duration": "3:23:11",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=YdWkUdMxMvM"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: How to Get a Developer Job – Even in This Economy [Full Course]",
+            "lessons": [
+              {
+                "title": "How to Get a Developer Job – Even in This Economy [Full Course]",
+                "duration": "3:59:46",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=6nz8GXjxiHg"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: How to Become a Developer",
+            "lessons": [
+              {
+                "title": "How to Become a Developer",
+                "duration": "37:37",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=lo4BSraYvc8"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Tech Career & Job Readiness at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Tech Career & Job Readiness!"
+      }
+    },
+    {
+      "slug": "solidity-smart-contracts",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Solidity & Smart Contracts",
+        "subtitle": "Write and deploy Ethereum smart contracts with Solidity.",
+        "category": "Blockchain",
+        "subCategory": "Short Course",
+        "topic": "Solidity",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/ipwxYa-F1uY/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=ipwxYa-F1uY",
+        "description": "Write and deploy Ethereum smart contracts with Solidity.",
+        "skills": [
+          "Solidity",
+          "Ethereum",
+          "Smart contracts"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Solidity Tutorial - A Full Course on Ethereum, Blockchain Development, Smart Contracts, and the EVM",
+            "lessons": [
+              {
+                "title": "Solidity Tutorial - A Full Course on Ethereum, Blockchain Development, Smart Contracts, and the EVM",
+                "duration": "1:30:02",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=ipwxYa-F1uY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Build Your First Blockchain App Using Ethereum Smart Contracts and Solidity",
+            "lessons": [
+              {
+                "title": "Build Your First Blockchain App Using Ethereum Smart Contracts and Solidity",
+                "duration": "1:31:07",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=coQ5dg8wM2o"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Solidity, Blockchain, and Smart Contract Course – Beginner to Expert Python Tutorial",
+            "lessons": [
+              {
+                "title": "Solidity, Blockchain, and Smart Contract Course – Beginner to Expert Python Tutorial",
+                "duration": "16:22:12",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=M576WGiDBdQ"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Solidity & Smart Contracts at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Solidity & Smart Contracts!"
+      }
+    },
+    {
+      "slug": "full-stack-web3-development",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Full-Stack Web3 Development",
+        "subtitle": "Build complete decentralised apps with Solidity, JavaScript and Web3 tooling.",
+        "category": "Blockchain",
+        "subCategory": "Short Course",
+        "topic": "Web3",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/gyMwXuJrbJQ/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=gyMwXuJrbJQ",
+        "description": "Build complete decentralised apps with Solidity, JavaScript and Web3 tooling.",
+        "skills": [
+          "Web3",
+          "dApps",
+          "JavaScript"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course",
+            "lessons": [
+              {
+                "title": "Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course",
+                "duration": "31:54:31",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=gyMwXuJrbJQ"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Web3 Course Walkthrough on freeCodeCamp.org (Rust, Blockchain Development, and Smart Contracts)",
+            "lessons": [
+              {
+                "title": "Web3 Course Walkthrough on freeCodeCamp.org (Rust, Blockchain Development, and Smart Contracts)",
+                "duration": "3:55:02",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=hDfkyF8U-pw"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Full-Stack Web3 Development at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Full-Stack Web3 Development!"
+      }
+    },
+    {
+      "slug": "rust-programming",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Rust Programming",
+        "subtitle": "Rust, the fast and safe language behind many blockchains and systems tools.",
+        "category": "Blockchain",
+        "subCategory": "Short Course",
+        "topic": "Rust",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/MsocPEZBd-M/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=MsocPEZBd-M",
+        "description": "Rust, the fast and safe language behind many blockchains and systems tools.",
+        "skills": [
+          "Rust",
+          "Systems programming",
+          "Memory safety"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Rust Programming Course for Beginners - Tutorial",
+            "lessons": [
+              {
+                "title": "Rust Programming Course for Beginners - Tutorial",
+                "duration": "1:25:37",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=MsocPEZBd-M"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn Rust Programming - Complete Course 🦀",
+            "lessons": [
+              {
+                "title": "Learn Rust Programming - Complete Course 🦀",
+                "duration": "13:59:10",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=BpPEoZW5IiY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Rust Programming at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Rust Programming!"
+      }
+    },
+    {
+      "slug": "computer-and-internet-basics",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Computer & Internet Basics",
+        "subtitle": "Use computers and the internet with confidence, from hardware to how websites reach you.",
+        "category": "Foundations",
+        "subCategory": "Short Course",
+        "topic": "Computer basics",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/y2kg3MOk1sY/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=y2kg3MOk1sY",
+        "description": "Use computers and the internet with confidence, from hardware to how websites reach you.",
+        "skills": [
+          "Computer basics",
+          "Internet",
+          "Digital literacy"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Computer & Technology Basics Course for Absolute Beginners",
+            "lessons": [
+              {
+                "title": "Computer & Technology Basics Course for Absolute Beginners",
+                "duration": "55:04",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=y2kg3MOk1sY"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: How does the internet work? (Full Course)",
+            "lessons": [
+              {
+                "title": "How does the internet work? (Full Course)",
+                "duration": "1:42:43",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=zN8YNNHcaZc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Intro to Computer Networks - Crash Course",
+            "lessons": [
+              {
+                "title": "Intro to Computer Networks - Crash Course",
+                "duration": "8:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=WO6P92v61y4"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Computer & Internet Basics at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Computer & Internet Basics!"
+      }
+    },
+    {
+      "slug": "introduction-to-programming",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Introduction to Programming",
+        "subtitle": "A first course in programming and computer science, with Python and C.",
+        "category": "Foundations",
+        "subCategory": "Short Course",
+        "topic": "Programming",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/zOjov-2OZ0E/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=zOjov-2OZ0E",
+        "description": "A first course in programming and computer science, with Python and C.",
+        "skills": [
+          "Programming",
+          "Python",
+          "C"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Introduction to Programming and Computer Science - Full Course",
+            "lessons": [
+              {
+                "title": "Introduction to Programming and Computer Science - Full Course",
+                "duration": "1:59:09",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=zOjov-2OZ0E"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Learn Python - Full Course for Beginners [Tutorial]",
+            "lessons": [
+              {
+                "title": "Learn Python - Full Course for Beginners [Tutorial]",
+                "duration": "4:26:52",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=rfscVS0vtbw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: C Programming Tutorial for Beginners",
+            "lessons": [
+              {
+                "title": "C Programming Tutorial for Beginners",
+                "duration": "3:46:13",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Introduction to Programming at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Introduction to Programming!"
+      }
+    },
+    {
+      "slug": "it-fundamentals",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "IT Fundamentals",
+        "subtitle": "The IT basics every tech role needs: hardware, networks, the command line and DevOps prerequisites.",
+        "category": "Foundations",
+        "subCategory": "Short Course",
+        "topic": "IT support",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/4m9j6hlbf4g/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=4m9j6hlbf4g",
+        "description": "The IT basics every tech role needs: hardware, networks, the command line and DevOps prerequisites.",
+        "skills": [
+          "IT support",
+          "Command line",
+          "Hardware"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: IT Fundamentals Course – Hardware, Cloud, DevOps, Networking, Security, Databases, DNS, Git, Linux",
+            "lessons": [
+              {
+                "title": "IT Fundamentals Course – Hardware, Cloud, DevOps, Networking, Security, Databases, DNS, Git, Linux",
+                "duration": "13:02:11",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=4m9j6hlbf4g"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Command Line Basics for Beginners - Full Course",
+            "lessons": [
+              {
+                "title": "Command Line Basics for Beginners - Full Course",
+                "duration": "45:20",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=mABpAI-pCw0"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: DevOps Prerequisites Course - Getting started with DevOps",
+            "lessons": [
+              {
+                "title": "DevOps Prerequisites Course - Getting started with DevOps",
+                "duration": "2:46:08",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Wvf0mBNGjXY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to IT Fundamentals at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing IT Fundamentals!"
+      }
+    },
+    {
+      "slug": "precalculus-and-algebra",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Precalculus & Algebra",
+        "subtitle": "Algebra and precalculus for exams and further study, with worked examples.",
+        "category": "Test Preparation",
+        "subCategory": "Short Course",
+        "topic": "Algebra",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/eI4an8aSsgw/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=eI4an8aSsgw",
+        "description": "Algebra and precalculus for exams and further study, with worked examples.",
+        "skills": [
+          "Algebra",
+          "Precalculus",
+          "Functions"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Precalculus Course",
+            "lessons": [
+              {
+                "title": "Precalculus Course",
+                "duration": "5:22:02",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=eI4an8aSsgw"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: College Algebra – Full Course with Python Code",
+            "lessons": [
+              {
+                "title": "College Algebra – Full Course with Python Code",
+                "duration": "15:08:48",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=i7vOAcUo5iA"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: College Precalculus – Full Course with Python Code",
+            "lessons": [
+              {
+                "title": "College Precalculus – Full Course with Python Code",
+                "duration": "12:03:25",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=Y8oZtFYweTY"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Precalculus & Algebra at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Precalculus & Algebra!"
+      }
+    },
+    {
+      "slug": "calculus",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Calculus",
+        "subtitle": "University-level Calculus 1 and 2: limits, derivatives, integrals and series.",
+        "category": "Test Preparation",
+        "subCategory": "Short Course",
+        "topic": "Calculus",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/HfACrKJ_Y2w/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=HfACrKJ_Y2w",
+        "description": "University-level Calculus 1 and 2: limits, derivatives, integrals and series.",
+        "skills": [
+          "Calculus",
+          "Derivatives",
+          "Integrals"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Calculus 1 - Full College Course",
+            "lessons": [
+              {
+                "title": "Calculus 1 - Full College Course",
+                "duration": "11:53:48",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=HfACrKJ_Y2w"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: Calculus 2 - Full College Course",
+            "lessons": [
+              {
+                "title": "Calculus 2 - Full College Course",
+                "duration": "6:52:53",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=7gigNsz4Oe8"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Calculus at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Calculus!"
+      }
+    },
+    {
+      "slug": "tech-interview-preparation",
+      "needsPrice": true,
+      "note": null,
+      "create": {
+        "title": "Tech Interview Preparation",
+        "subtitle": "Prepare for software and data job interviews: coding questions, system design and mock interviews.",
+        "category": "Test Preparation",
+        "subCategory": "Short Course",
+        "topic": "Coding interviews",
+        "language": "English",
+        "level": "beginner",
+        "courseType": "paid",
+        "price": null
+      },
+      "update": {
+        "thumbnail": "https://i.ytimg.com/vi/1qw5ITr3k9E/maxresdefault.jpg",
+        "trailerVideoUrl": "https://www.youtube.com/watch?v=1qw5ITr3k9E",
+        "description": "Prepare for software and data job interviews: coding questions, system design and mock interviews.",
+        "skills": [
+          "Coding interviews",
+          "System design",
+          "Mock interviews"
+        ],
+        "targetAudience": [
+          "Beginners",
+          "Career changers",
+          "Students and graduates"
+        ],
+        "requirements": [
+          "A computer or smartphone with internet access"
+        ],
+        "modules": [
+          {
+            "title": "Module 1: Software Engineering Job Interview – Full Mock Interview",
+            "lessons": [
+              {
+                "title": "Software Engineering Job Interview – Full Mock Interview",
+                "duration": "1:14:29",
+                "isFreePreview": true,
+                "videoUrl": "https://www.youtube.com/watch?v=1qw5ITr3k9E"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 2: System Design Concepts Course and Interview Prep",
+            "lessons": [
+              {
+                "title": "System Design Concepts Course and Interview Prep",
+                "duration": "53:38",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=F2FmTdLtb_4"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 3: Data Science Job Interview – Full Mock Interview",
+            "lessons": [
+              {
+                "title": "Data Science Job Interview – Full Mock Interview",
+                "duration": "1:25:04",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=sD468LfeVdc"
+              }
+            ],
+            "quizzes": []
+          },
+          {
+            "title": "Module 4: Neetcode 150 Course - All Coding Interview Questions Solved",
+            "lessons": [
+              {
+                "title": "Neetcode 150 Course - All Coding Interview Questions Solved",
+                "duration": "38:57:11",
+                "isFreePreview": false,
+                "videoUrl": "https://www.youtube.com/watch?v=T0u5nwSA0w0"
+              }
+            ],
+            "quizzes": []
+          }
+        ],
+        "welcomeMessage": "Welcome to Tech Interview Preparation at Gloxad Academy! The video lessons are by freeCodeCamp.org, used with permission.",
+        "congratsMessage": "Congratulations on completing Tech Interview Preparation!"
       }
     }
   ]
