@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import axiosInstance from "@utils/axiosInstance";
 import FreeCourseLayout from "./components/FreeCourseLayout";
 import NormalCourseLayout from "./components/NormalCourseLayout";
+import { findCatalogCourse, normaliseApiCourse } from "@services/catalog";
 
 import { Skeleton } from "../../components/Skeleton";
 
@@ -18,9 +19,13 @@ const CourseDetailsPage = () => {
       try {
         setIsLoading(true);
         const res = await axiosInstance.get(`/courses/${slug}`);
-        setCourse(res.data);
+        // GET /courses/:slugOrId answers { course, isEnrolled }
+        setCourse(normaliseApiCourse(res.data?.course ?? res.data));
       } catch (error) {
-        console.error("Failed to fetch course details", error);
+        // Not in the database (yet): show the built-in catalog copy if there is one
+        const catalogCourse = findCatalogCourse(String(slug));
+        if (catalogCourse) setCourse(catalogCourse);
+        else console.error("Failed to fetch course details", error);
       } finally {
         setIsLoading(false);
       }
@@ -53,7 +58,8 @@ const CourseDetailsPage = () => {
 
   // If price is strictly 0 (or course.isFree), show the Free Layout.
   // Otherwise show the Normal (Paid) layout.
-  if (course.price === 0) {
+  // Imported courses without a price are stored at 0 but are paid courses, so go by courseType when present
+  if (course.courseType ? course.courseType === "free" : course.price === 0) {
     return <FreeCourseLayout course={course} />;
   }
 

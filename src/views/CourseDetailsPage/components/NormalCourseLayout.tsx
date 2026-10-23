@@ -11,6 +11,8 @@ import CourseModules from "./CourseModules";
 import CourseRecommendations from "./CourseRecommendations";
 import CourseTestimonials from "./CourseTestimonials";
 import CourseReviews from "./CourseReviews";
+import LessonVideo from "@components/LessonVideo";
+import { CATALOG_VIDEO_CREDIT, isEnrollmentClosed } from "@services/catalog";
 
 type TProps = {
   course: any;
@@ -20,6 +22,18 @@ const NormalCourseLayout = ({ course }: TProps) => {
   const router = useRouter();
   const { authenticatedUser } = useAuth();
   const [activeTab, setActiveTab] = useState("About");
+  // Course preview: the trailer, or whichever lesson was picked in the Modules list
+  const [preview, setPreview] = useState<{ url: string; title: string } | null>(
+    course.trailerVideoUrl ? { url: course.trailerVideoUrl, title: course.title } : null
+  );
+  const priceText =
+    course.priceLabel ?? (course.price > 0 ? `₦${Number(course.price).toLocaleString()}` : "Free");
+
+  const playLesson = (lesson: { videoUrl?: string; title: string }) => {
+    if (!lesson.videoUrl) return;
+    setPreview({ url: lesson.videoUrl, title: lesson.title });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const tabs = [
     { name: "About", id: "about" },
     { name: "Modules", id: "modules" },
@@ -79,6 +93,12 @@ const NormalCourseLayout = ({ course }: TProps) => {
   };
 
   const handleEnrollClick = () => {
+    // Listed courses that can't be bought yet (no price set, or not in the database)
+    if (isEnrollmentClosed(course)) {
+      toast.info(`Enrolment for ${course.title} opens soon. You can watch the free lessons in the meantime.`);
+      return;
+    }
+
     if (!authenticatedUser) {
       toast.info("Please log in to enroll.");
       router.push("/auth/signin");
@@ -108,7 +128,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
         <div className="mx-auto max-w-[1512px] flex flex-col lg:flex-row items-center justify-between relative z-10">
           
           {/* Left Content */}
-          <div className="flex flex-col items-start max-w-[650px]">
+          <div className="flex min-w-0 flex-col items-start max-w-[650px] lg:pr-10">
             <img src="/gloxadlogo.png" alt="Gloxad Academy" className="h-10 object-contain mb-8" />
             
             <h1 className="text-[32px] md:text-[40px] font-bold text-[#202127] mb-6 leading-[1.2]">
@@ -156,7 +176,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
             <div className="flex items-center gap-6 mb-6">
               <p className="text-[14px] text-[#4e515c]">Price</p>
               <p className="text-[16px] font-bold text-[#202127] underline decoration-1 underline-offset-4">
-                {course.price > 0 ? `₦${course.price.toLocaleString()}` : "Free"}
+                {priceText}
               </p>
             </div>
             
@@ -164,7 +184,9 @@ const NormalCourseLayout = ({ course }: TProps) => {
               Enroll Now
             </button>
             <p className="text-[12px] text-[#202127] font-bold">
-              {course.enrollmentCount > 0 ? (
+              {course.programme ? (
+                <span className="font-normal text-[#4e515c]">{course.programme} · {course.modules?.length} free video lessons</span>
+              ) : course.enrollmentCount > 0 ? (
                 <>{course.enrollmentCount.toLocaleString()} <span className="font-normal text-[#4e515c]">already enrolled</span></>
               ) : (
                 <span className="font-normal text-[#4e515c]">Be the first to enroll!</span>
@@ -172,7 +194,15 @@ const NormalCourseLayout = ({ course }: TProps) => {
             </p>
           </div>
           
-          {/* Right Graphic Shape */}
+          {/* Right: course preview video, or the brand shape when there's no video */}
+          {preview ? (
+            <div className="mt-10 w-full lg:mt-0 lg:w-[420px] xl:w-[520px] shrink-0">
+              <div className="overflow-hidden rounded-[12px] bg-black shadow-2xl aspect-video">
+                <LessonVideo url={preview.url} title={preview.title} className="h-full w-full" />
+              </div>
+              <p className="mt-3 line-clamp-1 text-[13px] text-[#4e515c]">Now playing: {preview.title}</p>
+            </div>
+          ) : (
           <div className="hidden lg:block w-[450px] h-[450px] relative">
             {/* Placeholder for the large abstract shape */}
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-2xl">
@@ -180,6 +210,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
               <path fill="#1e4ed8" d="M 50 100 L 150 50 L 120 150 Z" />
             </svg>
           </div>
+          )}
 
         </div>
       </div>
@@ -203,11 +234,13 @@ const NormalCourseLayout = ({ course }: TProps) => {
           </div>
           <div className="flex-1 w-full md:w-auto md:border-r border-b md:border-b-0 border-gray-200 pb-4 md:pb-0 px-0 md:px-6">
             <h3 className="text-[16px] font-bold text-[#202127] mb-1">{course.level || "Entry Level"}</h3>
-            <p className="text-[12px] text-[#717480]">{course.entryLevelDescription || "No prior experience required"}</p>
+            <p className="text-[12px] text-[#717480]">{course.entry || course.entryLevelDescription || "No prior experience required"}</p>
           </div>
           <div className="flex-1 w-full md:w-auto md:border-r border-b md:border-b-0 border-gray-200 pb-4 md:pb-0 px-0 md:px-6">
             <h3 className="text-[16px] font-bold text-[#202127] mb-1">{course.learningType || "Self-paced Learning"}</h3>
-            <p className="text-[12px] text-[#717480]">Approx. {course.duration || "14 hours"}</p>
+            <p className="text-[12px] text-[#717480]">
+              {course.videoHours > 0 ? `${course.videoHours} hours of video` : `Approx. ${course.duration || "14 hours"}`}
+            </p>
             <p className="text-[12px] text-[#717480]">{course.learningTypeDescription || "Learn at your own pace"}</p>
           </div>
           <div className="flex-1 w-full md:w-auto pl-0 md:pl-6">
@@ -281,6 +314,36 @@ const NormalCourseLayout = ({ course }: TProps) => {
             </div>
           </div>
 
+          {/* Progression pathway and fees (academic and foundation programmes) */}
+          {course.pathway?.length > 0 && (
+            <div className="mb-16">
+              <h3 className="text-[20px] font-bold text-[#202127] mb-2">Pathway and fees</h3>
+              {course.entry && <p className="text-[14px] text-[#4e515c] mb-6">{course.entry}.</p>}
+              <div className="overflow-x-auto rounded-[8px] border border-[#e2e8f0] bg-white">
+                <table className="w-full min-w-[560px] text-left text-[14px]">
+                  <thead className="bg-[#f0f4f8] text-[12px] uppercase tracking-wider text-[#4e515c]">
+                    <tr>
+                      <th className="px-5 py-3 font-bold">Stage</th>
+                      <th className="px-5 py-3 font-bold">Duration</th>
+                      <th className="px-5 py-3 font-bold">Fee</th>
+                      <th className="px-5 py-3 font-bold">Progression</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {course.pathway.map((step: any) => (
+                      <tr key={step.stage} className="border-t border-[#e2e8f0] align-top">
+                        <td className="px-5 py-4 font-bold text-[#202127]">{step.stage}</td>
+                        <td className="px-5 py-4 text-[#4e515c]">{step.duration}</td>
+                        <td className="px-5 py-4 font-bold text-[#202127]">₦{step.fee.toLocaleString()}</td>
+                        <td className="px-5 py-4 text-[#4e515c]">{step.note}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
           {/* Details to know */}
           <div className="mb-16">
             <h3 className="text-[20px] font-bold text-[#202127] mb-8">Details to know</h3>
@@ -316,11 +379,15 @@ const NormalCourseLayout = ({ course }: TProps) => {
         <section id="modules" className="mb-16 scroll-mt-[160px]">
           <h2 className="text-[28px] font-bold text-[#202127] mb-4">There are {course.modules?.length || 5} modules in this course</h2>
           <p className="text-[14px] text-[#4e515c] max-w-[800px] mb-6 leading-relaxed">
-            {course.aboutCourseText || "Worldwide millions of children are not able to fully participate in schooling, and this is especially a problem for children with disabilities. In this course, we explore the support that teachers need in order to meet the needs of children with severe to profound hearing, visual and intellectual disabilities. We consider how this can be done by talking with a range of experts."}
+            {course.aboutCourseText || course.description}
           </p>
-          <button className="text-[14px] font-bold text-[#181C7B] hover:underline mb-8">Read more</button>
-          
-          <CourseModules course={course} />
+          {(course.isCatalog || course.videoCredit) && (
+            <p className="text-[13px] text-[#717480] max-w-[800px] mb-8">
+              {course.videoCredit || CATALOG_VIDEO_CREDIT} Select a lesson to play it above.
+            </p>
+          )}
+
+          <CourseModules course={course} onPlayLesson={playLesson} />
         </section>
 
         {/* RECOMMENDATIONS SECTION */}

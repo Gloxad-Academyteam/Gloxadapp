@@ -1,0 +1,1922 @@
+{
+  "source": "Gloxad Academy Complete Course List 2026 (Academic Progression Framework v2.0, October 2026)",
+  "videoCredit": "Video lessons by freeCodeCamp.org (youtube.com/@freecodecamp), used with permission.",
+  "courses": [
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "digital-marketing",
+      "title": "Digital Marketing",
+      "category": "Marketing & Sales",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Digital Marketing",
+      "description": "Plan and run digital campaigns, create content that converts and grow audiences online. The formal pathway takes you from certificate to diploma with an industry internship.",
+      "skills": [
+        "Digital campaigns",
+        "Content marketing",
+        "Email marketing",
+        "Marketing automation"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Digital Marketing",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Digital Marketing",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Digital Marketing",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "wYx9Q6dcJCw",
+          "title": "SaaS Marketing for Developers – Automate Sales Tasks with AI",
+          "length": "39:37",
+          "duration": "39 min",
+          "url": "https://www.youtube.com/watch?v=wYx9Q6dcJCw"
+        },
+        {
+          "youtubeId": "5kJv254sebQ",
+          "title": "Easily Automate Business Tasks – No-Code Automation Course",
+          "length": "3:00:39",
+          "duration": "3h 0m",
+          "url": "https://www.youtube.com/watch?v=5kJv254sebQ"
+        },
+        {
+          "youtubeId": "BK9iHnkr9nM",
+          "title": "Setting up MailChimp on WordPress with plugins (plus creating a MailChimp landing page)",
+          "length": "22:34",
+          "duration": "22 min",
+          "url": "https://www.youtube.com/watch?v=BK9iHnkr9nM"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/wYx9Q6dcJCw/maxresdefault.jpg",
+      "videoHours": 4.0,
+      "whatYouWillLearn": [
+        "Plan a digital marketing campaign from goal to reporting",
+        "Automate repetitive marketing and sales tasks",
+        "Set up email marketing and landing pages",
+        "Measure what works and improve it"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "product-design",
+      "title": "Product Design",
+      "category": "Design",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Product Design",
+      "description": "Learn user research, wireframing, interface design and design systems in Figma, and build a portfolio of product design work.",
+      "skills": [
+        "UI/UX design",
+        "Figma",
+        "Wireframing",
+        "Design systems"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Product Design",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Product Design",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Product Design",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "c9Wg6Cb_YlU",
+          "title": "UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+          "length": "1:26:21",
+          "duration": "1h 26m",
+          "url": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"
+        },
+        {
+          "youtubeId": "jwCmIBJ8Jtc",
+          "title": "Figma Tutorial for UI Design - Course for Beginners",
+          "length": "10:16:51",
+          "duration": "10h 16m",
+          "url": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+        },
+        {
+          "youtubeId": "pN92rnO_n5U",
+          "title": "How to Design a Website – A UX Wireframe Tutorial",
+          "length": "30:00",
+          "duration": "30 min",
+          "url": "https://www.youtube.com/watch?v=pN92rnO_n5U"
+        },
+        {
+          "youtubeId": "RYDiDpW2VkM",
+          "title": "Create a Design System with Figma - Full Course",
+          "length": "7:38:43",
+          "duration": "7h 38m",
+          "url": "https://www.youtube.com/watch?v=RYDiDpW2VkM"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/c9Wg6Cb_YlU/maxresdefault.jpg",
+      "videoHours": 19.9,
+      "whatYouWillLearn": [
+        "Turn user needs into wireframes and mockups",
+        "Design interfaces in Figma",
+        "Build and maintain a design system",
+        "Present product design work in a portfolio"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "cybersecurity",
+      "title": "Cybersecurity",
+      "category": "Cloud & Cybersecurity",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Cybersecurity",
+      "description": "Build security fundamentals and hands-on skills: Linux for security, network and web application testing, and ethical hacking practice.",
+      "skills": [
+        "Security fundamentals",
+        "Linux",
+        "Penetration testing",
+        "Web application security"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Cybersecurity",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Cybersecurity",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Cybersecurity",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "ug8W0sFiVJo",
+          "title": "Hands-On Cybersecurity and Ethical Hacking – Full Course",
+          "length": "3:35:45",
+          "duration": "3h 35m",
+          "url": "https://www.youtube.com/watch?v=ug8W0sFiVJo"
+        },
+        {
+          "youtubeId": "1hvVcEhcbLM",
+          "title": "Linux Essentials for Ethical Hackers - Full InfoSec Course",
+          "length": "4:41:24",
+          "duration": "4h 41m",
+          "url": "https://www.youtube.com/watch?v=1hvVcEhcbLM"
+        },
+        {
+          "youtubeId": "X4eRbHgRawI",
+          "title": "Web Application Ethical Hacking - Penetration Testing Course for Beginners",
+          "length": "5:01:15",
+          "duration": "5h 1m",
+          "url": "https://www.youtube.com/watch?v=X4eRbHgRawI"
+        },
+        {
+          "youtubeId": "3Kq1MIfTWCE",
+          "title": "Full Ethical Hacking Course - Network Penetration Testing for Beginners (2019)",
+          "length": "14:51:14",
+          "duration": "14h 51m",
+          "url": "https://www.youtube.com/watch?v=3Kq1MIfTWCE"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/ug8W0sFiVJo/maxresdefault.jpg",
+      "videoHours": 28.2,
+      "whatYouWillLearn": [
+        "Explain core security concepts and common attacks",
+        "Use Linux tools for security work",
+        "Test web applications for vulnerabilities",
+        "Run network penetration tests ethically"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "web-design-low-code",
+      "title": "Web Design (Low-Code)",
+      "category": "Design",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Web Design (Low-Code)",
+      "description": "Design and launch professional websites without heavy coding using Webflow and WordPress, from wireframe to live online store.",
+      "skills": [
+        "Webflow",
+        "WordPress",
+        "Low-code web design",
+        "E-commerce"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Web Design (Low-Code)",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Web Design (Low-Code)",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Web Design (Low-Code)",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "dSykLAkmZ84",
+          "title": "Webflow Tutorial for Beginners – No-Code Web Design",
+          "length": "1:39:48",
+          "duration": "1h 39m",
+          "url": "https://www.youtube.com/watch?v=dSykLAkmZ84"
+        },
+        {
+          "youtubeId": "W5_PbWXQepw",
+          "title": "From wireframe to website prototype - Webflow Tutorial",
+          "length": "1:21:55",
+          "duration": "1h 21m",
+          "url": "https://www.youtube.com/watch?v=W5_PbWXQepw"
+        },
+        {
+          "youtubeId": "O79pJ7qXwoE",
+          "title": "How To Make a Website With WordPress (Beginners Tutorial)",
+          "length": "1:45:24",
+          "duration": "1h 45m",
+          "url": "https://www.youtube.com/watch?v=O79pJ7qXwoE"
+        },
+        {
+          "youtubeId": "kF0UBL1eHeQ",
+          "title": "eCommerce Website Tutorial - Online Store with WooComerce and WordPress",
+          "length": "1:31:56",
+          "duration": "1h 31m",
+          "url": "https://www.youtube.com/watch?v=kF0UBL1eHeQ"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/dSykLAkmZ84/maxresdefault.jpg",
+      "videoHours": 6.3,
+      "whatYouWillLearn": [
+        "Build responsive websites in Webflow",
+        "Turn a wireframe into a working prototype",
+        "Create and manage WordPress websites",
+        "Launch an online store with WooCommerce"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "front-end-development",
+      "title": "Front-End Development",
+      "category": "Software Development",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Front-End Development",
+      "description": "Build modern, responsive user interfaces with HTML, CSS, JavaScript and React, following the front-end developer roadmap.",
+      "skills": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Front-End Development",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Front-End Development",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Front-End Development",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "9He4UBLyk8Y",
+          "title": "Front End Developer Roadmap",
+          "length": "12:09",
+          "duration": "12 min",
+          "url": "https://www.youtube.com/watch?v=9He4UBLyk8Y"
+        },
+        {
+          "youtubeId": "a_iQb1lnAEQ",
+          "title": "Learn HTML & CSS – Full Course for Beginners",
+          "length": "5:21:44",
+          "duration": "5h 21m",
+          "url": "https://www.youtube.com/watch?v=a_iQb1lnAEQ"
+        },
+        {
+          "youtubeId": "zJSY8tbf_ys",
+          "title": "Frontend Web Development Bootcamp Course (JavaScript, HTML, CSS)",
+          "length": "21:14:42",
+          "duration": "21h 14m",
+          "url": "https://www.youtube.com/watch?v=zJSY8tbf_ys"
+        },
+        {
+          "youtubeId": "x4rFhThSX04",
+          "title": "Learn React JS - Full Beginner’s Tutorial & Practice Projects",
+          "length": "15:40:54",
+          "duration": "15h 40m",
+          "url": "https://www.youtube.com/watch?v=x4rFhThSX04"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/9He4UBLyk8Y/maxresdefault.jpg",
+      "videoHours": 42.5,
+      "whatYouWillLearn": [
+        "Structure and style web pages with HTML and CSS",
+        "Add interactivity with JavaScript",
+        "Build single-page applications in React",
+        "Plan your growth as a front-end developer"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "back-end-development",
+      "title": "Back-End Development",
+      "category": "Software Development",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Back-End Development",
+      "description": "Build the server side of applications: APIs with Node.js and Express, databases with SQL, and the back-end developer roadmap.",
+      "skills": [
+        "Node.js",
+        "Express",
+        "SQL",
+        "REST APIs"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Back-End Development",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Back-End Development",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Back-End Development",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "tN6oJu2DqCM",
+          "title": "Back End Developer Roadmap",
+          "length": "10:30",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=tN6oJu2DqCM"
+        },
+        {
+          "youtubeId": "KOutPbKc9UM",
+          "title": "Intro to Backend Web Development – Node.js & Express Tutorial for Beginners",
+          "length": "2:26:22",
+          "duration": "2h 26m",
+          "url": "https://www.youtube.com/watch?v=KOutPbKc9UM"
+        },
+        {
+          "youtubeId": "Oe421EPjeBE",
+          "title": "Node.js and Express.js - Full Course",
+          "length": "8:16:48",
+          "duration": "8h 16m",
+          "url": "https://www.youtube.com/watch?v=Oe421EPjeBE"
+        },
+        {
+          "youtubeId": "HXV3zeQKqGY",
+          "title": "SQL Tutorial - Full Database Course for Beginners",
+          "length": "4:20:39",
+          "duration": "4h 20m",
+          "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/tN6oJu2DqCM/maxresdefault.jpg",
+      "videoHours": 15.2,
+      "whatYouWillLearn": [
+        "Build REST APIs with Node.js and Express",
+        "Design and query relational databases with SQL",
+        "Structure back-end projects for production",
+        "Plan your growth as a back-end developer"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "data-analysis",
+      "title": "Data Analysis",
+      "category": "Data Science & Analytics",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Data Analysis",
+      "description": "Prepare, analyse and visualise data with Excel, SQL, Python and Tableau, and turn findings into clear reports.",
+      "skills": [
+        "Excel",
+        "SQL",
+        "Python",
+        "Tableau",
+        "Power BI"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Data Analysis",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Data Analysis",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Data Analysis",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "jcTj6FgWOpo",
+          "title": "Data Analytics Crash Course: Teach Yourself in 30 Days",
+          "length": "38:19",
+          "duration": "38 min",
+          "url": "https://www.youtube.com/watch?v=jcTj6FgWOpo"
+        },
+        {
+          "youtubeId": "PSNXoAs2FtQ",
+          "title": "Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+          "length": "19:23:46",
+          "duration": "19h 23m",
+          "url": "https://www.youtube.com/watch?v=PSNXoAs2FtQ"
+        },
+        {
+          "youtubeId": "r-uOLxNrNk8",
+          "title": "Data Analysis with Python - Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn)",
+          "length": "4:22:13",
+          "duration": "4h 22m",
+          "url": "https://www.youtube.com/watch?v=r-uOLxNrNk8"
+        },
+        {
+          "youtubeId": "TPMlZxRRaBQ",
+          "title": "Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+          "length": "28:42",
+          "duration": "28 min",
+          "url": "https://www.youtube.com/watch?v=TPMlZxRRaBQ"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/jcTj6FgWOpo/maxresdefault.jpg",
+      "videoHours": 24.9,
+      "whatYouWillLearn": [
+        "Clean and prepare data for analysis",
+        "Query data with SQL",
+        "Analyse data with Python, NumPy and pandas",
+        "Build dashboards and visual reports"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "blockchain-technology",
+      "title": "Blockchain Technology",
+      "category": "Blockchain",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Blockchain Technology",
+      "description": "Understand how blockchains work and build smart contracts and decentralised applications with Solidity and JavaScript.",
+      "skills": [
+        "Blockchain fundamentals",
+        "Ethereum",
+        "Solidity",
+        "Smart contracts"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Blockchain Technology",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Blockchain Technology",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Blockchain Technology",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "coQ5dg8wM2o",
+          "title": "Build Your First Blockchain App Using Ethereum Smart Contracts and Solidity",
+          "length": "1:31:07",
+          "duration": "1h 31m",
+          "url": "https://www.youtube.com/watch?v=coQ5dg8wM2o"
+        },
+        {
+          "youtubeId": "ipwxYa-F1uY",
+          "title": "Solidity Tutorial - A Full Course on Ethereum, Blockchain Development, Smart Contracts, and the EVM",
+          "length": "1:30:02",
+          "duration": "1h 30m",
+          "url": "https://www.youtube.com/watch?v=ipwxYa-F1uY"
+        },
+        {
+          "youtubeId": "gyMwXuJrbJQ",
+          "title": "Learn Blockchain, Solidity, and Full Stack Web3 Development with JavaScript – 32-Hour Course",
+          "length": "31:54:31",
+          "duration": "31h 54m",
+          "url": "https://www.youtube.com/watch?v=gyMwXuJrbJQ"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/coQ5dg8wM2o/maxresdefault.jpg",
+      "videoHours": 34.9,
+      "whatYouWillLearn": [
+        "Explain how blockchains and smart contracts work",
+        "Write smart contracts in Solidity",
+        "Build a decentralised application",
+        "Develop full-stack Web3 projects"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "cloud-engineering",
+      "title": "Cloud Engineering",
+      "category": "Cloud & Cybersecurity",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Cloud Engineering",
+      "description": "Learn cloud concepts and services on AWS and Azure, then deploy applications with DevOps practices and containers.",
+      "skills": [
+        "AWS",
+        "Microsoft Azure",
+        "DevOps",
+        "Docker"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Cloud Engineering",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Cloud Engineering",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Cloud Engineering",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "NhDYbskXRgc",
+          "title": "AWS Certified Cloud Practitioner Certification Course (CLF-C02) - Pass the Exam!",
+          "length": "14:17:52",
+          "duration": "14h 17m",
+          "url": "https://www.youtube.com/watch?v=NhDYbskXRgc"
+        },
+        {
+          "youtubeId": "5abffC-K40c",
+          "title": "Microsoft Azure Fundamentals Certification Course (AZ-900) UPDATED – Pass the exam in 8 hours!",
+          "length": "8:21:49",
+          "duration": "8h 21m",
+          "url": "https://www.youtube.com/watch?v=5abffC-K40c"
+        },
+        {
+          "youtubeId": "j5Zsa_eOXeY",
+          "title": "DevOps Engineering Course for Beginners",
+          "length": "2:18:19",
+          "duration": "2h 18m",
+          "url": "https://www.youtube.com/watch?v=j5Zsa_eOXeY"
+        },
+        {
+          "youtubeId": "rjjES5IsPdg",
+          "title": "Learn Docker – Full DevOps Course for Deploying Containerized Apps",
+          "length": "7:29:48",
+          "duration": "7h 29m",
+          "url": "https://www.youtube.com/watch?v=rjjES5IsPdg"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/NhDYbskXRgc/maxresdefault.jpg",
+      "videoHours": 32.5,
+      "whatYouWillLearn": [
+        "Explain core cloud services and pricing",
+        "Prepare for AWS and Azure fundamentals certifications",
+        "Apply DevOps practices to delivery",
+        "Package and deploy apps with Docker"
+      ]
+    },
+    {
+      "type": "academic",
+      "programme": "Academic Programme",
+      "price": 150000,
+      "priceLabel": "From ₦150,000",
+      "duration": "3-month Certificate · 6-month Professional Certificate · Diploma",
+      "level": "Beginner",
+      "entry": "Requires completion of Fundamental & Basic Computing",
+      "slug": "project-management",
+      "title": "Project Management",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Certificate → Professional Certificate → Diploma in Project Management",
+      "description": "Plan and deliver projects using agile and Scrum, lead teams and manage the product lifecycle from idea to launch.",
+      "skills": [
+        "Agile",
+        "Scrum",
+        "Team leadership",
+        "Product management"
+      ],
+      "pathway": [
+        {
+          "stage": "Certificate in Project Management",
+          "duration": "3 months",
+          "fee": 150000,
+          "note": "Requires Foundation completion"
+        },
+        {
+          "stage": "Professional Certificate in Project Management",
+          "duration": "6 months",
+          "fee": 300000,
+          "note": "Requires matching Certificate; optional 3-month internship"
+        },
+        {
+          "stage": "Diploma in Project Management",
+          "duration": "6 months + 3-month compulsory internship",
+          "fee": 400000,
+          "note": "Requires matching Professional Certificate; awarded after internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "vuBFzAdaHDY",
+          "title": "Scrum in 16 minutes",
+          "length": "16:02",
+          "duration": "16 min",
+          "url": "https://www.youtube.com/watch?v=vuBFzAdaHDY"
+        },
+        {
+          "youtubeId": "dfR6UBEBVvo",
+          "title": "5 Common Scrum Events",
+          "length": "24:36",
+          "duration": "24 min",
+          "url": "https://www.youtube.com/watch?v=dfR6UBEBVvo"
+        },
+        {
+          "youtubeId": "kZdFRXeuCuY",
+          "title": "Become a Great Engineering Manager – Course",
+          "length": "1:36:49",
+          "duration": "1h 36m",
+          "url": "https://www.youtube.com/watch?v=kZdFRXeuCuY"
+        },
+        {
+          "youtubeId": "poLzjLt2yqU",
+          "title": "The Business of Building Apps - App Product Management Course for Developers",
+          "length": "7:59:57",
+          "duration": "7h 59m",
+          "url": "https://www.youtube.com/watch?v=poLzjLt2yqU"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/vuBFzAdaHDY/maxresdefault.jpg",
+      "videoHours": 10.3,
+      "whatYouWillLearn": [
+        "Run projects with Scrum and agile practices",
+        "Facilitate planning, reviews and retrospectives",
+        "Lead and support a delivery team",
+        "Manage a product from idea to launch"
+      ]
+    },
+    {
+      "type": "foundation",
+      "programme": "Foundation Programme",
+      "price": 50000,
+      "priceLabel": "₦50,000 – ₦70,000",
+      "duration": "To be finalised",
+      "level": "Beginner",
+      "slug": "fundamental-and-basic-computing",
+      "title": "Fundamental & Basic Computing",
+      "category": "Foundations",
+      "subtitle": "The required starting point for every Gloxad academic programme: computer operations, digital literacy and an introduction to programming and IT.",
+      "description": "The required starting point for every Gloxad academic programme: computer operations, digital literacy and an introduction to programming and IT.",
+      "skills": [
+        "Computer basics",
+        "Digital literacy",
+        "Intro to programming",
+        "IT fundamentals"
+      ],
+      "pathway": [
+        {
+          "stage": "Secondary School Track",
+          "duration": "To be finalised",
+          "fee": 50000,
+          "note": "Entry foundation; no internship"
+        },
+        {
+          "stage": "Undergraduate Track",
+          "duration": "To be finalised",
+          "fee": 70000,
+          "note": "Entry foundation; no internship"
+        }
+      ],
+      "videos": [
+        {
+          "youtubeId": "y2kg3MOk1sY",
+          "title": "Computer & Technology Basics Course for Absolute Beginners",
+          "length": "55:04",
+          "duration": "55 min",
+          "url": "https://www.youtube.com/watch?v=y2kg3MOk1sY"
+        },
+        {
+          "youtubeId": "zOjov-2OZ0E",
+          "title": "Introduction to Programming and Computer Science - Full Course",
+          "length": "1:59:09",
+          "duration": "1h 59m",
+          "url": "https://www.youtube.com/watch?v=zOjov-2OZ0E"
+        },
+        {
+          "youtubeId": "4m9j6hlbf4g",
+          "title": "IT Fundamentals Course – Hardware, Cloud, DevOps, Networking, Security, Databases, DNS, Git, Linux",
+          "length": "13:02:11",
+          "duration": "13h 2m",
+          "url": "https://www.youtube.com/watch?v=4m9j6hlbf4g"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/y2kg3MOk1sY/maxresdefault.jpg",
+      "videoHours": 15.9,
+      "whatYouWillLearn": [
+        "Use a computer and common software confidently",
+        "Understand how computers, networks and the internet work",
+        "Write your first simple programs",
+        "Get ready for a 3-month Certificate Programme"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "artificial-intelligence",
+      "title": "Artificial Intelligence (AI)",
+      "category": "Artificial Intelligence",
+      "subtitle": "AI fundamentals, practical AI tools and applied productivity for everyday work.",
+      "description": "AI fundamentals, practical AI tools and applied productivity for everyday work.",
+      "skills": [
+        "AI fundamentals",
+        "Generative AI",
+        "AI tools"
+      ],
+      "videos": [
+        {
+          "youtubeId": "tchN4xa4pfg",
+          "title": "AI Foundations for Absolute Beginners",
+          "length": "52:36",
+          "duration": "52 min",
+          "url": "https://www.youtube.com/watch?v=tchN4xa4pfg"
+        },
+        {
+          "youtubeId": "PcbuKRNtCUc",
+          "title": "Essential Machine Learning and AI Concepts Animated",
+          "length": "27:52",
+          "duration": "27 min",
+          "url": "https://www.youtube.com/watch?v=PcbuKRNtCUc"
+        },
+        {
+          "youtubeId": "nJ25yl34Uqw",
+          "title": "GenAI Essentials – Full Course for Beginners",
+          "length": "22:53:55",
+          "duration": "22h 53m",
+          "url": "https://www.youtube.com/watch?v=nJ25yl34Uqw"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/tchN4xa4pfg/maxresdefault.jpg",
+      "videoHours": 24.2,
+      "whatYouWillLearn": [
+        "Explain what AI and generative AI can and cannot do",
+        "Use practical AI tools in your work",
+        "Understand the key machine learning ideas behind AI"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "ai-prompt-engineering",
+      "title": "AI Prompt Engineering",
+      "category": "Artificial Intelligence",
+      "subtitle": "Design effective prompts and get reliable results from ChatGPT and other AI systems.",
+      "description": "Design effective prompts and get reliable results from ChatGPT and other AI systems.",
+      "skills": [
+        "Prompt design",
+        "ChatGPT",
+        "LLMs"
+      ],
+      "videos": [
+        {
+          "youtubeId": "_ZvnD73m40o",
+          "title": "Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+          "length": "41:36",
+          "duration": "41 min",
+          "url": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+        },
+        {
+          "youtubeId": "ScKCy2udln8",
+          "title": "Prompt Engineering for Web Devs - ChatGPT and Bard Tutorial",
+          "length": "3:13:14",
+          "duration": "3h 13m",
+          "url": "https://www.youtube.com/watch?v=ScKCy2udln8"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/_ZvnD73m40o/maxresdefault.jpg",
+      "videoHours": 3.9,
+      "whatYouWillLearn": [
+        "Write clear, structured prompts",
+        "Get consistent results from large language models",
+        "Use AI assistants for real tasks"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "ai-agents",
+      "title": "AI Agentic Engineering / AI Agents",
+      "category": "Artificial Intelligence",
+      "subtitle": "Design and work with AI agents and automation workflows that complete multi-step tasks.",
+      "description": "Design and work with AI agents and automation workflows that complete multi-step tasks.",
+      "skills": [
+        "AI agents",
+        "Automation",
+        "RAG",
+        "MCP"
+      ],
+      "videos": [
+        {
+          "youtubeId": "AZDSpS5v57w",
+          "title": "AI Agents For Beginners – OpenClaw Case Study",
+          "length": "3:05:58",
+          "duration": "3h 5m",
+          "url": "https://www.youtube.com/watch?v=AZDSpS5v57w"
+        },
+        {
+          "youtubeId": "I7_WXKhyGms",
+          "title": "RAG & MCP Fundamentals – A Hands-On Crash Course",
+          "length": "1:39:53",
+          "duration": "1h 39m",
+          "url": "https://www.youtube.com/watch?v=I7_WXKhyGms"
+        },
+        {
+          "youtubeId": "Zy7EXDONlTY",
+          "title": "Agentic AI – Complete Course for Beginners",
+          "length": "24:15:52",
+          "duration": "24h 15m",
+          "url": "https://www.youtube.com/watch?v=Zy7EXDONlTY"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/AZDSpS5v57w/maxresdefault.jpg",
+      "videoHours": 29.0,
+      "whatYouWillLearn": [
+        "Explain how AI agents plan and use tools",
+        "Connect agents to data with RAG and MCP",
+        "Build agent-powered automation workflows"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "machine-learning",
+      "title": "Machine Learning",
+      "category": "Data Science & Analytics",
+      "subtitle": "Introductory machine-learning concepts and practical applications with Python.",
+      "description": "Introductory machine-learning concepts and practical applications with Python.",
+      "skills": [
+        "Machine learning",
+        "Python",
+        "scikit-learn"
+      ],
+      "videos": [
+        {
+          "youtubeId": "PcbuKRNtCUc",
+          "title": "Essential Machine Learning and AI Concepts Animated",
+          "length": "27:52",
+          "duration": "27 min",
+          "url": "https://www.youtube.com/watch?v=PcbuKRNtCUc"
+        },
+        {
+          "youtubeId": "NWONeJKn6kc",
+          "title": "Machine Learning Course for Beginners",
+          "length": "9:52:19",
+          "duration": "9h 52m",
+          "url": "https://www.youtube.com/watch?v=NWONeJKn6kc"
+        },
+        {
+          "youtubeId": "hDKCxebp88A",
+          "title": "Machine Learning with Python and Scikit-Learn – Full Course",
+          "length": "18:00:35",
+          "duration": "18h 0m",
+          "url": "https://www.youtube.com/watch?v=hDKCxebp88A"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/PcbuKRNtCUc/maxresdefault.jpg",
+      "videoHours": 28.3,
+      "whatYouWillLearn": [
+        "Explain core machine learning concepts",
+        "Train and evaluate models with Python",
+        "Apply machine learning to practical problems"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "python-programming",
+      "title": "Python Programming",
+      "category": "Software Development",
+      "subtitle": "Programming fundamentals and Python-based practical work, from first lines of code to small projects.",
+      "description": "Programming fundamentals and Python-based practical work, from first lines of code to small projects.",
+      "skills": [
+        "Python",
+        "Programming fundamentals"
+      ],
+      "videos": [
+        {
+          "youtubeId": "rfscVS0vtbw",
+          "title": "Learn Python - Full Course for Beginners [Tutorial]",
+          "length": "4:26:52",
+          "duration": "4h 26m",
+          "url": "https://www.youtube.com/watch?v=rfscVS0vtbw"
+        },
+        {
+          "youtubeId": "8DvywoWv6fI",
+          "title": "Python for Everybody - Full University Python Course",
+          "length": "13:40:10",
+          "duration": "13h 40m",
+          "url": "https://www.youtube.com/watch?v=8DvywoWv6fI"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg",
+      "videoHours": 18.1,
+      "whatYouWillLearn": [
+        "Write Python programs from scratch",
+        "Work with data structures, functions and files",
+        "Build small practical Python projects"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "website-development",
+      "title": "Website Development",
+      "category": "Software Development",
+      "subtitle": "Website creation and development fundamentals, from your first web page to a full-stack site.",
+      "description": "Website creation and development fundamentals, from your first web page to a full-stack site.",
+      "skills": [
+        "HTML",
+        "CSS",
+        "Web development"
+      ],
+      "videos": [
+        {
+          "youtubeId": "kMT54MPz9oE",
+          "title": "HTML and CSS Tutorial - Create a Website for Beginners",
+          "length": "2:09:15",
+          "duration": "2h 9m",
+          "url": "https://www.youtube.com/watch?v=kMT54MPz9oE"
+        },
+        {
+          "youtubeId": "LzMnsfqjzkA",
+          "title": "Become a Fullstack Developer from Scratch – Full Beginner’s Tutorial",
+          "length": "47:29:21",
+          "duration": "47h 29m",
+          "url": "https://www.youtube.com/watch?v=LzMnsfqjzkA"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/kMT54MPz9oE/maxresdefault.jpg",
+      "videoHours": 49.6,
+      "whatYouWillLearn": [
+        "Build and style a website with HTML and CSS",
+        "Understand how websites are built and deployed",
+        "Plan a path into full-stack development"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "graphics-design",
+      "title": "Graphics Design",
+      "category": "Design",
+      "subtitle": "Visual communication and digital design practice: typography, layout and design tools.",
+      "description": "Visual communication and digital design practice: typography, layout and design tools.",
+      "skills": [
+        "Typography",
+        "Layout",
+        "Figma"
+      ],
+      "videos": [
+        {
+          "youtubeId": "agbh1wbfJt8",
+          "title": "Typography for Developers Tutorial - Full Course",
+          "length": "2:04:11",
+          "duration": "2h 4m",
+          "url": "https://www.youtube.com/watch?v=agbh1wbfJt8"
+        },
+        {
+          "youtubeId": "D56hs0Twfco",
+          "title": "Figma Course - Web Design Tutorial for Beginners",
+          "length": "3:14:27",
+          "duration": "3h 14m",
+          "url": "https://www.youtube.com/watch?v=D56hs0Twfco"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/agbh1wbfJt8/maxresdefault.jpg",
+      "videoHours": 5.3,
+      "whatYouWillLearn": [
+        "Apply typography and layout principles",
+        "Create visual designs in Figma",
+        "Communicate ideas clearly through design"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "digital-tools-and-productivity",
+      "title": "Digital Tools & Productivity",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Productivity tools and workplace digital skills: spreadsheets, Notion and productive work habits.",
+      "description": "Productivity tools and workplace digital skills: spreadsheets, Notion and productive work habits.",
+      "skills": [
+        "Excel",
+        "Google Sheets",
+        "Notion",
+        "Productivity"
+      ],
+      "videos": [
+        {
+          "youtubeId": "Vl0H-qTclOg",
+          "title": "Microsoft Excel Tutorial for Beginners - Full Course",
+          "length": "2:26:10",
+          "duration": "2h 26m",
+          "url": "https://www.youtube.com/watch?v=Vl0H-qTclOg"
+        },
+        {
+          "youtubeId": "cWGQncQxaHI",
+          "title": "Learn Google Sheets – Full Course for Beginners",
+          "length": "1:35:15",
+          "duration": "1h 35m",
+          "url": "https://www.youtube.com/watch?v=cWGQncQxaHI"
+        },
+        {
+          "youtubeId": "bB5eA7vU9W8",
+          "title": "Learn Notion – Full Course for Beginners",
+          "length": "11:36:52",
+          "duration": "11h 36m",
+          "url": "https://www.youtube.com/watch?v=bB5eA7vU9W8"
+        },
+        {
+          "youtubeId": "C_jQahOnGUU",
+          "title": "Productivity as a Developer – Full Course",
+          "length": "1:26:51",
+          "duration": "1h 26m",
+          "url": "https://www.youtube.com/watch?v=C_jQahOnGUU"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/Vl0H-qTclOg/maxresdefault.jpg",
+      "videoHours": 17.1,
+      "whatYouWillLearn": [
+        "Work confidently with Excel and Google Sheets",
+        "Organise work and knowledge in Notion",
+        "Build productive digital work habits"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "freelancing-and-remote-work",
+      "title": "Freelancing & Remote Work",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Client services, portfolio development and remote-work readiness.",
+      "description": "Client services, portfolio development and remote-work readiness.",
+      "skills": [
+        "Freelancing",
+        "Client management",
+        "Remote work"
+      ],
+      "videos": [
+        {
+          "youtubeId": "4TIvB8zDFio",
+          "title": "Ultimate Freelancing Guide for Web Developers (Make money through freelance programming!)",
+          "length": "3:00:41",
+          "duration": "3h 0m",
+          "url": "https://www.youtube.com/watch?v=4TIvB8zDFio"
+        },
+        {
+          "youtubeId": "0M7SaSsGCMQ",
+          "title": "Getting Started with Freelancing (web development and design)",
+          "length": "44:01",
+          "duration": "44 min",
+          "url": "https://www.youtube.com/watch?v=0M7SaSsGCMQ"
+        },
+        {
+          "youtubeId": "6nz8GXjxiHg",
+          "title": "How to Get a Developer Job – Even in This Economy [Full Course]",
+          "length": "3:59:46",
+          "duration": "3h 59m",
+          "url": "https://www.youtube.com/watch?v=6nz8GXjxiHg"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/4TIvB8zDFio/maxresdefault.jpg",
+      "videoHours": 7.7,
+      "whatYouWillLearn": [
+        "Find and win freelance clients",
+        "Build a portfolio that sells your skills",
+        "Get ready for remote work and job applications"
+      ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Self-paced",
+      "level": "Beginner",
+      "slug": "skills-monetisation",
+      "title": "Skills Monetisation",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Packaging and monetising digital skills and services.",
+      "description": "Packaging and monetising digital skills and services.",
+      "skills": [
+        "Pricing services",
+        "Personal brand",
+        "Selling digital products"
+      ],
+      "videos": [
+        {
+          "youtubeId": "fsTzLgra5dQ",
+          "title": "How to make money as a freelance developer - business tips from an expert",
+          "length": "35:17",
+          "duration": "35 min",
+          "url": "https://www.youtube.com/watch?v=fsTzLgra5dQ"
+        },
+        {
+          "youtubeId": "ObiAWFqgpMg",
+          "title": "Build and Deploy a Polished AI Project and Get Sales",
+          "length": "57:04",
+          "duration": "57 min",
+          "url": "https://www.youtube.com/watch?v=ObiAWFqgpMg"
+        },
+        {
+          "youtubeId": "AsTagX5tG4E",
+          "title": "How to start a coding YouTube channel (with tips from a bunch of successful creators!)",
+          "length": "1:02:59",
+          "duration": "1h 2m",
+          "url": "https://www.youtube.com/watch?v=AsTagX5tG4E"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/fsTzLgra5dQ/maxresdefault.jpg",
+      "videoHours": 2.6,
+      "whatYouWillLearn": [
+        "Price and package your services",
+        "Turn a project into something people pay for",
+        "Grow an audience for your work"
+      ]
+    },
+    {
+      "type": "business",
+      "programme": "Monthly Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Monthly programme",
+      "level": "Beginner",
+      "slug": "startup-founder-academy",
+      "title": "Startup Founder Academy",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Startup development and founder readiness: from idea and business model to finance and launch.",
+      "description": "Startup development and founder readiness: from idea and business model to finance and launch.",
+      "skills": [
+        "Entrepreneurship",
+        "Business finance",
+        "Product strategy"
+      ],
+      "videos": [
+        {
+          "youtubeId": "UEngvxZ11sw",
+          "title": "The Foundations of Entrepreneurship - Full Course",
+          "length": "5:46:30",
+          "duration": "5h 46m",
+          "url": "https://www.youtube.com/watch?v=UEngvxZ11sw"
+        },
+        {
+          "youtubeId": "EJHPltmAULA",
+          "title": "Fundamentals of Finance & Economics for Businesses – Crash Course",
+          "length": "1:38:08",
+          "duration": "1h 38m",
+          "url": "https://www.youtube.com/watch?v=EJHPltmAULA"
+        },
+        {
+          "youtubeId": "poLzjLt2yqU",
+          "title": "The Business of Building Apps - App Product Management Course for Developers",
+          "length": "7:59:57",
+          "duration": "7h 59m",
+          "url": "https://www.youtube.com/watch?v=poLzjLt2yqU"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/UEngvxZ11sw/maxresdefault.jpg",
+      "videoHours": 15.4,
+      "whatYouWillLearn": [
+        "Validate a business idea",
+        "Understand the finance and economics of a business",
+        "Plan the launch of a product or startup"
+      ]
+    },
+    {
+      "type": "business",
+      "programme": "Monthly Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Monthly programme",
+      "level": "Beginner",
+      "slug": "freelancing-remote-work-and-digital-service-entrepreneurship",
+      "title": "Freelancing, Remote Work & Digital Service Entrepreneurship",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "A monthly programme covering service entrepreneurship, freelance work and client readiness.",
+      "description": "A monthly programme covering service entrepreneurship, freelance work and client readiness.",
+      "skills": [
+        "Freelancing",
+        "Service business",
+        "Client acquisition"
+      ],
+      "videos": [
+        {
+          "youtubeId": "4TIvB8zDFio",
+          "title": "Ultimate Freelancing Guide for Web Developers (Make money through freelance programming!)",
+          "length": "3:00:41",
+          "duration": "3h 0m",
+          "url": "https://www.youtube.com/watch?v=4TIvB8zDFio"
+        },
+        {
+          "youtubeId": "IRcL5as-RaE",
+          "title": "How to Land Freelance Clients with Small Business Whisperer Luke Ciciliano [Podcast #211]",
+          "length": "1:47:30",
+          "duration": "1h 47m",
+          "url": "https://www.youtube.com/watch?v=IRcL5as-RaE"
+        },
+        {
+          "youtubeId": "UEngvxZ11sw",
+          "title": "The Foundations of Entrepreneurship - Full Course",
+          "length": "5:46:30",
+          "duration": "5h 46m",
+          "url": "https://www.youtube.com/watch?v=UEngvxZ11sw"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/4TIvB8zDFio/maxresdefault.jpg",
+      "videoHours": 10.6,
+      "whatYouWillLearn": [
+        "Set up and run a digital service business",
+        "Land and keep freelance clients",
+        "Apply entrepreneurship basics to your services"
+      ]
+    },
+    {
+      "type": "business",
+      "programme": "Monthly Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Monthly programme",
+      "level": "Beginner",
+      "slug": "digital-marketing-social-commerce-and-ai-powered-sales",
+      "title": "Digital Marketing, Social Commerce & AI-Powered Sales",
+      "category": "Marketing & Sales",
+      "subtitle": "A monthly programme combining marketing, commerce and AI-assisted sales.",
+      "description": "A monthly programme combining marketing, commerce and AI-assisted sales.",
+      "skills": [
+        "Digital marketing",
+        "Social commerce",
+        "AI sales tools"
+      ],
+      "videos": [
+        {
+          "youtubeId": "wYx9Q6dcJCw",
+          "title": "SaaS Marketing for Developers – Automate Sales Tasks with AI",
+          "length": "39:37",
+          "duration": "39 min",
+          "url": "https://www.youtube.com/watch?v=wYx9Q6dcJCw"
+        },
+        {
+          "youtubeId": "ObiAWFqgpMg",
+          "title": "Build and Deploy a Polished AI Project and Get Sales",
+          "length": "57:04",
+          "duration": "57 min",
+          "url": "https://www.youtube.com/watch?v=ObiAWFqgpMg"
+        },
+        {
+          "youtubeId": "kF0UBL1eHeQ",
+          "title": "eCommerce Website Tutorial - Online Store with WooComerce and WordPress",
+          "length": "1:31:56",
+          "duration": "1h 31m",
+          "url": "https://www.youtube.com/watch?v=kF0UBL1eHeQ"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/wYx9Q6dcJCw/maxresdefault.jpg",
+      "videoHours": 3.1,
+      "whatYouWillLearn": [
+        "Market and sell products online",
+        "Automate sales tasks with AI",
+        "Set up an online store"
+      ]
+    },
+    {
+      "type": "business",
+      "programme": "Monthly Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Monthly programme",
+      "level": "Beginner",
+      "slug": "ai-powered-productivity-automation-and-ai-agents",
+      "title": "AI-Powered Productivity, Automation & AI Agents",
+      "category": "Artificial Intelligence",
+      "subtitle": "A monthly programme focused on AI productivity and automation.",
+      "description": "A monthly programme focused on AI productivity and automation.",
+      "skills": [
+        "No-code automation",
+        "n8n",
+        "AI agents"
+      ],
+      "videos": [
+        {
+          "youtubeId": "5kJv254sebQ",
+          "title": "Easily Automate Business Tasks – No-Code Automation Course",
+          "length": "3:00:39",
+          "duration": "3h 0m",
+          "url": "https://www.youtube.com/watch?v=5kJv254sebQ"
+        },
+        {
+          "youtubeId": "UIf-SlmMays",
+          "title": "n8n Tutorial – Zero to Hero Course",
+          "length": "3:35:08",
+          "duration": "3h 35m",
+          "url": "https://www.youtube.com/watch?v=UIf-SlmMays"
+        },
+        {
+          "youtubeId": "AZDSpS5v57w",
+          "title": "AI Agents For Beginners – OpenClaw Case Study",
+          "length": "3:05:58",
+          "duration": "3h 5m",
+          "url": "https://www.youtube.com/watch?v=AZDSpS5v57w"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/5kJv254sebQ/maxresdefault.jpg",
+      "videoHours": 9.7,
+      "whatYouWillLearn": [
+        "Automate business tasks without code",
+        "Build workflows in n8n",
+        "Use AI agents to save time"
+      ]
+    },
+    {
+      "type": "business",
+      "programme": "Monthly Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "Monthly programme",
+      "level": "Beginner",
+      "slug": "data-analytics-business-intelligence-and-ai-assisted-reporting",
+      "title": "Data Analytics, Business Intelligence & AI-Assisted Reporting",
+      "category": "Data Science & Analytics",
+      "subtitle": "A monthly programme focused on analysis, reporting and business intelligence.",
+      "description": "A monthly programme focused on analysis, reporting and business intelligence.",
+      "skills": [
+        "Business intelligence",
+        "SQL",
+        "Tableau",
+        "Reporting"
+      ],
+      "videos": [
+        {
+          "youtubeId": "NnSIKA77pD8",
+          "title": "Data Analytics with the Google Stack (SQL, Python, Data Visualization, Data Analysis)",
+          "length": "2:57:10",
+          "duration": "2h 57m",
+          "url": "https://www.youtube.com/watch?v=NnSIKA77pD8"
+        },
+        {
+          "youtubeId": "TPMlZxRRaBQ",
+          "title": "Tableau for Data Science and Data Visualization - Crash Course Tutorial",
+          "length": "28:42",
+          "duration": "28 min",
+          "url": "https://www.youtube.com/watch?v=TPMlZxRRaBQ"
+        },
+        {
+          "youtubeId": "FTpmwX94_Yo",
+          "title": "Python for Data Science Course – Hands-on Projects with EDA, AB Testing & Business Intelligence",
+          "length": "5:24:31",
+          "duration": "5h 24m",
+          "url": "https://www.youtube.com/watch?v=FTpmwX94_Yo"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/NnSIKA77pD8/maxresdefault.jpg",
+      "videoHours": 8.8,
+      "whatYouWillLearn": [
+        "Analyse business data with SQL and Python",
+        "Build BI dashboards and reports",
+        "Turn data into decisions"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Training Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "ielts-preparation",
+      "title": "IELTS Preparation",
+      "category": "Test Preparation",
+      "subtitle": "English-language test preparation for the IELTS exam.",
+      "description": "English-language test preparation for the IELTS exam.",
+      "skills": [
+        "English",
+        "IELTS"
+      ],
+      "videoNote": "freeCodeCamp has no IELTS course; this lesson is a general language-learning video. Add dedicated IELTS lessons before launch.",
+      "videos": [
+        {
+          "youtubeId": "wuVVclLcjuA",
+          "title": "Learn ANY Language with AI (Learn English, Learn Spanish, Learn Mandarin Chinese, and more)",
+          "length": "36:48",
+          "duration": "36 min",
+          "url": "https://www.youtube.com/watch?v=wuVVclLcjuA"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/wuVVclLcjuA/maxresdefault.jpg",
+      "videoHours": 0.6,
+      "whatYouWillLearn": [
+        "Prepare for the IELTS listening, reading, writing and speaking papers",
+        "Practise English with AI tools"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Training Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "gre-preparation",
+      "title": "GRE Preparation",
+      "category": "Test Preparation",
+      "subtitle": "Graduate-school admissions test preparation for the GRE.",
+      "description": "Graduate-school admissions test preparation for the GRE.",
+      "skills": [
+        "Quantitative reasoning",
+        "Statistics",
+        "Algebra"
+      ],
+      "videoNote": "These freeCodeCamp lessons cover the GRE quantitative section only. Add verbal reasoning and writing lessons before launch.",
+      "videos": [
+        {
+          "youtubeId": "LwCRRUa8yTU",
+          "title": "College Algebra - Full Course",
+          "length": "6:43:47",
+          "duration": "6h 43m",
+          "url": "https://www.youtube.com/watch?v=LwCRRUa8yTU"
+        },
+        {
+          "youtubeId": "xxpc-HPKN28",
+          "title": "Statistics - A Full University Course on Data Science Basics",
+          "length": "8:15:04",
+          "duration": "8h 15m",
+          "url": "https://www.youtube.com/watch?v=xxpc-HPKN28"
+        },
+        {
+          "youtubeId": "2SpuBqvNjHI",
+          "title": "Maths for Programmers Tutorial - Full Course on Sets and Logic",
+          "length": "1:00:08",
+          "duration": "1h 0m",
+          "url": "https://www.youtube.com/watch?v=2SpuBqvNjHI"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/LwCRRUa8yTU/maxresdefault.jpg",
+      "videoHours": 16.0,
+      "whatYouWillLearn": [
+        "Revise the algebra behind GRE quantitative questions",
+        "Practise statistics and data interpretation",
+        "Strengthen logical reasoning"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Bootcamp",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "ai-and-website-development",
+      "title": "AI + Website Development",
+      "category": "Software Development",
+      "subtitle": "A combined bootcamp: build and deploy websites, and use AI to work faster.",
+      "description": "A combined bootcamp: build and deploy websites, and use AI to work faster.",
+      "skills": [
+        "Web development",
+        "AI-assisted coding"
+      ],
+      "videos": [
+        {
+          "youtubeId": "kMT54MPz9oE",
+          "title": "HTML and CSS Tutorial - Create a Website for Beginners",
+          "length": "2:09:15",
+          "duration": "2h 9m",
+          "url": "https://www.youtube.com/watch?v=kMT54MPz9oE"
+        },
+        {
+          "youtubeId": "g3X8JauSWTM",
+          "title": "Stop Building AI Slop – Build High-End Web Apps with AI",
+          "length": "1:04:16",
+          "duration": "1h 4m",
+          "url": "https://www.youtube.com/watch?v=g3X8JauSWTM"
+        },
+        {
+          "youtubeId": "ywLxbDV9TBU",
+          "title": "Create and Deploy Websites and IaC by Chatting with AI",
+          "length": "40:04",
+          "duration": "40 min",
+          "url": "https://www.youtube.com/watch?v=ywLxbDV9TBU"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/kMT54MPz9oE/maxresdefault.jpg",
+      "videoHours": 3.9,
+      "whatYouWillLearn": [
+        "Build a website with HTML and CSS",
+        "Use AI to design and build web apps",
+        "Deploy a website with help from AI"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Bootcamp",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "data-analysis-bootcamp",
+      "title": "Data Analysis Bootcamp",
+      "category": "Data Science & Analytics",
+      "subtitle": "Short-format data analysis training.",
+      "description": "Short-format data analysis training.",
+      "skills": [
+        "Data analysis",
+        "pandas",
+        "SQL",
+        "Tableau"
+      ],
+      "videos": [
+        {
+          "youtubeId": "PSNXoAs2FtQ",
+          "title": "Data Analyst Bootcamp for Beginners (SQL, Tableau, Power BI, Python, Excel, Pandas, Projects, more)",
+          "length": "19:23:46",
+          "duration": "19h 23m",
+          "url": "https://www.youtube.com/watch?v=PSNXoAs2FtQ"
+        },
+        {
+          "youtubeId": "gtjxAH8uaP0",
+          "title": "Pandas & Python for Data Analysis by Example – Full Course for Beginners",
+          "length": "4:57:59",
+          "duration": "4h 57m",
+          "url": "https://www.youtube.com/watch?v=gtjxAH8uaP0"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/PSNXoAs2FtQ/maxresdefault.jpg",
+      "videoHours": 24.4,
+      "whatYouWillLearn": [
+        "Analyse data with Excel, SQL and Python",
+        "Work with pandas for data analysis",
+        "Present findings with charts and dashboards"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Training Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "basic-blockchain-technology-programme",
+      "title": "Basic Blockchain Technology Programme (BBTP)",
+      "category": "Blockchain",
+      "subtitle": "Short-format blockchain training.",
+      "description": "Short-format blockchain training.",
+      "skills": [
+        "Blockchain",
+        "Smart contracts"
+      ],
+      "videos": [
+        {
+          "youtubeId": "coQ5dg8wM2o",
+          "title": "Build Your First Blockchain App Using Ethereum Smart Contracts and Solidity",
+          "length": "1:31:07",
+          "duration": "1h 31m",
+          "url": "https://www.youtube.com/watch?v=coQ5dg8wM2o"
+        },
+        {
+          "youtubeId": "M576WGiDBdQ",
+          "title": "Solidity, Blockchain, and Smart Contract Course – Beginner to Expert Python Tutorial",
+          "length": "16:22:12",
+          "duration": "16h 22m",
+          "url": "https://www.youtube.com/watch?v=M576WGiDBdQ"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/coQ5dg8wM2o/maxresdefault.jpg",
+      "videoHours": 17.9,
+      "whatYouWillLearn": [
+        "Explain how blockchains work",
+        "Build a simple smart contract application"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "NYSC Tech Training",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "nysc-product-design-and-ai",
+      "title": "NYSC Tech Training: Product Design + AI",
+      "category": "Design",
+      "subtitle": "NYSC tech training option: product design with AI tools.",
+      "description": "NYSC tech training option: product design with AI tools.",
+      "skills": [
+        "UI/UX design",
+        "Figma",
+        "AI tools"
+      ],
+      "videos": [
+        {
+          "youtubeId": "c9Wg6Cb_YlU",
+          "title": "UI / UX Design Tutorial – Wireframe, Mockup & Design in Figma",
+          "length": "1:26:21",
+          "duration": "1h 26m",
+          "url": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU"
+        },
+        {
+          "youtubeId": "_ZvnD73m40o",
+          "title": "Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+          "length": "41:36",
+          "duration": "41 min",
+          "url": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/c9Wg6Cb_YlU/maxresdefault.jpg",
+      "videoHours": 2.1,
+      "whatYouWillLearn": [
+        "Design product interfaces in Figma",
+        "Use AI to speed up design work"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "NYSC Tech Training",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "nysc-graphics-design-and-ai",
+      "title": "NYSC Tech Training: Graphics Design + AI",
+      "category": "Design",
+      "subtitle": "NYSC tech training option: graphics design with AI tools.",
+      "description": "NYSC tech training option: graphics design with AI tools.",
+      "skills": [
+        "Graphics design",
+        "Typography",
+        "AI tools"
+      ],
+      "videos": [
+        {
+          "youtubeId": "agbh1wbfJt8",
+          "title": "Typography for Developers Tutorial - Full Course",
+          "length": "2:04:11",
+          "duration": "2h 4m",
+          "url": "https://www.youtube.com/watch?v=agbh1wbfJt8"
+        },
+        {
+          "youtubeId": "D56hs0Twfco",
+          "title": "Figma Course - Web Design Tutorial for Beginners",
+          "length": "3:14:27",
+          "duration": "3h 14m",
+          "url": "https://www.youtube.com/watch?v=D56hs0Twfco"
+        },
+        {
+          "youtubeId": "_ZvnD73m40o",
+          "title": "Prompt Engineering Tutorial – Master ChatGPT and LLM Responses",
+          "length": "41:36",
+          "duration": "41 min",
+          "url": "https://www.youtube.com/watch?v=_ZvnD73m40o"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/agbh1wbfJt8/maxresdefault.jpg",
+      "videoHours": 6.0,
+      "whatYouWillLearn": [
+        "Apply typography and layout principles",
+        "Create designs with Figma and AI tools"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "NYSC Tech Training",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "To be confirmed",
+      "level": "Beginner",
+      "slug": "nysc-website-development-and-ai",
+      "title": "NYSC Tech Training: Website Development + AI",
+      "category": "Software Development",
+      "subtitle": "NYSC tech training option: website development with AI tools.",
+      "description": "NYSC tech training option: website development with AI tools.",
+      "skills": [
+        "Web development",
+        "AI-assisted coding"
+      ],
+      "videos": [
+        {
+          "youtubeId": "kMT54MPz9oE",
+          "title": "HTML and CSS Tutorial - Create a Website for Beginners",
+          "length": "2:09:15",
+          "duration": "2h 9m",
+          "url": "https://www.youtube.com/watch?v=kMT54MPz9oE"
+        },
+        {
+          "youtubeId": "g3X8JauSWTM",
+          "title": "Stop Building AI Slop – Build High-End Web Apps with AI",
+          "length": "1:04:16",
+          "duration": "1h 4m",
+          "url": "https://www.youtube.com/watch?v=g3X8JauSWTM"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/kMT54MPz9oE/maxresdefault.jpg",
+      "videoHours": 3.2,
+      "whatYouWillLearn": [
+        "Build and style a website",
+        "Use AI to build web apps faster"
+      ]
+    },
+    {
+      "type": "prep",
+      "programme": "Secondary School Programme",
+      "price": null,
+      "priceLabel": "Price to be confirmed",
+      "duration": "6 weeks",
+      "level": "Beginner",
+      "slug": "secondary-school-technology-programme",
+      "title": "Secondary School Technology Programme",
+      "category": "Foundations",
+      "subtitle": "A six-week technology programme for secondary-school learners covering computer basics, programming and the web.",
+      "description": "A six-week technology programme for secondary-school learners covering computer basics, programming and the web.",
+      "skills": [
+        "Computer basics",
+        "Programming",
+        "Web basics"
+      ],
+      "videos": [
+        {
+          "youtubeId": "y2kg3MOk1sY",
+          "title": "Computer & Technology Basics Course for Absolute Beginners",
+          "length": "55:04",
+          "duration": "55 min",
+          "url": "https://www.youtube.com/watch?v=y2kg3MOk1sY"
+        },
+        {
+          "youtubeId": "zOjov-2OZ0E",
+          "title": "Introduction to Programming and Computer Science - Full Course",
+          "length": "1:59:09",
+          "duration": "1h 59m",
+          "url": "https://www.youtube.com/watch?v=zOjov-2OZ0E"
+        },
+        {
+          "youtubeId": "kMT54MPz9oE",
+          "title": "HTML and CSS Tutorial - Create a Website for Beginners",
+          "length": "2:09:15",
+          "duration": "2h 9m",
+          "url": "https://www.youtube.com/watch?v=kMT54MPz9oE"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/y2kg3MOk1sY/maxresdefault.jpg",
+      "videoHours": 5.1,
+      "whatYouWillLearn": [
+        "Use computers and the internet confidently",
+        "Write simple programs",
+        "Build a first web page"
+      ]
+    }
+  ]
+}

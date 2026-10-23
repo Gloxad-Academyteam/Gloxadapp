@@ -3,65 +3,39 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaChevronLeft, FaChevronRight, FaStar, FaBullseye } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaBullseye, FaBitcoin, FaCloud, FaRobot } from "react-icons/fa6";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { MdOutlineDeveloperMode } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
+import { PiBriefcase } from "react-icons/pi";
 import ScrollReveal from "@components/ScrollReveal";
-import CourseBrandDesign from "@assets/images/course-brand-design.png";
-import CourseFigmaUiux from "@assets/images/course-figma-uiux.png";
-import CourseMotionDesign from "@assets/images/course-motion-design.png";
-import CourseUiuxBeginner from "@assets/images/course-uiux-beginner.png";
-import FreeGraphicDesign from "@assets/images/free-graphic-design.png";
-import FreePython from "@assets/images/free-python.png";
-import FreeSeo from "@assets/images/free-seo.png";
-import FreeSupport from "@assets/images/free-support.png";
+import { catalogCourses, categorySlug } from "@services/catalog";
 
+// Tabs map onto the catalog categories (services/catalog); each shows its first four courses
 const courseTabs = [
-  { id: "design", title: "Design", icon: IoColorPaletteOutline, to: "/courses?category=design" },
-  { id: "software-development", title: "Software Development", icon: MdOutlineDeveloperMode, to: "/courses?category=software-development" },
-  { id: "data-science", title: "Data Science & Analytics", icon: FaChartSimple, to: "/courses?category=data-science" },
-  { id: "marketing-seo", title: "Marketing & SEO", icon: FaBullseye, to: "/courses?category=marketing-seo" },
-  { id: "business", title: "Business & Entrepreneurship", icon: FaBullseye, to: "/courses?category=business" },
+  { id: "Software Development", title: "Software Development", icon: MdOutlineDeveloperMode },
+  { id: "Design", title: "Design", icon: IoColorPaletteOutline },
+  { id: "Data Science & Analytics", title: "Data Science & Analytics", icon: FaChartSimple },
+  { id: "Artificial Intelligence", title: "Artificial Intelligence", icon: FaRobot },
+  { id: "Cloud & Cybersecurity", title: "Cloud & Cybersecurity", icon: FaCloud },
+  { id: "Marketing & Sales", title: "Marketing & Sales", icon: FaBullseye },
+  { id: "Business & Entrepreneurship", title: "Business & Entrepreneurship", icon: PiBriefcase },
+  { id: "Blockchain", title: "Blockchain", icon: FaBitcoin },
 ];
-
-const featuredCoursesByTab: Record<string, any[]> = {
-  "design": [
-    { title: "Figma: From Zero to Pro", author: "Jane R", rating: "4.9", price: "₦8,000", image: CourseFigmaUiux, to: "/courses?search=figma" },
-    { title: "UI/UX Design for Beginners", author: "David O", rating: "5.0", price: "₦5,000", image: CourseUiuxBeginner, to: "/courses?search=ui-ux-design" },
-    { title: "Brand Design A-Z", author: "Emmanuel D", rating: "5.0", price: "₦6,000", image: CourseBrandDesign, to: "/courses?search=brand-design" },
-    { title: "Motion Design", author: "Michael K", rating: "4.5", price: "₦10,000", image: CourseMotionDesign, to: "/courses?search=motion-design" },
-  ],
-  "software-development": [
-    { title: "Figma: From Zero to Pro", author: "Jane R", rating: "5.0", price: "₦8,000", image: CourseFigmaUiux, to: "/courses?search=web-development" },
-    { title: "Machine Learning with Python", author: "Olivia W", rating: "5.0", price: "₦9,000", image: FreePython, to: "/courses?search=machine-learning" },
-    { title: "Brand Design A-Z", author: "Emmanuel D", rating: "5.0", price: "₦6,000", image: CourseBrandDesign, to: "/courses?search=javascript" },
-    { title: "React JS", author: "Jason B", rating: "4.5", price: "₦10,000", image: CourseMotionDesign, to: "/courses?search=react" },
-  ],
-  "data-science": [
-    { title: "Figma: From Zero to Pro", author: "Jane R", rating: "4.9", price: "₦8,000", image: FreeGraphicDesign, to: "/courses?search=excel" },
-    { title: "Machine Learning with Python", author: "Olivia W", rating: "5.0", price: "₦9,000", image: FreeSeo, to: "/courses?search=data-science" },
-    { title: "Brand Design A-Z", author: "Emmanuel D", rating: "4.0", price: "₦6,000", image: CourseUiuxBeginner, to: "/courses?search=data-analytics" },
-    { title: "Excel Masterclass", author: "Michael K", rating: "4.5", price: "₦10,000", image: FreeSupport, to: "/courses?search=excel-masterclass" },
-  ],
-  "marketing-seo": [
-    { title: "Digital Marketing 101", author: "Sarah L", rating: "4.8", price: "₦7,500", image: CourseUiuxBeginner, to: "/courses?search=digital-marketing" },
-    { title: "SEO Optimization Guide", author: "David O", rating: "4.7", price: "₦5,500", image: CourseBrandDesign, to: "/courses?search=seo" },
-  ],
-  "business": [
-    { title: "Entrepreneurship Basics", author: "Mark S", rating: "4.9", price: "₦8,500", image: CourseMotionDesign, to: "/courses?search=business" },
-  ],
-};
 
 const ExploreCourses = () => {
   const router = useRouter();
   const tabsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [activeTabTitle, setActiveTabTitle] = useState("Design");
+  const [activeTabTitle, setActiveTabTitle] = useState(courseTabs[0].title);
 
-  const activeTabId = courseTabs.find((t) => t.title === activeTabTitle)?.id || "design";
-  const featuredCourses = featuredCoursesByTab[activeTabId] || [];
+  const activeTabId = courseTabs.find((t) => t.title === activeTabTitle)?.id || courseTabs[0].id;
+  // Academic programmes first, then short courses and bootcamps
+  const featuredCourses = catalogCourses
+    .filter((course) => course.category === activeTabId)
+    .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"))
+    .slice(0, 4);
 
   const checkScroll = () => {
     if (tabsRef.current) {
@@ -156,31 +130,27 @@ const ExploreCourses = () => {
       >
         {featuredCourses.map((course) => (
           <motion.article
-            key={course.title}
+            key={course.slug}
             variants={{
               hidden: { opacity: 0, y: 24 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
             }}
             whileHover={{ y: -4 }}
-            onClick={() => router.push(course.to)}
+            onClick={() => router.push(`/courses/${course.slug}`)}
             className="flex w-[75vw] shrink-0 snap-center cursor-pointer flex-col overflow-hidden rounded-[12px] border border-[#dedee7] bg-white transition-shadow duration-300 hover:shadow-lg sm:w-auto sm:shrink sm:snap-none"
           >
             <div className="p-3">
-              <img src={course.image.src} alt={course.title} className="h-[180px] w-full rounded-[8px] object-cover" />
+              <img src={course.thumbnail} alt={course.title} loading="lazy" className="aspect-video w-full rounded-[8px] object-cover" />
             </div>
             <div className="flex flex-1 flex-col p-5 pt-2">
+              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.06em] text-[#3e92cc]">{course.programme}</p>
               <h3 className="text-[17px] font-bold leading-[1.3] text-[#202127]">{course.title}</h3>
-              <p className="mt-2 text-[14px] text-[#717480]">{course.author}</p>
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-[14px] font-medium text-[#717480]">{course.rating}</span>
-                <span className="flex gap-0.5 text-[#ff8800] text-[14px]">
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    <FaStar key={index} />
-                  ))}
-                </span>
-              </div>
+              <p className="mt-2 text-[14px] text-[#717480]">Gloxad Academy</p>
+              <p className="mt-1 text-[13px] text-[#717480]">
+                {course.videos.length} video lessons · {course.videoHours} hours
+              </p>
               <div className="mt-auto pt-4">
-                <p className="text-[20px] font-bold text-[#202127]">{course.price}</p>
+                <p className="text-[18px] font-bold text-[#202127]">{course.priceLabel}</p>
               </div>
             </div>
           </motion.article>
@@ -190,10 +160,10 @@ const ExploreCourses = () => {
       <div className="w-full max-w-[1272px] flex justify-start">
         <button
           type="button"
-          onClick={() => router.push("/courses")}
-          className="btn-interactive mt-10 h-[46px] w-[187px] rounded-full bg-[#07004d] text-[15px] font-medium text-white transition hover:bg-[#111456]"
+          onClick={() => router.push(`/courses?category=${categorySlug(activeTabId)}`)}
+          className="btn-interactive mt-10 h-[46px] rounded-full bg-[#07004d] px-7 text-[15px] font-medium text-white transition hover:bg-[#111456]"
         >
-          Browse All Courses
+          Browse All {activeTabTitle} Courses
         </button>
       </div>
     </ScrollReveal>

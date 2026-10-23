@@ -4,7 +4,23 @@
     {
       "name": "gloxad-web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "gloxad-web-localapi",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "BACKEND_URL=http://localhost:4011",
+        "npx",
+        "next",
+        "dev",
+        "-p",
+        "3000"
+      ],
       "port": 3000
     }
   ]

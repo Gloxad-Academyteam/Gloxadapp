@@ -17,7 +17,10 @@ type TInputs = {
 const useSignInPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams() ?? new URLSearchParams();
-  const redirectUrl = searchParams?.get("redirect") || "/dashboard";
+  // Only same-site paths, so a crafted ?redirect= can't send users to another website after signing in
+  const requestedRedirect = searchParams?.get("redirect");
+  const redirectUrl =
+    requestedRedirect?.startsWith("/") && !requestedRedirect.startsWith("//") ? requestedRedirect : "/dashboard";
   const queryClient = useQueryClient();
   const {
     register,

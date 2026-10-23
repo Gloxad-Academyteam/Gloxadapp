@@ -1,8 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import useAuth from "@hooks/useAuth";
-import { trimesterHref } from "@utils/trimesterHref";
 import TrimesterUiux from "@assets/images/trimester-uiux.png";
 import CourseUiuxBeginner from "@assets/images/course-uiux-beginner.png";
 import CourseBrandDesign from "@assets/images/course-brand-design.png";
@@ -41,9 +39,8 @@ const trimesterCourses = [
 
 const TrimesterBanner = () => {
   const router = useRouter();
-  // Signed-out visitors go to sign-in first; signed-in students go straight to the trimester LMS
-  const { isAuthenticated } = useAuth();
-  const target = trimesterHref(isAuthenticated);
+  // The trimester landing page explains the programmes; its "Start your trimester" button leads on to the LMS
+  const target = "/trimester";
 
   return (
     <div className="relative flex min-h-[420px] w-full flex-col overflow-hidden rounded-[24px] md:rounded-[36px] bg-gradient-to-r from-[#0a1b56] to-[#80a4e3] shadow-sm px-6 pb-10 pt-14 lg:flex-row lg:px-14 lg:pb-14 lg:pt-16">

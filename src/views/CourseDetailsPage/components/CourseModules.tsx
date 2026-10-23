@@ -9,7 +9,13 @@ const defaultModules = [
   { title: "Inclusive teaching", moduleNumber: 5, duration: "1 hour to complete" }
 ];
 
-const CourseModules = ({ course }: { course?: any }) => {
+type TProps = {
+  course?: any;
+  // Plays a lesson in the course page's preview player; lessons are only clickable when this is set
+  onPlayLesson?: (lesson: { videoUrl?: string; title: string }) => void;
+};
+
+const CourseModules = ({ course, onPlayLesson }: TProps) => {
   const [expandedModule, setExpandedModule] = useState<number | null>(null);
 
   const modules = course?.modules?.length > 0 ? course.modules : defaultModules;
@@ -43,15 +49,24 @@ const CourseModules = ({ course }: { course?: any }) => {
                   {mod.description && <p className="mb-4">{mod.description}</p>}
                   {mod.lessons && mod.lessons.length > 0 ? (
                     <div className="flex flex-col gap-3 pl-2 mt-2" onClick={(e) => e.stopPropagation()}>
-                      {mod.lessons.map((lesson: any, lIdx: number) => (
-                        <div key={lesson._id || lIdx} className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0">
-                          <div className="flex items-center gap-3">
-                            <FaPlay className="text-[#181C7B] text-[10px] shrink-0" />
-                            <span className="text-[14px] text-[#202127] font-medium">{lesson.title}</span>
-                          </div>
-                          <span className="text-[12px] text-[#717480]">{lesson.duration || "Self-paced"}</span>
-                        </div>
-                      ))}
+                      {mod.lessons.map((lesson: any, lIdx: number) => {
+                        const playable = !!onPlayLesson && !!lesson.videoUrl;
+                        return (
+                          <button
+                            type="button"
+                            key={lesson._id || lIdx}
+                            disabled={!playable}
+                            onClick={() => playable && onPlayLesson!(lesson)}
+                            className={`flex w-full items-center justify-between gap-4 py-1 text-left border-b border-gray-100 last:border-0 ${playable ? "hover:text-[#181C7B]" : "cursor-default"}`}
+                          >
+                            <span className="flex items-center gap-3">
+                              <FaPlay className="text-[#181C7B] text-[10px] shrink-0" />
+                              <span className="text-[14px] text-[#202127] font-medium">{lesson.title}</span>
+                            </span>
+                            <span className="shrink-0 text-[12px] text-[#717480]">{playable ? `Play · ${lesson.duration || "Video"}` : lesson.duration || "Self-paced"}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   ) : (
                     !mod.description && <p className="text-[13px] text-[#717480] italic">No lectures uploaded for this module yet.</p>
@@ -91,6 +106,23 @@ const CourseModules = ({ course }: { course?: any }) => {
 
       {/* Right Column - Instructor Info */}
       <div className="w-full lg:w-[380px] shrink-0">
+        {course?.isCatalog || course?.videoCredit ? (
+          <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
+            <h3 className="text-[18px] font-bold text-[#202127] mb-2">Video lessons</h3>
+            <p className="text-[14px] text-[#4e515c] leading-relaxed">
+              Lessons in this course are taught by freeCodeCamp.org instructors and used with permission. Gloxad Academy adds the
+              programme structure, assessments and certification.
+            </p>
+            <a
+              href="https://www.youtube.com/@freecodecamp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-block text-[14px] font-bold text-[#181C7B] hover:underline"
+            >
+              freeCodeCamp.org on YouTube
+            </a>
+          </div>
+        ) : (
         <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
           <h3 className="text-[18px] font-bold text-[#202127] mb-2">Instructor</h3>
           <div className="flex items-center gap-2 mb-6">
@@ -123,6 +155,7 @@ const CourseModules = ({ course }: { course?: any }) => {
             </div>
           </div>
         </div>
+        )}
 
         <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 shadow-sm flex flex-col items-start gap-3">
           <h3 className="text-[18px] font-bold text-[#202127]">Offered by</h3>

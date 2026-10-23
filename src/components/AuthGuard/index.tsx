@@ -23,7 +23,10 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
     // and see the success screen; the page itself routes them onward afterwards.
     if (pathname === "/auth/verify-otp") return;
 
-    router.replace(getPostAuthRoute(authenticatedUser));
+    // Keep ?redirect= (e.g. /courses) so this doesn't race the sign-in form's own redirect to /dashboard
+    const redirect = new URLSearchParams(window.location.search).get("redirect");
+    const safeRedirect = redirect?.startsWith("/") && !redirect.startsWith("//") ? redirect : undefined;
+    router.replace(getPostAuthRoute(authenticatedUser, safeRedirect));
   }, [isAuthenticated, isLoading, authenticatedUser, pathname, router]);
 
   return <>{children}</>;

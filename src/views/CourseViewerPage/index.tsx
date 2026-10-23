@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiChevronLeft, FiStar, FiClock, FiCheckCircle, FiPlayCircle, FiSearch, FiChevronDown, FiPlus, FiMoreVertical, FiChevronUp } from "react-icons/fi";
 import axiosInstance from "../../utils/axiosInstance";
+import LessonVideo from "@components/LessonVideo";
 
 export default function CourseViewerPage() {
   const { id: courseId } = useParams<{ id: string }>()!;
@@ -203,10 +204,10 @@ export default function CourseViewerPage() {
                 </button>
               </div>
             ) : activeLesson?.videoUrl ? (
-              <video 
-                src={activeLesson.videoUrl} 
+              <LessonVideo
+                url={activeLesson.videoUrl}
+                title={activeLesson.title || "Lesson video"}
                 className="w-full h-full object-contain"
-                controls 
               />
             ) : (
               <div className="text-white text-center">

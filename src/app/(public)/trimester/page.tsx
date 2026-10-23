@@ -3,7 +3,7 @@ import TrimesterPage from "@pages/TrimesterPage";
 
 export const metadata: Metadata = {
   title: "Trimester Courses | Gloxad Academy",
-  description: "Enroll in structured trimester courses before the deadline and learn with a cohort of motivated students.",
+  description: "Learn in structured 3-month trimesters with live classes and a cohort, from Certificate to Diploma with an industry internship.",
   alternates: { canonical: "/trimester" },
 };
 

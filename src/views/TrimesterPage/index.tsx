@@ -1,240 +1,272 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useLenis } from "@studio-freight/react-lenis";
-import { FiCheck, FiCalendar, FiLayers, FiBarChart2, FiUsers } from "react-icons/fi";
+import Link from "next/link";
+import {
+  FiAward,
+  FiBookOpen,
+  FiBriefcase,
+  FiCalendar,
+  FiCheck,
+  FiChevronDown,
+  FiMonitor,
+  FiUsers,
+  FiVideo,
+} from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
-import { trimesterCourses } from "./data";
+import { trimesterHref } from "@utils/trimesterHref";
+import { catalogCourses } from "@services/catalog";
 
-const TABS = ["Overview", "Modules", "Who it's for", "Instructors"] as const;
-type Tab = (typeof TABS)[number];
+// Trimester programmes follow Gloxad Academy's Academic Progression Framework (v2.0, October 2026):
+// Foundation → 3-month Certificate → 6-month Professional Certificate → Diploma + 3-month internship.
+
+const naira = (amount: number) => `₦${amount.toLocaleString()}`;
+
+const pathway = [
+  {
+    step: "Foundation",
+    title: "Fundamental & Basic Computing",
+    duration: "Duration to be finalised",
+    fee: "₦50,000 – ₦70,000",
+    detail: "Required before any Certificate. Secondary School track ₦50,000, Undergraduate track ₦70,000.",
+  },
+  {
+    step: "Trimester 1",
+    title: "Certificate",
+    duration: "3 months",
+    fee: naira(150000),
+    detail: "Your first trimester in a specialisation. Requires Foundation completion.",
+  },
+  {
+    step: "Trimesters 2–3",
+    title: "Professional Certificate",
+    duration: "6 months",
+    fee: naira(300000),
+    detail: "Builds on the matching Certificate, with an optional 3-month internship.",
+  },
+  {
+    step: "Diploma",
+    title: "Diploma + internship",
+    duration: "6 months + 3-month internship",
+    fee: naira(400000),
+    detail: "Requires the matching Professional Certificate. Awarded after the compulsory internship.",
+  },
+];
+
+const benefits = [
+  { Icon: FiUsers, title: "Learn with a cohort", detail: "Start together each trimester and progress with classmates." },
+  { Icon: FiVideo, title: "Live classes", detail: "Instructor-led sessions alongside self-paced video lessons." },
+  { Icon: FiBookOpen, title: "Assignments and quizzes", detail: "Practical work reviewed through the Gloxad learning portal." },
+  { Icon: FiMonitor, title: "Coding lab and community", detail: "Practise in the browser and get help from your cohort." },
+  { Icon: FiAward, title: "Recognised certificates", detail: "Earn a Certificate, Professional Certificate and Diploma." },
+  { Icon: FiBriefcase, title: "Industry internship", detail: "A compulsory 3-month internship completes the Diploma." },
+];
+
+const faqs = [
+  {
+    q: "What is a trimester?",
+    a: "A trimester is a 3-month term. Each Certificate takes one trimester, a Professional Certificate takes two, and the Diploma stage takes two plus a 3-month internship.",
+  },
+  {
+    q: "Do I need to complete the Foundation first?",
+    a: "Yes. Fundamental & Basic Computing must be completed before you can join a 3-month Certificate Programme.",
+  },
+  {
+    q: "How much does each stage cost?",
+    a: "Foundation is ₦50,000 (Secondary School track) or ₦70,000 (Undergraduate track). The Certificate is ₦150,000, the Professional Certificate ₦300,000 and the Diploma ₦400,000.",
+  },
+  {
+    q: "Is the internship required?",
+    a: "The 3-month internship is optional after the Professional Certificate and compulsory for the Diploma, which is awarded once the internship is complete.",
+  },
+  {
+    q: "Can I move to the next stage in a different specialisation?",
+    a: "Each stage builds on the matching earlier stage, so the Professional Certificate requires the Certificate in the same specialisation, and the Diploma requires the matching Professional Certificate.",
+  },
+];
 
 const TrimesterPage = () => {
-  const router = useRouter();
-  const lenis = useLenis();
   const { isAuthenticated } = useAuth();
-  const [activeSlug, setActiveSlug] = useState(trimesterCourses[0].slug);
-  const [tab, setTab] = useState<Tab>("Overview");
-
-  const course = trimesterCourses.find((c) => c.slug === activeSlug) ?? trimesterCourses[0];
-  const others = trimesterCourses.filter((c) => c.slug !== course.slug);
-
-  const enroll = () => router.push(isAuthenticated ? "/dashboard?tab=trimester" : "/auth/signin?redirect=/trimester");
-
-  const selectCourse = (slug: string) => {
-    setActiveSlug(slug);
-    setTab("Overview");
-    const top = document.getElementById("trimester-top");
-    if (top) lenis?.scrollTo(top, { offset: -140 });
-  };
-
-  const stats = [
-    { Icon: FiLayers, label: `${course.modules.length} Modules`, detail: course.duration },
-    { Icon: FiCalendar, label: "Enrollment closes", detail: course.closes },
-    { Icon: FiBarChart2, label: "Level", detail: course.level },
-    { Icon: FiUsers, label: "Format", detail: course.format },
-  ];
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const startHref = trimesterHref(isAuthenticated);
+  const programmes = catalogCourses.filter((course) => course.type === "academic");
 
   return (
-    <div className="w-full bg-white font-sans">
-      <main className="relative mx-auto w-full max-w-[1512px] overflow-hidden px-5 pb-16 pt-8 md:px-10 lg:px-8 lg:pb-24 lg:pt-12 xl:px-[120px]">
-        {/* Soft blue wash from the Figma background */}
-        <div className="pointer-events-none absolute -right-40 top-40 h-[520px] w-[520px] rounded-full bg-[#eaf2fd] opacity-80 blur-3xl" />
-
-        {/* ===================== HERO: title + featured course ===================== */}
-        <section id="trimester-top" className="relative grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
-          {/* ---- MOBILE (below lg): image first ---- */}
-          <div className="order-1 lg:order-2">
-            <div className="relative mx-auto aspect-[4/3] w-full max-w-[520px] overflow-hidden rounded-[24px] bg-[#eaf2fd] shadow-sm lg:max-w-none">
-              <img key={course.slug} src={course.image.src} alt={course.title} className="h-full w-full object-cover" />
-            </div>
-          </div>
-
-          {/* ---- DESKTOP (lg and up): text left ---- */}
-          <div className="order-2 lg:order-1">
-            <h1 className="text-[28px] font-bold text-[#202127] md:text-[34px] lg:text-[40px]">Trimester Courses</h1>
-            <img src="/gloxadlogo.png" alt="Gloxad Academy" className="mt-5 h-8 w-[96px] object-contain object-left" />
-            <h2 className="mt-5 text-[22px] font-bold leading-tight text-[#202127] md:text-[26px]">{course.title}</h2>
-            <p className="mt-3 max-w-[560px] text-[14px] leading-[1.6] text-[#4e515c] md:text-[15px]">{course.summary}</p>
-            <p className="mt-4 flex items-center gap-3 text-[13px] text-[#717480]">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#07004d] text-[11px] font-bold text-white">G</span>
-              Taught by Gloxad Academy instructors
+    <div className="w-full overflow-x-hidden bg-white font-sans">
+      {/* ===================== HERO ===================== */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#0d0a6b] via-[#07004d] to-[#040030] text-white">
+        <div className="pointer-events-none absolute -right-32 -top-32 h-[420px] w-[420px] rounded-full bg-[#3e92cc] opacity-20 blur-3xl" />
+        <div className="relative mx-auto grid w-full max-w-[1512px] items-center gap-10 px-5 py-14 sm:px-8 md:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-20 xl:px-[120px]">
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-[#8fc3ea] sm:text-[13px]">Trimester Programmes</p>
+            <h1 className="mt-3 font-['DM_Sans'] text-[30px] font-bold leading-[1.1] tracking-[-0.5px] sm:text-[40px] lg:text-[48px] lg:tracking-[-1.5px]">
+              Learn in trimesters. Graduate with a Diploma.
+            </h1>
+            <p className="mt-4 max-w-[560px] text-[15px] leading-[1.6] text-white/85 sm:text-[16px]">
+              Structured 3-month terms with live classes, a cohort and real projects. Start with a Certificate and
+              progress to a Professional Certificate and a Diploma with an industry internship.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={enroll}
-                className="btn-interactive h-[42px] rounded-full bg-[#07004d] px-8 text-[14px] font-medium text-white transition hover:bg-[#111456]"
+            <div className="mt-7 flex flex-col gap-3 min-[420px]:flex-row">
+              <Link
+                href={startHref}
+                className="btn-interactive flex h-[46px] items-center justify-center rounded-full bg-[#4aa3df] px-7 text-[14px] font-medium text-white transition-colors hover:bg-[#3e92cc]"
               >
-                Enroll now
-              </button>
-              <span className="text-[13px] font-medium text-[#ff8800]">Enrollment closes: {course.closes}</span>
+                Start your trimester
+              </Link>
+              <a
+                href="#programmes"
+                className="flex h-[46px] items-center justify-center rounded-full border border-white px-7 text-[14px] font-medium text-white transition-colors hover:bg-white hover:text-[#07004d]"
+              >
+                View programmes
+              </a>
             </div>
           </div>
-        </section>
 
-        {/* ===================== STATS CARD ===================== */}
-        <section className="relative mt-10 rounded-[16px] border border-[#efeff5] bg-white p-5 shadow-sm md:p-6 lg:mt-14">
-          <dl className="grid grid-cols-2 gap-x-4 gap-y-5 lg:grid-cols-4 lg:gap-x-8">
-            {stats.map(({ Icon, label, detail }) => (
-              <div key={label} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eaf2fd] text-[16px] text-[#07004d]">
-                  <Icon />
-                </span>
-                <div className="min-w-0">
-                  <dt className="text-[14px] font-bold text-[#202127]">{label}</dt>
-                  <dd className="mt-0.5 text-[12px] leading-snug text-[#717480] md:text-[13px]">{detail}</dd>
-                </div>
+          {/* At-a-glance card */}
+          <dl className="grid grid-cols-2 gap-3 rounded-[20px] border border-white/15 bg-white/10 p-5 backdrop-blur-sm sm:gap-4 sm:p-6">
+            {[
+              { Icon: FiCalendar, label: "Trimester length", value: "3 months" },
+              { Icon: FiBookOpen, label: "Specialisations", value: `${programmes.length} programmes` },
+              { Icon: FiAward, label: "Certificate from", value: naira(150000) },
+              { Icon: FiBriefcase, label: "Diploma", value: "+ 3-month internship" },
+            ].map(({ Icon, label, value }) => (
+              <div key={label} className="rounded-[14px] bg-white/10 p-4">
+                <Icon className="text-[20px] text-[#8fc3ea]" />
+                <dt className="mt-3 text-[12px] text-white/70 sm:text-[13px]">{label}</dt>
+                <dd className="mt-0.5 text-[15px] font-bold sm:text-[17px]">{value}</dd>
               </div>
             ))}
           </dl>
-        </section>
+        </div>
+      </section>
 
-        {/* ===================== TABS ===================== */}
-        <section className="relative mt-8 lg:mt-10">
-          <div
-            role="tablist"
-            className="-mx-5 flex gap-2 overflow-x-auto border-b border-[#efeff5] px-5 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      {/* ===================== PATHWAY ===================== */}
+      <section className="mx-auto w-full max-w-[1512px] px-5 py-14 sm:px-8 md:px-10 lg:px-8 lg:py-20 xl:px-[120px]">
+        <div className="max-w-[720px]">
+          <h2 className="text-[26px] font-bold leading-tight text-[#202127] md:text-[34px]">Your path, one trimester at a time</h2>
+          <p className="mt-3 text-[15px] leading-[1.6] text-[#4e515c]">
+            Every specialisation follows the same progression. Each stage unlocks the next one in the same programme.
+          </p>
+        </div>
+
+        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          {pathway.map((stage, index) => (
+            <li key={stage.step} className="relative flex flex-col rounded-[16px] border border-[#e2e4ed] bg-white p-5 shadow-sm">
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#07004d] text-[14px] font-bold text-white">
+                  {index + 1}
+                </span>
+                <span className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3e92cc]">{stage.step}</span>
+              </div>
+              <h3 className="mt-4 text-[18px] font-bold text-[#202127]">{stage.title}</h3>
+              <p className="mt-1 text-[13px] text-[#717480]">{stage.duration}</p>
+              <p className="mt-3 text-[14px] leading-[1.55] text-[#4e515c]">{stage.detail}</p>
+              <p className="mt-auto pt-4 text-[20px] font-bold text-[#07004d]">{stage.fee}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ===================== PROGRAMMES ===================== */}
+      <section id="programmes" className="scroll-mt-[140px] bg-[#f5f7fb]">
+        <div className="mx-auto w-full max-w-[1512px] px-5 py-14 sm:px-8 md:px-10 lg:px-8 lg:py-20 xl:px-[120px]">
+          <div className="max-w-[720px]">
+            <h2 className="text-[26px] font-bold leading-tight text-[#202127] md:text-[34px]">Choose your specialisation</h2>
+            <p className="mt-3 text-[15px] leading-[1.6] text-[#4e515c]">
+              {programmes.length} programmes, each running from Certificate to Diploma.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {programmes.map((course) => (
+              <Link
+                key={course.slug}
+                href={`/courses/${course.slug}`}
+                className="card-interactive group flex flex-col overflow-hidden rounded-[14px] border border-[#e2e4ed] bg-white"
+              >
+                <div className="overflow-hidden bg-[#eaf2fd]">
+                  <img
+                    src={course.thumbnail}
+                    alt={course.title}
+                    loading="lazy"
+                    className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="text-[16px] font-bold leading-tight text-[#202127]">{course.title}</h3>
+                  <p className="mt-2 line-clamp-3 text-[13px] leading-[1.5] text-[#6b6d76]">{course.description}</p>
+                  <p className="mt-auto pt-4 text-[13px] font-bold text-[#07004d]">From {naira(150000)}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== BENEFITS ===================== */}
+      <section className="mx-auto w-full max-w-[1512px] px-5 py-14 sm:px-8 md:px-10 lg:px-8 lg:py-20 xl:px-[120px]">
+        <h2 className="max-w-[720px] text-[26px] font-bold leading-tight text-[#202127] md:text-[34px]">What every trimester includes</h2>
+        <div className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          {benefits.map(({ Icon, title, detail }) => (
+            <div key={title} className="flex items-start gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-[#eaf2fd] text-[20px] text-[#07004d]">
+                <Icon />
+              </span>
+              <div>
+                <h3 className="text-[16px] font-bold text-[#202127]">{title}</h3>
+                <p className="mt-1 text-[14px] leading-[1.55] text-[#4e515c]">{detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===================== FAQ ===================== */}
+      <section className="mx-auto w-full max-w-[1512px] px-5 pb-14 sm:px-8 md:px-10 lg:px-8 lg:pb-20 xl:px-[120px]">
+        <h2 className="text-[26px] font-bold leading-tight text-[#202127] md:text-[34px]">Frequently asked questions</h2>
+        <div className="mt-8 max-w-[860px] divide-y divide-[#e2e4ed] border-y border-[#e2e4ed]">
+          {faqs.map((faq, index) => {
+            const isOpen = openFaq === index;
+            return (
+              <div key={faq.q}>
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenFaq(isOpen ? null : index)}
+                  className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                >
+                  <span className="text-[15px] font-bold text-[#202127] md:text-[16px]">{faq.q}</span>
+                  <FiChevronDown className={`shrink-0 text-[18px] text-[#07004d] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                </button>
+                {isOpen && <p className="pb-5 pr-8 text-[14px] leading-[1.65] text-[#4e515c]">{faq.a}</p>}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ===================== CTA ===================== */}
+      <section className="mx-auto w-full max-w-[1512px] px-5 pb-16 sm:px-8 md:px-10 lg:px-8 lg:pb-24 xl:px-[120px]">
+        <div className="flex flex-col items-start gap-6 rounded-[24px] bg-[#07004d] px-6 py-10 text-white sm:px-10 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-[600px]">
+            <h2 className="text-[24px] font-bold leading-tight md:text-[30px]">Ready to start your first trimester?</h2>
+            <ul className="mt-4 flex flex-col gap-2 text-[14px] text-white/85">
+              {["Complete the Foundation", "Join a Certificate cohort", "Progress to your Diploma"].map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <FiCheck className="shrink-0 text-[#8fc3ea]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link
+            href={startHref}
+            className="btn-interactive flex h-[48px] shrink-0 items-center justify-center rounded-full bg-[#4aa3df] px-8 text-[15px] font-medium text-white transition-colors hover:bg-[#3e92cc]"
           >
-            {TABS.map((name) => (
-              <button
-                key={name}
-                role="tab"
-                type="button"
-                aria-selected={tab === name}
-                onClick={() => setTab(name)}
-                className={`relative shrink-0 whitespace-nowrap px-4 py-3 text-[14px] font-medium transition-colors ${
-                  tab === name ? "text-[#07004d]" : "text-[#717480] hover:text-[#202127]"
-                }`}
-              >
-                {name}
-                <span
-                  className={`absolute inset-x-3 -bottom-px h-[3px] rounded-full bg-[#07004d] transition-opacity ${
-                    tab === name ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <div role="tabpanel" className="pt-8">
-            {tab === "Overview" && (
-              <div className="flex flex-col gap-10">
-                <ul className="grid gap-x-12 gap-y-4 md:grid-cols-2">
-                  {course.outcomes.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.6] text-[#4e515c]">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#eaf2fd] text-[12px] text-[#07004d]">
-                        <FiCheck />
-                      </span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <div>
-                  <h3 className="text-[18px] font-bold text-[#202127]">What you&apos;ll learn in this course</h3>
-                  <p className="mt-3 max-w-[820px] text-[14px] leading-[1.7] text-[#4e515c]">{course.about}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-[18px] font-bold text-[#202127]">Skills you&apos;ll gain</h3>
-                  <div className="mt-4 flex flex-wrap gap-2.5">
-                    {course.skills.map((skill) => (
-                      <span key={skill} className="rounded-[8px] bg-[#eef0f6] px-4 py-2 text-[13px] font-medium text-[#3a3d4a]">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {tab === "Modules" && (
-              <ol className="flex max-w-[820px] flex-col gap-3">
-                {course.modules.map((module, index) => (
-                  <li key={module.title} className="flex items-start gap-4 rounded-[12px] border border-[#efeff5] bg-white p-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#07004d] text-[13px] font-bold text-white">
-                      {index + 1}
-                    </span>
-                    <div>
-                      <p className="text-[15px] font-bold text-[#202127]">{module.title}</p>
-                      <p className="mt-0.5 text-[13px] text-[#717480]">{module.detail}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            )}
-
-            {tab === "Who it's for" && (
-              <ul className="flex max-w-[820px] flex-col gap-4">
-                {course.audience.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.6] text-[#4e515c]">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#eaf2fd] text-[12px] text-[#07004d]">
-                      <FiCheck />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {tab === "Instructors" && (
-              <div className="flex max-w-[820px] items-center gap-4 rounded-[12px] border border-[#efeff5] p-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#07004d] text-[16px] font-bold text-white">G</span>
-                <div>
-                  <p className="text-[15px] font-bold text-[#202127]">Gloxad Academy instructors</p>
-                  <p className="mt-0.5 text-[13px] text-[#717480]">
-                    Industry practitioners who lead live sessions, review your work and mentor your cohort.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* ===================== OTHER TRIMESTER COURSES ===================== */}
-        <section className="relative mt-14 lg:mt-20">
-          <h2 className="text-[22px] font-bold text-[#202127] md:text-[26px]">More upcoming trimester courses</h2>
-          <p className="mt-2 text-[14px] text-[#4e515c]">Enroll before the deadline and learn with a cohort of motivated students.</p>
-
-          {/* MOBILE: swipe carousel — DESKTOP: 3-column grid */}
-          <div className="-mx-5 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 lg:grid-cols-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {others.map((item) => (
-              <article
-                key={item.slug}
-                className="card-interactive flex w-[78vw] shrink-0 snap-center flex-col overflow-hidden rounded-[16px] border border-[#efeff5] bg-white sm:w-auto"
-              >
-                <img src={item.image.src} alt={item.title} className="h-[170px] w-full object-cover" />
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-[17px] font-bold text-[#202127]">{item.title}</h3>
-                  <p className="mt-2 line-clamp-3 text-[13px] leading-[1.5] text-[#6b6d76]">{item.summary}</p>
-                  <p className="mt-3 text-[12px] font-medium text-[#ff8800]">Enrollment closes: {item.closes}</p>
-                  <p className="mt-1 text-[12px] text-[#8a8c95]">
-                    {item.duration} · {item.level}
-                  </p>
-                  <div className="mt-auto flex gap-2 pt-5">
-                    <button
-                      type="button"
-                      onClick={() => selectCourse(item.slug)}
-                      className="h-[38px] flex-1 rounded-full border border-[#07004d] text-[13px] font-medium text-[#07004d] transition hover:bg-[#07004d] hover:text-white"
-                    >
-                      View details
-                    </button>
-                    <button
-                      type="button"
-                      onClick={enroll}
-                      className="btn-interactive h-[38px] flex-1 rounded-full bg-[#07004d] text-[13px] font-medium text-white transition hover:bg-[#111456]"
-                    >
-                      Enroll now
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      </main>
+            Start your trimester
+          </Link>
+        </div>
+      </section>
     </div>
   );
 };
