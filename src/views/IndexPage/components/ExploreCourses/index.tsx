@@ -124,20 +124,14 @@ const ExploreCourses = () => {
 
       {/* ===================== MOBILE (below sm) — swipeable snap-scroll carousel ===================== */}
       {/* ===================== DESKTOP (sm and up) — static grid ===================== */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.15, once: true }}
-        variants={{ visible: { transition: { staggerChildren: 0.03 } } }}
+      {/* No per-card scroll reveal: with every course listed the grid is taller than the screen, and inside the
+          mobile carousel cards scrolled in sideways never registered as in view, so they stayed invisible */}
+      <div
         className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-[20px] sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
       >
         {featuredCourses.map((course) => (
           <motion.article
             key={course.slug}
-            variants={{
-              hidden: { opacity: 0, y: 24 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-            }}
             whileHover={{ y: -4 }}
             onClick={() => router.push(`/courses/${course.slug}`)}
             className="flex w-[75vw] shrink-0 snap-center cursor-pointer flex-col overflow-hidden rounded-[12px] border border-[#dedee7] bg-white transition-shadow duration-300 hover:shadow-lg sm:w-auto sm:shrink sm:snap-none"
@@ -158,7 +152,7 @@ const ExploreCourses = () => {
             </div>
           </motion.article>
         ))}
-      </motion.div>
+      </div>
 
       <div className="w-full max-w-[1272px] flex justify-start">
         <button
