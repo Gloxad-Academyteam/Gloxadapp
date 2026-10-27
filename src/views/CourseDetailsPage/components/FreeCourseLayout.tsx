@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { FaCheck, FaClipboardList, FaLinkedin } from "react-icons/fa";
 import CourseReviews from "./CourseReviews";
 import CourseModules from "./CourseModules";
+import CourseRecommendations from "./CourseRecommendations";
 
 type TProps = {
   course: any;
@@ -220,6 +221,10 @@ const FreeCourseLayout = ({ course }: TProps) => {
             reviewCount={course.reviewCount ?? course.reviews?.length ?? 0}
           />
         )}
+
+        <div className="mt-16 mb-10">
+          <CourseRecommendations course={course} />
+        </div>
       </div>
     </div>
   );

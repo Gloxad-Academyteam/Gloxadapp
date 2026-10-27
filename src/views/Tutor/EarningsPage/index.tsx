@@ -183,16 +183,15 @@ export default function EarningsPage() {
           <div>
             <h3 className="text-[16px] font-bold mb-6">Next Payout</h3>
             <p className="text-[13px] text-blue-200 mb-1">Scheduled for</p>
-            <h2 className="text-[24px] font-bold mb-8">July 15, 2024</h2>
+            <h2 className="text-[20px] font-bold mb-8">No payout scheduled yet</h2>
             
             <div className="bg-[#3b66b8] rounded-[8px] p-4 flex flex-col gap-2 mb-6">
               <div className="flex justify-between items-center text-[12px] text-blue-200">
-                <span>Verified Method</span>
-                <FaCheckCircle className="text-white" />
+                <span>Payout method</span>
               </div>
               <div className="flex items-center gap-3 text-[14px] font-bold">
                 <FaUniversity />
-                <span>Wells Fargo ****4291</span>
+                <span>Add a Nigerian bank account to receive payouts</span>
               </div>
             </div>
           </div>
@@ -276,7 +275,7 @@ export default function EarningsPage() {
 
         {/* Pagination */}
         <div className="p-4 border-t border-[#dedee7] flex justify-between items-center bg-[#f8fafc]">
-          <span className="text-[13px] text-[#717480]">Showing 1-4 of 128 transactions</span>
+          <span className="text-[13px] text-[#717480]">Your transactions will appear here</span>
           <div className="flex items-center gap-1">
             <button className="w-[32px] h-[32px] flex items-center justify-center rounded-[6px] border border-[#dedee7] bg-white text-[#a0aab8] hover:bg-gray-50">
               <FaChevronLeft className="text-[10px]" />

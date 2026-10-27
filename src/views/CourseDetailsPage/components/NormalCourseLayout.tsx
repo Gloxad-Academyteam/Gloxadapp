@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { FaCheck, FaClipboardList, FaLinkedin, FaStar, FaThumbsUp } from "react-icons/fa";
 import CourseModules from "./CourseModules";
 import CourseRecommendations from "./CourseRecommendations";
-import CourseTestimonials from "./CourseTestimonials";
 import CourseReviews from "./CourseReviews";
 import LessonVideo from "@components/LessonVideo";
 import { CATALOG_VIDEO_CREDIT, isEnrollmentClosed } from "@services/catalog";
@@ -403,12 +402,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
 
         {/* RECOMMENDATIONS SECTION */}
         <section id="recommendations" className="mb-20 scroll-mt-[160px]">
-          <CourseRecommendations />
-        </section>
-
-        {/* TRUSTED BY OTHERS / TESTIMONIALS SECTION */}
-        <section id="trusted" className="mb-20 scroll-mt-[160px]">
-          <CourseTestimonials />
+          <CourseRecommendations course={course} />
         </section>
 
         {/* REVIEWS SECTION */}

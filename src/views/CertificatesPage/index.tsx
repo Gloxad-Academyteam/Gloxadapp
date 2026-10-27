@@ -19,7 +19,15 @@ export default function CertificatesPage() {
 
   if (isLoading) return <div className="p-8 text-[#717480]">Loading certificates...</div>;
 
-  const completedCourses = (enrollments || []).filter((e: any) => e.progress?.percent === 100);
+  // The API may return a list or an object wrapping one; anything else shows the empty state instead of crashing
+  const enrollmentList: any[] = Array.isArray(enrollments)
+    ? enrollments
+    : Array.isArray(enrollments?.enrollments)
+      ? enrollments.enrollments
+      : Array.isArray(enrollments?.data)
+        ? enrollments.data
+        : [];
+  const completedCourses = enrollmentList.filter((e: any) => e.progress?.percent === 100);
 
   return (
     <div className="p-8 h-full bg-[#fcfcfd]">

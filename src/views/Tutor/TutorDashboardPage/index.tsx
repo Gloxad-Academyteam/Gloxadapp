@@ -73,7 +73,7 @@ const TutorDashboardPage = () => {
       icon: FaGraduationCap,
       iconBg: "bg-[#eeecff]",
       iconColor: "text-[#4c40e6]",
-      badge: "~ 12%",
+      badge: "",
       badgeBg: "bg-[#e3f2fd] text-[#3e92cc]",
     },
     {
@@ -82,7 +82,7 @@ const TutorDashboardPage = () => {
       icon: FaBolt,
       iconBg: "bg-[#e0f7fa]",
       iconColor: "text-[#00b8d9]",
-      badge: "~ 4%",
+      badge: "",
       badgeBg: "bg-[#e3f2fd] text-[#3e92cc]",
     },
     {
@@ -91,7 +91,7 @@ const TutorDashboardPage = () => {
       icon: FaCheckCircle,
       iconBg: "bg-[#fff8e1]",
       iconColor: "text-[#ffab00]",
-      badge: "- 0%",
+      badge: "",
       badgeBg: "bg-[#f4f5f7] text-[#8993a4]",
     },
     {
@@ -100,7 +100,7 @@ const TutorDashboardPage = () => {
       icon: FaMoneyBillWave,
       iconBg: "bg-[#e3f2fd]",
       iconColor: "text-[#3e92cc]",
-      badge: "~ 28%",
+      badge: "",
       badgeBg: "bg-[#e3f2fd] text-[#3e92cc]",
     },
   ];
@@ -133,7 +133,7 @@ const TutorDashboardPage = () => {
           </div>
           <div>
             <h1 className="text-[20px] font-bold text-[#202127]">Welcome back, {tutorName}!</h1>
-            <p className="text-[13px] text-[#8993a4]">You're doing great! Complete your profile to reach higher limits.</p>
+            <p className="text-[13px] text-[#8993a4]">Complete your profile to get the most out of Gloxad Academy.</p>
           </div>
         </div>
 
@@ -159,9 +159,11 @@ const TutorDashboardPage = () => {
               <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${card.iconBg} ${card.iconColor}`}>
                 <card.icon className="text-[20px]" />
               </div>
-              <span className={`rounded-full px-3 py-1 text-[11px] font-bold ${card.badgeBg}`}>
-                {card.badge}
-              </span>
+              {card.badge && (
+                <span className={`rounded-full px-3 py-1 text-[11px] font-bold ${card.badgeBg}`}>
+                  {card.badge}
+                </span>
+              )}
             </div>
             <div className="mt-5">
               <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-[#8993a4]">{card.title}</p>

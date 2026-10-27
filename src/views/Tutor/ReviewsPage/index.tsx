@@ -96,7 +96,7 @@ export default function ReviewsPage() {
           </div>
           <h2 className="text-[24px] font-bold text-[#202127] mb-2">No Review Yet!</h2>
           <p className="text-[15px] text-[#717480] mb-8 text-center max-w-[350px]">
-            You don't have any review yet. Check this inbox later!
+            You don't have any reviews yet. Reviews from your students will appear here.
           </p>
         </div>
       </div>

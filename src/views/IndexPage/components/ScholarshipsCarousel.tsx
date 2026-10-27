@@ -13,6 +13,7 @@ export interface ScholarshipItem {
   description: string;
   eligibility: string;
   deadline: string;
+  closesOn: string;
   image: StaticImageData;
   to: string;
   badge: string;
@@ -25,6 +26,7 @@ export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
     description: "Empowering learners with free access to tech courses in design, coding, and data analytics.",
     eligibility: "Eligibility: Open to anyone passionate about tech, with a strong motivation to learn.",
     deadline: "Application Deadline: March 25, 2026",
+    closesOn: "2026-03-25",
     image: ScholarshipTech,
     to: "/auth/signin?redirect=/scholarships",
     badge: "Fully Funded",
@@ -35,6 +37,7 @@ export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
     description: "Rewarding high-achieving students who demonstrate academic excellence and financial need.",
     eligibility: "Eligibility: Students with outstanding academic records (GPA 3.5+ or equivalent).",
     deadline: "Application Deadline: April 15, 2026",
+    closesOn: "2026-04-15",
     image: ScholarshipGrant,
     to: "/auth/signin?redirect=/scholarships",
     badge: "Merit Grant",
@@ -45,6 +48,7 @@ export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
     description: "Empowering women in STEM with full sponsorship, mentorship, and career placement support.",
     eligibility: "Eligibility: Female students and career switchers pursuing tech and design tracks.",
     deadline: "Application Deadline: May 01, 2026",
+    closesOn: "2026-05-01",
     image: ScholarshipTech,
     to: "/auth/signin?redirect=/scholarships",
     badge: "Fully Funded",
@@ -55,6 +59,7 @@ export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
     description: "Seed grants and mentorship for final project capstone graduates building real products.",
     eligibility: "Eligibility: Open to top trimester project graduates with verified submissions.",
     deadline: "Application Deadline: June 10, 2026",
+    closesOn: "2026-06-10",
     image: ScholarshipGrant,
     to: "/auth/signin?redirect=/scholarships",
     badge: "Project Grant",
@@ -62,7 +67,9 @@ export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
 ];
 
 // Tripled dataset to ensure enough content for smooth seamless infinite loop on wide screens
-const DUPLICATED_SCHOLARSHIPS = [...SCHOLARSHIPS_DATA, ...SCHOLARSHIPS_DATA, ...SCHOLARSHIPS_DATA];
+// Only scholarships whose application deadline has not passed
+const OPEN_SCHOLARSHIPS = SCHOLARSHIPS_DATA.filter((item) => new Date(item.closesOn) >= new Date(new Date().toDateString()));
+const DUPLICATED_SCHOLARSHIPS = [...OPEN_SCHOLARSHIPS, ...OPEN_SCHOLARSHIPS, ...OPEN_SCHOLARSHIPS];
 
 export const ScholarshipsCarousel: React.FC = () => {
   const router = useRouter();

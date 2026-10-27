@@ -75,7 +75,7 @@ const Footer = () => {
       </div>
 
       <div className="mx-auto max-w-[1512px] mt-16 pt-8 border-t border-white/20 flex flex-col md:flex-row items-center justify-between gap-6 text-[13px] text-white/90">
-        <p>© 2026 Gloxad Academy Inc. All rights reserved.</p>
+        <p>© 2026 Gloxad Academy. All rights reserved.</p>
         <div className="flex items-center gap-6">
           {/* INACTIVE LINKS LOGGED FOR LATER:
           <Link href="/terms" className="hover:underline">Terms</Link>

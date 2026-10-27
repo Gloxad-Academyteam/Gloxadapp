@@ -270,7 +270,7 @@ const SettingsPage = () => {
               <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Phone Number</label>
               <PhoneInput
                 international
-                defaultCountry="US"
+                defaultCountry="NG"
                 value={formData.phoneNumber}
                 onChange={(value) => setFormData(prev => ({ ...prev, phoneNumber: value || "" }))}
                 className="flex items-center h-11 px-4 border border-[#dedee7] rounded-[6px] bg-white focus-within:border-[#181C7B] transition-colors text-[14px] outline-none"
@@ -279,7 +279,7 @@ const SettingsPage = () => {
 
             {/* Title */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Tittle</label>
+              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Title</label>
               <div className="flex items-center border border-[#dedee7] rounded-[6px] pl-4 pr-3 bg-white focus-within:border-[#181C7B] transition-colors">
                 <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your tittle, proffesion or small biography" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <span className="text-[12px] text-[#4e515c] font-medium ml-2">{formData.title.length}/50</span>
@@ -342,7 +342,7 @@ const SettingsPage = () => {
               <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" disabled={isUploadingAvatar} />
             </div>
             <p className="text-[10px] text-[#717480] text-center leading-[1.6]">
-              Image size should be under 5MB<br/>and image ration needs to be 1:1
+              Image size should be under 5MB<br/>and image ratio needs to be 1:1
             </p>
           </div>
         </div>

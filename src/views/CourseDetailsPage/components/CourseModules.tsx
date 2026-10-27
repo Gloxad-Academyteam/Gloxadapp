@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaStar, FaPlay } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaPlay } from 'react-icons/fa';
 
 const defaultModules = [
   { title: "Inclusive education and special education: Equality and equity", moduleNumber: 1, duration: "3 hours to complete" },
@@ -128,33 +128,19 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
         ) : (
         <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
           <h3 className="text-[18px] font-bold text-[#202127] mb-2">Instructor</h3>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-[13px] text-[#717480]">Instructor ratings</span>
-            <div className="w-3 h-3 rounded-full bg-[#181C7B] text-white flex items-center justify-center text-[8px]">i</div>
-            <span className="text-[14px] font-bold text-[#202127] flex items-center gap-1 ml-1">
-              4.8 <FaStar className="text-[#181C7B] text-[12px]" />
-            </span>
-            <span className="text-[13px] text-[#717480]">(266 ratings)</span>
-          </div>
-
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 bg-gray-200">
-              <img 
-                src={course?.instructor?.avatarUrl || "https://i.pravatar.cc/150?img=11"} 
-                alt="Instructor" 
-                className="w-full h-full object-cover" 
-              />
+            <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 bg-[#181C7B] text-white flex items-center justify-center text-[16px] font-bold">
+              {course?.instructor?.avatarUrl ? (
+                <img src={course.instructor.avatarUrl} alt="Instructor" className="w-full h-full object-cover" />
+              ) : (
+                `${(course?.instructor?.firstName || "G")[0]}${(course?.instructor?.lastName || "A")[0]}`
+              )}
             </div>
             <div>
-              <h4 className="text-[15px] font-bold text-[#202127] underline decoration-1 underline-offset-2 cursor-pointer hover:text-[#181C7B] mb-1">
-                {course?.instructor?.firstName || "Omowumi"} {course?.instructor?.lastName || "Sharon"}
+              <h4 className="text-[15px] font-bold text-[#202127] mb-1">
+                {course?.instructor?.firstName || "Gloxad"} {course?.instructor?.lastName || "Academy"}
               </h4>
-              <p className="text-[13px] text-[#4e515c] mb-2">GLOXAD ACADEMY</p>
-              <div className="flex items-center gap-2 text-[12px] text-[#717480]">
-                <span>2 Courses</span>
-                <span>•</span>
-                <span>43,539 learners</span>
-              </div>
+              <p className="text-[13px] text-[#4e515c]">GLOXAD ACADEMY</p>
             </div>
           </div>
         </div>
