@@ -40,7 +40,7 @@ type TCatalogEntry = {
 export type TCatalogCourse = TCatalogEntry & {
   _id: string;
   isCatalog: true;
-  courseType: "paid";
+  courseType: "free" | "paid";
   thumbnailUrl: string;
   trailerVideoUrl: string;
   whatYouWillTeach: string[];
@@ -59,7 +59,8 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   ...entry,
   _id: `catalog-${entry.slug}`,
   isCatalog: true,
-  courseType: "paid",
+  // Price 0 means free, the same rule the backend uses when it imports the catalog
+  courseType: entry.price === 0 ? "free" : "paid",
   thumbnailUrl: entry.thumbnail,
   trailerVideoUrl: entry.videos[0]?.url ?? "",
   whatYouWillTeach: entry.whatYouWillLearn,
@@ -130,5 +131,7 @@ export function normaliseApiCourse(course: any) {
 }
 
 // Listed but not purchasable yet: catalog-only courses, and imported courses whose price isn't set
-export const isEnrollmentClosed = (course: any) => !!course?.isCatalog || course?.enrollmentOpen === false;
+// Free catalog courses can be enrolled in (once they are in the database); paid ones are closed until priced
+export const isEnrollmentClosed = (course: any) =>
+  course?.enrollmentOpen === false || (!!course?.isCatalog && course?.courseType !== "free");
 

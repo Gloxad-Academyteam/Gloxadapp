@@ -108,10 +108,13 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
       <div className="w-full lg:w-[380px] shrink-0">
         {course?.isCatalog || course?.videoCredit ? (
           <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
-            <h3 className="text-[18px] font-bold text-[#202127] mb-2">Video lessons</h3>
+            <h3 className="text-[18px] font-bold text-[#202127] mb-2">External learning resource</h3>
             <p className="text-[14px] text-[#4e515c] leading-relaxed">
-              Lessons in this course are taught by freeCodeCamp.org instructors and used with permission. Gloxad Academy adds the
-              programme structure, assessments and certification.
+              Creator/channel: freeCodeCamp.org. Source: YouTube, where each lesson is played in its original player.
+            </p>
+            <p className="mt-2 text-[13px] text-[#6b6d76] leading-relaxed">
+              This content is created and owned by its respective creator. Gloxad Academy provides access through a YouTube
+              embed and does not claim authorship or ownership.
             </p>
             <a
               href="https://www.youtube.com/@freecodecamp"
@@ -119,7 +122,7 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
               rel="noopener noreferrer"
               className="mt-3 inline-block text-[14px] font-bold text-[#181C7B] hover:underline"
             >
-              freeCodeCamp.org on YouTube
+              Original source: freeCodeCamp.org on YouTube
             </a>
           </div>
         ) : (
