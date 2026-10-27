@@ -13,17 +13,17 @@ const FreeCourses = () => {
 
   return (
     <ScrollReveal className="mx-auto flex w-full max-w-[1512px] flex-col items-center px-5 py-10 md:px-10 lg:px-[120px]">
-      <div className="text-center">
+      <div className="mb-8 text-center">
         <h2 className="text-[28px] font-bold leading-[1.2] text-[#202127] md:text-[34px]">
           Start Learning for Free!
         </h2>
-        <p className="mt-2 text-[15px] text-[#4e515c] mb-8">
+        <p className="mt-2 text-[15px] text-[#4e515c]">
           Explore our free courses and upgrade anytime to get a certificate!
         </p>
         <button
           type="button"
           onClick={() => router.push("/free")}
-          className="btn-interactive mt-4 h-[42px] rounded-full border border-[#07004d] px-6 text-[14px] font-medium text-[#07004d] transition hover:bg-[#07004d] hover:text-white"
+          className="btn-interactive mt-5 h-[42px] rounded-full border border-[#07004d] px-6 text-[14px] font-medium text-[#07004d] transition hover:bg-[#07004d] hover:text-white"
         >
           Browse all {catalogCourses.length} free courses
         </button>
