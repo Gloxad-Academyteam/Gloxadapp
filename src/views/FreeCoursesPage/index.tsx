@@ -35,13 +35,16 @@ const FreeCoursesPage = () => {
                 <p className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#3e92cc]">{course.programme}</p>
                 <h3 className="mt-1 line-clamp-2 text-[15px] font-bold leading-tight text-[#201633]">{course.title}</h3>
                 <p className="mt-2 line-clamp-3 flex-1 text-[13px] leading-[1.55] text-[#6b6d76]">{course.subtitle}</p>
-                <p className="mt-3 text-[12px] font-medium text-[#F97316]">
-                  {course.videos.length} video lessons · {course.videoHours} hours
-                </p>
-                <p className="mt-1 text-[12px] text-[#8a8c95]">{course.level}</p>
+                {/* On phones the button sits right under the description; from tablet up it goes last */}
+                <div className="order-5 sm:order-4">
+                  <p className="mt-3 text-[12px] font-medium text-[#F97316]">
+                    {course.videos.length} video lessons · {course.videoHours} hours
+                  </p>
+                  <p className="mt-1 text-[12px] text-[#8a8c95]">{course.level}</p>
+                </div>
                 <Link
                   href={`/courses/${course.slug}`}
-                  className="btn-interactive mt-4 inline-flex h-[36px] w-max items-center rounded-full bg-[#07004d] px-6 text-[13px] font-medium text-white transition hover:bg-[#111456]"
+                  className="btn-interactive order-4 mt-3 inline-flex h-[36px] w-max items-center rounded-full bg-[#07004d] px-6 text-[13px] font-medium text-white transition hover:bg-[#111456] sm:order-6 sm:mt-4"
                 >
                   Start Learning
                 </Link>
