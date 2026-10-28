@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { FiX, FiCheckCircle } from "react-icons/fi";
 import axiosInstance from "../../utils/axiosInstance";
+import { getMyEnrollment } from "@services/enrollments";
 
 export default function CourseQuizPage() {
   const { id: courseId, moduleId } = useParams<{ id: string; moduleId: string }>()!;
@@ -19,8 +20,7 @@ export default function CourseQuizPage() {
   const { data: enrollment, isLoading: isEnrollmentLoading, isError: isEnrollmentError } = useQuery({
     queryKey: ["enrollment", courseId],
     queryFn: async () => {
-      const res = await axiosInstance.get("/enrollments/my-courses");
-      const match = res.data.find((e: any) => e.course?._id === courseId || e.course === courseId);
+      const match = await getMyEnrollment(courseId);
       if (!match) throw new Error("Not enrolled");
       return match;
     },
@@ -31,7 +31,8 @@ export default function CourseQuizPage() {
     queryKey: ["course.quiz", courseId],
     queryFn: async () => {
       const res = await axiosInstance.get(`/courses/${courseId}`);
-      return res.data;
+      // GET /courses/:slugOrId answers { course, isEnrolled }
+      return res.data?.course ?? res.data;
     },
     enabled: !!courseId
   });

@@ -87,7 +87,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
         reference: reference.reference
       });
       toast.success("Enrolled successfully!");
-      router.push(`/dashboard`);
+      router.push(`/learning/${course._id}`);
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Failed to verify enrollment.");
     }
@@ -115,7 +115,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
       axiosInstance.post(`/enrollments/enroll/${course._id}`)
         .then(() => {
           toast.success("Enrolled successfully!");
-          router.push(`/dashboard`);
+          router.push(`/learning/${course._id}`);
         })
         .catch((err: any) => {
           toast.error(err.response?.data?.error || "Failed to enroll.");

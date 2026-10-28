@@ -27,7 +27,7 @@ export default function CertificatesPage() {
       : Array.isArray(enrollments?.data)
         ? enrollments.data
         : [];
-  const completedCourses = enrollmentList.filter((e: any) => e.progress?.percent === 100);
+  const completedCourses = enrollmentList.filter((e: any) => (e.progressPercentage ?? e.progress?.percent) === 100);
 
   return (
     <div className="p-8 h-full bg-[#fcfcfd]">

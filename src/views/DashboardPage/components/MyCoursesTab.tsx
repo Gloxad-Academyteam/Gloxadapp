@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axiosInstance from "@utils/axiosInstance";
+import { useRouter } from "next/navigation";
+import { getMyEnrollments } from "@services/enrollments";
 import { toast } from "react-toastify";
 import { FaPlay, FaCalendarAlt, FaFlag } from "react-icons/fa";
 import CertificateView from "./CertificateView";
@@ -25,6 +26,7 @@ const imageMap: Record<string, StaticImageData> = {
 };
 
 const MyCoursesTab = () => {
+  const router = useRouter();
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activePill, setActivePill] = useState("In Progress");
@@ -33,8 +35,7 @@ const MyCoursesTab = () => {
   useEffect(() => {
     const fetchEnrollments = async () => {
       try {
-        const response = await axiosInstance.get("/enrollments/my-courses");
-        setEnrollments(response.data || []);
+        setEnrollments(await getMyEnrollments());
       } catch (error) {
         console.error("Failed to fetch enrollments:", error);
         toast.error("Failed to load your courses");
@@ -46,6 +47,10 @@ const MyCoursesTab = () => {
   }, []);
 
   const pills = ["In Progress", "Completed", "Certificates"];
+  const visibleEnrollments = enrollments.filter((enrollment) => {
+    const done = (enrollment.progressPercentage ?? 0) >= 100;
+    return activePill === "Completed" ? done : !done;
+  });
 
   return (
     <div className="mx-auto max-w-[1512px] px-5 md:px-10 lg:px-[120px] pt-12 pb-24">
@@ -93,17 +98,27 @@ const MyCoursesTab = () => {
         <div className="flex-1 flex flex-col gap-6">
           {isLoading ? (
             <div className="py-10 text-center text-[#717480]">Loading your courses...</div>
-          ) : enrollments.length === 0 ? (
-            <div className="py-10 text-center text-[#717480]">You are not enrolled in any courses yet.</div>
+          ) : visibleEnrollments.length === 0 ? (
+            <div className="py-10 text-center text-[#717480]">
+              {enrollments.length === 0
+                ? "You are not enrolled in any courses yet."
+                : activePill === "Completed"
+                  ? "You have not completed a course yet."
+                  : "You have finished every course you started."}
+            </div>
           ) : (
-            enrollments.map((enrollment, idx) => {
+            visibleEnrollments
+              .map((enrollment, idx) => {
               const course = enrollment.course;
               if (!course) return null;
               const instructorName = course.instructor 
                 ? `${course.instructor.firstName} ${course.instructor.lastName}` 
                 : "Gloxad Academy";
               
-              const progress = enrollment.progress || { completed: 0, total: 0, percent: 0 };
+              const progress = {
+                completed: enrollment.completedLessons?.length ?? 0,
+                percent: enrollment.progressPercentage ?? 0,
+              };
               const categoryTag = course.category?.name || (idx % 2 === 0 ? "DESIGN" : "DEVELOPMENT");
               const categoryColor = idx % 2 === 0 ? "bg-[#e0f2fe] text-[#0284c7]" : "bg-[#dcfce3] text-[#166534]";
 
@@ -127,7 +142,7 @@ const MyCoursesTab = () => {
                         {categoryTag}
                       </span>
                       <span className="text-[12px] font-bold text-[#717480]">
-                        {progress.completed}/{progress.total} Lessons
+                        {progress.completed} {progress.completed === 1 ? "lesson" : "lessons"} done
                       </span>
                     </div>
 
@@ -145,7 +160,7 @@ const MyCoursesTab = () => {
                           <div className="h-full bg-[#1e4ed8] rounded-full" style={{ width: `${progress.percent}%` }}></div>
                         </div>
                       </div>
-                      <button className="flex items-center gap-2 bg-[#1e4ed8] text-white px-6 py-2.5 rounded-[6px] text-[13px] font-bold hover:bg-blue-800 transition-colors shrink-0 btn-interactive">
+                      <button type="button" onClick={() => router.push(`/learning/${course._id}`)} className="flex items-center gap-2 bg-[#1e4ed8] text-white px-6 py-2.5 rounded-[6px] text-[13px] font-bold hover:bg-blue-800 transition-colors shrink-0 btn-interactive">
                         <FaPlay className="text-[10px]" /> Resume
                       </button>
                     </div>

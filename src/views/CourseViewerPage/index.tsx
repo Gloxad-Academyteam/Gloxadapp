@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiChevronLeft, FiStar, FiClock, FiCheckCircle, FiPlayCircle, FiSearch, FiChevronDown, FiPlus, FiMoreVertical, FiChevronUp } from "react-icons/fi";
 import axiosInstance from "../../utils/axiosInstance";
 import LessonVideo from "@components/LessonVideo";
+import { getMyEnrollment, getCourseProgress, saveLessonProgress } from "@services/enrollments";
 
 export default function CourseViewerPage() {
   const { id: courseId } = useParams<{ id: string }>()!;
@@ -23,8 +24,7 @@ export default function CourseViewerPage() {
   const { data: enrollment, isLoading, isError } = useQuery({
     queryKey: ["enrollment", courseId],
     queryFn: async () => {
-      const res = await axiosInstance.get("/enrollments/my-courses");
-      const match = res.data.find((e: any) => e.course?._id === courseId || e.course === courseId);
+      const match = await getMyEnrollment(courseId);
       if (!match) throw new Error("Not enrolled");
       return match;
     },
@@ -35,7 +35,8 @@ export default function CourseViewerPage() {
     queryKey: ["course.detail", courseId],
     queryFn: async () => {
       const res = await axiosInstance.get(`/courses/${courseId}`);
-      return res.data;
+      // GET /courses/:slugOrId answers { course, isEnrolled }
+      return res.data?.course ?? res.data;
     },
     enabled: !!courseId
   });
@@ -97,6 +98,49 @@ export default function CourseViewerPage() {
     }
   });
 
+  const lessons: any[] = useMemo(
+    () => (courseData?.modules || []).flatMap((mod: any) => mod.lessons || []),
+    [courseData]
+  );
+  const completedIds = useMemo(() => new Set((enrollment?.completedLessons || []).map(String)), [enrollment]);
+
+  const progressMutation = useMutation({
+    mutationFn: (vars: { lessonId: string; completed?: boolean }) => saveLessonProgress(courseId, vars),
+    onSuccess: (_data, vars) => {
+      if (!vars.completed) return;
+      queryClient.invalidateQueries({ queryKey: ["enrollment", courseId] });
+      queryClient.invalidateQueries({ queryKey: ["my-courses"] });
+    },
+  });
+
+  // Open the lesson the learner stopped at, or the first one they have not finished
+  useEffect(() => {
+    if (activeLesson || !enrollment || lessons.length === 0) return;
+    const resume =
+      lessons.find((l) => String(l._id) === String(enrollment.lastAccessedLesson)) ||
+      lessons.find((l) => !completedIds.has(String(l._id))) ||
+      lessons[0];
+    setActiveLesson(resume);
+  }, [activeLesson, enrollment, lessons, completedIds]);
+
+  // Picking a lesson remembers it, so "Resume" returns to the same place next time
+  const selectLesson = (lesson: any) => {
+    setActiveLesson(lesson);
+    if (lesson?._id) progressMutation.mutate({ lessonId: lesson._id });
+  };
+
+  const activeIndex = lessons.findIndex((l) => l._id === activeLesson?._id);
+  const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
+  const isActiveDone = !!activeLesson && completedIds.has(String(activeLesson._id));
+
+  const markComplete = (andContinue = false) => {
+    if (!activeLesson || activeLesson.isQuiz) return;
+    progressMutation.mutate(
+      { lessonId: activeLesson._id, completed: true },
+      { onSuccess: () => { if (andContinue && nextLesson) selectLesson(nextLesson); } }
+    );
+  };
+
   const toggleModule = (modId: string) => {
     setExpandedModules(prev => ({ ...prev, [modId]: !prev[modId] }));
   };
@@ -116,10 +160,8 @@ export default function CourseViewerPage() {
     return <div className="p-20 text-center text-[#717480]">Loading course...</div>;
   }
 
-  const completedCount = enrollment?.progress?.completed || 0;
-  const totalCount = enrollment?.progress?.total || 1;
-  const progressPercent = Math.round((completedCount / totalCount) * 100);
-  const isCompleted = completedCount >= totalCount && totalCount > 0;
+  const { completed: completedCount, total: totalCount, percent: progressPercent } = getCourseProgress(enrollment, courseData);
+  const isCompleted = totalCount > 0 && completedCount >= totalCount;
 
   return (
     <div className="w-full h-screen bg-[#f8fafc] flex flex-col text-[#202127] overflow-hidden">
@@ -216,6 +258,33 @@ export default function CourseViewerPage() {
               </div>
             )}
           </div>
+
+          {/* Lesson toolbar: finish this lesson, or finish it and move on */}
+          {activeLesson && !activeLesson.isQuiz && (
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#dedee7] bg-white px-6 py-4">
+              <p className="line-clamp-1 text-[14px] font-bold text-[#202127]">{activeLesson.title}</p>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => markComplete(false)}
+                  disabled={isActiveDone || progressMutation.isPending}
+                  className="h-[38px] rounded-[8px] border border-[#07006f] px-4 text-[13px] font-bold text-[#07006f] transition-colors hover:bg-[#eef2ff] disabled:cursor-default disabled:border-[#dedee7] disabled:text-[#8a8c95] disabled:hover:bg-transparent"
+                >
+                  {isActiveDone ? "Completed" : "Mark as complete"}
+                </button>
+                {nextLesson && (
+                  <button
+                    type="button"
+                    onClick={() => markComplete(true)}
+                    disabled={progressMutation.isPending}
+                    className="h-[38px] rounded-[8px] bg-[#07006f] px-4 text-[13px] font-bold text-white transition-colors hover:bg-[#0a0050] disabled:opacity-60"
+                  >
+                    {isActiveDone ? "Next lesson" : "Complete and continue"}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Content Tabs */}
           <div className="flex-1 w-full max-w-[900px] mx-auto px-8 py-8">
@@ -474,7 +543,9 @@ export default function CourseViewerPage() {
                   >
                     <div>
                       <h3 className="font-bold text-[14px] text-[#202127] line-clamp-1">Section {idx + 1}: {mod.title}</h3>
-                      <p className="text-[12px] text-[#717480] mt-1">0 / {mod.lessons?.length || 0} | 45min</p>
+                      <p className="text-[12px] text-[#717480] mt-1">
+                        {(mod.lessons || []).filter((l: any) => completedIds.has(String(l._id))).length} / {mod.lessons?.length || 0} lessons
+                      </p>
                     </div>
                     {isExpanded ? <FiChevronUp className="text-[#a0aab8]" /> : <FiChevronDown className="text-[#a0aab8]" />}
                   </button>
@@ -483,12 +554,12 @@ export default function CourseViewerPage() {
                     <div className="bg-white">
                       {(mod.lessons || []).map((lesson: any, lIdx: number) => {
                         const isActive = activeLesson?._id === lesson._id;
-                        const isLessonCompleted = enrollment?.completedLessons?.includes(lesson._id);
+                        const isLessonCompleted = completedIds.has(String(lesson._id));
                         
                         return (
                           <button 
                             key={lesson._id}
-                            onClick={() => setActiveLesson(lesson)}
+                            onClick={() => selectLesson(lesson)}
                             className={`w-full flex items-start gap-3 p-4 hover:bg-[#f8fafc] transition-colors text-left ${isActive ? 'bg-[#eef2ff]' : ''}`}
                           >
                             <div className="mt-1 flex-shrink-0">

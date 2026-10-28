@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "../../../hooks/useAuth";
-import axiosInstance from "../../../utils/axiosInstance";
+import { enrollInFreeCourse } from "@services/enrollments";
 import { toast } from "react-toastify";
 import { FaCheck, FaClipboardList, FaLinkedin } from "react-icons/fa";
 import CourseReviews from "./CourseReviews";
@@ -27,13 +27,16 @@ const FreeCourseLayout = ({ course }: TProps) => {
       return;
     }
 
-    axiosInstance.post(`/enrollments/enroll/${course._id}`)
-      .then(() => {
-        toast.success("Enrolled successfully! You can now start learning.");
-        router.push(`/dashboard`);
-      })
+    // A course that exists only in the bundled catalogue has no database record to enrol in yet
+    if (course.isCatalog) {
+      toast.info("This course is not open for enrolment yet. Please check back soon.");
+      return;
+    }
+
+    enrollInFreeCourse(course._id)
+      .then(() => router.push(`/learning/${course._id}`))
       .catch((err: any) => {
-        toast.error(err.response?.data?.error || "Failed to enroll.");
+        toast.error(err.response?.data?.error || "Could not start this course. Please try again.");
       });
   };
 
