@@ -215,7 +215,7 @@ export default function CourseViewerPage() {
                     </div>
                     <div>
                       <div className="text-[12px] text-[#717480] uppercase tracking-wider font-bold mb-1">Questions</div>
-                      <div className="text-[16px] font-bold text-[#202127]">{activeLesson.questionsCount || 10} Questions</div>
+                      <div className="text-[16px] font-bold text-[#202127]">{activeLesson.questionsCount ?? 0} Questions</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -224,7 +224,7 @@ export default function CourseViewerPage() {
                     </div>
                     <div>
                       <div className="text-[12px] text-[#717480] uppercase tracking-wider font-bold mb-1">Time Limit</div>
-                      <div className="text-[16px] font-bold text-[#202127]">{activeLesson.timeLimitMinutes || 15} Minutes</div>
+                      <div className="text-[16px] font-bold text-[#202127]">15 Minutes</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -233,13 +233,13 @@ export default function CourseViewerPage() {
                     </div>
                     <div>
                       <div className="text-[12px] text-[#717480] uppercase tracking-wider font-bold mb-1">Passing Score</div>
-                      <div className="text-[16px] font-bold text-[#202127]">{activeLesson.passingScore || 80}%</div>
+                      <div className="text-[16px] font-bold text-[#202127]">{activeLesson.passingScore ?? 70}%</div>
                     </div>
                   </div>
                 </div>
 
                 <button 
-                  onClick={() => router.push(`/learning/${courseId}/quiz/${activeLesson.moduleId}`)}
+                  onClick={() => router.push(`/learning/${courseId}/quiz/${activeLesson._id}`)}
                   className="w-fit px-8 h-[52px] bg-[#07006f] text-white rounded-[8px] font-bold text-[15px] hover:bg-[#0a0050] transition-colors"
                 >
                   Start Quiz
@@ -580,27 +580,27 @@ export default function CourseViewerPage() {
                         );
                       })}
 
-                      {mod.quiz && mod.quiz.title && (
-                        <button 
-                          onClick={() => setActiveLesson({ 
-                            ...mod.quiz, 
-                            isQuiz: true, 
-                            moduleId: mod._id, 
-                            questionsCount: mod.quiz.questions?.length || 10 
-                          })}
-                          className={`w-full flex items-start gap-3 p-4 hover:bg-[#f8fafc] transition-colors text-left border-t border-[#dedee7] ${activeLesson?.isQuiz && activeLesson?.moduleId === mod._id ? 'bg-[#eef2ff]' : ''}`}
-                        >
-                          <div className="mt-1 flex-shrink-0 text-[#07006f]">
-                            <FiStar />
-                          </div>
-                          <div className="flex-1">
-                            <p className={`text-[14px] leading-tight mb-1 ${activeLesson?.isQuiz && activeLesson?.moduleId === mod._id ? 'font-bold text-[#07006f]' : 'font-bold text-[#202127]'}`}>{mod.quiz.title}</p>
-                            <div className="flex items-center gap-2 text-[12px] text-[#717480]">
-                              {mod.quiz.questions?.length || 10} Questions
+                      {(mod.quizzes || []).map((quiz: any) => {
+                        const isActiveQuiz = activeLesson?.isQuiz && activeLesson?._id === quiz._id;
+                        return (
+                          <button
+                            key={quiz._id}
+                            type="button"
+                            onClick={() => setActiveLesson({ ...quiz, isQuiz: true, moduleId: mod._id, questionsCount: quiz.questions?.length ?? 0 })}
+                            className={`w-full flex items-start gap-3 p-4 hover:bg-[#f8fafc] transition-colors text-left border-t border-[#dedee7] ${isActiveQuiz ? "bg-[#eef2ff]" : ""}`}
+                          >
+                            <div className="mt-1 flex-shrink-0 text-[#07006f]">
+                              <FiStar />
                             </div>
-                          </div>
-                        </button>
-                      )}
+                            <div className="flex-1">
+                              <p className={`text-[14px] leading-tight mb-1 ${isActiveQuiz ? "font-bold text-[#07006f]" : "font-bold text-[#202127]"}`}>
+                                {quiz.title || "Quiz"}
+                              </p>
+                              <div className="flex items-center gap-2 text-[12px] text-[#717480]">{quiz.questions?.length ?? 0} Questions</div>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

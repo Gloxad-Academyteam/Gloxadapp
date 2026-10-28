@@ -69,7 +69,7 @@ The video lessons come from [freeCodeCamp.org](https://www.youtube.com/@freecode
 | --- | --- |
 | **Public site** | Home page with category tabs, free courses, the course catalogue and course pages, the trimester programme page, tutor and institution landing pages, sign-in and sign-up |
 | **Student dashboard** | My courses, free courses, trimester courses, certificates, notifications, messages, settings |
-| **Course player** | Lessons, notes and questions, quizzes, a completion page and a downloadable certificate. Some of its API calls still need fixing: see [Learning](#5-learning). |
+| **Course player** | Lessons with saved progress, notes and questions, server-scored quizzes, a completion page and a downloadable certificate |
 | **Tutor area** | Dashboard, a step-by-step course upload wizard, credential verification, earnings, reviews, messages |
 | **Admin area** | Courses, tutors, students, reviews, finance, live classes, platform settings |
 | **Institution module** | Landing page, application, a six-step onboarding wizard (logo, departments, tutors, students, subscription, branding), and an institution dashboard. These screens are designed and built, and run on demo data until the backend endpoints exist. |
@@ -160,15 +160,14 @@ flowchart TD
 
 ### 5. Learning
 
-The course player (`/learning/[id]`) loads the enrolment, the course, the lesson questions, the learner's notes and the course announcements, plays the lesson, and lets the learner post questions and notes. Finished courses open `/learning/[id]/certificate`, where the certificate is **built in the browser** (`html2canvas` and `jspdf`) and downloaded as a PDF.
+Starting a course:
 
-> **Known gaps, checked on 28 October 2026 against the backend code and a local run.** The learning screens were written before the API settled, so several calls do not line up yet:
->
-> - **Enrolments list.** `GET /enrollments/my-courses` answers `{ enrollments, pagination }`, but the course player, the My Courses tab and the dashboard hook treat the answer as a plain list. The certificates page accepts both shapes, but still looks for `progress.percent`, while the API sends `progressPercentage`.
-> - **Lesson progress is never saved.** Nothing in the course player calls `POST /learning/:courseId/progress`, and it reads a `progress.completed` and `progress.total` the API does not send.
-> - **Quizzes.** The quiz page looks for `module.quiz` (the API has `quizzes`), falls back to three built-in questions, works out the score in the browser using answers the API deliberately hides, and sends `{ score, passed }`. The API expects an `answers` list and answers 400 ("Invalid or missing answers array").
->
-> Fixing these is the next step for the learning area (see the roadmap).
+1. **Start Learning** enrols the learner (`POST /enrollments/enroll/:id`, safe to repeat) and opens the course player at `/learning/<course id>`. A course that exists only in the bundled catalogue cannot be enrolled in yet, and the page says so.
+2. **The player** loads the learner's enrolment (`GET /enrollments/my-courses`, which answers `{ enrollments, pagination }`) and the course (`GET /courses/:id`, which answers `{ course, isEnrolled }`). It opens the lesson the learner stopped at, or the first unfinished one.
+3. **Progress is saved on the server.** Picking a lesson remembers it (`POST /learning/:courseId/progress`). **Mark as complete** and **Complete and continue** mark it finished, and the API recalculates the percentage. The sidebar ticks, the progress bar, **My Courses** and the **Continue learning** card all read the same saved numbers.
+4. **Quizzes** appear in the lesson list. The quiz page shows the quiz's real questions and sends only the chosen option for each (`POST /learning/:courseId/quiz/:quizId/submit` with an `answers` list). **The API scores it**, because it never sends the answer key to learners, and the page shows the API's result: score, pass mark, and correct, incorrect and skipped counts. A failed quiz can be retaken. The page's 15-minute timer is a page feature, not enforced by the API.
+5. **Certificates.** A finished course opens `/learning/[id]/certificate`, where the certificate is **built in the browser** (`html2canvas` and `jspdf`) and downloaded as a PDF. The Certificates tab on **My Courses** lists the learner's real completed courses.
+6. **Questions and notes.** The player lets the learner post lesson questions and private notes.
 
 ### 6. Teaching
 
@@ -420,7 +419,6 @@ Team documents are in [`docs/`](docs/):
 
 ## Known issues and roadmap
 
-- [ ] **Fix the learning screens' API calls** (see [Learning](#5-learning)): read `{ enrollments }` from `/enrollments/my-courses`, save lesson progress with `POST /learning/:courseId/progress`, and rebuild the quiz page around `quizzes` and the `answers` the API expects.
 - [ ] Connect the LMS lesson, quiz, assignments, community, certificates and instructor and admin dashboards to the API as the endpoints appear.
 - [ ] Move live-class chat and polls from polling to the `/live` socket channel.
 - [ ] Fix the Jest set-up so the tests run, then add tests for the course pages and guards.

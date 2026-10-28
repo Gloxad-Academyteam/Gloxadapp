@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getMyEnrollments } from "@services/enrollments";
 import { toast } from "react-toastify";
-import { FaPlay, FaCalendarAlt, FaFlag } from "react-icons/fa";
-import CertificateView from "./CertificateView";
+import { FaPlay, FaFlag } from "react-icons/fa";
+import CertificatesPage from "@pages/CertificatesPage";
 import useAuth from "@hooks/useAuth";
 
 import FreePythonImg from "@assets/images/free-python.png";
@@ -47,6 +47,16 @@ const MyCoursesTab = () => {
   }, []);
 
   const pills = ["In Progress", "Completed", "Certificates"];
+  const percentOf = (enrollment: any) => enrollment.progressPercentage ?? 0;
+  const completedCount = enrollments.filter((enrollment) => percentOf(enrollment) >= 100).length;
+  const lessonsDone = enrollments.reduce((total, enrollment) => total + (enrollment.completedLessons?.length ?? 0), 0);
+  const averagePercent = enrollments.length
+    ? Math.round(enrollments.reduce((total, enrollment) => total + percentOf(enrollment), 0) / enrollments.length)
+    : 0;
+  // The unfinished course worked on most recently
+  const continueEnrollment = enrollments
+    .filter((enrollment) => enrollment.course && percentOf(enrollment) < 100)
+    .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())[0];
   const visibleEnrollments = enrollments.filter((enrollment) => {
     const done = (enrollment.progressPercentage ?? 0) >= 100;
     return activePill === "Completed" ? done : !done;
@@ -83,14 +93,7 @@ const MyCoursesTab = () => {
       </div>
 
       {activePill === "Certificates" ? (
-        <CertificateView 
-          studentName={authenticatedUser?.firstName ? `${authenticatedUser.firstName} ${authenticatedUser.lastName}` : "Moses Philippine"}
-          courseName="Web Development (Frontend) Basic level A"
-          completionDate="July 3rd, 2025"
-          score="80%"
-          certificateId="12345678AD"
-          onBack={() => setActivePill("In Progress")}
-        />
+        <CertificatesPage />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8">
           
@@ -171,98 +174,56 @@ const MyCoursesTab = () => {
           )}
         </div>
 
-        {/* Right Column: Widgets */}
+        {/* Right Column: the learner's own numbers */}
         <div className="w-full lg:w-[320px] flex flex-col gap-6 shrink-0">
-          
-          {/* Weekly Goals Widget */}
           <div className="bg-white border border-[#e2e8f0] rounded-[16px] p-6 shadow-sm">
             <h3 className="text-[15px] font-bold text-[#202127] mb-6 flex items-center gap-2">
-              <FaFlag className="text-[#1e4ed8]" /> Weekly Goals
+              <FaFlag className="text-[#1e4ed8]" /> Your Learning
             </h3>
-            
+
             <div className="mb-6">
               <div className="flex justify-between text-[12px] font-bold text-[#202127] mb-2">
-                <span>Study Time</span>
-                <span>12 / 20 hrs</span>
+                <span>Average progress</span>
+                <span>{averagePercent}%</span>
               </div>
               <div className="w-full h-[6px] bg-[#e2e8f0] rounded-full overflow-hidden">
-                <div className="h-full bg-[#1e4ed8] w-[60%] rounded-full"></div>
+                <div className="h-full bg-[#1e4ed8] rounded-full" style={{ width: `${averagePercent}%` }}></div>
               </div>
             </div>
 
-            <div className="mb-8">
-              <div className="flex justify-between text-[12px] font-bold text-[#202127] mb-2">
-                <span>Lessons Completed</span>
-                <span>8 / 10</span>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div className="text-[22px] font-bold text-[#202127]">{enrollments.length}</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#717480]">Enrolled</div>
               </div>
-              <div className="w-full h-[6px] bg-[#e2e8f0] rounded-full overflow-hidden">
-                <div className="h-full bg-[#16a34a] w-[80%] rounded-full"></div>
+              <div>
+                <div className="text-[22px] font-bold text-[#202127]">{lessonsDone}</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#717480]">Lessons done</div>
               </div>
-            </div>
-
-            <button className="w-full text-center text-[12px] font-bold text-[#1e4ed8] hover:underline">
-              Edit Your Goals
-            </button>
-          </div>
-
-          {/* Academic Streak Widget */}
-          <div className="bg-[#1e4ed8] rounded-[16px] p-6 text-white shadow-md relative overflow-hidden">
-            {/* Subtle background glow/shape simulation */}
-            <div className="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] bg-white opacity-10 rounded-full blur-2xl"></div>
-            
-            <h3 className="text-[14px] font-medium mb-2 opacity-90">Academic Streak</h3>
-            <div className="flex items-baseline gap-2 mb-3">
-              <span className="text-[36px] font-bold leading-none">14</span>
-              <span className="text-[13px] font-medium opacity-90">Days in a row!</span>
-            </div>
-            <p className="text-[12px] leading-relaxed opacity-80 mb-6">
-              You're in the top 5% of learners this week. Keep the momentum going!
-            </p>
-            
-            {/* Mini Bar Chart Mockup */}
-            <div className="flex items-end gap-1.5 h-[30px]">
-              {[40, 60, 50, 80, 70, 90, 100].map((height, i) => (
-                <div 
-                  key={i} 
-                  className={`w-[5px] rounded-t-sm ${i === 6 ? 'bg-white' : 'bg-white/40'}`} 
-                  style={{ height: `${height}%` }}
-                ></div>
-              ))}
+              <div>
+                <div className="text-[22px] font-bold text-[#16a34a]">{completedCount}</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[#717480]">Completed</div>
+              </div>
             </div>
           </div>
 
-          {/* Deadlines Widget */}
-          <div className="bg-white border border-[#e2e8f0] rounded-[16px] p-6 shadow-sm">
-            <h3 className="text-[15px] font-bold text-[#202127] mb-5 flex items-center gap-2">
-              <FaCalendarAlt className="text-[#e11d48]" /> Deadlines
-            </h3>
-            
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-[42px] h-[46px] rounded-[8px] bg-[#ffe4e6] text-[#e11d48] flex flex-col items-center justify-center shrink-0">
-                  <span className="text-[10px] font-bold uppercase leading-none mb-1">Oct</span>
-                  <span className="text-[16px] font-bold leading-none">24</span>
-                </div>
-                <div>
-                  <h4 className="text-[13px] font-bold text-[#202127]">Design Quiz 3</h4>
-                  <p className="text-[11px] text-[#717480]">Visual Hierarchy</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-[42px] h-[46px] rounded-[8px] bg-[#f1f5f9] text-[#64748b] flex flex-col items-center justify-center shrink-0">
-                  <span className="text-[10px] font-bold uppercase leading-none mb-1">Oct</span>
-                  <span className="text-[16px] font-bold leading-none">28</span>
-                </div>
-                <div>
-                  <h4 className="text-[13px] font-bold text-[#202127]">Project Submission</h4>
-                  <p className="text-[11px] text-[#717480]">Brand Identity</p>
-                </div>
-              </div>
+          {continueEnrollment && (
+            <div className="bg-[#1e4ed8] rounded-[16px] p-6 text-white shadow-md relative overflow-hidden">
+              <div className="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] bg-white opacity-10 rounded-full blur-2xl"></div>
+              <h3 className="text-[14px] font-medium mb-2 opacity-90">Continue learning</h3>
+              <p className="text-[18px] font-bold leading-snug mb-1 line-clamp-2">{continueEnrollment.course.title}</p>
+              <p className="text-[12px] opacity-80 mb-5">{percentOf(continueEnrollment)}% complete</p>
+              <button
+                type="button"
+                onClick={() => router.push(`/learning/${continueEnrollment.course._id}`)}
+                className="flex items-center gap-2 bg-white text-[#1e4ed8] px-5 py-2.5 rounded-[6px] text-[13px] font-bold hover:bg-blue-50 transition-colors"
+              >
+                <FaPlay className="text-[10px]" /> Resume
+              </button>
             </div>
-            </div>
-          </div>
+          )}
         </div>
+      </div>
       )}
     </div>
   );
