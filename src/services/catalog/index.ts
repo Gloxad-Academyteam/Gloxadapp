@@ -71,8 +71,32 @@ export const CATALOG_VIDEO_CREDIT: string = catalogData.videoCredit;
 
 const lengthToSeconds = (length: string) => length.split(":").map(Number).reduce((total, part) => total * 60 + part, 0);
 
-const chaptersOf = (video: TCatalogVideo): TCatalogChapter[] =>
-  video.chapters?.length ? video.chapters : [{ title: video.title, start: 0, end: lengthToSeconds(video.length) }];
+// Chapters of each video, keyed by YouTube id. They live in their own file (src/constants/catalog/gloxadChapters.json)
+// and are loaded only on course pages, so the course lists stay small.
+export type TChaptersByVideo = Record<string, TCatalogChapter[]>;
+
+// The video's chapters, or the whole video as one chapter when it has none
+const chaptersOf = (video: TCatalogVideo, byVideo: TChaptersByVideo): TCatalogChapter[] => {
+  const chapters = byVideo[video.youtubeId] ?? video.chapters;
+  return chapters?.length ? chapters : [{ title: video.title, start: 0, end: lengthToSeconds(video.length) }];
+};
+
+const buildModules = (entry: TCatalogEntry, byVideo: TChaptersByVideo): TCatalogCourse["modules"] =>
+  // One module per video, and one lesson per chapter of that video
+  entry.videos.map((video) => ({
+    title: video.title,
+    duration: video.duration,
+    lessons: chaptersOf(video, byVideo).map((chapter) => ({
+      _id: `catalog-${entry.slug}-${video.youtubeId}-${chapter.start}`,
+      title: chapter.title,
+      duration: formatLength(chapter.end - chapter.start),
+      videoUrl: `${video.url}&t=${chapter.start}s`,
+      youtubeId: video.youtubeId,
+      startSeconds: chapter.start,
+      endSeconds: chapter.end,
+      isFreePreview: true as const,
+    })),
+  }));
 
 const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   ...entry,
@@ -86,21 +110,8 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   aboutCourseText: entry.description,
   // No avatarUrl: the course page falls back to an initials avatar
   instructor: { firstName: "Gloxad", lastName: "Academy", avatarUrl: "" },
-  // One module per video, and one lesson per chapter of that video (the whole video if it has no chapters)
-  modules: entry.videos.map((video) => ({
-    title: video.title,
-    duration: video.duration,
-    lessons: chaptersOf(video).map((chapter) => ({
-      _id: `catalog-${entry.slug}-${video.youtubeId}-${chapter.start}`,
-      title: chapter.title,
-      duration: formatLength(chapter.end - chapter.start),
-      videoUrl: `${video.url}&t=${chapter.start}s`,
-      youtubeId: video.youtubeId,
-      startSeconds: chapter.start,
-      endSeconds: chapter.end,
-      isFreePreview: true as const,
-    })),
-  })),
+  // Without the chapters file each video is one lesson; withChapters() upgrades a course once it has loaded
+  modules: buildModules(entry, {}),
 });
 
 export const catalogCourses: TCatalogCourse[] = (catalogData.courses as TCatalogEntry[]).map(toCourse);
@@ -123,6 +134,22 @@ export const categorySlug = (category: string) =>
   category.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export const findCatalogCourse = (slug: string) => catalogCourses.find((course) => course.slug === slug) ?? null;
+
+let chaptersPromise: Promise<TChaptersByVideo> | null = null;
+
+// Loads the chapters file the first time a course page asks for it
+export const loadCatalogChapters = (): Promise<TChaptersByVideo> => {
+  if (!chaptersPromise) {
+    chaptersPromise = import("@constants/catalog/gloxadChapters.json").then((module) => module.default as TChaptersByVideo);
+  }
+  return chaptersPromise;
+};
+
+// The same course with its modules rebuilt from the video chapters
+export const withChapters = (course: TCatalogCourse, byVideo: TChaptersByVideo): TCatalogCourse => {
+  const entry = (catalogData.courses as TCatalogEntry[]).find((item) => item.slug === course.slug);
+  return entry ? { ...course, modules: buildModules(entry, byVideo) } : course;
+};
 
 const normalise = (value: string) => value.toLowerCase().replace(/[-_]+/g, " ").trim();
 

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import axiosInstance from "@utils/axiosInstance";
 import FreeCourseLayout from "./components/FreeCourseLayout";
 import NormalCourseLayout from "./components/NormalCourseLayout";
-import { findCatalogCourse, normaliseApiCourse } from "@services/catalog";
+import { findCatalogCourse, loadCatalogChapters, normaliseApiCourse, withChapters } from "@services/catalog";
 
 import { Skeleton } from "../../components/Skeleton";
 
@@ -17,11 +17,21 @@ const CourseDetailsPage = () => {
 
   useEffect(() => {
     const catalogCourse = findCatalogCourse(String(slug));
+    let fromApi = false;
     const fetchCourse = async () => {
       try {
         setCourse(catalogCourse);
         setIsLoading(!catalogCourse);
+        // The bundled copy gets its video chapters as soon as they have loaded, unless the database copy arrived first
+        if (catalogCourse) {
+          loadCatalogChapters()
+            .then((byVideo) => {
+              if (!fromApi) setCourse(withChapters(catalogCourse, byVideo));
+            })
+            .catch(() => undefined);
+        }
         const res = await axiosInstance.get(`/courses/${slug}`, { timeout: catalogCourse ? 15000 : 60000 });
+        fromApi = true;
         // GET /courses/:slugOrId answers { course, isEnrolled }
         setCourse(normaliseApiCourse(res.data?.course ?? res.data));
       } catch (error) {

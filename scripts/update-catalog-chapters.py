@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Adds each catalogue video's YouTube chapters to src/constants/catalog/gloxadCourses.json.
+"""Collects each catalogue video's YouTube chapters into src/constants/catalog/gloxadChapters.json.
 
-    python3 scripts/update-catalog-chapters.py                    # fetch chapters for videos that have none yet
+    python3 scripts/update-catalog-chapters.py                    # fetch chapters for videos not in that file yet
     python3 scripts/update-catalog-chapters.py --refresh          # fetch every video again
     python3 scripts/update-catalog-chapters.py --cache saved.json # reuse results from an earlier run (repeatable)
+    python3 scripts/update-catalog-chapters.py --backend ../gloxard-backend/src/data/gloxadCourses2026.json
 
 Chapters are the ones the creator published on YouTube, read from the video's public page: the chapter list
-when YouTube has one, otherwise the timestamps in the description. Each video gets a `chapters` list of
-{ title, start, end } in seconds. A video with no chapters gets an empty list, and the app then plays it as a
-single lesson. The backend has its own copy of the catalogue, so copy the file across afterwards:
+when YouTube has one, otherwise the timestamps in the description. The output maps a video id to a list of
+{ title, start, end } in seconds. A video with no chapters maps to an empty list and plays as one lesson.
 
-    cp src/constants/catalog/gloxadCourses.json ../gloxard-backend/src/data/gloxadCourses2026.json
+The website loads the chapters file only on course pages, so the course list stays small. The backend needs
+the chapters inside its own copy of the catalogue: pass --backend to write that merged copy.
 
 Be gentle with YouTube: the script waits between requests, and fast bursts can get blocked.
 """
@@ -22,6 +23,7 @@ import urllib.request
 from pathlib import Path
 
 CATALOG = Path(__file__).resolve().parent.parent / "src/constants/catalog/gloxadCourses.json"
+CHAPTERS = CATALOG.parent / "gloxadChapters.json"
 DELAY_SECONDS = 1.5
 
 
@@ -98,19 +100,21 @@ def with_ends(chapters, length):
 def main():
     args = sys.argv[1:]
     refresh = "--refresh" in args
+    backend = Path(args[args.index("--backend") + 1]) if "--backend" in args else None
     cache = {}
     for index, arg in enumerate(args):
         if arg == "--cache":
             cache.update(json.loads(Path(args[index + 1]).read_text()))
 
     catalog = json.loads(CATALOG.read_text())
-    videos = {}
+    saved = json.loads(CHAPTERS.read_text()) if CHAPTERS.exists() else {}
+    lengths = {}
     for course in catalog["courses"]:
         for video in course["videos"]:
-            videos.setdefault(video["youtubeId"], []).append(video)
+            lengths.setdefault(video["youtubeId"], sum(int(p) * 60 ** i for i, p in enumerate(reversed(video["length"].split(":")))))
 
-    todo = [vid for vid, entries in videos.items() if vid not in cache and (refresh or "chapters" not in entries[0])]
-    print(f"{len(videos)} videos, {len(todo)} to fetch")
+    todo = [vid for vid in lengths if vid not in cache and (refresh or vid not in saved)]
+    print(f"{len(lengths)} videos, {len(todo)} to fetch")
     for number, video_id in enumerate(todo, 1):
         for attempt in range(4):
             try:
@@ -124,15 +128,20 @@ def main():
         print(f"  {number}/{len(todo)} {video_id}: {len(cache[video_id]['chapters'])} chapters ({cache[video_id]['source']})")
         time.sleep(DELAY_SECONDS)
 
-    for video_id, entries in videos.items():
+    chapters = {}
+    for video_id, catalogue_length in lengths.items():
         info = cache.get(video_id)
-        for video in entries:
-            length = (info or {}).get("length") or sum(int(p) * 60 ** i for i, p in enumerate(reversed(video["length"].split(":"))))
-            video["chapters"] = with_ends(info["chapters"], length) if info else video.get("chapters", [])
+        chapters[video_id] = with_ends(info["chapters"], info.get("length") or catalogue_length) if info else saved.get(video_id, [])
 
-    CATALOG.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n")
-    total = sum(len(v["chapters"]) for entries in videos.values() for v in entries[:1])
-    print(f"Wrote {CATALOG.name}: {total} chapters across {len(videos)} videos")
+    CHAPTERS.write_text(json.dumps(chapters, ensure_ascii=False, separators=(",", ":")) + "\n")
+    print(f"Wrote {CHAPTERS.name}: {sum(len(c) for c in chapters.values())} chapters across {len(chapters)} videos")
+
+    if backend:
+        for course in catalog["courses"]:
+            for video in course["videos"]:
+                video["chapters"] = chapters.get(video["youtubeId"], [])
+        backend.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n")
+        print(f"Wrote {backend} with chapters included")
 
 
 if __name__ == "__main__":

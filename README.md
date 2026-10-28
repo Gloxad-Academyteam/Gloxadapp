@@ -163,11 +163,18 @@ flowchart TD
 Starting a course:
 
 1. **Start Learning** enrols the learner (`POST /enrollments/enroll/:id`, safe to repeat) and opens the course player at `/learning/<course id>`. A course that exists only in the bundled catalogue cannot be enrolled in yet, and the page says so.
-2. **The player** loads the learner's enrolment (`GET /enrollments/my-courses`, which answers `{ enrollments, pagination }`) and the course (`GET /courses/:id`, which answers `{ course, isEnrolled }`). It opens the lesson the learner stopped at, or the first unfinished one.
-3. **Progress is saved on the server.** Picking a lesson remembers it (`POST /learning/:courseId/progress`). **Mark as complete** and **Complete and continue** mark it finished, and the API recalculates the percentage. The sidebar ticks, the progress bar, **My Courses** and the **Continue learning** card all read the same saved numbers.
-4. **Quizzes** appear in the lesson list. The quiz page shows the quiz's real questions and sends only the chosen option for each (`POST /learning/:courseId/quiz/:quizId/submit` with an `answers` list). **The API scores it**, because it never sends the answer key to learners, and the page shows the API's result: score, pass mark, and correct, incorrect and skipped counts. A failed quiz can be retaken. The page's 15-minute timer is a page feature, not enforced by the API.
-5. **Certificates.** A finished course opens `/learning/[id]/certificate`, where the certificate is **built in the browser** (`html2canvas` and `jspdf`) and downloaded as a PDF. The Certificates tab on **My Courses** lists the learner's real completed courses.
-6. **Questions and notes.** The player lets the learner post lesson questions and private notes.
+2. **Courses are built from the videos' own chapters.** Each catalogue course has one **module per YouTube video** and one **lesson per chapter** of that video, using the chapters the creator published on YouTube. A lesson knows its video, its start time and its end time. A 4-hour video with 35 chapters becomes a module with 35 lessons, each with its timestamp.
+3. **The course page** (`/courses/<slug>`) embeds the actual video in YouTube's own player, lists every module and chapter with its start time, and plays any chapter you click from its start time. Before enrolling, anyone can preview the chapters.
+4. **The player** (`/learning/<id>`) loads the learner's enrolment (`GET /enrollments/my-courses`, which answers `{ enrollments, pagination }`) and the course (`GET /courses/:id`, which answers `{ course, isEnrolled }`). It resumes the chapter the learner stopped at, at the second they stopped.
+5. **Progress is tracked live as the video plays.** The player uses YouTube's official IFrame Player API to read the playback time once a second:
+   - The highlighted chapter in the list **follows the video**, like YouTube's own chapters.
+   - A chapter is marked **complete when playback runs past its end**. Jumping around the timeline does **not** count, so a chapter must actually be watched. The progress bar, the tick and the module count (such as "1 / 35") update at that moment, and the API saves it (`POST /learning/:courseId/progress`).
+   - The current position is saved every 15 seconds and whenever the learner pauses or picks a chapter, so **Resume** returns to the same second.
+   - Clicking a chapter in the same video jumps the player to it. A chapter in another video loads that video. When a video ends, the next lesson starts.
+   - **Mark as complete** and **Complete and continue** finish a chapter by hand. **My Courses** and the **Continue learning** card read the same saved numbers.
+6. **Quizzes** appear in the lesson list. The quiz page shows the quiz's real questions and sends only the chosen option for each (`POST /learning/:courseId/quiz/:quizId/submit` with an `answers` list). **The API scores it**, because it never sends the answer key to learners, and the page shows the API's result: score, pass mark, and correct, incorrect and skipped counts. A failed quiz can be retaken. The page's 15-minute timer is a page feature, not enforced by the API.
+7. **Certificates.** A finished course opens `/learning/[id]/certificate`, where the certificate is **built in the browser** (`html2canvas` and `jspdf`) and downloaded as a PDF. The Certificates tab on **My Courses** lists the learner's real completed courses.
+8. **Questions and notes.** The player lets the learner post lesson questions and private notes.
 
 ### 6. Teaching
 
@@ -276,6 +283,7 @@ Copy `.env.example` to `.env.local`. Real `.env` files are ignored by Git. **Nev
 | `npm test` | Runs the Jest tests |
 | `npm run test:watch` / `npm run test:coverage` | Watch mode / coverage report |
 | `node scripts/build-course-seed.mjs` | Builds the backend course seed in `docs/course-seed/` from the catalogue JSON |
+| `python3 scripts/update-catalog-chapters.py` | Reads each catalogue video's chapters from YouTube into `gloxadChapters.json`. Add `--backend <path>` to write the backend's merged copy. |
 
 ---
 
@@ -294,7 +302,7 @@ Gloxadapp/
     assets/       Images and videos
   public/         Static files: logo, favicon, sitemap, email images
   docs/           Team documents, backend hand-off patch, course seed
-  scripts/        build-course-seed.mjs
+  scripts/        build-course-seed.mjs, update-catalog-chapters.py
   amplify.yml     AWS Amplify build settings
   next.config.mjs Proxy to the backend API
 ```
@@ -341,11 +349,13 @@ Folders in brackets such as `(public)` and `(protected)` only share a layout. Th
 
 ## The course catalogue and free courses
 
-- The data lives in `src/constants/catalog/gloxadCourses.json`: 74 courses, 10 categories, and 340 lesson entries (206 different freeCodeCamp videos). **All courses are free.**
+- The data lives in `src/constants/catalog/gloxadCourses.json`: 74 courses, 10 categories, and 340 video entries (206 different freeCodeCamp videos). **All courses are free.**
+- Each video's **chapters** (5,845 in total) are in a separate file, `src/constants/catalog/gloxadChapters.json`, keyed by YouTube id. It is loaded only on course pages, so the course lists stay light. A course page shows each video as a single lesson for a moment, then rebuilds its modules from the chapters as soon as the file loads.
+- To refresh the chapters, run `python3 scripts/update-catalog-chapters.py`. It reads each video's public YouTube page slowly, to avoid being blocked.
 - `src/services/catalog/index.ts` converts each entry into the same shape the API uses, so the existing cards and pages work unchanged. A catalogue course has `_id: catalog-<slug>` and `isCatalog: true`.
 - A course is free when its price is `0`. Free courses use the free layout and the **Free Courses** page (`/free`).
 - The course list merges API courses with catalogue courses by title, so nothing appears twice.
-- The backend has its own copy of the catalogue and an import script, so the courses exist in the database too. Run `node scripts/build-course-seed.mjs` after editing the JSON.
+- The backend has its own copy of the catalogue (with the chapters included) and an import script, so the courses exist in the database too. After changing the catalogue or the chapters, run `python3 scripts/update-catalog-chapters.py --backend ../gloxard-backend/src/data/gloxadCourses2026.json`, then `npm run catalog:import` in the backend.
 
 ### Rules for third-party videos
 
@@ -356,6 +366,7 @@ These come from the team's YouTube embedding guidelines:
 - Credit the creator, show the source link, and make clear Gloxad does not own the content.
 - Do not require a like, subscribe or comment to watch.
 - Keep a register of every video (title, creator, link, date checked, embedding tested, approver).
+- **YouTube API terms.** Live tracking uses YouTube's IFrame Player API, which counts as using YouTube API Services. The team's guidelines require the technical lead to review YouTube's API terms and developer policies, and the privacy disclosures they ask for, before this goes live. The player's controls, ads and branding are left untouched.
 
 ---
 
