@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { getYouTubeStart } from "@utils/youtube";
 
 const YOUTUBE_ID = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/;
 
@@ -12,17 +13,27 @@ type TProps = {
   className?: string;
   autoPlay?: boolean;
   onEnded?: () => void;
+  // Play only part of a YouTube video (a chapter). The start also comes from a ...&t=123s link.
+  startSeconds?: number;
+  endSeconds?: number;
 };
 
 // Plays YouTube lessons (e.g. freeCodeCamp videos) in an embed and uploaded files in a <video> element
-const LessonVideo = ({ url, title, className = "", autoPlay = false, onEnded }: TProps) => {
+const LessonVideo = ({ url, title, className = "", autoPlay = false, onEnded, startSeconds, endSeconds }: TProps) => {
   const youtubeId = getYouTubeId(url);
 
   if (youtubeId) {
-    const params = new URLSearchParams({ rel: "0", modestbranding: "1", ...(autoPlay ? { autoplay: "1" } : {}) });
+    const start = startSeconds ?? getYouTubeStart(url);
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      ...(autoPlay ? { autoplay: "1" } : {}),
+      ...(start > 0 ? { start: String(Math.floor(start)) } : {}),
+      ...(endSeconds && endSeconds > start ? { end: String(Math.floor(endSeconds)) } : {}),
+    });
     return (
       <iframe
-        key={youtubeId}
+        key={`${youtubeId}-${start}-${endSeconds ?? 0}`}
         src={`https://www.youtube-nocookie.com/embed/${youtubeId}?${params}`}
         title={title}
         className={className}
