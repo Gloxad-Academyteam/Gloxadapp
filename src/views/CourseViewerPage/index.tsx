@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FiChevronLeft, FiStar, FiClock, FiCheckCircle, FiPlayCircle, FiSearch, FiChevronDown, FiPlus, FiMoreVertical, FiChevronUp } from "react-icons/fi";
 import axiosInstance from "../../utils/axiosInstance";
-import LessonVideo from "@components/LessonVideo";
+import LessonVideo, { getYouTubeId } from "@components/LessonVideo";
+import YouTubePlayer, { TPlayerState, TYouTubePlayerHandle } from "@components/YouTubePlayer";
+import { formatTimestamp, getYouTubeStart } from "@utils/youtube";
 import { getMyEnrollment, getCourseProgress, saveLessonProgress } from "@services/enrollments";
 
 export default function CourseViewerPage() {
@@ -98,14 +100,39 @@ export default function CourseViewerPage() {
     }
   });
 
+  // One entry per lesson. A lesson is a chapter of a YouTube video: _vid is the video, and _start and _end
+  // are where the chapter begins and ends in it, in seconds.
   const lessons: any[] = useMemo(
-    () => (courseData?.modules || []).flatMap((mod: any) => mod.lessons || []),
+    () =>
+      (courseData?.modules || []).flatMap((mod: any) =>
+        (mod.lessons || []).map((lesson: any) => ({
+          ...lesson,
+          _vid: lesson.youtubeId || getYouTubeId(lesson.videoUrl),
+          _start: lesson.youtubeId ? lesson.startSeconds ?? 0 : getYouTubeStart(lesson.videoUrl),
+          _end: lesson.endSeconds || 0,
+        }))
+      ),
     [courseData]
   );
-  const completedIds = useMemo(() => new Set((enrollment?.completedLessons || []).map(String)), [enrollment]);
+  const lessonById = useMemo(() => new Map(lessons.map((l) => [String(l._id), l])), [lessons]);
+
+  // Chapters finished in this visit show at once, before the server has answered
+  const [liveCompleted, setLiveCompleted] = useState<Set<string>>(new Set());
+  const [videoStart, setVideoStart] = useState(0);
+  const playerRef = useRef<TYouTubePlayerHandle>(null);
+  const lastTimeRef = useRef(0);
+  const lastSaveRef = useRef(0);
+  const activeRef = useRef<any>(null);
+  activeRef.current = activeLesson;
+
+  const completedIds = useMemo(() => {
+    const ids = new Set<string>((enrollment?.completedLessons || []).map(String));
+    liveCompleted.forEach((id) => ids.add(id));
+    return ids;
+  }, [enrollment, liveCompleted]);
 
   const progressMutation = useMutation({
-    mutationFn: (vars: { lessonId: string; completed?: boolean }) => saveLessonProgress(courseId, vars),
+    mutationFn: (vars: { lessonId: string; completed?: boolean; playbackPosition?: number }) => saveLessonProgress(courseId, vars),
     onSuccess: (_data, vars) => {
       if (!vars.completed) return;
       queryClient.invalidateQueries({ queryKey: ["enrollment", courseId] });
@@ -113,36 +140,87 @@ export default function CourseViewerPage() {
     },
   });
 
-  // Open the lesson the learner stopped at, or the first one they have not finished
+  // The chapters of one video in order, each with the time it ends
+  const chaptersOf = (videoId: string) => {
+    const list = lessons.filter((l) => l._vid === videoId).sort((x, y) => x._start - y._start);
+    return list.map((lesson, i) => ({ lesson, end: lesson._end || list[i + 1]?._start || Infinity }));
+  };
+
+  const completeChapter = (lesson: any) => {
+    if (!lesson || lesson.isQuiz || !lesson._id) return;
+    const id = String(lesson._id);
+    setLiveCompleted((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
+    if (!completedIds.has(id)) progressMutation.mutate({ lessonId: lesson._id, completed: true });
+  };
+
+  // Pick a chapter: the same video jumps to it, another video loads and starts there
+  const playLesson = (lesson: any) => {
+    const current = activeRef.current;
+    setActiveLesson(lesson);
+    if (lesson.isQuiz || !lesson._vid) return;
+    lastTimeRef.current = lesson._start;
+    if (current && !current.isQuiz && current._vid === lesson._vid) {
+      playerRef.current?.seekTo(lesson._start);
+    } else {
+      setVideoStart(lesson._start);
+    }
+    if (lesson._id) progressMutation.mutate({ lessonId: lesson._id, playbackPosition: lesson._start });
+  };
+
+  // Called about once a second while the video plays
+  const handleTime = (t: number) => {
+    const lesson = activeRef.current;
+    if (!lesson?._vid || lesson.isQuiz) return;
+    const chapters = chaptersOf(lesson._vid);
+    const last = lastTimeRef.current;
+    // A chapter counts as watched when playback runs past its end. Skipping around the timeline does not count.
+    chapters.forEach(({ lesson: chapter, end }) => {
+      if (end !== Infinity && last < end && t >= end && t - last < 5) completeChapter(chapter);
+    });
+    lastTimeRef.current = t;
+    // The highlighted chapter follows the video
+    const playing = [...chapters].reverse().find(({ lesson: chapter }) => chapter._start <= t + 0.5)?.lesson;
+    if (playing && playing._id !== lesson._id) setActiveLesson(playing);
+    // Remember where the learner is, so "Resume" returns here
+    const now = Date.now();
+    if (playing?._id && now - lastSaveRef.current > 15000) {
+      lastSaveRef.current = now;
+      saveLessonProgress(courseId, { lessonId: playing._id, playbackPosition: Math.floor(t) }).catch(() => undefined);
+    }
+  };
+
+  // When a video ends, finish its last chapter and carry on with the next lesson
+  const handleState = (state: TPlayerState) => {
+    const lesson = activeRef.current;
+    if (state !== "ended" || !lesson || lesson.isQuiz) return;
+    completeChapter(lesson);
+    const next = lessons[lessons.findIndex((l) => l._id === lesson._id) + 1];
+    if (next) playLesson(next);
+  };
+
+  // Open the chapter the learner stopped at, at the moment they stopped; otherwise the first unfinished one
   useEffect(() => {
     if (activeLesson || !enrollment || lessons.length === 0) return;
-    const resume =
-      lessons.find((l) => String(l._id) === String(enrollment.lastAccessedLesson)) ||
-      lessons.find((l) => !completedIds.has(String(l._id))) ||
-      lessons[0];
+    const saved = lessons.find((l) => String(l._id) === String(enrollment.lastAccessedLesson));
+    const resume = saved || lessons.find((l) => !completedIds.has(String(l._id))) || lessons[0];
+    const position = Number(enrollment.lastPlaybackPosition) || 0;
+    const inside = !!saved && position >= resume._start && (!resume._end || position < resume._end);
+    setVideoStart(inside ? position : resume._start);
+    lastTimeRef.current = inside ? position : resume._start;
     setActiveLesson(resume);
   }, [activeLesson, enrollment, lessons, completedIds]);
 
-  // Picking a lesson remembers it, so "Resume" returns to the same place next time
-  const selectLesson = (lesson: any) => {
-    setActiveLesson(lesson);
-    if (lesson?._id) progressMutation.mutate({ lessonId: lesson._id });
-  };
+  // Keep the playing chapter in view in the list
+  useEffect(() => {
+    if (activeLesson?._id) document.getElementById(`lesson-${activeLesson._id}`)?.scrollIntoView({ block: "nearest" });
+  }, [activeLesson?._id]);
 
   const activeIndex = lessons.findIndex((l) => l._id === activeLesson?._id);
   const nextLesson = activeIndex >= 0 ? lessons[activeIndex + 1] : undefined;
   const isActiveDone = !!activeLesson && completedIds.has(String(activeLesson._id));
 
-  const markComplete = (andContinue = false) => {
-    if (!activeLesson || activeLesson.isQuiz) return;
-    progressMutation.mutate(
-      { lessonId: activeLesson._id, completed: true },
-      { onSuccess: () => { if (andContinue && nextLesson) selectLesson(nextLesson); } }
-    );
-  };
-
-  const toggleModule = (modId: string) => {
-    setExpandedModules(prev => ({ ...prev, [modId]: !prev[modId] }));
+  const toggleModule = (modId: string, isOpen: boolean) => {
+    setExpandedModules((prev) => ({ ...prev, [modId]: !isOpen }));
   };
 
   useEffect(() => {
@@ -160,7 +238,7 @@ export default function CourseViewerPage() {
     return <div className="p-20 text-center text-[#717480]">Loading course...</div>;
   }
 
-  const { completed: completedCount, total: totalCount, percent: progressPercent } = getCourseProgress(enrollment, courseData);
+  const { completed: completedCount, total: totalCount, percent: progressPercent } = getCourseProgress({ completedLessons: Array.from(completedIds) }, courseData);
   const isCompleted = totalCount > 0 && completedCount >= totalCount;
 
   return (
@@ -245,6 +323,16 @@ export default function CourseViewerPage() {
                   Start Quiz
                 </button>
               </div>
+            ) : activeLesson?._vid ? (
+              <YouTubePlayer
+                ref={playerRef}
+                videoId={activeLesson._vid}
+                startSeconds={videoStart}
+                title={activeLesson.title || "Lesson video"}
+                className="h-full w-full"
+                onTime={handleTime}
+                onStateChange={handleState}
+              />
             ) : activeLesson?.videoUrl ? (
               <LessonVideo
                 url={activeLesson.videoUrl}
@@ -266,7 +354,7 @@ export default function CourseViewerPage() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => markComplete(false)}
+                  onClick={() => completeChapter(activeLesson)}
                   disabled={isActiveDone || progressMutation.isPending}
                   className="h-[38px] rounded-[8px] border border-[#07006f] px-4 text-[13px] font-bold text-[#07006f] transition-colors hover:bg-[#eef2ff] disabled:cursor-default disabled:border-[#dedee7] disabled:text-[#8a8c95] disabled:hover:bg-transparent"
                 >
@@ -275,7 +363,7 @@ export default function CourseViewerPage() {
                 {nextLesson && (
                   <button
                     type="button"
-                    onClick={() => markComplete(true)}
+                    onClick={() => { completeChapter(activeLesson); playLesson(nextLesson); }}
                     disabled={progressMutation.isPending}
                     className="h-[38px] rounded-[8px] bg-[#07006f] px-4 text-[13px] font-bold text-white transition-colors hover:bg-[#0a0050] disabled:opacity-60"
                   >
@@ -534,11 +622,11 @@ export default function CourseViewerPage() {
 
           <div className="flex-1">
             {(courseData.modules || []).map((mod: any, idx: number) => {
-              const isExpanded = expandedModules[mod._id] !== false; // Default true
+              const isExpanded = expandedModules[mod._id] ?? (mod.lessons || []).some((l: any) => String(l._id) === String(activeLesson?._id));
               return (
                 <div key={mod._id} className="border-b border-[#dedee7]">
                   <button 
-                    onClick={() => toggleModule(mod._id)}
+                    onClick={() => toggleModule(mod._id, isExpanded)}
                     className="w-full flex items-center justify-between p-4 hover:bg-[#f8fafc] transition-colors text-left"
                   >
                     <div>
@@ -553,13 +641,15 @@ export default function CourseViewerPage() {
                   {isExpanded && (
                     <div className="bg-white">
                       {(mod.lessons || []).map((lesson: any, lIdx: number) => {
+                        const item = lessonById.get(String(lesson._id)) ?? lesson;
                         const isActive = activeLesson?._id === lesson._id;
                         const isLessonCompleted = completedIds.has(String(lesson._id));
                         
                         return (
                           <button 
                             key={lesson._id}
-                            onClick={() => selectLesson(lesson)}
+                            id={`lesson-${lesson._id}`}
+                            onClick={() => playLesson(item)}
                             className={`w-full flex items-start gap-3 p-4 hover:bg-[#f8fafc] transition-colors text-left ${isActive ? 'bg-[#eef2ff]' : ''}`}
                           >
                             <div className="mt-1 flex-shrink-0">
@@ -573,7 +663,7 @@ export default function CourseViewerPage() {
                             <div className="flex-1">
                               <p className={`text-[14px] leading-tight mb-1 ${isActive ? 'font-bold text-[#07006f]' : 'text-[#202127]'}`}>{lIdx + 1}. {lesson.title}</p>
                               <div className="flex items-center gap-2 text-[12px] text-[#717480]">
-                                <FiPlayCircle /> {lesson.duration || "10:00"}
+                                <FiPlayCircle /> {item._vid ? `${formatTimestamp(item._start)} · ${lesson.duration || ""}` : lesson.duration || "Video"}
                               </div>
                             </div>
                           </button>

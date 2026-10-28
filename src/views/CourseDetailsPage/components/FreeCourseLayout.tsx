@@ -9,6 +9,7 @@ import { FaCheck, FaClipboardList, FaLinkedin } from "react-icons/fa";
 import CourseReviews from "./CourseReviews";
 import CourseModules from "./CourseModules";
 import CourseRecommendations from "./CourseRecommendations";
+import LessonVideo from "@components/LessonVideo";
 
 type TProps = {
   course: any;
@@ -18,6 +19,20 @@ const FreeCourseLayout = ({ course }: TProps) => {
   const router = useRouter();
   const { authenticatedUser } = useAuth();
   const [activeTab, setActiveTab] = useState("About");
+  // The video in the page's player: the trailer at first, then whichever chapter the visitor picks
+  const firstLesson = (course.modules || []).flatMap((mod: any) => mod.lessons || []).find((lesson: any) => lesson.videoUrl);
+  const [preview, setPreview] = useState<{ url: string; title: string; start?: number; end?: number } | null>(
+    course.trailerVideoUrl
+      ? { url: course.trailerVideoUrl, title: course.title }
+      : firstLesson
+        ? { url: firstLesson.videoUrl, title: firstLesson.title, start: firstLesson.startSeconds, end: firstLesson.endSeconds }
+        : null
+  );
+  const playChapter = (lesson: { videoUrl?: string; title: string; startSeconds?: number; endSeconds?: number }) => {
+    if (!lesson.videoUrl) return;
+    setPreview({ url: lesson.videoUrl, title: lesson.title, start: lesson.startSeconds, end: lesson.endSeconds });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const tabs = ["About", "Modules", "Reviews"]; // Only keep the fully built tabs to ensure no broken or unbuilt placeholders
 
   const handleEnrollClick = () => {
@@ -97,12 +112,22 @@ const FreeCourseLayout = ({ course }: TProps) => {
             </button>
           </div>
           
-          {/* Abstract Shape on the right */}
-          <div className="hidden lg:block w-[400px] h-[400px] relative">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
-              <path fill="#181C7B" d="M45.7,-76.3C58.9,-69.3,69.1,-55.3,77.7,-40.7C86.3,-26.1,93.4,-10.8,92.6,4.1C91.8,19,83.2,33.5,72.4,45C61.6,56.5,48.7,65.1,34.5,71.7C20.3,78.3,4.9,82.8,-10.1,81.1C-25.1,79.4,-39.7,71.5,-52.1,60.8C-64.5,50.1,-74.6,36.5,-80.4,21.2C-86.2,5.9,-87.6,-11,-82.3,-26.1C-77,-41.2,-64.9,-54.5,-50.8,-61.4C-36.7,-68.3,-20.5,-68.8,-3.3,-64.1C13.9,-59.4,27.8,-49.5,45.7,-76.3Z" transform="translate(100 100) scale(1.1)" />
-              <path fill="#1e4ed8" d="M35.7,-56.3C45.9,-49.3,53.1,-35.3,58.7,-20.7C64.3,-6.1,68.4,7.8,63.6,18.1C58.8,28.4,45.2,35.1,32.4,42C19.6,48.9,7.7,56.1,-5.1,59.1C-17.9,62.1,-31.7,60.9,-43.1,53.8C-54.5,46.7,-63.6,33.7,-67.4,19.2C-71.2,4.7,-69.6,-11.3,-62.3,-24.1C-55,-36.9,-42,-46.5,-28.8,-53.4C-15.6,-60.3,-2.5,-64.5,10.7,-59.6C23.9,-54.7,37.8,-40.5,35.7,-56.3Z" transform="translate(100 100) scale(1.1) rotate(45)" />
-            </svg>
+          {/* The course's video: plays the trailer, or any chapter picked in the Modules tab */}
+          <div className="mt-10 w-full shrink-0 lg:mt-0 lg:w-[480px]">
+            <div className="aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg">
+              {preview ? (
+                <LessonVideo
+                  url={preview.url}
+                  title={preview.title}
+                  startSeconds={preview.start}
+                  endSeconds={preview.end}
+                  className="h-full w-full"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center text-[14px] text-white/70">No video yet</div>
+              )}
+            </div>
+            {preview && <p className="mt-3 text-[13px] text-[#4e515c]">Now playing: {preview.title}</p>}
           </div>
         </div>
       </div>
@@ -213,7 +238,7 @@ const FreeCourseLayout = ({ course }: TProps) => {
         )}
 
         {activeTab === "Modules" && (
-          <CourseModules course={course} />
+          <CourseModules course={course} onPlayLesson={playChapter} />
         )}
 
         {activeTab === "Reviews" && (

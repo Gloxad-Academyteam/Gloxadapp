@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaPlay } from 'react-icons/fa';
+import { formatLength, formatTimestamp } from '@utils/youtube';
 
 const defaultModules = [
   { title: "Inclusive education and special education: Equality and equity", moduleNumber: 1, duration: "3 hours to complete" },
@@ -12,7 +13,7 @@ const defaultModules = [
 type TProps = {
   course?: any;
   // Plays a lesson in the course page's preview player; lessons are only clickable when this is set
-  onPlayLesson?: (lesson: { videoUrl?: string; title: string }) => void;
+  onPlayLesson?: (lesson: { videoUrl?: string; title: string; startSeconds?: number; endSeconds?: number }) => void;
 };
 
 const CourseModules = ({ course, onPlayLesson }: TProps) => {
@@ -37,7 +38,11 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
                     {mod.title}
                   </h3>
                   <p className="text-[13px] text-[#717480]">
-                    Module {mod.moduleNumber || (index + 1)} • {mod.duration || `${mod.lessons?.length || 0} lessons`}
+                    Module {mod.moduleNumber || (index + 1)} • {mod.lessons?.length || 0} {mod.lessons?.length === 1 ? "chapter" : "chapters"}
+                    {(() => {
+                      const seconds = (mod.lessons || []).reduce((total: number, l: any) => total + Math.max(0, (l.endSeconds || 0) - (l.startSeconds || 0)), 0);
+                      return seconds > 0 ? ` • ${formatLength(seconds)}` : mod.duration ? ` • ${mod.duration}` : "";
+                    })()}
                   </p>
                 </div>
                 <div className="text-[#181C7B]">
@@ -48,7 +53,7 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
                 <div className="mt-4 pt-4 border-t border-[#e2e8f0] text-[14px] text-[#4e515c] leading-relaxed space-y-4">
                   {mod.description && <p className="mb-4">{mod.description}</p>}
                   {mod.lessons && mod.lessons.length > 0 ? (
-                    <div className="flex flex-col gap-3 pl-2 mt-2" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex max-h-[420px] flex-col gap-3 overflow-y-auto pl-2 pr-2 mt-2" onClick={(e) => e.stopPropagation()}>
                       {mod.lessons.map((lesson: any, lIdx: number) => {
                         const playable = !!onPlayLesson && !!lesson.videoUrl;
                         return (
@@ -61,6 +66,9 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
                           >
                             <span className="flex items-center gap-3">
                               <FaPlay className="text-[#181C7B] text-[10px] shrink-0" />
+                              {lesson.youtubeId && (
+                                <span className="w-[52px] shrink-0 text-[12px] tabular-nums text-[#717480]">{formatTimestamp(lesson.startSeconds || 0)}</span>
+                              )}
                               <span className="text-[14px] text-[#202127] font-medium">{lesson.title}</span>
                             </span>
                             <span className="shrink-0 text-[12px] text-[#717480]">{playable ? `Play · ${lesson.duration || "Video"}` : lesson.duration || "Self-paced"}</span>

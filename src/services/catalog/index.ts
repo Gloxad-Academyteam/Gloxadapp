@@ -1,8 +1,12 @@
 import catalogData from "@constants/catalog/gloxadCourses.json";
+import { formatLength } from "@utils/youtube";
 
 // Gloxad Academy's 2026 course list (constants/catalog/gloxadCourses.json), shown on the site until
 // the courses exist in the database. Lessons are freeCodeCamp.org videos, used with permission.
 // Regenerate the backend seed from the same file with `node scripts/build-course-seed.mjs`.
+
+// A chapter the video's creator published on YouTube: where it starts and ends, in seconds
+export type TCatalogChapter = { title: string; start: number; end: number };
 
 export type TCatalogVideo = {
   youtubeId: string;
@@ -10,6 +14,7 @@ export type TCatalogVideo = {
   length: string;
   duration: string;
   url: string;
+  chapters?: TCatalogChapter[];
 };
 
 export type TPathwayStage = { stage: string; duration: string; fee: number; note: string };
@@ -49,11 +54,25 @@ export type TCatalogCourse = TCatalogEntry & {
   modules: {
     title: string;
     duration: string;
-    lessons: { title: string; duration: string; videoUrl: string; youtubeId: string; isFreePreview: true }[];
+    lessons: {
+      _id: string;
+      title: string;
+      duration: string;
+      videoUrl: string;
+      youtubeId: string;
+      startSeconds: number;
+      endSeconds: number;
+      isFreePreview: true;
+    }[];
   }[];
 };
 
 export const CATALOG_VIDEO_CREDIT: string = catalogData.videoCredit;
+
+const lengthToSeconds = (length: string) => length.split(":").map(Number).reduce((total, part) => total * 60 + part, 0);
+
+const chaptersOf = (video: TCatalogVideo): TCatalogChapter[] =>
+  video.chapters?.length ? video.chapters : [{ title: video.title, start: 0, end: lengthToSeconds(video.length) }];
 
 const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   ...entry,
@@ -67,13 +86,20 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   aboutCourseText: entry.description,
   // No avatarUrl: the course page falls back to an initials avatar
   instructor: { firstName: "Gloxad", lastName: "Academy", avatarUrl: "" },
-  // One module per video lesson
+  // One module per video, and one lesson per chapter of that video (the whole video if it has no chapters)
   modules: entry.videos.map((video) => ({
     title: video.title,
     duration: video.duration,
-    lessons: [
-      { title: video.title, duration: video.duration, videoUrl: video.url, youtubeId: video.youtubeId, isFreePreview: true },
-    ],
+    lessons: chaptersOf(video).map((chapter) => ({
+      _id: `catalog-${entry.slug}-${video.youtubeId}-${chapter.start}`,
+      title: chapter.title,
+      duration: formatLength(chapter.end - chapter.start),
+      videoUrl: `${video.url}&t=${chapter.start}s`,
+      youtubeId: video.youtubeId,
+      startSeconds: chapter.start,
+      endSeconds: chapter.end,
+      isFreePreview: true as const,
+    })),
   })),
 });
 
