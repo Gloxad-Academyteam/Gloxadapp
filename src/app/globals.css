@@ -208,8 +208,8 @@ html {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .card-interactive:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 16px 35px rgba(7, 0, 111, 0.15) !important;
+  transform: none !important;
+  box-shadow: 0 2px 10px rgba(20, 20, 60, 0.07) !important;
 }
 
 /* 3. Tactile Button Physics (Micro-Bounce) */

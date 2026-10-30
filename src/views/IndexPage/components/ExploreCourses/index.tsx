@@ -2,12 +2,12 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { FaChevronLeft, FaChevronRight, FaBullseye, FaBitcoin, FaCloud, FaRobot, FaLayerGroup, FaLaptop, FaGraduationCap } from "react-icons/fa6";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { MdOutlineDeveloperMode } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
 import { PiBriefcase } from "react-icons/pi";
+import CourseCard from "@components/CourseCard";
 import ScrollReveal from "@components/ScrollReveal";
 import { catalogCourses, categorySlug } from "@services/catalog";
 
@@ -127,30 +127,20 @@ const ExploreCourses = () => {
       {/* No per-card scroll reveal: with every course listed the grid is taller than the screen, and inside the
           mobile carousel cards scrolled in sideways never registered as in view, so they stayed invisible */}
       <div
-        className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-[20px] sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
+        className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3"
       >
         {featuredCourses.map((course) => (
-          <motion.article
-            key={course.slug}
-            whileHover={{ y: -4 }}
-            onClick={() => router.push(`/courses/${course.slug}`)}
-            className="flex w-[75vw] shrink-0 snap-center cursor-pointer flex-col overflow-hidden rounded-[12px] border border-[#dedee7] bg-white transition-shadow duration-300 hover:shadow-lg sm:w-auto sm:shrink sm:snap-none"
-          >
-            <div className="p-3">
-              <img src={course.thumbnail} alt={course.title} loading="lazy" className="aspect-video w-full rounded-[8px] object-cover" />
-            </div>
-            <div className="flex flex-1 flex-col p-5 pt-2">
-              <p className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.06em] text-[#3e92cc]">{course.programme}</p>
-              <h3 className="text-[17px] font-bold leading-[1.3] text-[#202127]">{course.title}</h3>
-              <p className="mt-2 text-[14px] text-[#717480]">Gloxad Academy</p>
-              <p className="mt-1 text-[13px] text-[#717480]">
-                {course.videos.length} video lessons · {course.videoHours} hours
-              </p>
-              <div className="mt-auto pt-4">
-                <p className="text-[18px] font-bold text-[#202127]">{course.priceLabel}</p>
-              </div>
-            </div>
-          </motion.article>
+          <div key={course.slug} className="w-[82vw] shrink-0 snap-center sm:w-auto sm:shrink sm:snap-none">
+            <CourseCard
+              href={`/courses/${course.slug}`}
+              title={course.title}
+              image={course.thumbnail}
+              provider="Gloxad Academy"
+              tag={course.programme}
+              meta={[`${course.videos.length} video lessons`, `${course.videoHours} hours`]}
+              priceLabel={course.priceLabel}
+            />
+          </div>
         ))}
       </div>
 
