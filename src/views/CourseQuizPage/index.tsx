@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FiX, FiCheckCircle } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiMenu } from "react-icons/fi";
+import { FaCheckCircle, FaRegCircle, FaTimesCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import axiosInstance from "../../utils/axiosInstance";
 import { getMyEnrollment } from "@services/enrollments";
-
-// The API does not set a time limit on quizzes, so the page gives every quiz the same one
-const QUIZ_MINUTES = 15;
 
 type TQuizResult = {
   score: number;
@@ -17,14 +15,7 @@ type TQuizResult = {
   passed: boolean;
   totalQuestions: number;
   correctAnswers: number;
-  breakdown: { questionId: string; selectedOptionIndex: number | null; isCorrect: boolean }[];
-};
-
-const formatTime = (seconds: number) => {
-  const safe = Math.max(0, seconds);
-  const m = Math.floor(safe / 60);
-  const s = safe % 60;
-  return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  breakdown: { questionId: string; selectedOptionIndex: number | null; isCorrect: boolean; correctOptionIndex?: number }[];
 };
 
 // The route segment is named [moduleId] for historical reasons; it now carries the quiz's id
@@ -33,12 +24,9 @@ export default function CourseQuizPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
-  const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
   const [result, setResult] = useState<TQuizResult | null>(null);
-  const [timeLeft, setTimeLeft] = useState(QUIZ_MINUTES * 60);
-  const autoSubmitted = useRef(false);
 
   const { isLoading: isEnrollmentLoading, isError: isEnrollmentError } = useQuery({
     queryKey: ["enrollment", courseId],
@@ -73,13 +61,11 @@ export default function CourseQuizPage() {
       return res.data.result as TQuizResult;
     },
     onSuccess: (data) => {
-      setShowSubmitModal(false);
       setResult(data);
       queryClient.invalidateQueries({ queryKey: ["enrollment", courseId] });
       queryClient.invalidateQueries({ queryKey: ["my-courses"] });
     },
     onError: (error: any) => {
-      autoSubmitted.current = false;
       toast.error(error.response?.data?.error || "Could not submit the quiz. Please try again.");
     },
   });
@@ -90,21 +76,6 @@ export default function CourseQuizPage() {
       .filter((a) => typeof a.selectedOptionIndex === "number");
     submitMutation.mutate(answers);
   };
-
-  // Count down while the learner is answering
-  useEffect(() => {
-    if (result || showSubmitModal || totalQuestions === 0) return;
-    const interval = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    return () => clearInterval(interval);
-  }, [result, showSubmitModal, totalQuestions]);
-
-  // Time is up: send whatever has been answered
-  useEffect(() => {
-    if (timeLeft > 0 || result || totalQuestions === 0 || autoSubmitted.current) return;
-    autoSubmitted.current = true;
-    submitQuiz();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeLeft]);
 
   useEffect(() => {
     if (isEnrollmentError) router.push(`/courses/${courseId}`);
@@ -132,204 +103,184 @@ export default function CourseQuizPage() {
     );
   }
 
+  const allAnswered = questions.every((_, i) => typeof selectedAnswers[i] === "number");
+  const modules: any[] = courseData.modules || [];
+  const moduleIndex = modules.findIndex((m: any) => (m.quizzes || []).some((q: any) => String(q._id) === String(quizId)));
+  const moduleName = (mod: any) => String(mod?.title || "").replace(/^Module \d+:\s*/, "");
+
   const retake = () => {
     setResult(null);
     setSelectedAnswers({});
-    setCurrentQuestionIdx(0);
-    setTimeLeft(QUIZ_MINUTES * 60);
-    autoSubmitted.current = false;
   };
 
-  if (result) {
-    const incorrect = result.breakdown.filter((b) => b.selectedOptionIndex !== null && !b.isCorrect).length;
-    const skipped = result.breakdown.filter((b) => b.selectedOptionIndex === null).length;
-
-    return (
-      <div className="w-full min-h-screen bg-[#f8fafc] text-[#202127] flex flex-col items-center justify-center p-6">
-        <div className="bg-white max-w-[600px] w-full rounded-[24px] border border-[#dedee7] p-12 text-center shadow-sm">
-          <h1 className="text-[32px] font-bold text-[#07006f] mb-2">Quiz Completed</h1>
-          <p className="text-[16px] text-[#717480] mb-12">Here is your performance breakdown</p>
-
-          <div className="relative w-[160px] h-[160px] mx-auto mb-6">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#eef2ff" strokeWidth="10" />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke={result.passed ? "#10b981" : "#ef4444"}
-                strokeWidth="10"
-                strokeDasharray="283"
-                strokeDashoffset={283 - (283 * result.score) / 100}
-                strokeLinecap="round"
-                className="transition-all duration-1000"
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-[36px] font-bold text-[#202127]">{result.score}%</span>
-              <span className="text-[12px] text-[#717480]">Score</span>
-            </div>
-          </div>
-
-          <h2 className={`text-[20px] font-bold mb-2 ${result.passed ? "text-[#10b981]" : "text-[#ef4444]"}`}>
-            {result.passed ? "Congratulations! You passed the quiz." : "You did not pass. Please review and try again."}
-          </h2>
-          <p className="text-[13px] text-[#717480] mb-8">The pass mark is {result.passingScore}%.</p>
-
-          <div className="flex justify-center gap-12 mb-12 border-t border-b border-[#dedee7] py-6">
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-[#10b981]">{result.correctAnswers}</div>
-              <div className="text-[12px] font-bold text-[#717480] uppercase tracking-wider">Correct</div>
-            </div>
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-[#ef4444]">{incorrect}</div>
-              <div className="text-[12px] font-bold text-[#717480] uppercase tracking-wider">Incorrect</div>
-            </div>
-            <div className="text-center">
-              <div className="text-[24px] font-bold text-[#f59e0b]">{skipped}</div>
-              <div className="text-[12px] font-bold text-[#717480] uppercase tracking-wider">Skipped</div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            {!result.passed && (
-              <button
-                type="button"
-                onClick={retake}
-                className="w-full h-[52px] bg-[#07006f] text-white rounded-[8px] font-bold text-[15px] hover:bg-[#0a0050] transition-colors"
-              >
-                Try again
-              </button>
-            )}
-            <button
-              type="button"
-              onClick={() => router.push(`/learning/${courseId}`)}
-              className={`w-full h-[52px] rounded-[8px] font-bold text-[15px] transition-colors ${
-                result.passed ? "bg-[#07006f] text-white hover:bg-[#0a0050]" : "bg-white border border-[#dedee7] text-[#202127] hover:bg-gray-50"
-              }`}
-            >
-              Back to course
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const currentQuestion = questions[currentQuestionIdx];
-  const answeredCount = Object.keys(selectedAnswers).length;
-
   return (
-    <div className="w-full min-h-screen bg-[#f8fafc] text-[#202127] flex flex-col">
-      <header className="h-[70px] bg-white border-b border-[#dedee7] flex items-center justify-between px-6 shrink-0">
-        <button
-          type="button"
-          onClick={() => router.push(`/learning/${courseId}`)}
-          className="flex items-center gap-2 text-[#4e515c] hover:text-[#202127] transition-colors font-bold text-[14px]"
-        >
-          <FiX className="text-[20px]" /> Close
-        </button>
-        <div className="flex items-center gap-4 bg-[#f8fafc] px-4 py-2 rounded-[8px] border border-[#dedee7] font-bold text-[16px] text-[#07006f]">
-          {formatTime(timeLeft)}
-        </div>
-      </header>
+    <div className="w-full bg-white text-[#201633]">
+      <div className="flex min-h-[calc(100vh-140px)] flex-col lg:flex-row">
+        {/* Left: course menu */}
+        <aside className={`order-2 w-full shrink-0 border-t border-[#e5e7ef] lg:order-1 lg:border-r lg:border-t-0 ${showMenu ? "lg:w-[320px]" : "lg:w-[64px]"}`}>
+          <button type="button" onClick={() => setShowMenu((v) => !v)} className="flex w-full items-center gap-3 px-5 py-5 text-left text-[13px] font-semibold text-[#07004d]">
+            <FiMenu className="text-[16px]" />
+            {showMenu && "Hide Menu"}
+          </button>
+          {showMenu && (
+            <nav className="px-5 pb-8">
+              {modules.map((mod: any, idx: number) => (
+                <div key={mod._id} className="mb-5">
+                  <h3 className="mb-3 text-[14px] font-bold leading-snug text-[#07004d]">Module {idx + 1}: {moduleName(mod)}</h3>
+                  <ul className="space-y-3">
+                    {(mod.lessons || []).map((lesson: any) => (
+                      <li key={lesson._id}>
+                        <button type="button" onClick={() => router.push(`/learning/${courseId}`)} className="flex w-full items-start gap-2.5 text-left text-[13px] leading-snug text-[#201633] hover:text-[#07004d]">
+                          <FaCheckCircle className="mt-[2px] shrink-0 text-[15px] text-[#22a559]" />
+                          <span>{lesson.title}</span>
+                        </button>
+                      </li>
+                    ))}
+                    {(mod.quizzes || []).map((q: any) => (
+                      <li key={q._id} className={`flex items-start gap-2.5 text-[13px] leading-snug ${String(q._id) === String(quizId) ? "font-semibold text-[#07004d]" : "text-[#201633]"}`}>
+                        <FaRegCircle className="mt-[2px] shrink-0 text-[15px] text-[#6b6e7a]" />
+                        <span>{q.title || "Quiz"}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </nav>
+          )}
+        </aside>
 
-      <div className="flex-1 overflow-y-auto flex flex-col items-center py-12 px-6 relative">
-        <div className="w-full max-w-[800px] mb-12">
-          <div className="flex justify-between items-end mb-2">
-            <span className="font-bold text-[14px] text-[#202127]">
-              {quiz.title ? `${quiz.title}: ` : ""}Question {currentQuestionIdx + 1} of {totalQuestions}
-            </span>
-          </div>
-          <div className="w-full h-[8px] bg-[#e2e8f0] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#07006f] transition-all duration-300"
-              style={{ width: `${((currentQuestionIdx + 1) / totalQuestions) * 100}%` }}
-            ></div>
-          </div>
-        </div>
+        {/* Right: the quiz, or its results */}
+        <section className="order-1 min-w-0 flex-1 bg-[radial-gradient(ellipse_at_bottom_right,#e8f0ff_0%,transparent_55%)] px-5 py-5 sm:px-8 lg:order-2">
+          <div className="mx-auto max-w-[760px]">
+            <div className="mb-6 flex items-center justify-between gap-3 text-[12px] text-[#4e515c]">
+              <p className="min-w-0 truncate">
+                <span className="text-[#201633]">{courseData.title}</span>
+                <span className="mx-2 text-[#a0a3ae]">/</span>
+                <span className="text-[#07004d]">Module {Math.max(moduleIndex + 1, 1)}</span>
+                <span className="mx-2 text-[#a0a3ae]">›</span>
+                <span>{result ? "Quiz Results" : quiz.title || "Quiz"}</span>
+              </p>
+              <div className="flex shrink-0 items-center gap-4 font-semibold text-[#07004d]">
+                <button type="button" onClick={() => router.push(`/learning/${courseId}`)} className="flex items-center gap-1">
+                  <FiChevronLeft /> Previous
+                </button>
+                <button type="button" onClick={() => router.push(`/learning/${courseId}`)} className="flex items-center gap-1">
+                  Next <FiChevronRight />
+                </button>
+              </div>
+            </div>
 
-        <div className="w-full max-w-[800px] bg-white rounded-[16px] border border-[#dedee7] p-8 md:p-12 shadow-sm mb-24">
-          <h2 className="text-[24px] font-bold text-[#202127] mb-8 leading-tight">{currentQuestion.questionText}</h2>
+            {!result ? (
+              <>
+                <p className="mb-1 text-[13px] leading-[1.7]">
+                  Instructions: Please provide an answer for all questions. Each question is one point. Click on the Submit button to register your answers. After submitting your answers, the correct answer to each question will be displayed.
+                </p>
+                <p className="mb-6 text-[13px] font-semibold">All quiz questions count towards your score. You should answer all questions.</p>
 
-          <div className="space-y-4">
-            {(currentQuestion.options || []).map((opt: string, idx: number) => {
-              const isSelected = selectedAnswers[currentQuestionIdx] === idx;
-              return (
-                <label
-                  key={idx}
-                  onClick={() => setSelectedAnswers((prev) => ({ ...prev, [currentQuestionIdx]: idx }))}
-                  className={`flex items-center gap-4 p-5 rounded-[12px] border-2 cursor-pointer transition-all ${
-                    isSelected ? "border-[#07006f] bg-[#eef2ff]" : "border-[#dedee7] hover:border-[#b4bff5]"
-                  }`}
+                <div className="space-y-6">
+                  {questions.map((q: any, qi: number) => (
+                    <fieldset key={q._id || qi}>
+                      <legend className="mb-2 text-[13px] font-medium">{qi + 1}. {q.questionText}</legend>
+                      <div className="space-y-1.5">
+                        {(q.options || []).map((opt: string, oi: number) => {
+                          const picked = selectedAnswers[qi] === oi;
+                          return (
+                            <label key={oi} className="flex cursor-pointer items-center gap-2.5 text-[13px]">
+                              <span className={`flex h-[14px] w-[14px] items-center justify-center rounded-full border ${picked ? "border-[#07004d]" : "border-[#6b6e7a]"}`}>
+                                {picked && <span className="h-[8px] w-[8px] rounded-full bg-[#07004d]" />}
+                              </span>
+                              <input type="radio" className="sr-only" name={`q-${qi}`} checked={picked} onChange={() => setSelectedAnswers((prev) => ({ ...prev, [qi]: oi }))} />
+                              {opt}
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </fieldset>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={submitQuiz}
+                  disabled={!allAnswered || submitMutation.isPending}
+                  className="mt-8 h-[44px] w-full rounded-[6px] bg-[#07004d] text-[13px] font-semibold text-white transition hover:bg-[#111456] disabled:cursor-not-allowed disabled:bg-[#c9c9e0]"
                 >
-                  <div
-                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                      isSelected ? "border-[#07006f]" : "border-[#dedee7]"
-                    }`}
-                  >
-                    {isSelected && <div className="w-3 h-3 rounded-full bg-[#07006f]"></div>}
+                  {submitMutation.isPending ? "Submitting..." : "Submit"}
+                </button>
+              </>
+            ) : (
+              <>
+                <h2 className="text-[16px] font-bold text-[#07004d]">Quiz Results</h2>
+                <p className="mt-1 mb-6 text-[12px] text-[#4e515c]">
+                  You correctly answered {result.correctAnswers} of {result.totalQuestions} questions.
+                </p>
+
+                <div className="space-y-5">
+                  {questions.map((q: any, qi: number) => {
+                    const row = result.breakdown.find((b) => String(b.questionId) === String(q._id));
+                    const picked = row?.selectedOptionIndex;
+                    const correctText = typeof row?.correctOptionIndex === "number" ? q.options?.[row.correctOptionIndex] : undefined;
+                    return (
+                      <dl key={q._id || qi} className="grid grid-cols-[110px_1fr] gap-y-2 text-[12px]">
+                        <dt className="font-semibold">Question {qi + 1}</dt>
+                        <dd>{q.questionText}</dd>
+                        <dt className="font-semibold">Your answer</dt>
+                        <dd>{typeof picked === "number" ? q.options?.[picked] : "Not answered"}</dd>
+                        <dt className="font-semibold">Result</dt>
+                        <dd className="flex items-center gap-1.5">
+                          {row?.isCorrect ? (
+                            <>Correct <FaCheckCircle className="text-[#22a559]" /></>
+                          ) : (
+                            <>Wrong <FaTimesCircle className="text-[#e5484d]" /></>
+                          )}
+                        </dd>
+                        {!row?.isCorrect && correctText && (
+                          <>
+                            <dt className="font-semibold">Correct answer</dt>
+                            <dd>{correctText}</dd>
+                          </>
+                        )}
+                      </dl>
+                    );
+                  })}
+                </div>
+
+                <div className="mx-auto mt-10 flex max-w-[300px] flex-col items-center text-center">
+                  <div className="relative h-[190px] w-[190px]">
+                    <svg className="h-full w-full -rotate-90" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="44" fill="none" stroke="#e5e7ef" strokeWidth="9" />
+                      <circle
+                        cx="50" cy="50" r="44" fill="none"
+                        stroke={result.passed ? "#1f7a1f" : "#e5484d"}
+                        strokeWidth="9" strokeDasharray="276.5"
+                        strokeDashoffset={276.5 - (276.5 * result.score) / 100}
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
+                      <span className="text-[28px] font-bold">{result.score}%</span>
+                      <span className="mt-1 text-[8px] leading-snug text-[#4e515c]">
+                        {result.passed
+                          ? "Congratulations! You scored well. Keep up the great work and push to achieve more excellence."
+                          : "Don't be discouraged. Revisit the lessons, then retake the quiz when you're ready."}
+                      </span>
+                    </div>
                   </div>
-                  <span className={`text-[16px] ${isSelected ? "font-bold text-[#07006f]" : "text-[#4e515c]"}`}>{opt}</span>
-                </label>
-              );
-            })}
-          </div>
-        </div>
+                </div>
 
-        <div className="fixed bottom-0 left-0 w-full h-[80px] bg-white border-t border-[#dedee7] flex items-center justify-center px-6">
-          <div className="w-full max-w-[800px] flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setCurrentQuestionIdx((prev) => Math.max(0, prev - 1))}
-              disabled={currentQuestionIdx === 0}
-              className="px-8 h-[48px] bg-white border border-[#dedee7] text-[#202127] rounded-[8px] font-bold text-[14px] hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Previous
-            </button>
-            <button
-              type="button"
-              onClick={() => (currentQuestionIdx < totalQuestions - 1 ? setCurrentQuestionIdx((prev) => prev + 1) : setShowSubmitModal(true))}
-              className="px-8 h-[48px] bg-[#07006f] text-white rounded-[8px] font-bold text-[14px] hover:bg-[#0a0050] transition-colors"
-            >
-              {currentQuestionIdx === totalQuestions - 1 ? "Submit Quiz" : "Next"}
-            </button>
+                <div className="mx-auto mt-8 flex max-w-[420px] gap-4">
+                  <button type="button" onClick={() => router.push(`/learning/${courseId}`)} className="h-[40px] flex-1 rounded-[6px] bg-[#07004d] text-[12px] font-semibold text-white hover:bg-[#111456]">
+                    {result.passed ? "Next Module" : "Back to Course"}
+                  </button>
+                  <button type="button" onClick={retake} className="h-[40px] flex-1 rounded-[6px] border border-[#07004d] bg-white text-[12px] font-semibold text-[#07004d] hover:bg-[#eef2ff]">
+                    Retake Quiz
+                  </button>
+                </div>
+              </>
+            )}
           </div>
-        </div>
+        </section>
       </div>
-
-      {showSubmitModal && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-6 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-[480px] rounded-[24px] p-8 text-center shadow-xl">
-            <div className="w-[80px] h-[80px] bg-[#eef2ff] text-[#07006f] rounded-full flex items-center justify-center text-[40px] mx-auto mb-6">
-              <FiCheckCircle />
-            </div>
-            <h3 className="text-[24px] font-bold text-[#202127] mb-2">Submit Quiz?</h3>
-            <p className="text-[14px] text-[#717480] mb-8 leading-relaxed">
-              You have answered {answeredCount} out of {totalQuestions} questions. Unanswered questions count as incorrect.
-            </p>
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={() => setShowSubmitModal(false)}
-                disabled={submitMutation.isPending}
-                className="flex-1 h-[52px] bg-white border border-[#dedee7] text-[#202127] rounded-[8px] font-bold text-[15px] hover:bg-gray-50 transition-colors disabled:opacity-60"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={submitQuiz}
-                disabled={submitMutation.isPending}
-                className="flex-1 h-[52px] bg-[#07006f] text-white rounded-[8px] font-bold text-[15px] hover:bg-[#0a0050] transition-colors disabled:opacity-60"
-              >
-                {submitMutation.isPending ? "Submitting..." : "Submit"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

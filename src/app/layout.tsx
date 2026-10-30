@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Roboto } from "next/font/google";
 import Providers from "@components/Providers";
+import ServiceWorkerRegister from "@components/ServiceWorkerRegister";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -36,7 +37,8 @@ export const metadata: Metadata = {
     "elearning platform",
   ],
   alternates: { canonical: "/" },
-  icons: { icon: "/gloxadlogo.png" },
+  icons: { icon: "/gloxadlogo.png", apple: "/icons/apple-touch-icon.png" },
+  appleWebApp: { capable: true, title: "Gloxad", statusBarStyle: "default" },
   openGraph: {
     type: "website",
     url: "https://www.gloxadacademy.com/",
@@ -52,11 +54,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = { themeColor: "#07004d" };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${roboto.variable}`}>
       <body>
         <Providers>{children}</Providers>
+        <ServiceWorkerRegister />
         <div id="modal" />
       </body>
     </html>

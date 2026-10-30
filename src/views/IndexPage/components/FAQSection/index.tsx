@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     question: "Are the courses self-paced or instructor-led?",
-    answer: "Both — most courses are self-paced so you can learn on your own schedule, while trimester courses run on a fixed schedule with live instructor sessions and discussions.",
+    answer: "Every course is self-paced, so you learn on your own schedule. Trimester courses, which run on a fixed schedule with a cohort, are not available at the moment.",
   },
   {
     question: "Will I receive a certificate after completing a course?",

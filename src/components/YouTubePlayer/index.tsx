@@ -1,6 +1,7 @@
 "use client";
 
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { toggleFullscreen } from "@utils/fullscreen";
 
 // A YouTube video in YouTube's own player (privacy-enhanced mode) that reports where the viewer is, so a
 // course page can follow the video's timeline. It uses YouTube's official IFrame Player API and leaves the
@@ -37,6 +38,8 @@ export type TPlayerState = "playing" | "paused" | "ended" | "buffering" | "other
 export type TYouTubePlayerHandle = {
   seekTo: (seconds: number) => void;
   getCurrentTime: () => number;
+  // Full screen for the whole video frame (YouTube's own full-screen button works as well)
+  toggleFullscreen: () => void;
 };
 
 type TProps = {
@@ -68,6 +71,7 @@ const YouTubePlayer = forwardRef<TYouTubePlayerHandle, TProps>(
         playerRef.current?.playVideo?.();
       },
       getCurrentTime: () => playerRef.current?.getCurrentTime?.() ?? 0,
+      toggleFullscreen: () => toggleFullscreen(containerRef.current),
     }));
 
     const stopTimer = () => {
@@ -99,9 +103,13 @@ const YouTubePlayer = forwardRef<TYouTubePlayerHandle, TProps>(
           events: {
             onReady: (event: any) => {
               try {
-                event.target.getIframe().title = latest.current.title;
+                const iframe = event.target.getIframe();
+                iframe.title = latest.current.title;
+                // Let the video go full screen from YouTube's own button as well as ours
+                iframe.setAttribute("allowfullscreen", "");
+                iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture; web-share");
               } catch {
-                // title is only for screen readers
+                // title and permissions are best effort
               }
               // The video may have changed while the player was loading
               if (loadedVideo.current !== latest.current.videoId) {

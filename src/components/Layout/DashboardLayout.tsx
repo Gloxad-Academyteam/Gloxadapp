@@ -246,8 +246,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 <SidebarItem
                   icon={PiStudent}
                   label="Trimester Courses"
-                  to="/lms"
-                  active={pathname.startsWith("/lms")}
+                  to="/dashboard?tab=trimester"
+                  active={false}
                   isOpen={isSidebarOpen}
                 />
                 <SidebarItem

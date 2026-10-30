@@ -223,18 +223,23 @@ const LandingHeader = () => {
                       </button>
                     )}
                     renderDropdown={() => (
-                      <div className="flex flex-col p-5 gap-4 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[200px]">
-                        <div className="border-b pb-2 mb-2">
-                          <p className="font-bold text-[14px]">{authenticatedUser?.name || "User"}</p>
-                          <p className="text-[12px] text-gray-500">{authenticatedUser?.email}</p>
-                        </div>
-                        <Button
-                          text={isLoggingOut ? "Logging out..." : "Logout"}
+                      <div className="flex min-w-[220px] flex-col rounded-2xl border border-[#07004d] bg-white px-6 py-5 shadow-lg">
+                        <p className="text-[16px] text-[#0b1a4a]">Profile</p>
+                        <div className="my-3 h-px bg-[#c9c9d1]" />
+                        <Link href="/dashboard?tab=settings" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
+                          Basic Information
+                        </Link>
+                        <Link href="/dashboard?tab=settings&section=password" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
+                          Change Password
+                        </Link>
+                        <button
+                          type="button"
                           onClick={() => handleLogout()}
                           disabled={isLoggingOut}
-                          outline
-                          className="w-full text-center"
-                        />
+                          className="py-2 text-left text-[15px] font-bold text-[#ff5a4f] disabled:opacity-60"
+                        >
+                          {isLoggingOut ? "Logging out..." : "Log Out"}
+                        </button>
                       </div>
                     )}
                   />
@@ -395,18 +400,23 @@ const Header = () => {
                       </button>
                     )}
                     renderDropdown={() => (
-                      <div className="flex flex-col p-5 gap-4 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[200px]">
-                        <div className="border-b pb-2 mb-2">
-                          <p className="font-bold text-[14px]">{authenticatedUser?.name || "User"}</p>
-                          <p className="text-[12px] text-gray-500">{authenticatedUser?.email}</p>
-                        </div>
-                        <Button
-                          text={isLoggingOut ? "Logging out..." : "Logout"}
+                      <div className="flex min-w-[220px] flex-col rounded-2xl border border-[#07004d] bg-white px-6 py-5 shadow-lg">
+                        <p className="text-[16px] text-[#0b1a4a]">Profile</p>
+                        <div className="my-3 h-px bg-[#c9c9d1]" />
+                        <Link href="/dashboard?tab=settings" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
+                          Basic Information
+                        </Link>
+                        <Link href="/dashboard?tab=settings&section=password" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
+                          Change Password
+                        </Link>
+                        <button
+                          type="button"
                           onClick={() => handleLogout()}
                           disabled={isLoggingOut}
-                          outline
-                          className="w-full text-center"
-                        />
+                          className="py-2 text-left text-[15px] font-bold text-[#ff5a4f] disabled:opacity-60"
+                        >
+                          {isLoggingOut ? "Logging out..." : "Log Out"}
+                        </button>
                       </div>
                     )}
                   />

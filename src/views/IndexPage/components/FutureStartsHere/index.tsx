@@ -23,8 +23,8 @@ const FutureStartsHere = () => {
             Your Future Starts Here!
           </h2>
           <p className="mt-4 max-w-[640px] text-[14px] leading-[1.6] text-white/95 lg:text-[15px]">
-            <span className="sm:hidden">Enroll before the deadline and learn with a motivated cohort.</span>
-            <span className="hidden sm:inline">Enroll in our structured trimester courses before the deadline. Stay ahead and learn with a cohort of motivated students.</span>
+            <span className="sm:hidden">Start any free course today and learn at your own pace.</span>
+            <span className="hidden sm:inline">Every Gloxad Academy course is free. Pick a course, watch the lessons chapter by chapter, and track your progress as you learn.</span>
           </p>
           <button
             type="button"

@@ -43,7 +43,7 @@ Gloxad Academy is an online academy that teaches practical technology and busine
 
 | Who | What they do on the platform |
 | --- | --- |
-| **Learners** | Browse courses, learn from video lessons, take quizzes, track progress, earn certificates, join a trimester cohort |
+| **Learners** | Browse courses, learn from video lessons, take quizzes, track progress, earn certificates |
 | **Tutors** | Apply to teach, build and submit courses, reply to reviews, message learners, see earnings |
 | **Administrators** | Approve tutors and courses, manage users and categories, handle appeals, watch finance and platform settings |
 | **Partner institutions** | Apply to partner with Gloxad, onboard departments, tutors and students, and manage their own workspace |
@@ -67,8 +67,9 @@ The video lessons come from [freeCodeCamp.org](https://www.youtube.com/@freecode
 
 | Area | What it includes |
 | --- | --- |
-| **Public site** | Home page with category tabs, free courses, the course catalogue and course pages, the trimester programme page, tutor and institution landing pages, sign-in and sign-up |
-| **Student dashboard** | My courses, free courses, trimester courses, certificates, notifications, messages, settings |
+| **Public site** | Home page with category tabs, free courses, the course catalogue and course pages, the trimester page (currently shows "Not available", as every course is free and self-paced), tutor and institution landing pages, sign-in and sign-up |
+| **Student dashboard** | My courses, free courses, trimester courses (shows "Not available"), certificates, notifications, messages, settings |
+| **Course pages and player** | Clean course page with a video preview, collapsible module and chapter list, and a Full screen button on every video (the player also has YouTube's own) |
 | **Course player** | Lessons with saved progress, notes and questions, server-scored quizzes, a completion page and a downloadable certificate |
 | **Tutor area** | Dashboard, a step-by-step course upload wizard, credential verification, earnings, reviews, messages |
 | **Admin area** | Courses, tutors, students, reviews, finance, live classes, platform settings |

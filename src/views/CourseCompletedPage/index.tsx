@@ -3,63 +3,59 @@
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
+import { FiChevronLeft } from "react-icons/fi";
 import axiosInstance from "../../utils/axiosInstance";
 
 export default function CourseCompletedPage() {
   const { id: courseId } = useParams()!;
   const router = useRouter();
 
-  const { data: courseData, isLoading } = useQuery({
+  const { data: course } = useQuery({
     queryKey: ["course.completed", courseId],
     queryFn: async () => {
       const res = await axiosInstance.get(`/courses/${courseId}`);
-      return res.data;
+      return res.data?.course ?? res.data;
     },
-    enabled: !!courseId
+    enabled: !!courseId,
   });
 
-  if (isLoading) return <div className="p-20 text-center text-white">Loading...</div>;
-
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center p-6 text-white" style={{ background: "linear-gradient(135deg, #07006f 0%, #1e3a8a 100%)" }}>
-      
-      <div className="max-w-[500px] w-full text-center">
-        {/* Placeholder for Illustration */}
-        <div className="w-[280px] h-[280px] mx-auto mb-8 bg-white/10 rounded-full flex items-center justify-center relative shadow-[0_0_80px_rgba(255,255,255,0.1)]">
-          <img 
-            src="/assets/completed_illustration_placeholder.svg" 
-            alt="Course Completed"
-            className="w-[200px] h-[200px] object-contain drop-shadow-2xl"
-            onError={(e) => {
-              // fallback if asset not found
-              (e.target as HTMLImageElement).src = "https://cdn-icons-png.flaticon.com/512/3135/3135692.png";
-              (e.target as HTMLImageElement).style.filter = "brightness(0) invert(1)";
-            }}
-          />
-        </div>
+    <div className="w-full bg-white px-5 pb-24 pt-6 text-[#201633] md:px-10">
+      <div className="mx-auto max-w-[900px]">
+        <button type="button" onClick={() => router.push("/dashboard/courses")} className="flex items-center gap-1 text-[13px] text-[#4e515c] hover:text-[#07004d]">
+          <FiChevronLeft /> Back
+        </button>
 
-        <h1 className="text-[36px] font-bold mb-4 drop-shadow-md">Course completed successfully!</h1>
-        <p className="text-[16px] text-blue-100 mb-10 leading-relaxed max-w-[400px] mx-auto">
-          Congratulations! You've successfully completed <span className="font-bold text-white">"{courseData?.title || 'the course'}"</span>. 
-          Your certificate of completion is now available.
-        </p>
+        <div className="mt-10 text-center">
+          {/* Graduate illustration */}
+          <div className="mx-auto flex h-[210px] w-[210px] items-center justify-center rounded-full bg-[#f9dcb4]">
+            <svg viewBox="0 0 120 120" className="h-[150px] w-[150px]" role="img" aria-label="Graduate">
+              <circle cx="60" cy="52" r="20" fill="#f2c9a5" />
+              <path d="M30 108c0-24 12-38 30-38s30 14 30 38z" fill="#1d1d3a" />
+              <path d="M52 72l8 14 8-14z" fill="#3e6ab3" />
+              <path d="M60 20L22 36l38 16 38-16z" fill="#1d1d3a" />
+              <path d="M40 46v14c0 6 9 10 20 10s20-4 20-10V46l-20 8z" fill="#1d1d3a" />
+              <path d="M96 38v18" stroke="#f5b400" strokeWidth="3" />
+              <circle cx="96" cy="58" r="3" fill="#f5b400" />
+            </svg>
+          </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button 
+          <div className="mx-auto mt-10 max-w-[620px] text-[14px] leading-[1.9]">
+            <p>🎉 Congratulations!</p>
+            <p>You have successfully completed your {course?.title || "course"}.</p>
+            <p>All of us at Gloxad celebrate you and your achievement.</p>
+            <p>We're proud of your dedication and growth — this is just the beginning of your learning journey!</p>
+          </div>
+
+          <button
+            type="button"
             onClick={() => router.push(`/learning/${courseId}/certificate`)}
-            className="w-full sm:w-auto px-8 h-[52px] bg-white text-[#07006f] rounded-[8px] font-bold text-[15px] hover:bg-gray-100 transition-colors shadow-lg"
+            className="mx-auto mt-12 block h-[52px] w-full max-w-[520px] rounded-full bg-[#07004d] text-[13px] font-semibold text-white transition hover:bg-[#111456]"
           >
-            Download Certificate
-          </button>
-          <button 
-            onClick={() => router.push("/dashboard/courses")}
-            className="w-full sm:w-auto px-8 h-[52px] bg-transparent border-2 border-white text-white rounded-[8px] font-bold text-[15px] hover:bg-white/10 transition-colors"
-          >
-            Go to dashboard
+            View and Download Certificate
           </button>
         </div>
       </div>
-
     </div>
   );
 }

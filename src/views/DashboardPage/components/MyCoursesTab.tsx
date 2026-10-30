@@ -75,15 +75,13 @@ const MyCoursesTab = () => {
         </div>
 
         {/* Pill Navigation */}
-        <div className="flex items-center gap-2 bg-[#f0f4f8] w-fit p-1 rounded-[8px] mt-6 md:mt-0">
+        <div className="mt-6 flex w-fit items-center gap-1 rounded-full bg-white p-1 ring-1 ring-[#e2e8f0] md:mt-0">
           {pills.map((pill) => (
             <button
               key={pill}
               onClick={() => setActivePill(pill)}
-              className={`px-6 py-2 rounded-[6px] text-[13px] font-bold transition-colors ${
-                activePill === pill
-                  ? "bg-white text-[#1e4ed8] shadow-sm border border-[#e2e8f0]"
-                  : "text-[#4e515c] hover:bg-gray-200"
+              className={`rounded-full px-6 py-2 text-[13px] font-semibold transition-colors ${
+                activePill === pill ? "bg-[#07004d] text-white" : "text-[#4e515c] hover:bg-[#f0f4f8]"
               }`}
             >
               {pill}
@@ -156,17 +154,34 @@ const MyCoursesTab = () => {
                       Instructor: {instructorName}
                     </p>
 
-                    <div className="mt-auto flex items-end justify-between gap-4">
-                      <div className="flex-1 max-w-[300px]">
-                        <p className="text-[11px] font-bold text-[#202127] mb-2">{progress.percent}% Complete</p>
-                        <div className="w-full h-[6px] bg-[#e2e8f0] rounded-full overflow-hidden">
-                          <div className="h-full bg-[#1e4ed8] rounded-full" style={{ width: `${progress.percent}%` }}></div>
+                    {progress.percent >= 100 ? (
+                      <div className="mt-auto">
+                        <p className="mb-2 text-[11px] font-bold text-[#202127]">100%</p>
+                        <div className="mb-4 h-[6px] w-full overflow-hidden rounded-full bg-[#e2e8f0]">
+                          <div className="h-full w-full rounded-full bg-[#22a559]" />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <button type="button" onClick={() => router.push(`/learning/${course._id}`)} className="h-[38px] rounded-full border border-[#07004d] text-[12px] font-semibold text-[#07004d] transition hover:bg-[#eef2ff]">
+                            Watch Video
+                          </button>
+                          <button type="button" onClick={() => router.push(`/learning/${course._id}/completed`)} className="h-[38px] rounded-full bg-[#07004d] text-[12px] font-semibold text-white transition hover:bg-[#111456]">
+                            View and Download Certificate
+                          </button>
                         </div>
                       </div>
-                      <button type="button" onClick={() => router.push(`/learning/${course._id}`)} className="flex items-center gap-2 bg-[#1e4ed8] text-white px-6 py-2.5 rounded-[6px] text-[13px] font-bold hover:bg-blue-800 transition-colors shrink-0 btn-interactive">
-                        <FaPlay className="text-[10px]" /> Resume
-                      </button>
-                    </div>
+                    ) : (
+                    <div className="mt-auto flex items-end justify-between gap-4">
+                        <div className="flex-1 max-w-[300px]">
+                          <p className="text-[11px] font-bold text-[#202127] mb-2">{progress.percent}% Complete</p>
+                          <div className="w-full h-[6px] bg-[#e2e8f0] rounded-full overflow-hidden">
+                            <div className={`h-full rounded-full ${progress.percent >= 100 ? "bg-[#22a559]" : "bg-[#07004d]"}`} style={{ width: `${progress.percent}%` }}></div>
+                          </div>
+                        </div>
+                        <button type="button" onClick={() => router.push(`/learning/${course._id}`)} className="flex items-center gap-2 bg-[#07004d] text-white px-6 py-2.5 rounded-[6px] text-[13px] font-bold hover:bg-[#111456] transition-colors shrink-0 btn-interactive">
+                          <FaPlay className="text-[10px]" /> Resume
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
