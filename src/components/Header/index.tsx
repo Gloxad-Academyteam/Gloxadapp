@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import TutorCoursesOnly from "@components/TutorCoursesOnly";
 import { usePathname, useSearchParams } from "next/navigation";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
 import { FaTimes, FaSearch, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -154,7 +155,7 @@ const LandingHeader = () => {
               {isTutorActive ? (
                 <nav className="hidden lg:flex items-center gap-6 text-[14px] font-bold text-[#4e515c] ml-4">
                   <Link href="/" className="hover:text-[#1e4ed8] transition-colors">Home</Link>
-                  <Link href={coursesHref(isAuthenticated)} className="hover:text-[#1e4ed8] transition-colors">Our Courses</Link>
+                  <TutorCoursesOnly><Link href={coursesHref(isAuthenticated)} className="hover:text-[#1e4ed8] transition-colors">Our Courses</Link></TutorCoursesOnly>
                   <Link href="/trimester" className="hover:text-[#1e4ed8] transition-colors">Trimester Courses</Link>
                   <Link href="/free" className="hover:text-[#1e4ed8] transition-colors">Free Courses</Link>
                   <Link href="/scholarships" className="hover:text-[#1e4ed8] transition-colors">Scholarships</Link>
@@ -291,7 +292,7 @@ const LandingHeader = () => {
           <div className="mx-auto flex h-full w-full max-w-[1512px] items-center px-5 md:px-10 lg:px-8 xl:px-[120px] pointer-events-auto">
             <nav className="flex h-full items-center gap-5 text-[14px] font-medium text-white/80 xl:gap-8">
               <Link href="/" className="font-bold text-white transition-colors">Home</Link>
-              <Link href={coursesHref(isAuthenticated)} className="hover:text-white transition-colors">Our Courses</Link>
+              <TutorCoursesOnly><Link href={coursesHref(isAuthenticated)} className="hover:text-white transition-colors">Our Courses</Link></TutorCoursesOnly>
               <Link href="/trimester" className="hover:text-white transition-colors">Trimester Courses</Link>
               <Link href="/free" className="hover:text-white transition-colors">Free Courses</Link>
               <Link href="/scholarships" className="hover:text-white transition-colors">Scholarships</Link>
@@ -433,7 +434,7 @@ const Header = () => {
               <nav className="flex h-full items-center gap-5 overflow-x-auto whitespace-nowrap text-[14px] font-bold text-[#4e515c] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden xl:gap-8">
                 <Link href="/dashboard" className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/dashboard' && (!search.includes('tab') || search.includes('tab=home')) ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Home</Link>
                 <Link href="/dashboard?tab=my-courses" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">My Courses</Link>
-                <Link href="/dashboard/explore" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname.includes('/dashboard/explore') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Our Courses</Link>
+                <TutorCoursesOnly><Link href="/dashboard/explore" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname.includes('/dashboard/explore') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Our Courses</Link></TutorCoursesOnly>
                 <Link href="/dashboard?tab=trimester" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">Trimester Courses</Link>
                 <Link href="/dashboard?tab=free" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname === '/dashboard' && search.includes('tab=free') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Free Courses</Link>
                 <Link href="/scholarships" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">Scholarships</Link>
@@ -443,7 +444,7 @@ const Header = () => {
             ) : (
               <nav className="flex h-full items-center gap-5 overflow-x-auto whitespace-nowrap text-[14px] font-bold text-[#4e515c] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden xl:gap-8">
                 <Link href="/" className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Home</Link>
-                <Link href={coursesHref(isAuthenticated)} className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/courses' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Our Courses</Link>
+                <TutorCoursesOnly><Link href={coursesHref(isAuthenticated)} className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/courses' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Our Courses</Link></TutorCoursesOnly>
                 <Link href="/trimester" className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/trimester' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Trimester Courses</Link>
                 <Link href="/free" className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/free' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Free Courses</Link>
                 <Link href="/scholarships" className={`h-full flex items-center border-b-2 hover:text-[#030069] transition-colors ${pathname === '/scholarships' ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Scholarships</Link>
@@ -597,7 +598,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
                 <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
                 <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
                 <Link href="/dashboard?tab=my-courses" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">My Courses</Link>
-                <Link href="/dashboard/explore" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link>
+                <TutorCoursesOnly><Link href="/dashboard/explore" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link></TutorCoursesOnly>
                 <Link href="/dashboard?tab=trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
                 <Link href="/dashboard?tab=free" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Free Courses</Link>
                 <Link href="/scholarships" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Scholarships</Link>
@@ -609,7 +610,9 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
                 <Link href="/" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isStudentActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Students (Home)</Link>
                 <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
                 <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
+                <TutorCoursesOnly>
                 <Link href={coursesHref(isAuthenticated)} onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link>
+                </TutorCoursesOnly>
                 <Link href="/free" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Free Courses</Link>
                 <Link href="/trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
                 <Link href="/scholarships" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Scholarships</Link>

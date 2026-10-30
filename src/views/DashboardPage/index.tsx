@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import useAuth from "@hooks/useAuth";
 import FreeCoursesTab from "./components/FreeCoursesTab";
 import MyCoursesTab from "./components/MyCoursesTab";
+import LearnerHome from "./components/LearnerHome";
 import TrimesterCoursesTab from "./components/TrimesterCoursesTab";
 import TutorDashboardPage from "@pages/Tutor/TutorDashboardPage";
 import IndexPage from "../IndexPage";
@@ -20,7 +21,7 @@ const DashboardPage = () => {
 
   return (
     <div className="w-full bg-[#fcfcfd] min-h-[calc(100vh-136px)] pb-24">
-      {tab === "home" && <IndexPage variant="dashboard" />}
+      {tab === "home" && <LearnerHome />}
       {tab === "my-courses" && <MyCoursesTab />}
       {tab === "free" && <FreeCoursesTab />}
       {tab === "trimester" && <TrimesterCoursesTab />}

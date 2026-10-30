@@ -8,6 +8,7 @@ import HowItWorks from "./components/HowItWorks";
 import Testimonials from "./components/Testimonials";
 import FAQSection from "./components/FAQSection";
 import FutureStartsHere from "./components/FutureStartsHere";
+import TutorCoursesOnly from "@components/TutorCoursesOnly";
 
 type IndexPageProps = {
   /** "dashboard" renders the slim, text-only hero used inside the signed-in student dashboard. */
@@ -20,7 +21,9 @@ const IndexPage = ({ variant = "public" }: IndexPageProps) => {
       <Hero compact={variant === "dashboard"} />
 
       <main className="bg-white rounded-t-[40px] relative z-10 -mt-[40px] pt-8 md:pt-14 pb-16 shadow-[0_-20px_60px_rgba(0,0,0,0.25)] border-t border-white/10">
-        <ExploreCourses />
+        <TutorCoursesOnly>
+          <ExploreCourses />
+        </TutorCoursesOnly>
 
         <div className="mx-auto flex flex-col gap-8 w-full max-w-[1272px] px-5 md:px-10 lg:px-0 mb-16">
           <TrimesterBanner />

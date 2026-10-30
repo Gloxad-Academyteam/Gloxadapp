@@ -1,5 +1,6 @@
 "use client";
 
+import TutorCoursesOnly from "@components/TutorCoursesOnly";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -236,6 +237,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   active={pathname === "/dashboard" || pathname === "/dashboard/"}
                   isOpen={isSidebarOpen}
                 />
+                <TutorCoursesOnly>
                 <SidebarItem
                   icon={PiCompass}
                   label="Our Courses"
@@ -243,6 +245,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   active={pathname.includes("/dashboard/explore")}
                   isOpen={isSidebarOpen}
                 />
+                </TutorCoursesOnly>
                 <SidebarItem
                   icon={PiStudent}
                   label="Trimester Courses"
