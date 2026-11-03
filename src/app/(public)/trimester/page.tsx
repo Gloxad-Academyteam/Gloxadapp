@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import TrimesterPage from "@pages/TrimesterPage";
 
 export const metadata: Metadata = {
-  title: "Trimester Courses | Gloxad Academy",
-  description: "Trimester courses are not available right now. Every Gloxad Academy course is free and self-paced.",
+  title: "Trimester Program | Gloxad Academy",
+  description: "A four week guided program with live classes, assignments, a final project and a certificate.",
   alternates: { canonical: "/trimester" },
 };
 
