@@ -130,7 +130,7 @@ const ScholarshipsPage = () => {
       {scholarships.isLoading ? (
         <LoadingState />
       ) : scholarships.isError ? (
-        <ErrorState onRetry={() => scholarships.refetch()} />
+        <ErrorState title="Scholarships are temporarily unavailable" description="We could not fetch the latest scholarship and application details. Check your connection, then try again." onRetry={() => scholarships.refetch()} />
       ) : !scholarships.data?.length ? (
         <EmptyState title="No scholarships are published right now" text="New scholarships will appear here as soon as they are announced." href="/free" action="Browse free courses" />
       ) : (

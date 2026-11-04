@@ -95,7 +95,7 @@ const TrimesterPage = () => {
       {trimesters.isLoading ? (
         <LoadingState />
       ) : trimesters.isError ? (
-        <ErrorState onRetry={() => trimesters.refetch()} />
+        <ErrorState title="Trimester programs are temporarily unavailable" description="We could not fetch the latest programs and enrolment details. Check your connection, then try again." onRetry={() => trimesters.refetch()} />
       ) : !trimesters.data?.length ? (
         <EmptyState title="No trimester is open yet" text="The next trimester has not been published. In the meantime every Gloxad course is free and self-paced." href="/free" action="Browse free courses" />
       ) : (

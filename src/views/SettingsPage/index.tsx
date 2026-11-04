@@ -5,19 +5,18 @@ import {
   FaUpload, FaEye, FaEyeSlash, FaChevronDown, 
   FaGlobe, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaWhatsapp, FaYoutube 
 } from "react-icons/fa";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
 import useAuth from "@hooks/useAuth";
 import { useS3Upload } from "@hooks/useS3Upload";
 import { useQueryClient } from "@tanstack/react-query";
 import { updatePassword, updateProfile } from "@services/auth";
-import AvatarPlaceholder from "@assets/images/image.png";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
 const SettingsPage = () => {
   const { authenticatedUser, handleLogout } = useAuth();
-  const { uploadFile, isUploading: isUploadingAvatar } = useS3Upload();
+  const { uploadFile, isUploading: isUploadingAvatar, uploadProgress } = useS3Upload();
   const queryClient = useQueryClient();
   const user: any = authenticatedUser;
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -26,6 +25,7 @@ const SettingsPage = () => {
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const [isSocialLoading, setIsSocialLoading] = useState(false);
   const [isNotificationsLoading, setIsNotificationsLoading] = useState(false);
+  const [avatarImageFailed, setAvatarImageFailed] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -101,6 +101,8 @@ const SettingsPage = () => {
     }
   }, [user]);
 
+  useEffect(() => setAvatarImageFailed(false), [formData.avatarUrl]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     if (name === "title" && value.length > 50) return;
@@ -139,10 +141,17 @@ const SettingsPage = () => {
 
     try {
       const url = await uploadFile(file, "avatars");
-      setFormData((prev) => ({ ...prev, avatarUrl: url }));
-      await updateProfile({ avatarUrl: url });
-      queryClient.invalidateQueries({ queryKey: ["auth.me"] });
-      toast.success("Profile picture saved!");
+      const savedProfile = await updateProfile({ avatarUrl: url });
+      const savedAvatar = savedProfile.data?.avatarUrl || savedProfile.data?.avatar || url;
+      setFormData((prev) => ({ ...prev, avatarUrl: savedAvatar }));
+      if (savedProfile.data) {
+        queryClient.setQueryData(["auth.me"], {
+          ...savedProfile,
+          data: { ...savedProfile.data, avatar: savedAvatar, avatarUrl: savedAvatar },
+        });
+      }
+      await queryClient.invalidateQueries({ queryKey: ["auth.me"] });
+      toast.success("Profile photo updated");
     } catch (error: any) {
       setFormData((prev) => ({ ...prev, avatarUrl: previousUrl }));
       toast.error(error?.response?.data?.error || "Failed to save profile picture. Please try again.");
@@ -248,7 +257,10 @@ const SettingsPage = () => {
         
         {/* Left: Form */}
         <div className="flex-1 order-2 md:order-1">
-          <h2 className="text-[20px] font-bold text-[#202127] mb-6">Account Settings</h2>
+          <div className="mb-6">
+            <h2 className="text-[20px] font-bold text-[#202127]">Profile information</h2>
+            <p className="mt-1 text-[13px] leading-relaxed text-[#717480]">Update the details people see when they learn with you.</p>
+          </div>
           <form onSubmit={handleProfileSubmit} className="flex flex-col gap-6">
             {/* Full name */}
             <div>
@@ -281,7 +293,7 @@ const SettingsPage = () => {
             <div>
               <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Title</label>
               <div className="flex items-center border border-[#dedee7] rounded-[6px] pl-4 pr-3 bg-white focus-within:border-[#181C7B] transition-colors">
-                <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your tittle, proffesion or small biography" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
+                <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your role or professional title" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <span className="text-[12px] text-[#4e515c] font-medium ml-2">{formData.title.length}/50</span>
               </div>
             </div>
@@ -296,7 +308,7 @@ const SettingsPage = () => {
             {/* Biography */}
             <div>
               <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Biography</label>
-              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Your tittle, proffesion or small biography" className="w-full h-[120px] p-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors resize-none"></textarea>
+              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Share a little about your background, interests, and goals." className="w-full h-[120px] p-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors resize-none"></textarea>
             </div>
 
             <div className="mt-2">
@@ -307,45 +319,47 @@ const SettingsPage = () => {
           </form>
         </div>
 
-        {/* Right: Avatar */}
-        <div className="w-full md:w-[280px] shrink-0 order-1 md:order-2">
-          <div className="w-full bg-[#f5f6f8] rounded-[8px] p-6 flex flex-col items-center justify-center h-full min-h-[280px]">
-            <div className={`w-full aspect-square bg-[#eaf2fd] overflow-hidden relative mb-4 shadow-sm rounded-[8px] transition-all duration-300 ${isUploadingAvatar ? "ring-4 ring-[#3e92cc] ring-offset-2" : "border border-[#dedee7]"}`}>
-              {formData.avatarUrl ? (
-                <img src={formData.avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+        {/* Right: Profile photo */}
+        <aside className="order-1 w-full shrink-0 md:order-2 md:w-[280px]">
+          <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-[10px] border border-[#e5e7ef] bg-[#fafbff] px-6 py-8 text-center">
+            <div className={`flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#e9edff] text-[#24327d] shadow-sm ring-1 ring-[#dfe3f2] transition ${isUploadingAvatar ? "ring-4 ring-[#b8c4ff]" : ""}`}>
+              {formData.avatarUrl && !avatarImageFailed ? (
+                <img
+                  src={formData.avatarUrl}
+                  alt={`${formData.firstName || "Your"} profile photo`}
+                  className="h-full w-full object-cover"
+                  onError={() => setAvatarImageFailed(true)}
+                />
               ) : (
-                <img src={AvatarPlaceholder.src} alt="Profile Placeholder" className="w-full h-full object-cover opacity-80" />
+                <span className="text-[28px] font-bold" aria-hidden="true">
+                  {formData.firstName[0]?.toUpperCase() || formData.lastName[0]?.toUpperCase() || <FiUser size={30} />}
+                  {formData.firstName[0] && formData.lastName[0] ? formData.lastName[0].toUpperCase() : ""}
+                </span>
               )}
-              
-              {/* Colorful Progress Overlay when Saving */}
-              {isUploadingAvatar && (
-                <div className="absolute inset-0 bg-gradient-to-t from-[#181C7B]/80 via-[#3e92cc]/40 to-transparent flex flex-col items-center justify-center backdrop-blur-[2px] transition-all z-10">
-                  <div className="w-10 h-10 border-4 border-white/30 border-t-[#3e92cc] rounded-full animate-spin mb-2 shadow-lg"></div>
-                  <span className="text-white text-[13px] font-bold tracking-wide drop-shadow-md">Saving photo...</span>
-                </div>
-              )}
-
-              {/* Upload Overlay (shown when NOT uploading) */}
-              {!isUploadingAvatar && (
-                <div 
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute bottom-0 left-0 right-0 h-[40px] bg-black/50 flex items-center justify-center cursor-pointer hover:bg-black/60 transition-colors backdrop-blur-sm"
-                >
-                  <div className="flex items-center gap-2 text-white text-[12px] font-medium">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 16V4M12 4L8 8M12 4L16 8M4 20H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Upload Photo
-                  </div>
-                </div>
-              )}
-              <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" disabled={isUploadingAvatar} />
             </div>
-            <p className="text-[10px] text-[#717480] text-center leading-[1.6]">
-              Image size should be under 5MB<br/>and image ratio needs to be 1:1
-            </p>
+            <h3 className="mt-4 text-[15px] font-bold text-[#202127]">Profile photo</h3>
+            <p className="mt-1 max-w-[220px] text-[12px] leading-relaxed text-[#717480]">This photo appears on your account and course activity.</p>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingAvatar}
+              className="mt-5 inline-flex h-[40px] items-center justify-center gap-2 rounded-full border border-[#d8dced] bg-white px-5 text-[13px] font-semibold text-[#202127] transition hover:border-[#aeb8ec] hover:bg-[#f4f6ff] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#dbe2ff] disabled:cursor-wait disabled:opacity-60"
+            >
+              <FaUpload aria-hidden />
+              {isUploadingAvatar ? `Uploading ${uploadProgress}%` : formData.avatarUrl ? "Change photo" : "Upload photo"}
+            </button>
+            <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" disabled={isUploadingAvatar} aria-label="Upload a profile photo" />
+            {isUploadingAvatar ? (
+              <div className="mt-3 w-full max-w-[180px]">
+                <div className="h-1.5 overflow-hidden rounded-full bg-[#e7e9f3]" role="progressbar" aria-label="Photo upload progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={uploadProgress}>
+                  <div className="h-full rounded-full bg-[#4258d6] transition-[width]" style={{ width: `${uploadProgress}%` }} />
+                </div>
+              </div>
+            ) : (
+              <p className="mt-3 text-[11px] text-[#85899a]">PNG, JPG or WEBP. Up to 5MB.</p>
+            )}
           </div>
-        </div>
+        </aside>
       </div>
 
       {/* Social Profile Card */}

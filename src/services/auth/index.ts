@@ -67,7 +67,7 @@ function normalizeUser(user: any): TUser {
     ...user,
     _id: user._id ?? user.id,
     name: user.name ?? [user.firstName, user.lastName].filter(Boolean).join(" "),
-    avatar: user.avatar ?? user.avatarUrl ?? "",
+    avatar: user.avatarUrl || user.avatar || "",
     biography: user.biography ?? user.bio,
     socialLinks: user.socialLinks ?? user.socials,
     ...(isEmailVerified !== undefined && { isEmailVerified }),
