@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Stars from '@components/Stars/Stars';
 import ImageComponent from '@components/ImageComponent/ImageComponent';
+import { FiUser } from 'react-icons/fi';
 
 type TCourse = {
   id: string | number;
@@ -16,6 +17,7 @@ type TCourse = {
   discountedPrice: number;
   imageUrl: string;
   url: string;
+  isYouTubeFree?: boolean;
 }
 
 type TCourseBoxProps = {
@@ -46,8 +48,9 @@ const CourseList = ({ course, isEnrolled }: TCourseBoxProps) => {
             <p className="flex-1 text-gray-600 text-body-large">
               {course.description}
             </p>
-            <p className="font-medium text-gray-800 text-body-medium">
-              {course.instructor}
+            <p className="flex items-center gap-2 font-medium text-gray-800 text-body-medium">
+              {course.isYouTubeFree && <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#eef2ff] text-[#07004d]" aria-hidden="true"><FiUser size={12} /></span>}
+              {course.isYouTubeFree ? `Source: ${course.instructor}` : course.instructor}
             </p>
             <div className="flex items-center my-1">
               <span className="text-sm font-bold text-gray-600">{course.rating.toFixed(1)}</span>

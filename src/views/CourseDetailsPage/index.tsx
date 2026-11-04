@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import axiosInstance from "@utils/axiosInstance";
 import FreeCourseLayout from "./components/FreeCourseLayout";
 import NormalCourseLayout from "./components/NormalCourseLayout";
 import { findCatalogCourse, loadCatalogChapters, normaliseApiCourse, withChapters } from "@services/catalog";
+import { isFreeCourse, isFreeYouTubeCourse } from "@utils/courseSource";
 
 import { Skeleton } from "../../components/Skeleton";
 
@@ -65,6 +67,16 @@ const CourseDetailsPage = () => {
 
   if (!course) {
     return <div className="w-full min-h-screen flex items-center justify-center bg-[#fcfcfd]">Course not found</div>;
+  }
+
+  if (isFreeCourse(course) && !isFreeYouTubeCourse(course)) {
+    return (
+      <main className="mx-auto flex min-h-[60vh] max-w-[720px] flex-col items-center justify-center px-5 text-center">
+        <h1 className="text-[28px] font-bold text-[#202127]">This free course is unavailable</h1>
+        <p className="mt-3 text-[14px] text-[#4e515c]">Free courses in the catalogue are currently limited to YouTube learning resources.</p>
+        <Link href="/free" className="mt-6 inline-flex h-[44px] items-center rounded-full bg-[#07004d] px-6 text-[14px] font-semibold text-white">Browse free courses</Link>
+      </main>
+    );
   }
 
   // If price is strictly 0 (or course.isFree), show the Free Layout.

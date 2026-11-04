@@ -3,7 +3,26 @@ import { TCourseItem, TUISearchCourseItem } from "./types";
 import axiosInstance from "@utils/axiosInstance";
 import handleUseRoute from "@utils/handleUseRoute";
 import { ERouteId } from "@constants/routes";
+import { getYouTubeSourceName, isCourseVisible, isFreeYouTubeCourse } from "@utils/courseSource";
 
+
+const instructorName = (item: any) => {
+  if (isFreeYouTubeCourse(item)) return getYouTubeSourceName(item);
+  if (typeof item.instructor === "string") return item.instructor;
+  return [item.instructor?.firstName, item.instructor?.lastName].filter(Boolean).join(" ") || "Gloxad Academy";
+};
+
+const mapCourseItem = (item: any): TCourseItem => ({
+  id: item.id ?? item._id,
+  title: item.title,
+  instructor: instructorName(item),
+  rating: item.rating?.average ?? item.rating ?? 0,
+  price: item.price ?? 0,
+  imageUrl: item.imageUrl || item.thumbnailUrl || item.thumbnail || "",
+  studentCount: item.studentCount ?? item.enrolledCount ?? 0,
+  discountedPrice: item.discountedPrice ?? item.discountPrice ?? 0,
+  isYouTubeFree: isFreeYouTubeCourse(item),
+});
 
 async function getRecommendedCourses(): Promise<TService<TCourseItem[]>> {
   const response = await axiosInstance.get(
@@ -16,20 +35,7 @@ async function getRecommendedCourses(): Promise<TService<TCourseItem[]>> {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: TCourseItem[] = (response.data.courses || []).map((item: any) => {
-    const course: TCourseItem = {
-      id: item.id,
-      title: item.title,
-      instructor: item.instructor,
-      rating: item.rating,
-      price: item.price,
-      imageUrl: item.imageUrl,
-      studentCount: item.studentCount,
-      discountedPrice: item.discountedPrice,
-    };
-
-    return course;
-  });
+  const data: TCourseItem[] = (response.data.courses || []).filter(isCourseVisible).map(mapCourseItem);
 
   return { data };
 }
@@ -53,20 +59,7 @@ async function getBecauseYouViewedCourses(): Promise<
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const courses: TCourseItem[] = (response.data?.courses || []).map((item: any) => {
-    const course: TCourseItem = {
-      id: item.id,
-      title: item.title,
-      instructor: item.instructor,
-      rating: item.rating,
-      price: item.price,
-      imageUrl: item.imageUrl,
-      studentCount: item.studentCount,
-      discountedPrice: item.discountedPrice,
-    };
-
-    return course;
-  });
+  const courses: TCourseItem[] = (response.data?.courses || []).filter(isCourseVisible).map(mapCourseItem);
 
   return {
     data: {
@@ -90,20 +83,7 @@ async function getFeaturedCourses(): Promise<TService<TCourseItem[]>> {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: TCourseItem[] = (response.data.courses || []).map((item: any) => {
-    const course: TCourseItem = {
-      id: item.id,
-      title: item.title,
-      instructor: item.instructor,
-      rating: item.rating,
-      price: item.price,
-      imageUrl: item.imageUrl,
-      studentCount: item.studentCount,
-      discountedPrice: item.discountedPrice,
-    };
-
-    return course;
-  });
+  const data: TCourseItem[] = (response.data.courses || []).filter(isCourseVisible).map(mapCourseItem);
 
   return { data };
 }
@@ -135,12 +115,12 @@ const getSearchResults = async ({
     }
   );
 
-  const courses: TUISearchCourseItem[] = (response.data.courses || []).map(
+  const courses: TUISearchCourseItem[] = (response.data.courses || []).filter(isCourseVisible).map(
     (item: any) => {
       const course: TUISearchCourseItem = {
         id: item.id,
         title: item.title,
-        instructor: item.instructor,
+        instructor: instructorName(item),
         rating: item.rating,
         price: item.price,
         imageUrl: item.imageUrl,
@@ -151,6 +131,7 @@ const getSearchResults = async ({
         totalHours: item.totalHours,
         totalLectures: item.totalLectures,
         level: item.level,
+        isYouTubeFree: isFreeYouTubeCourse(item),
       };
 
       return course;

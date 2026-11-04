@@ -2,6 +2,7 @@ import Link from 'next/link';
 import formatToCurrency from '@utils/formatToCurrency';
 import Stars from '@components/Stars/Stars';
 import { FaGraduationCap } from 'react-icons/fa';
+import { FiUser } from 'react-icons/fi';
 
 export type TCourse = {
   id: string | number;
@@ -16,6 +17,7 @@ export type TCourse = {
   skills?: string;
   level?: string;
   duration?: string;
+  isYouTubeFree?: boolean;
 }
 
 type TCourseBoxProps = {
@@ -55,8 +57,8 @@ const CourseBox = ({ course, isEnrolled }: TCourseBoxProps ) => {
         <div className="p-4 flex flex-col flex-1">
           {/* Provider/Instructor */}
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-5 h-5 rounded-sm bg-neutral-2 flex items-center justify-center border border-neutral-4">
-              <FaGraduationCap className="text-primary-6 text-[10px]" />
+            <div className={`w-5 h-5 ${course.isYouTubeFree ? "rounded-full" : "rounded-sm"} bg-neutral-2 flex items-center justify-center border border-neutral-4`}>
+              {course.isYouTubeFree ? <FiUser className="text-primary-6 text-[11px]" /> : <FaGraduationCap className="text-primary-6 text-[10px]" />}
             </div>
             <span className="text-xs font-medium text-neutral-8">{course.instructor}</span>
           </div>

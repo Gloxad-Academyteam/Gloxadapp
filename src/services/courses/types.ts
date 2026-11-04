@@ -7,6 +7,7 @@ type TCourseItem = {
   imageUrl: string;
   studentCount: number;
   discountedPrice: number;
+  isYouTubeFree?: boolean;
 };
 
 

@@ -6,6 +6,7 @@ import useAuth from "@hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Button from "@components/Button";
 import { motion } from "framer-motion";
+import { getYouTubeSourceName, isCourseVisible, isFreeYouTubeCourse } from "@utils/courseSource";
 
 const PopularCourses = () => {
   const { isAuthenticated } = useAuth();
@@ -19,7 +20,7 @@ const PopularCourses = () => {
     },
   });
 
-  const courses = data?.courses || [];
+  const courses = (data?.courses || []).filter(isCourseVisible);
   const totalCourses = data?.totalCourses || 0;
 
   const handleViewMore = () => {
@@ -56,7 +57,8 @@ const PopularCourses = () => {
           const frontendCourse = {
             id: course._id,
             title: course.title,
-            instructor: course.instructor ? `${course.instructor.firstName} ${course.instructor.lastName}` : "Gloxad Academy",
+            instructor: isFreeYouTubeCourse(course) ? getYouTubeSourceName(course) : course.instructor ? `${course.instructor.firstName} ${course.instructor.lastName}` : "Gloxad Academy",
+            isYouTubeFree: isFreeYouTubeCourse(course),
             rating: course.averageRating ?? 0,
             price: course.price,
             imageUrl: course.thumbnailUrl || "https://via.placeholder.com/400x230",

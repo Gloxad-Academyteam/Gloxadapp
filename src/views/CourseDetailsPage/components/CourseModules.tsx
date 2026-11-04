@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaPlay } from 'react-icons/fa';
 import { formatLength, formatTimestamp } from '@utils/youtube';
+import { FiUser } from 'react-icons/fi';
+import { getYouTubeSourceName, getYouTubeSourceUrl, isYouTubeCourse } from '@utils/courseSource';
 
 const defaultModules = [
   { title: "Inclusive education and special education: Equality and equity", moduleNumber: 1, duration: "3 hours to complete" },
@@ -20,6 +22,8 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
   const [expandedModule, setExpandedModule] = useState<number | null>(null);
 
   const modules = course?.modules?.length > 0 ? course.modules : defaultModules;
+  const sourceName = getYouTubeSourceName(course || {});
+  const sourceUrl = getYouTubeSourceUrl(course || {});
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 max-w-[1100px] mt-8">
@@ -114,23 +118,24 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
 
       {/* Right Column - Instructor Info */}
       <div className="w-full lg:w-[380px] shrink-0">
-        {course?.isCatalog || course?.videoCredit ? (
+        {isYouTubeCourse(course || {}) ? (
           <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
+            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#eef2ff] text-[#07004d]" aria-hidden="true"><FiUser size={22} /></div>
             <h3 className="text-[18px] font-bold text-[#202127] mb-2">External learning resource</h3>
             <p className="text-[14px] text-[#4e515c] leading-relaxed">
-              Creator/channel: freeCodeCamp.org. Source: YouTube, where each lesson is played in its original player.
+              Creator/channel: {sourceName}. Source: YouTube, where each lesson is played in its original player.
             </p>
             <p className="mt-2 text-[13px] text-[#6b6d76] leading-relaxed">
               This content is created and owned by its respective creator. Gloxad Academy provides access through a YouTube
               embed and does not claim authorship or ownership.
             </p>
             <a
-              href="https://www.youtube.com/@freecodecamp"
+              href={sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-block text-[14px] font-bold text-[#181C7B] hover:underline"
             >
-              Original source: freeCodeCamp.org on YouTube
+              Original source: {sourceName} on YouTube
             </a>
           </div>
         ) : (
