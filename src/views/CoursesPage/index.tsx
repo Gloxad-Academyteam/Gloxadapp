@@ -7,6 +7,7 @@ import useAuth from "@hooks/useAuth";
 import { FaSearch } from "react-icons/fa";
 import { useCoursesPage } from "./hooks/useCoursesPage";
 import ExploreCourseCard from "./components/ExploreCourseCard";
+import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 import { CATALOG_CATEGORIES, CATALOG_VIDEO_CREDIT, categorySlug } from "@services/catalog";
 
 // The public /courses list needs an account; /dashboard/explore is already behind the dashboard guard
@@ -122,6 +123,8 @@ const CoursesPageContent = () => {
                 programme: course.programme,
                 duration: course.durationLabel || course.duration,
                 priceLabel: course.priceLabel ?? (course.price > 0 ? `₦${Number(course.price).toLocaleString()}` : undefined),
+                provider: isFreeYouTubeCourse(course) ? getYouTubeSourceName(course) : undefined,
+                providerAvatar: isFreeYouTubeCourse(course),
               };
               return <ExploreCourseCard key={course._id} course={frontendCourse} />;
             })}

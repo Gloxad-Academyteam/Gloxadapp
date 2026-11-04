@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation";
 import CourseCard from "@components/CourseCard";
 import ScrollReveal from "@components/ScrollReveal";
-import { catalogCourses } from "@services/catalog";
+import { youtubeFreeCatalogCourses } from "@services/catalog";
 
 // Four featured free courses from the catalog; the full list lives on /free
 const FEATURED_SLUGS = ["python-programming", "graphics-design", "digital-marketing", "cybersecurity"];
-const freeCourses = FEATURED_SLUGS.map((slug) => catalogCourses.find((course) => course.slug === slug)).filter(Boolean) as typeof catalogCourses;
+const freeCourses = FEATURED_SLUGS.map((slug) => youtubeFreeCatalogCourses.find((course) => course.slug === slug)).filter(Boolean) as typeof youtubeFreeCatalogCourses;
 
 const FreeCourses = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const FreeCourses = () => {
           onClick={() => router.push("/free")}
           className="btn-interactive mt-5 h-[42px] rounded-full border border-[#07004d] px-6 text-[14px] font-medium text-[#07004d] transition hover:bg-[#07004d] hover:text-white"
         >
-          Browse all {catalogCourses.length} free courses
+          Browse all {youtubeFreeCatalogCourses.length} free courses
         </button>
       </div>
 
@@ -39,7 +39,8 @@ const FreeCourses = () => {
               href={`/courses/${course.slug}`}
               title={course.title}
               image={course.thumbnail}
-              provider="Gloxad Academy"
+              provider={course.sourceName}
+              providerAvatar
               tag={course.programme}
               meta={[course.level, `${course.videos.length} video lessons`, `${course.videoHours} hours`]}
               priceLabel="Free"

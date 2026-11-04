@@ -14,6 +14,8 @@ interface ExploreCourseCardProps {
     programme?: string;
     duration?: string;
     priceLabel?: string;
+    provider?: string;
+    providerAvatar?: boolean;
   };
 }
 
@@ -30,7 +32,8 @@ const ExploreCourseCard: React.FC<ExploreCourseCardProps> = ({ course }) => (
     href={course.url}
     title={course.title}
     image={course.imageUrl}
-    provider="Gloxad Academy"
+    provider={course.provider || "Gloxad Academy"}
+    providerAvatar={course.providerAvatar}
     tag={course.programme}
     meta={[levelLabel(course.level), course.duration, course.closingDate && `Enrollment closes ${course.closingDate}`]}
     priceLabel={course.priceLabel}

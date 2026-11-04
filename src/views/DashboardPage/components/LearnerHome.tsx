@@ -4,10 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { FiChevronRight, FiAward, FiBookOpen } from "react-icons/fi";
+import { FiChevronRight, FiAward, FiBookOpen, FiUser } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import axiosInstance from "../../../utils/axiosInstance";
 import { getMyEnrollments } from "@services/enrollments";
+import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // The course's picture, or a plain tinted block when it has none
 const Thumb = ({ course, className }: { course: any; className: string }) =>
@@ -40,7 +41,7 @@ const LearnerHome = () => {
   const lessonsDone = withCourse.reduce((total: number, e: any) => total + (e.completedLessons?.length ?? 0), 0);
   const average = withCourse.length ? Math.round(withCourse.reduce((t: number, e: any) => t + percentOf(e), 0) / withCourse.length) : 0;
   const enrolledIds = new Set(withCourse.map((e: any) => String(e.course._id)));
-  const recommended = catalogue.filter((c: any) => !enrolledIds.has(String(c._id))).slice(0, 3);
+  const recommended = catalogue.filter((c: any) => isFreeYouTubeCourse(c) && !enrolledIds.has(String(c._id))).slice(0, 3);
   const firstName = authenticatedUser?.firstName || "there";
 
   return (
@@ -119,7 +120,10 @@ const LearnerHome = () => {
                       <Thumb course={c} className="h-[40px] w-[40px] shrink-0 rounded-md" />
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[14px] font-semibold text-[#201633]">{c.title}</span>
-                        <span className="block truncate text-[12px] text-[#717480]">{c.level ? `${c.level} · ` : ""}Free</span>
+                        <span className="mt-1 flex items-center gap-1.5 truncate text-[12px] text-[#717480]">
+                          <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#eef2ff] text-[#07004d]" aria-hidden="true"><FiUser size={10} /></span>
+                          {getYouTubeSourceName(c)} · Free
+                        </span>
                       </span>
                       <FiChevronRight className="shrink-0 text-[#8a8c95]" />
                     </Link>

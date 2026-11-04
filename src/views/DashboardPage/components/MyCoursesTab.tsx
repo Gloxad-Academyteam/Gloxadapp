@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { getMyEnrollments } from "@services/enrollments";
 import { toast } from "react-toastify";
 import { FaPlay, FaFlag } from "react-icons/fa";
+import { FiUser } from "react-icons/fi";
 import CertificatesPage from "@pages/CertificatesPage";
 import useAuth from "@hooks/useAuth";
+import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 import FreePythonImg from "@assets/images/free-python.png";
 import FreeGraphicDesignImg from "@assets/images/free-graphic-design.png";
@@ -112,9 +114,12 @@ const MyCoursesTab = () => {
               .map((enrollment, idx) => {
               const course = enrollment.course;
               if (!course) return null;
-              const instructorName = course.instructor 
-                ? `${course.instructor.firstName} ${course.instructor.lastName}` 
-                : "Gloxad Academy";
+              const isYouTubeFree = isFreeYouTubeCourse(course);
+              const instructorName = isYouTubeFree
+                ? getYouTubeSourceName(course)
+                : course.instructor
+                  ? `${course.instructor.firstName} ${course.instructor.lastName}`
+                  : "Gloxad Academy";
               
               const progress = {
                 completed: enrollment.completedLessons?.length ?? 0,
@@ -150,8 +155,9 @@ const MyCoursesTab = () => {
                     <h3 className="text-[20px] font-bold text-[#202127] mb-1 line-clamp-2">
                       {course.title}
                     </h3>
-                    <p className="text-[13px] text-[#4e515c] mb-6">
-                      Instructor: {instructorName}
+                    <p className="mb-6 flex items-center gap-1.5 text-[13px] text-[#4e515c]">
+                      {isYouTubeFree && <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#eef2ff] text-[#07004d]" aria-hidden="true"><FiUser size={12} /></span>}
+                      {isYouTubeFree ? "Source" : "Instructor"}: {instructorName}
                     </p>
 
                     {progress.percent >= 100 ? (

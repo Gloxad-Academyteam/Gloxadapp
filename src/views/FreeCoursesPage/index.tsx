@@ -2,10 +2,9 @@
 
 import React from "react";
 import CourseCard from "@components/CourseCard";
-import { catalogCourses } from "@services/catalog";
+import { youtubeFreeCatalogCourses } from "@services/catalog";
 
-// Every course in the catalog is free, so the page lists all of them
-const freeCourses = catalogCourses.filter((course) => course.courseType === "free");
+const freeCourses = youtubeFreeCatalogCourses;
 
 const FreeCoursesPage = () => {
   return (
@@ -27,7 +26,8 @@ const FreeCoursesPage = () => {
               href={`/courses/${course.slug}`}
               title={course.title}
               image={course.thumbnail}
-              provider="Gloxad Academy"
+              provider={course.sourceName}
+              providerAvatar
               tag={course.programme}
               meta={[course.level, `${course.videos.length} video lessons`, `${course.videoHours} hours`]}
               priceLabel="Free"

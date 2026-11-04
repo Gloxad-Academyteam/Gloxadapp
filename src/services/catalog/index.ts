@@ -1,5 +1,6 @@
 import catalogData from "@constants/catalog/gloxadCourses.json";
 import { formatLength } from "@utils/youtube";
+import { getYouTubeSourceName, isCourseVisible, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Gloxad Academy's 2026 course list (constants/catalog/gloxadCourses.json), shown on the site until
 // the courses exist in the database. Lessons are freeCodeCamp.org videos, used with permission.
@@ -51,6 +52,8 @@ export type TCatalogCourse = TCatalogEntry & {
   whatYouWillTeach: string[];
   aboutCourseText: string;
   instructor: { firstName: string; lastName: string; avatarUrl: string };
+  sourceName: string;
+  videoCredit: string;
   modules: {
     title: string;
     duration: string;
@@ -110,11 +113,15 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   aboutCourseText: entry.description,
   // No avatarUrl: the course page falls back to an initials avatar
   instructor: { firstName: "Gloxad", lastName: "Academy", avatarUrl: "" },
+  sourceName: getYouTubeSourceName({ videoCredit: CATALOG_VIDEO_CREDIT }),
+  videoCredit: CATALOG_VIDEO_CREDIT,
   // Without the chapters file each video is one lesson; withChapters() upgrades a course once it has loaded
   modules: buildModules(entry, {}),
 });
 
 export const catalogCourses: TCatalogCourse[] = (catalogData.courses as TCatalogEntry[]).map(toCourse);
+export const visibleCatalogCourses = catalogCourses.filter(isCourseVisible);
+export const youtubeFreeCatalogCourses = catalogCourses.filter(isFreeYouTubeCourse);
 
 // Categories in the order the home page tabs show them
 export const CATALOG_CATEGORIES = [
@@ -158,7 +165,7 @@ export function searchCatalog({ search, category }: { search?: string | null; ca
   const query = search ? normalise(search) : "";
   const categoryKey = category ? categorySlug(category) : "";
 
-  return catalogCourses.filter((course) => {
+  return visibleCatalogCourses.filter((course) => {
     if (categoryKey && categorySlug(course.category) !== categoryKey) return false;
     if (!query) return true;
     const haystack = normalise(

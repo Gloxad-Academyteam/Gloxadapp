@@ -5,6 +5,7 @@ import CourseCard from "@components/CourseCard";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@utils/axiosInstance";
 import { toast } from "react-toastify";
+import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 const FreeCoursesTab = () => {
   const router = useRouter();
@@ -14,20 +15,23 @@ const FreeCoursesTab = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // Fetch courses with price=0 OR courseType=free
-        const response = await axiosInstance.get("/courses?courseType=free");
-        const data = response.data.courses || [];
-        
-        if (data.length === 0) {
-          // Fallback: filter any published course by price=0
-          const fallback = await axiosInstance.get("/courses?limit=20");
-          const freeCourses = (fallback.data.courses || []).filter(
-            (c: any) => !c.price || c.price === 0
+        const fetchPages = async (params: Record<string, string | number>) => {
+          const first = await axiosInstance.get("/courses", { params: { ...params, limit: 50, page: 1 } });
+          const firstCourses = first.data?.courses || [];
+          const totalPages = Math.max(1, Number(first.data?.pagination?.totalPages) || 1);
+          const remaining = await Promise.all(
+            Array.from({ length: totalPages - 1 }, (_, index) =>
+              axiosInstance.get("/courses", { params: { ...params, limit: 50, page: index + 2 } }),
+            ),
           );
-          setCourses(freeCourses);
-        } else {
-          setCourses(data);
-        }
+          return [firstCourses, ...remaining.map((response) => response.data?.courses || [])]
+            .flat()
+            .filter(isFreeYouTubeCourse);
+        };
+
+        let freeCourses = await fetchPages({ courseType: "free" });
+        if (freeCourses.length === 0) freeCourses = await fetchPages({});
+        setCourses(freeCourses);
       } catch (error) {
         console.error("Failed to fetch courses:", error);
         toast.error("Failed to load courses");
@@ -82,7 +86,8 @@ const FreeCoursesTab = () => {
                 href={`/courses/${course.slug}`}
                 title={course.title}
                 image={course.thumbnailUrl?.startsWith("http") ? course.thumbnailUrl : null}
-                provider={course.instructor ? `${course.instructor.firstName} ${course.instructor.lastName}` : "Gloxad Academy"}
+                provider={getYouTubeSourceName(course)}
+                providerAvatar
                 tag={course.category?.name}
                 meta={[course.level || "Beginner"]}
                 priceLabel="Free"

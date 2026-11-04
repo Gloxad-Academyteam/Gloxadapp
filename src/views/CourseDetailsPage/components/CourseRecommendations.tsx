@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { catalogCourses } from "@services/catalog";
+import { youtubeFreeCatalogCourses } from "@services/catalog";
 
 type TProps = { course: any };
 
 // Other courses from our own catalogue in the same category (never another institution's)
 const CourseRecommendations = ({ course }: TProps) => {
-  const related = catalogCourses
+  const related = youtubeFreeCatalogCourses
     .filter((item) => item.category === course?.category && item.slug !== course?.slug)
     .slice(0, 4);
 

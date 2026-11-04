@@ -9,7 +9,8 @@ import { FaChartSimple } from "react-icons/fa6";
 import { PiBriefcase } from "react-icons/pi";
 import CourseCard from "@components/CourseCard";
 import ScrollReveal from "@components/ScrollReveal";
-import { catalogCourses, categorySlug } from "@services/catalog";
+import { visibleCatalogCourses, categorySlug } from "@services/catalog";
+import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Tabs map onto the catalog categories (services/catalog); "All Courses" lists the full catalog
 const ALL_COURSES = "All Courses";
@@ -36,7 +37,7 @@ const ExploreCourses = () => {
 
   const activeTabId = courseTabs.find((t) => t.title === activeTabTitle)?.id || courseTabs[0].id;
   // Academic programmes first, then short courses and bootcamps
-  const featuredCourses = catalogCourses
+  const featuredCourses = visibleCatalogCourses
     .filter((course) => activeTabId === ALL_COURSES || course.category === activeTabId)
     .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"));
 
@@ -135,7 +136,8 @@ const ExploreCourses = () => {
               href={`/courses/${course.slug}`}
               title={course.title}
               image={course.thumbnail}
-              provider="Gloxad Academy"
+              provider={isFreeYouTubeCourse(course) ? getYouTubeSourceName(course) : "Gloxad Academy"}
+              providerAvatar={isFreeYouTubeCourse(course)}
               tag={course.programme}
               meta={[`${course.videos.length} video lessons`, `${course.videoHours} hours`]}
               priceLabel={course.priceLabel}
@@ -150,7 +152,7 @@ const ExploreCourses = () => {
           onClick={() => router.push(activeTabId === ALL_COURSES ? "/courses" : `/courses?category=${categorySlug(activeTabId)}`)}
           className="btn-interactive mt-10 h-[46px] rounded-full bg-[#07004d] px-7 text-[15px] font-medium text-white transition hover:bg-[#111456]"
         >
-          {activeTabId === ALL_COURSES ? `Browse All ${catalogCourses.length} Courses` : `Browse All ${activeTabTitle} Courses`}
+          {activeTabId === ALL_COURSES ? `Browse All ${visibleCatalogCourses.length} Courses` : `Browse All ${activeTabTitle} Courses`}
         </button>
       </div>
     </ScrollReveal>

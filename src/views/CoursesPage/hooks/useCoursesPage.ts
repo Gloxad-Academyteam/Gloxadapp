@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axiosInstance from "@utils/axiosInstance";
 import { searchCatalog } from "@services/catalog";
+import { isCourseVisible } from "@utils/courseSource";
 
 export const useCoursesPage = () => {
   const searchParams = useSearchParams();
@@ -60,7 +61,7 @@ export const useCoursesPage = () => {
   });
 
   // Database courses first; catalog courses fill in any title the database doesn't have yet
-  const fromApi = apiCourses || [];
+  const fromApi = (apiCourses || []).filter(isCourseVisible);
   const apiTitles = new Set(fromApi.map((course: any) => String(course.title).toLowerCase()));
   const fromCatalog = searchCatalog({ search, category }).filter(
     (course) => !apiTitles.has(course.title.toLowerCase())
