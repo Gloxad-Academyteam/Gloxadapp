@@ -15,7 +15,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
 const SettingsPage = () => {
-  const { authenticatedUser, handleLogout } = useAuth();
+  const { authenticatedUser, handleLogout, isLoggingOut } = useAuth();
   const { uploadFile, isUploading: isUploadingAvatar, uploadProgress } = useS3Upload();
   const queryClient = useQueryClient();
   const user: any = authenticatedUser;
@@ -532,9 +532,20 @@ const SettingsPage = () => {
             </div>
 
             {/* Logout */}
-            <div className="mt-4">
-              <button type="button" onClick={handleLogout} className="flex w-fit items-center gap-2 text-[#ff4b4b] font-medium text-[14px] hover:text-[#be123c] transition-colors">
-                <FiLogOut className="text-[18px] rotate-180" /> Logout
+            <div className="mt-3 border-t border-[#eef0f6] pt-5">
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+                className="flex w-full max-w-[320px] items-center gap-3 rounded-xl border border-[#f0d8d6] bg-white px-3 py-3 text-left transition hover:border-[#e8b8b5] hover:bg-[#fff9f8] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#ffe5e2] disabled:cursor-wait disabled:opacity-60"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#fff0ef] text-[#b93832]">
+                  <FiLogOut size={18} aria-hidden />
+                </span>
+                <span className="flex flex-col">
+                  <span className="text-[13px] font-semibold text-[#a8342e]">{isLoggingOut ? "Logging out..." : "Log out"}</span>
+                  <span className="mt-0.5 text-[11px] text-[#777c8e]">Sign out of your Gloxad account</span>
+                </span>
               </button>
             </div>
           </form>

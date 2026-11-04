@@ -140,8 +140,7 @@ const LearnerHome = () => {
             <section>
               <div className="mb-4 flex items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-[17px] font-bold text-[#201633]">Free Courses Available</h2>
-                  <p className="mt-1 text-[12px] text-[#717480]">{availableFreeCourses.length} YouTube courses you can start for free</p>
+                  <h2 className="text-[17px] font-bold text-[#201633]">Free Courses</h2>
                 </div>
                 <Link href="/dashboard/explore" className="shrink-0 text-[12px] font-semibold text-[#07004d] hover:underline">Browse all</Link>
               </div>

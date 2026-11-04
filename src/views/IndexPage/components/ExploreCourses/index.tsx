@@ -152,7 +152,7 @@ const ExploreCourses = () => {
           onClick={() => router.push(activeTabId === ALL_COURSES ? "/courses" : `/courses?category=${categorySlug(activeTabId)}`)}
           className="btn-interactive mt-10 h-[46px] rounded-full bg-[#07004d] px-7 text-[15px] font-medium text-white transition hover:bg-[#111456]"
         >
-          {activeTabId === ALL_COURSES ? `Browse All ${visibleCatalogCourses.length} Courses` : `Browse All ${activeTabTitle} Courses`}
+          {activeTabId === ALL_COURSES ? "Browse All Courses" : `Browse All ${activeTabTitle} Courses`}
         </button>
       </div>
     </ScrollReveal>

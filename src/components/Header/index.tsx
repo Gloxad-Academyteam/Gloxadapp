@@ -8,6 +8,7 @@ import ImageComponent from "@components/ImageComponent/ImageComponent";
 import { FaTimes, FaSearch, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import Button from "@components/Button";
 import { PiUserCircleLight } from "react-icons/pi";
+import { FiLogOut } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
@@ -237,9 +238,10 @@ const LandingHeader = () => {
                           type="button"
                           onClick={() => handleLogout()}
                           disabled={isLoggingOut}
-                          className="py-2 text-left text-[15px] font-bold text-[#ff5a4f] disabled:opacity-60"
+                          className="mt-2 inline-flex h-[42px] w-full items-center gap-3 rounded-xl bg-[#fff3f2] px-3 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
                         >
-                          {isLoggingOut ? "Logging out..." : "Log Out"}
+                          <FiLogOut size={17} aria-hidden />
+                          {isLoggingOut ? "Logging out..." : "Log out"}
                         </button>
                       </div>
                     )}
@@ -414,9 +416,10 @@ const Header = () => {
                           type="button"
                           onClick={() => handleLogout()}
                           disabled={isLoggingOut}
-                          className="py-2 text-left text-[15px] font-bold text-[#ff5a4f] disabled:opacity-60"
+                          className="mt-2 inline-flex h-[42px] w-full items-center gap-3 rounded-xl bg-[#fff3f2] px-3 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
                         >
-                          {isLoggingOut ? "Logging out..." : "Log Out"}
+                          <FiLogOut size={17} aria-hidden />
+                          {isLoggingOut ? "Logging out..." : "Log out"}
                         </button>
                       </div>
                     )}
@@ -630,14 +633,16 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
             ) : (
               <>
                 <button
+                  type="button"
                   onClick={() => {
                     handleLogout();
                     setIsOpen(false);
                   }}
                   disabled={isLoggingOut}
-                  className="px-6 py-3 text-left text-red-600 hover:bg-red-50 transition-colors"
+                  className="mx-6 my-2 inline-flex h-[44px] items-center gap-3 rounded-xl bg-[#fff3f2] px-4 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
                 >
-                  {isLoggingOut ? "Logging out..." : "Logout"}
+                  <FiLogOut size={17} aria-hidden />
+                  {isLoggingOut ? "Logging out..." : "Log out"}
                 </button>
               </>
             )}

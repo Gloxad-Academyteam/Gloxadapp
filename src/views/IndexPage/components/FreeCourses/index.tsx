@@ -26,7 +26,7 @@ const FreeCourses = () => {
           onClick={() => router.push("/free")}
           className="btn-interactive mt-5 h-[42px] rounded-full border border-[#07004d] px-6 text-[14px] font-medium text-[#07004d] transition hover:bg-[#07004d] hover:text-white"
         >
-          Browse all {youtubeFreeCatalogCourses.length} free courses
+          Browse all free courses
         </button>
       </div>
 

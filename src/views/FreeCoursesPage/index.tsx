@@ -14,7 +14,7 @@ const FreeCoursesPage = () => {
         <div className="mx-auto mb-10 max-w-[720px] text-center md:mb-14">
           <h1 className="text-[28px] font-semibold text-[#201633] md:text-[36px]">Free Courses</h1>
           <p className="mt-3 text-[14px] leading-relaxed text-[#4e515c] md:text-[15px]">
-            {freeCourses.length} free courses. Explore them and upgrade anytime to get a certificate!
+            Explore our YouTube courses and start learning at your own pace.
           </p>
         </div>
 
