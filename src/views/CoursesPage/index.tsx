@@ -7,7 +7,7 @@ import useAuth from "@hooks/useAuth";
 import { FaSearch } from "react-icons/fa";
 import { useCoursesPage } from "./hooks/useCoursesPage";
 import ExploreCourseCard from "./components/ExploreCourseCard";
-import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
+import { getYouTubeSourceName, isFreeCourse, isFreeYouTubeCourse } from "@utils/courseSource";
 import { CATALOG_CATEGORIES, CATALOG_VIDEO_CREDIT, categorySlug } from "@services/catalog";
 
 // The public /courses list needs an account; /dashboard/explore is already behind the dashboard guard
@@ -48,6 +48,20 @@ const CoursesPageContent = () => {
   const pathname = usePathname() ?? "/courses";
   const { courses, isLoading, error, category, searchQuery, setSearchQuery } = useCoursesPage();
   const activeCategory = CATALOG_CATEGORIES.find((name) => categorySlug(name) === categorySlug(category));
+  const courseGroups = courses.reduce((groups: Map<string, any[]>, course: any) => {
+    const rawCategory = typeof course.category === "string"
+      ? course.category
+      : course.category?.name || course.programme || "Other Courses";
+    const categoryName = CATALOG_CATEGORIES.find((name) => categorySlug(name) === categorySlug(rawCategory)) || rawCategory;
+    const existing = groups.get(categoryName) || [];
+    existing.push(course);
+    groups.set(categoryName, existing);
+    return groups;
+  }, new Map<string, any[]>());
+  const orderedCategories = [
+    ...CATALOG_CATEGORIES.filter((name) => courseGroups.has(name)),
+    ...Array.from(courseGroups.keys()).filter((name) => !CATALOG_CATEGORIES.includes(name as (typeof CATALOG_CATEGORIES)[number])).sort(),
+  ];
 
   return (
     <div className="mx-auto min-h-[60vh] w-full max-w-[1512px] px-5 py-10 md:px-10 md:py-14 lg:px-8 xl:px-[120px]">
@@ -110,24 +124,39 @@ const CoursesPageContent = () => {
             <p className="text-body-medium text-neutral-7">Try adjusting your search.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course: any) => {
-              const frontendCourse = {
-                id: course._id,
-                title: course.title,
-                description: course.description,
-                imageUrl: course.thumbnail || course.thumbnailUrl || "/og-image.jpg",
-                url: `/courses/${course.slug}`,
-                level: course.level,
-                closingDate: course.closingDate,
-                programme: course.programme,
-                duration: course.durationLabel || course.duration,
-                priceLabel: course.priceLabel ?? (course.price > 0 ? `₦${Number(course.price).toLocaleString()}` : undefined),
-                provider: isFreeYouTubeCourse(course) ? getYouTubeSourceName(course) : undefined,
-                providerAvatar: isFreeYouTubeCourse(course),
-              };
-              return <ExploreCourseCard key={course._id} course={frontendCourse} />;
-            })}
+          <div className="space-y-12">
+            {orderedCategories.map((categoryName) => (
+              <section key={categoryName} aria-labelledby={`course-category-${categorySlug(categoryName)}`}>
+                <div className="mb-5 flex items-baseline justify-between gap-4">
+                  <h2 id={`course-category-${categorySlug(categoryName)}`} className="text-[20px] font-bold text-[#201633] md:text-[24px]">
+                    {categoryName}
+                  </h2>
+                  <span className="shrink-0 text-[12px] text-[#717480]">
+                    {courseGroups.get(categoryName)?.length} {courseGroups.get(categoryName)?.length === 1 ? "course" : "courses"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {(courseGroups.get(categoryName) || []).map((course: any) => {
+                    const isFreeYouTube = isFreeYouTubeCourse(course);
+                    const frontendCourse = {
+                      id: course._id || course.slug,
+                      title: course.title,
+                      description: course.description,
+                      imageUrl: course.thumbnail || course.thumbnailUrl || "/og-image.jpg",
+                      url: `/courses/${course.slug || course._id}`,
+                      level: course.level,
+                      closingDate: course.closingDate,
+                      programme: course.programme,
+                      duration: course.durationLabel || course.duration,
+                      priceLabel: course.priceLabel || (Number(course.price) > 0 ? `₦${Number(course.price).toLocaleString()}` : isFreeCourse(course) ? "Free" : undefined),
+                      provider: isFreeYouTube ? getYouTubeSourceName(course) : undefined,
+                      providerAvatar: isFreeYouTube,
+                    };
+                    return <ExploreCourseCard key={course._id || course.slug} course={frontendCourse} />;
+                  })}
+                </div>
+              </section>
+            ))}
           </div>
         )}
       </div>

@@ -34,23 +34,30 @@ export const useCoursesPage = () => {
     queryKey: ["courses", apiSearch, category, subjects, languages, products, levels, durations],
     queryFn: async () => {
       try {
-        const { data } = await axiosInstance.get("/courses", {
-          // A sleeping Render instance can take a minute to wake; the catalog covers the page meanwhile
-          timeout: 8000,
-          params: {
-            search: apiSearch ? apiSearch.replace(/-/g, " ") : undefined,
-            category: category || undefined,
-            subjects: subjects.length ? subjects.join(",") : undefined,
-            languages: languages.length ? languages.join(",") : undefined,
-            products: products.length ? products.join(",") : undefined,
-            levels: levels.length ? levels.join(",") : undefined,
-            durations: durations.length ? durations.join(",") : undefined,
-          }
+        const params = {
+          search: apiSearch ? apiSearch.replace(/-/g, " ") : undefined,
+          category: category || undefined,
+          subjects: subjects.length ? subjects.join(",") : undefined,
+          languages: languages.length ? languages.join(",") : undefined,
+          products: products.length ? products.join(",") : undefined,
+          levels: levels.length ? levels.join(",") : undefined,
+          durations: durations.length ? durations.join(",") : undefined,
+          limit: 50,
+          page: 1,
+        };
+        // A sleeping Render instance can take a minute to wake; the catalog covers the page meanwhile.
+        const first = await axiosInstance.get("/courses", { timeout: 8000, params });
+        const totalPages = Math.max(1, Number(first.data?.pagination?.totalPages) || 1);
+        const remaining = await Promise.all(
+          Array.from({ length: totalPages - 1 }, (_, index) =>
+            axiosInstance.get("/courses", { timeout: 8000, params: { ...params, page: index + 2 } }),
+          ),
+        );
+        return [first, ...remaining].flatMap((response) => {
+          const data = response.data;
+          const list = data.courses || data.data || data || [];
+          return Array.isArray(list) ? list : [];
         });
-
-        // Handle different possible backend response structures
-        const list = data.courses || data.data || data || [];
-        return Array.isArray(list) ? list : [];
       } catch (err) {
         console.error("Failed to fetch courses:", err);
         return [];

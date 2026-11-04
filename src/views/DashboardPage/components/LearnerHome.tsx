@@ -9,14 +9,17 @@ import useAuth from "@hooks/useAuth";
 import axiosInstance from "../../../utils/axiosInstance";
 import { getMyEnrollments } from "@services/enrollments";
 import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
+import { youtubeFreeCatalogCourses } from "@services/catalog";
 
 // The course's picture, or a plain tinted block when it has none
-const Thumb = ({ course, className }: { course: any; className: string }) =>
-  course?.thumbnailUrl && /^https?:\/\//.test(course.thumbnailUrl) ? (
-    <img src={course.thumbnailUrl} alt="" className={`${className} object-cover`} />
+const Thumb = ({ course, className }: { course: any; className: string }) => {
+  const image = course?.thumbnailUrl || course?.thumbnail;
+  return image && typeof image === "string" ? (
+    <img src={image} alt="" className={`${className} object-cover`} />
   ) : (
     <div className={`${className} bg-gradient-to-br from-[#dfe7ff] to-[#c3d2ff]`} />
   );
+};
 
 // The learner's home: where they left off, what to take next, and what they have earned. Everything shown is real data.
 const LearnerHome = () => {
@@ -25,11 +28,31 @@ const LearnerHome = () => {
 
   const { data: enrollments = [], isLoading } = useQuery({ queryKey: ["my-courses"], queryFn: getMyEnrollments });
   const { data: catalogue = [] } = useQuery({
-    queryKey: ["home.recommended"],
+    queryKey: ["home.free-available"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/courses?limit=12");
-      return (res.data?.courses ?? res.data?.data ?? (Array.isArray(res.data) ? res.data : [])) as any[];
+      try {
+        const params = { courseType: "free", limit: 50, page: 1 };
+        const first = await axiosInstance.get("/courses", { params });
+        const totalPages = Math.max(1, Number(first.data?.pagination?.totalPages) || 1);
+        const remaining = await Promise.all(
+          Array.from({ length: totalPages - 1 }, (_, index) =>
+            axiosInstance.get("/courses", { params: { ...params, page: index + 2 } }),
+          ),
+        );
+        const apiCourses = [first, ...remaining]
+          .flatMap((response) => response.data?.courses || [])
+          .filter(isFreeYouTubeCourse);
+        const apiTitles = new Set(apiCourses.map((course: any) => String(course.title).toLowerCase()));
+        return [
+          ...apiCourses,
+          ...youtubeFreeCatalogCourses.filter((course) => !apiTitles.has(course.title.toLowerCase())),
+        ];
+      } catch (error) {
+        console.error("Failed to load free courses for My Learning:", error);
+        return youtubeFreeCatalogCourses;
+      }
     },
+    staleTime: 60_000,
   });
 
   const percentOf = (e: any) => e.progressPercentage ?? 0;
@@ -40,8 +63,11 @@ const LearnerHome = () => {
   const completed = withCourse.filter((e: any) => percentOf(e) >= 100);
   const lessonsDone = withCourse.reduce((total: number, e: any) => total + (e.completedLessons?.length ?? 0), 0);
   const average = withCourse.length ? Math.round(withCourse.reduce((t: number, e: any) => t + percentOf(e), 0) / withCourse.length) : 0;
-  const enrolledIds = new Set(withCourse.map((e: any) => String(e.course._id)));
-  const recommended = catalogue.filter((c: any) => isFreeYouTubeCourse(c) && !enrolledIds.has(String(c._id))).slice(0, 3);
+  const enrolledIds = new Set(withCourse.flatMap((e: any) => [e.course._id, e.course.slug].filter(Boolean).map(String)));
+  const availableFreeCourses = catalogue.filter((course: any) => {
+    const courseKeys = [course._id, course.slug].filter(Boolean).map(String);
+    return isFreeYouTubeCourse(course) && !courseKeys.some((key: string) => enrolledIds.has(key));
+  });
   const firstName = authenticatedUser?.firstName || "there";
 
   return (
@@ -109,20 +135,26 @@ const LearnerHome = () => {
             )}
           </section>
 
-          {/* Recommended */}
-          {recommended.length > 0 && (
+          {/* Free courses available after the learner's active courses */}
+          {availableFreeCourses.length > 0 && (
             <section>
-              <h2 className="mb-4 text-[17px] font-bold text-[#201633]">Recommended for You</h2>
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-[17px] font-bold text-[#201633]">Free Courses Available</h2>
+                  <p className="mt-1 text-[12px] text-[#717480]">{availableFreeCourses.length} YouTube courses you can start for free</p>
+                </div>
+                <Link href="/dashboard/explore" className="shrink-0 text-[12px] font-semibold text-[#07004d] hover:underline">Browse all</Link>
+              </div>
               <ul className="divide-y divide-[#eceef5] rounded-2xl border border-[#e5e7ef] bg-white">
-                {recommended.map((c: any) => (
-                  <li key={c._id}>
-                    <Link href={`/courses/${c.slug || c._id}`} className="flex items-center gap-4 px-5 py-4 hover:bg-[#f9fafd]">
-                      <Thumb course={c} className="h-[40px] w-[40px] shrink-0 rounded-md" />
+                {availableFreeCourses.slice(0, 6).map((course: any) => (
+                  <li key={course._id || course.slug}>
+                    <Link href={`/courses/${course.slug || course._id}`} className="flex items-center gap-4 px-5 py-4 hover:bg-[#f9fafd]">
+                      <Thumb course={course} className="h-[40px] w-[40px] shrink-0 rounded-md" />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[14px] font-semibold text-[#201633]">{c.title}</span>
+                        <span className="block truncate text-[14px] font-semibold text-[#201633]">{course.title}</span>
                         <span className="mt-1 flex items-center gap-1.5 truncate text-[12px] text-[#717480]">
                           <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#eef2ff] text-[#07004d]" aria-hidden="true"><FiUser size={10} /></span>
-                          {getYouTubeSourceName(c)} · Free
+                          {getYouTubeSourceName(course)} · Free
                         </span>
                       </span>
                       <FiChevronRight className="shrink-0 text-[#8a8c95]" />
