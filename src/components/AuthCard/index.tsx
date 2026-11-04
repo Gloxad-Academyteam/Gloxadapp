@@ -23,7 +23,7 @@ type AuthCardProps = {
  * Shared shell for every auth screen.
  *
  * MOBILE  (below lg): only the form is shown, edge to edge, no card chrome until `sm`.
- * No top navigation on auth pages; the card grows with its content (so the social buttons are never clipped) and has a minimum height so short screens keep the same frame.
+ * No top navigation on auth pages; the card grows with its content (so form content is never clipped) and has a minimum height so short screens keep the same frame.
  * DESKTOP (lg and up): image panel + form sit together inside ONE rounded card (no shadow).
  */
 const AuthCard = ({ headline, image, imageAlt = "", panel, headlineHidden = false, children }: AuthCardProps) => {
@@ -69,8 +69,8 @@ const AuthCard = ({ headline, image, imageAlt = "", panel, headlineHidden = fals
         </div>
 
         {/* ===================== MOBILE (below lg) — form only; DESKTOP — right half of the card ===================== */}
-        <section className="flex w-full flex-col px-5 py-8 sm:px-12 sm:py-12 lg:px-10 lg:py-8 xl:px-14">
-          <div className="mx-auto my-auto flex w-full max-w-[420px] flex-col">{children}</div>
+        <section className="flex w-full min-w-0 flex-col px-5 py-8 sm:px-12 sm:py-12 lg:px-10 lg:py-8 xl:px-14">
+          <div className="mx-auto my-auto flex w-full min-w-0 max-w-[420px] flex-col">{children}</div>
         </section>
       </div>
     </main>

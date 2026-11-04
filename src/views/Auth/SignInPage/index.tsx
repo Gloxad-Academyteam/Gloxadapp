@@ -5,7 +5,6 @@ import Input from "@components/Input";
 import PasswordInput from "@components/Input/PasswordInput";
 import TextLink from "@components/TextLink";
 import AuthCard from "@components/AuthCard";
-import SocialAuthButtons from "@components/AuthCard/SocialAuthButtons";
 import { HiOutlineMail } from "react-icons/hi";
 import useSignInPage from "./hooks/useSignInPage";
 import SignupHeroImage from "@assets/images/student-login-portrait.png";
@@ -73,7 +72,6 @@ const SignInPage = () => {
             Don't have an account? <TextLink text="Sign up" to="/auth/signup" className="font-bold text-[#07004d]" />
           </div>
 
-          <SocialAuthButtons />
         </div>
       </form>
     </AuthCard>
