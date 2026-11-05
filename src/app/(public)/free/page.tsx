@@ -3,7 +3,7 @@ import FreeCoursesPage from "@pages/FreeCoursesPage";
 
 export const metadata: Metadata = {
   title: "Free Courses | Gloxad Academy",
-  description: "Explore our free courses and upgrade anytime to get a certificate!",
+  description: "Explore free courses, learn at your own pace, complete assessments and earn a certificate at no charge.",
   alternates: { canonical: "/free" },
 };
 

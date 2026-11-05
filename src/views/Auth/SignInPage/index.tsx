@@ -15,6 +15,7 @@ const SignInPage = () => {
     formFieldRegister,
     handleFormSubmit,
     mutationIsLoading,
+    redirectUrl,
   } = useSignInPage();
 
   return (
@@ -69,7 +70,7 @@ const SignInPage = () => {
           />
 
           <div className="text-center text-[13px] text-[#717480]">
-            Don't have an account? <TextLink text="Sign up" to="/auth/signup" className="font-bold text-[#07004d]" />
+            Don't have an account? <TextLink text="Sign up" to={redirectUrl === "/dashboard" ? "/auth/signup" : `/auth/signup?redirect=${encodeURIComponent(redirectUrl)}`} className="font-bold text-[#07004d]" />
           </div>
 
         </div>

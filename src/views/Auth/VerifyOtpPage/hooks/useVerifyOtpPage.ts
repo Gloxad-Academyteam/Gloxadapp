@@ -3,7 +3,7 @@
 import { verifyOtp, verifyEmail, forgetPasswd, resendVerification } from "@services/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { TUser } from "@services/auth/types_";
-import { getPostAuthRoute } from "@utils/getPostAuthRoute";
+import { getPostAuthRoute, safeRedirectPath } from "@utils/getPostAuthRoute";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
@@ -14,6 +14,7 @@ const useVerifyOtpPage = () => {
   const searchParams = useSearchParams() ?? new URLSearchParams();
   const email = searchParams?.get("email") || "";
   const type = searchParams?.get("type") || "verify"; // "reset" or "verify"
+  const redirectUrl = safeRedirectPath(searchParams?.get("redirect"));
   const [otp, setOtp] = useState<string | null>(null);
   const [countdown, setCountdown] = useState(60);
   const [isVerified, setIsVerified] = useState(false);
@@ -123,12 +124,12 @@ const useVerifyOtpPage = () => {
     }
     const cached = queryClient.getQueryData<{ data?: TUser } | null>(["auth.me"]);
     if (cached?.data) {
-      router.push(getPostAuthRoute(cached.data));
+      router.push(getPostAuthRoute(cached.data, redirectUrl));
       return;
     }
     // Verified but no session (e.g. the page was reloaded after signup): sign in to continue
     toast.info("Email verified! Please sign in to continue.");
-    router.push("/auth/signin");
+    router.push(redirectUrl === "/dashboard" ? "/auth/signin" : `/auth/signin?redirect=${encodeURIComponent(redirectUrl)}`);
   };
 
   const handleResend = () => {

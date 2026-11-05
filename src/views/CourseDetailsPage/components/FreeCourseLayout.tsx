@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FiAward, FiBarChart2, FiCheck, FiClock, FiLayers, FiPlayCircle } from "react-icons/fi";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
-import { enrollInFreeCourse } from "@services/enrollments";
+import { enrollInFreeCourse, getMyEnrollment } from "@services/enrollments";
+import { getYouTubeSourceName, getYouTubeSourceUrl, isYouTubeCourse } from "@utils/courseSource";
 import LessonVideo from "@components/LessonVideo";
 import FullscreenButton from "@components/FullscreenButton";
 import { toggleFullscreen } from "@utils/fullscreen";
@@ -23,8 +25,34 @@ type TPreview = { url: string; title: string; start?: number; end?: number };
 
 const FreeCourseLayout = ({ course }: TProps) => {
   const router = useRouter();
-  const { authenticatedUser } = useAuth();
+  const queryClient = useQueryClient();
+  const { authenticatedUser, isLoading: authLoading } = useAuth();
   const frameRef = useRef<HTMLDivElement>(null);
+  const autoEnrollHandled = useRef<string | null>(null);
+
+  const coursePath = `/courses/${course.slug || course._id}`;
+  const enrollmentQuery = useQuery({
+    queryKey: ["enrollment.for-course", course._id],
+    queryFn: () => getMyEnrollment(String(course._id)),
+    enabled: !!authenticatedUser && !!course._id && !course.isCatalog,
+    retry: false,
+  });
+  const isEnrolled = Boolean(course.isEnrolled || enrollmentQuery.data);
+  const enrollMutation = useMutation({
+    mutationFn: () => enrollInFreeCourse(String(course._id)),
+    onSuccess: async () => {
+      toast.success("You are enrolled. Your course is ready.");
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["enrollment.for-course", course._id] }),
+        queryClient.invalidateQueries({ queryKey: ["my-courses"] }),
+        queryClient.invalidateQueries({ queryKey: ["enrollment", course._id] }),
+      ]);
+      router.push(`/learning/${course._id}`);
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.error || "Could not enrol in this course. Please try again.");
+    },
+  });
 
   const modules: any[] = course.modules || [];
   const lessons = modules.flatMap((mod) => mod.lessons || []);
@@ -47,10 +75,10 @@ const FreeCourseLayout = ({ course }: TProps) => {
     frameRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleEnrollClick = () => {
+  const handleEnrollClick = useCallback(() => {
     if (!authenticatedUser) {
-      toast.info("Please log in to start learning.");
-      router.push("/auth/signin");
+      const returnTo = `${coursePath}?enrol=1`;
+      router.push(`/auth/signin?redirect=${encodeURIComponent(returnTo)}`);
       return;
     }
 
@@ -60,12 +88,23 @@ const FreeCourseLayout = ({ course }: TProps) => {
       return;
     }
 
-    enrollInFreeCourse(course._id)
-      .then(() => router.push(`/learning/${course._id}`))
-      .catch((err: any) => {
-        toast.error(err.response?.data?.error || "Could not start this course. Please try again.");
-      });
-  };
+    if (isEnrolled) {
+      router.push(`/learning/${course._id}`);
+      return;
+    }
+
+    enrollMutation.mutate();
+  }, [authenticatedUser, course._id, course.isCatalog, coursePath, enrollMutation, isEnrolled, router]);
+
+  useEffect(() => {
+    if (authLoading || !authenticatedUser || enrollmentQuery.isLoading || autoEnrollHandled.current === String(course._id)) return;
+    if (typeof window === "undefined" || new URLSearchParams(window.location.search).get("enrol") !== "1") return;
+    if (course.isCatalog) return;
+
+    autoEnrollHandled.current = String(course._id);
+    router.replace(coursePath, { scroll: false });
+    handleEnrollClick();
+  }, [authLoading, authenticatedUser, course.isCatalog, coursePath, enrollmentQuery.isLoading, handleEnrollClick, router]);
 
   const facts = [
     { icon: FiBarChart2, label: course.level || "Beginner" },
@@ -73,6 +112,35 @@ const FreeCourseLayout = ({ course }: TProps) => {
     { icon: FiPlayCircle, label: `${lessons.length} ${lessons.length === 1 ? "chapter" : "chapters"}` },
     ...(hoursText ? [{ icon: FiClock, label: hoursText }] : []),
   ];
+  const sourceName = getYouTubeSourceName(course);
+  const sourceUrl = getYouTubeSourceUrl(course);
+  const isExternalYouTubeCourse = isYouTubeCourse(course);
+  const quizCandidates = modules.flatMap((module) => [
+    ...(Array.isArray(module.quizzes) ? module.quizzes : []),
+    ...(module.quiz ? [module.quiz] : []),
+  ]).filter((item: any) => {
+    const status = String(item?.status || "").toLowerCase();
+    return item?.isDraft !== true && item?.isPublished !== false && !["draft", "pending", "rejected"].includes(status);
+  });
+  const quizzes = Array.from(new Map(quizCandidates.map((item: any, index: number) => [String(item._id || item.id || `${item.title || "quiz"}-${index}`), item])).values());
+  const assessmentCandidates = Array.isArray(course.assessments) ? course.assessments : course.assessment ? [course.assessment] : [];
+  const assessments = assessmentCandidates.filter((item: any) => {
+    const status = String(item?.status || "").toLowerCase();
+    return item?.isDraft !== true && item?.isPublished !== false && !["draft", "pending", "rejected"].includes(status);
+  });
+  const requirementEntries = Array.isArray(course.requirements)
+    ? course.requirements
+    : course.entry
+      ? [course.entry]
+      : ["No prior experience is required."];
+  const requirements = requirementEntries.map((item: any) => typeof item === "string" ? item : item?.title || item?.description || "").filter(Boolean);
+  const enrollLabel = enrollMutation.isPending
+    ? "Enrolling…"
+    : enrollmentQuery.isLoading
+      ? "Checking enrolment…"
+      : isEnrolled
+        ? "Continue learning"
+        : "Enrol for free";
 
   return (
     <div className="w-full bg-white pb-24 text-[#201633]">
@@ -109,21 +177,24 @@ const FreeCourseLayout = ({ course }: TProps) => {
               <button
                 type="button"
                 onClick={handleEnrollClick}
-                className="h-[52px] rounded-full bg-[#07004d] px-9 text-[15px] font-semibold text-white shadow-sm transition hover:bg-[#111456]"
+                disabled={enrollMutation.isPending || enrollmentQuery.isLoading}
+                className="h-[52px] rounded-full bg-[#07004d] px-9 text-[15px] font-semibold text-white shadow-sm transition hover:bg-[#111456] disabled:cursor-wait disabled:opacity-70"
               >
-                Start learning
+                {enrollLabel}
               </button>
               <a href="#course-content" className="text-[14px] font-semibold text-[#07004d] underline-offset-4 hover:underline">
                 See what's inside
               </a>
             </div>
 
-            <p className="mt-6 text-[13px] text-[#717480]">
-              Video lessons by{" "}
-              <a href="https://www.youtube.com/@freecodecamp" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#07004d] hover:underline">
-                freeCodeCamp.org
-              </a>
-            </p>
+            {isExternalYouTubeCourse && (
+              <p className="mt-6 text-[13px] text-[#717480]">
+                Video lessons by{" "}
+                <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#07004d] hover:underline">
+                  {sourceName}
+                </a>
+              </p>
+            )}
           </div>
 
           <div>
@@ -200,6 +271,41 @@ const FreeCourseLayout = ({ course }: TProps) => {
           )}
 
           <section>
+            <h2 className="mb-4 text-[22px] font-bold">Requirements</h2>
+            <ul className="space-y-2 rounded-2xl border border-[#e5e7ef] p-5 text-[14px] leading-[1.6] text-[#4e515c]">
+              {requirements.map((requirement: string, index: number) => (
+                <li key={`${requirement}-${index}`} className="flex items-start gap-2.5">
+                  <FiCheck className="mt-1 shrink-0 text-[#15803d]" aria-hidden="true" />
+                  <span>{requirement}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-[22px] font-bold">Assessments and completion</h2>
+            <div className="rounded-2xl border border-[#e5e7ef] p-5 text-[14px] leading-[1.65] text-[#4e515c]">
+              {quizzes.length > 0 || assessments.length > 0 ? (
+                <>
+                  <p>This course includes {quizzes.length ? `${quizzes.length} module ${quizzes.length === 1 ? "quiz" : "quizzes"}` : "learning activities"}{assessments.length ? ` and ${assessments.length} ${assessments.length === 1 ? "assessment" : "assessments"}` : ""}.</p>
+                  <ul className="mt-3 space-y-1.5">
+                    {[...quizzes, ...assessments].map((item: any, index: number) => (
+                      <li key={item._id || item.id || item.title || index} className="flex flex-wrap gap-x-2">
+                        <span className="font-semibold text-[#202127]">{item.title || `Assessment ${index + 1}`}</span>
+                        {(item.passMark ?? item.passingScore) != null && <span>Pass mark: {item.passMark ?? item.passingScore}%</span>}
+                        {(item.maxAttempts ?? item.attemptsAllowed) != null && <span>Attempts: {item.maxAttempts ?? item.attemptsAllowed}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p>Complete the required course lessons to track your progress. This course has no graded assessments listed.</p>
+              )}
+              <p className="mt-3 font-medium text-[#202127]">A completion certificate is included at no charge when course requirements are met.</p>
+            </div>
+          </section>
+
+          <section>
             <CourseReviews
               courseId={course._id}
               reviews={course.reviews || []}
@@ -213,7 +319,7 @@ const FreeCourseLayout = ({ course }: TProps) => {
           <div className="space-y-5 lg:sticky lg:top-24">
             <div className="rounded-2xl border border-[#e5e7ef] bg-white p-6 shadow-sm">
               <p className="text-[24px] font-bold text-[#15803d]">Free</p>
-              <p className="mt-1 text-[13px] text-[#717480]">No payment, no catch</p>
+              <p className="mt-1 text-[13px] text-[#717480]">No payment or card details required</p>
               <ul className="mt-5 space-y-3 text-[14px] text-[#4e515c]">
                 <li className="flex items-center gap-3">
                   <FiPlayCircle className="text-[16px] text-[#07004d]" /> {lessons.length} video chapters
@@ -231,29 +337,27 @@ const FreeCourseLayout = ({ course }: TProps) => {
               <button
                 type="button"
                 onClick={handleEnrollClick}
-                className="mt-6 h-[48px] w-full rounded-full bg-[#07004d] text-[14px] font-semibold text-white transition hover:bg-[#111456]"
+                disabled={enrollMutation.isPending || enrollmentQuery.isLoading}
+                className="mt-6 h-[48px] w-full rounded-full bg-[#07004d] text-[14px] font-semibold text-white transition hover:bg-[#111456] disabled:cursor-wait disabled:opacity-70"
               >
-                Start learning
+                {enrollLabel}
               </button>
             </div>
 
-            <div className="rounded-2xl bg-[#f7f8fc] p-6">
-              <h3 className="text-[14px] font-bold">External learning resource</h3>
-              <p className="mt-2 text-[13px] leading-[1.65] text-[#5b5e6b]">
-                Creator/channel: freeCodeCamp.org. Source: YouTube, where each lesson plays in its original player.
-              </p>
-              <p className="mt-2 text-[12px] leading-[1.65] text-[#717480]">
-                This content is created and owned by its respective creator. Gloxad Academy provides access through a YouTube embed and does not claim authorship or ownership.
-              </p>
-              <a
-                href="https://www.youtube.com/@freecodecamp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block text-[13px] font-semibold text-[#07004d] hover:underline"
-              >
-                Original source: freeCodeCamp.org on YouTube
-              </a>
-            </div>
+            {isExternalYouTubeCourse && (
+              <div className="rounded-2xl bg-[#f7f8fc] p-6">
+                <h3 className="text-[14px] font-bold">External learning resource</h3>
+                <p className="mt-2 text-[13px] leading-[1.65] text-[#5b5e6b]">
+                  Creator/channel: {sourceName}. Source: YouTube, where each lesson plays in its original player.
+                </p>
+                <p className="mt-2 text-[12px] leading-[1.65] text-[#717480]">
+                  This content is created and owned by its respective creator. Gloxad Academy links to the original YouTube player and does not claim authorship or ownership.
+                </p>
+                <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[13px] font-semibold text-[#07004d] hover:underline">
+                  Original source: {sourceName} on YouTube
+                </a>
+              </div>
+            )}
           </div>
         </aside>
       </div>

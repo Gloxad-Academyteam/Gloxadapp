@@ -53,7 +53,7 @@ const FreeCoursesTab = () => {
           Start Learning for Free!
         </h1>
         <p className="text-[16px] text-[#4e515c] max-w-[500px]">
-          Explore our free courses and upgrade anytime to get a certificate!
+            Explore free courses with lessons, assessments and completion certificates included at no charge.
         </p>
       </div>
 

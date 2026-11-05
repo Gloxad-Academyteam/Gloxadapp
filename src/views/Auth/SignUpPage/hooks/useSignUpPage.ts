@@ -1,11 +1,11 @@
 "use client";
 
 import { signUp } from "@services/auth";
-import { getPostAuthRoute } from "@utils/getPostAuthRoute";
+import { getPostAuthRoute, safeRedirectPath } from "@utils/getPostAuthRoute";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 
 import { useState } from "react";
@@ -21,6 +21,8 @@ type TInputs = {
 
 const useSignUpPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams() ?? new URLSearchParams();
+  const redirectUrl = safeRedirectPath(searchParams.get("redirect"));
   const queryClient = useQueryClient();
   const routeRole = useParams<{ role?: string }>()?.role;
   const initialRole = routeRole === "instructor" ? "instructor" : "student";
@@ -71,7 +73,7 @@ const useSignUpPage = () => {
       });
 
       // New accounts start unverified, so this sends everyone to the email verification step first
-      router.push(getPostAuthRoute(response?.data?.user));
+      router.push(getPostAuthRoute(response?.data?.user, redirectUrl));
     },
 
     onError: (error: any) => {
@@ -117,6 +119,7 @@ const useSignUpPage = () => {
     mutationIsLoading: isPending,
     role,
     setRole,
+    redirectUrl,
   };
 };
 

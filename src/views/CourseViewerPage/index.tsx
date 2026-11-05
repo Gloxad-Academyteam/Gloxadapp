@@ -12,6 +12,11 @@ import { formatTimestamp, getYouTubeStart } from "@utils/youtube";
 import FullscreenButton from "@components/FullscreenButton";
 import { getMyEnrollment, getCourseProgress, saveLessonProgress } from "@services/enrollments";
 
+const isLearnerVisibleQuiz = (quiz: any) => {
+  const status = String(quiz?.status || "").toLowerCase();
+  return quiz?.isDraft !== true && quiz?.isPublished !== false && !["draft", "pending", "rejected"].includes(status);
+};
+
 export default function CourseViewerPage() {
   const { id: courseId } = useParams<{ id: string }>()!;
   const router = useRouter();
@@ -268,7 +273,7 @@ export default function CourseViewerPage() {
                         </li>
                       );
                     })}
-                    {(mod.quizzes || []).map((quiz: any) => {
+                    {(mod.quizzes || []).filter(isLearnerVisibleQuiz).map((quiz: any) => {
                       const isActiveQuiz = activeLesson?.isQuiz && activeLesson?._id === quiz._id;
                       return (
                         <li key={quiz._id}>

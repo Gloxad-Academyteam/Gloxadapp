@@ -58,10 +58,10 @@ const LearnerHome = () => {
   const percentOf = (e: any) => e.progressPercentage ?? 0;
   const withCourse = enrollments.filter((e: any) => e.course);
   const inProgress = withCourse
-    .filter((e: any) => percentOf(e) < 100)
+    .filter((e: any) => percentOf(e) > 0 && percentOf(e) < 100)
     .sort((a: any, b: any) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime());
   const completed = withCourse.filter((e: any) => percentOf(e) >= 100);
-  const lessonsDone = withCourse.reduce((total: number, e: any) => total + (e.completedLessons?.length ?? 0), 0);
+  const notStarted = withCourse.filter((e: any) => percentOf(e) <= 0);
   const average = withCourse.length ? Math.round(withCourse.reduce((t: number, e: any) => t + percentOf(e), 0) / withCourse.length) : 0;
   const enrolledIds = new Set(withCourse.flatMap((e: any) => [e.course._id, e.course.slug].filter(Boolean).map(String)));
   const availableFreeCourses = catalogue.filter((course: any) => {
@@ -83,14 +83,14 @@ const LearnerHome = () => {
             My Courses
           </Link>
         </div>
-        <div className="flex shrink-0 gap-6 rounded-xl border border-white/30 px-8 py-5 text-center">
+        <div className="grid shrink-0 grid-cols-2 gap-x-6 rounded-xl border border-white/30 px-6 py-5 text-center">
           <div>
-            <p className="text-[11px] uppercase tracking-wider text-white/80">Lessons done</p>
-            <p className="mt-1 text-[28px] font-bold">{lessonsDone}</p>
+            <p className="text-[10px] uppercase tracking-wider text-white/80">Enrolled</p>
+            <p className="mt-1 text-[24px] font-bold">{withCourse.length}</p>
           </div>
           <div>
-            <p className="text-[11px] uppercase tracking-wider text-white/80">Completed</p>
-            <p className="mt-1 text-[28px] font-bold">{completed.length}</p>
+            <p className="text-[10px] uppercase tracking-wider text-white/80">In progress</p>
+            <p className="mt-1 text-[24px] font-bold">{inProgress.length}</p>
           </div>
         </div>
       </section>
@@ -108,8 +108,16 @@ const LearnerHome = () => {
             ) : inProgress.length === 0 ? (
               <div className="rounded-2xl border border-[#e5e7ef] bg-white p-8 text-center">
                 <FiBookOpen className="mx-auto mb-3 text-[28px] text-[#07004d]" />
-                <p className="text-[14px] text-[#4e515c]">{withCourse.length === 0 ? "You haven't started a course yet." : "You've finished every course you started."}</p>
-                <Link href="/free" className="mt-4 inline-flex h-[40px] items-center rounded-full bg-[#07004d] px-6 text-[13px] font-semibold text-white">Browse free courses</Link>
+                <p className="text-[14px] text-[#4e515c]">
+                  {withCourse.length === 0
+                    ? "You have not enrolled in a course yet."
+                    : notStarted.length > 0
+                      ? "Your enrolled courses are ready when you are."
+                      : "You have finished every course you started."}
+                </p>
+                <Link href={withCourse.length > 0 ? "/dashboard?tab=my-courses" : "/free"} className="mt-4 inline-flex h-[40px] items-center rounded-full bg-[#07004d] px-6 text-[13px] font-semibold text-white">
+                  {withCourse.length > 0 ? "View my courses" : "Browse free courses"}
+                </Link>
               </div>
             ) : (
               <div className="grid gap-5 sm:grid-cols-2">
@@ -204,6 +212,7 @@ const LearnerHome = () => {
               <div className="flex justify-between"><dt className="text-[#717480]">Courses enrolled</dt><dd className="font-semibold">{withCourse.length}</dd></div>
               <div className="flex justify-between"><dt className="text-[#717480]">In progress</dt><dd className="font-semibold">{inProgress.length}</dd></div>
               <div className="flex justify-between"><dt className="text-[#717480]">Completed</dt><dd className="font-semibold">{completed.length}</dd></div>
+              <div className="flex justify-between"><dt className="text-[#717480]">Certificates earned</dt><dd className="font-semibold">{completed.length}</dd></div>
             </dl>
           </div>
         </aside>

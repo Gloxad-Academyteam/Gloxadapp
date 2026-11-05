@@ -1,7 +1,7 @@
 "use client";
 
 import { resendVerification, signIn } from "@services/auth";
-import { getPostAuthRoute, needsEmailVerification, verifyEmailRoute } from "@utils/getPostAuthRoute";
+import { getPostAuthRoute, needsEmailVerification, safeRedirectPath, verifyEmailRoute } from "@utils/getPostAuthRoute";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {AxiosError} from "axios";
 import { useForm } from "react-hook-form";
@@ -19,8 +19,7 @@ const useSignInPage = () => {
   const searchParams = useSearchParams() ?? new URLSearchParams();
   // Only same-site paths, so a crafted ?redirect= can't send users to another website after signing in
   const requestedRedirect = searchParams?.get("redirect");
-  const redirectUrl =
-    requestedRedirect?.startsWith("/") && !requestedRedirect.startsWith("//") ? requestedRedirect : "/dashboard";
+  const redirectUrl = safeRedirectPath(requestedRedirect);
   const queryClient = useQueryClient();
   const {
     register,
@@ -42,7 +41,7 @@ const useSignInPage = () => {
         resendVerification({ email: user.email })
           .then(() => toast.info("Please verify your email. We've sent you a new code."))
           .catch(() => toast.info("Please verify your email with the code we sent when you signed up."));
-        router.push(verifyEmailRoute(user.email));
+        router.push(verifyEmailRoute(user.email, redirectUrl));
         return;
       }
 
@@ -98,6 +97,7 @@ const useSignInPage = () => {
     formFieldRegister: register,
     handleFormSubmit: handleSubmit,
     mutationIsLoading: isPending,
+    redirectUrl,
   };
 };
 

@@ -135,32 +135,24 @@ const Hero = ({ compact = false }: HeroProps) => {
           <div className="mt-3 w-full max-w-[600px] lg:mt-6">
             {/* MOBILE: one short line */}
             <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[13px] leading-[1.55] text-white/90 sm:text-[15px] lg:hidden">
-              Expert-led courses, hands-on projects and recognised certificates. Start learning today.
+              Build useful skills with free courses, assessments and certificates.
             </p>
             {/* DESKTOP: full copy */}
             <p className="hidden text-[15px] leading-[1.6] text-white/90 lg:block">
-              Develop future-ready skills through expert-led courses, hands-on
-              projects, and industry-recognized certifications. Whether you're
-              building a career in technology, business, data analytics,
-              artificial intelligence, or blockchain, Gloxad Academy provides the
-              knowledge, experience, and opportunities you need to thrive in a
-              rapidly evolving world.
-            </p>
-            <p className="mt-3 hidden text-[15px] leading-[1.6] text-white/90 lg:block">
-              Start learning today and unlock your full potential.
+              Build practical, future-ready skills through free courses, assessments and completion certificates.
             </p>
 
-            <div className="mt-6 flex flex-row flex-nowrap gap-2 sm:gap-4 lg:mt-7">
+            <div className="mt-6 flex flex-wrap gap-2 sm:gap-4 lg:mt-7">
               <button
                 type="button"
-                onClick={() => router.push("/auth/signin")}
-                className="btn-interactive flex h-[36px] items-center justify-center whitespace-nowrap rounded-full bg-[#4aa3df] px-3.5 text-[12px] min-[400px]:h-[40px] min-[400px]:px-5 min-[400px]:text-[13px] font-medium text-white shadow-lg transition-colors hover:bg-[#3e92cc] sm:h-[46px] sm:px-6 sm:text-[14px] lg:h-[48px] lg:w-[150px] lg:text-[15px]"
+                onClick={() => router.push("/free")}
+                className="btn-interactive flex h-[36px] items-center justify-center whitespace-nowrap rounded-full bg-[#4aa3df] px-3.5 text-[12px] min-[400px]:h-[40px] min-[400px]:px-5 min-[400px]:text-[13px] font-medium text-white shadow-lg transition-colors hover:bg-[#3e92cc] sm:h-[46px] sm:px-6 sm:text-[14px] lg:h-[48px] lg:w-auto lg:px-6 lg:text-[15px]"
               >
-                Get Started
+                Start Learning for Free
               </button>
               <button
                 type="button"
-                onClick={() => router.push("/auth/signup")}
+                onClick={() => router.push("/free")}
                 className="btn-interactive flex h-[36px] items-center justify-center whitespace-nowrap rounded-full border border-white bg-transparent px-3.5 text-[12px] min-[400px]:h-[40px] min-[400px]:px-5 min-[400px]:text-[13px] font-medium text-white transition-colors hover:bg-white hover:text-[#181C7B] sm:h-[46px] sm:px-6 sm:text-[14px] lg:h-[48px] lg:w-[170px] lg:text-[15px]"
               >
                 Explore Courses

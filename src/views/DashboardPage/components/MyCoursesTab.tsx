@@ -48,8 +48,12 @@ const MyCoursesTab = () => {
     fetchEnrollments();
   }, []);
 
-  const pills = ["In Progress", "Completed", "Certificates"];
+  const pills = ["In Progress", "Not Started", "Completed", "Certificates"];
   const percentOf = (enrollment: any) => enrollment.progressPercentage ?? 0;
+  const statusOf = (enrollment: any) => {
+    const percent = percentOf(enrollment);
+    return percent >= 100 ? "Completed" : percent > 0 ? "In Progress" : "Not Started";
+  };
   const completedCount = enrollments.filter((enrollment) => percentOf(enrollment) >= 100).length;
   const lessonsDone = enrollments.reduce((total, enrollment) => total + (enrollment.completedLessons?.length ?? 0), 0);
   const averagePercent = enrollments.length
@@ -60,8 +64,7 @@ const MyCoursesTab = () => {
     .filter((enrollment) => enrollment.course && percentOf(enrollment) < 100)
     .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime())[0];
   const visibleEnrollments = enrollments.filter((enrollment) => {
-    const done = (enrollment.progressPercentage ?? 0) >= 100;
-    return activePill === "Completed" ? done : !done;
+    return statusOf(enrollment) === activePill;
   });
 
   return (
@@ -77,7 +80,7 @@ const MyCoursesTab = () => {
         </div>
 
         {/* Pill Navigation */}
-        <div className="mt-6 flex w-fit items-center gap-1 rounded-full bg-white p-1 ring-1 ring-[#e2e8f0] md:mt-0">
+        <div className="mt-6 flex max-w-full flex-wrap items-center gap-1 rounded-2xl bg-white p-1 ring-1 ring-[#e2e8f0] md:mt-0 md:rounded-full">
           {pills.map((pill) => (
             <button
               key={pill}
@@ -107,7 +110,9 @@ const MyCoursesTab = () => {
                 ? "You are not enrolled in any courses yet."
                 : activePill === "Completed"
                   ? "You have not completed a course yet."
-                  : "You have finished every course you started."}
+                  : activePill === "Not Started"
+                    ? "You do not have any courses waiting to start."
+                    : "You have finished every course you started."}
             </div>
           ) : (
             visibleEnrollments
@@ -122,9 +127,14 @@ const MyCoursesTab = () => {
                   : "Gloxad Academy";
               
               const progress = {
-                completed: enrollment.completedLessons?.length ?? 0,
                 percent: enrollment.progressPercentage ?? 0,
               };
+              const status = statusOf(enrollment);
+              const statusClass = status === "Completed"
+                ? "bg-[#dcfce7] text-[#166534]"
+                : status === "In Progress"
+                  ? "bg-[#eef2ff] text-[#3730a3]"
+                  : "bg-[#f1f2f5] text-[#555866]";
               const categoryTag = course.category?.name || (idx % 2 === 0 ? "DESIGN" : "DEVELOPMENT");
               const categoryColor = idx % 2 === 0 ? "bg-[#e0f2fe] text-[#0284c7]" : "bg-[#dcfce3] text-[#166534]";
 
@@ -147,9 +157,7 @@ const MyCoursesTab = () => {
                       <span className={`px-2.5 py-1 rounded-[4px] text-[10px] font-bold tracking-wider uppercase ${categoryColor}`}>
                         {categoryTag}
                       </span>
-                      <span className="text-[12px] font-bold text-[#717480]">
-                        {progress.completed} {progress.completed === 1 ? "lesson" : "lessons"} done
-                      </span>
+                      <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${statusClass}`}>{status}</span>
                     </div>
 
                     <h3 className="text-[20px] font-bold text-[#202127] mb-1 line-clamp-2">

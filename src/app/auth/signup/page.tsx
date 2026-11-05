@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import SignUpPage from "@pages/Auth/SignUpPage";
 
 export default function Page() {
-  return <SignUpPage />;
+  return (
+    <Suspense fallback={null}>
+      <SignUpPage />
+    </Suspense>
+  );
 }
