@@ -1,12 +1,5 @@
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-
-const socials = [
-  { label: "LinkedIn", Icon: FaLinkedin, color: "#0A66C2" },
-  { label: "Twitter", Icon: FaTwitter, color: "#1DA1F2" },
-  { label: "Instagram", Icon: FaInstagram, color: "#262626" },
-  { label: "Facebook", Icon: FaFacebook, color: "#1877F2" },
-];
+import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
 
 const pillClass = "rounded-full px-3 py-1.5 transition-colors sm:px-4";
 
@@ -39,15 +32,18 @@ const TopBar = ({ showLogo = false, contained = false }: { showLogo?: boolean; c
       </div>
 
       <div className="hidden items-center gap-4 sm:flex">
-        {socials.map(({ label, Icon, color }) => (
+        {OFFICIAL_SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
           <a
             key={label}
-            href="#"
-            aria-label={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Gloxad Academy on ${label}`}
+            title={label}
             className="transition-transform hover:scale-110"
             style={{ color }}
           >
-            <Icon size={28} />
+            <Icon size={24} aria-hidden="true" />
           </a>
         ))}
       </div>

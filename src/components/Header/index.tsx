@@ -5,20 +5,14 @@ import Link from "next/link";
 import TutorCoursesOnly from "@components/TutorCoursesOnly";
 import { usePathname, useSearchParams } from "next/navigation";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
-import { FaTimes, FaSearch, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaTimes, FaSearch } from "react-icons/fa";
 import Button from "@components/Button";
 import { PiUserCircleLight } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
-
-const LANDING_SOCIALS = [
-  { label: "LinkedIn", Icon: FaLinkedin, color: "#0A66C2" },
-  { label: "Twitter", Icon: FaTwitter, color: "#1DA1F2" },
-  { label: "Instagram", Icon: FaInstagram, color: "#262626" },
-  { label: "Facebook", Icon: FaFacebook, color: "#1877F2" },
-];
+import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
 
 const exploreColumns = [
   {
@@ -125,15 +119,18 @@ const LandingHeader = () => {
             <div className="flex flex-1 items-center justify-end gap-4 text-[#202127]">
               {/* Same social links, sizes and brand colours as the institution page's top bar */}
               <div className="flex items-center gap-4">
-                {LANDING_SOCIALS.map(({ label, Icon, color }) => (
+                {OFFICIAL_SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
                   <a
                     key={label}
-                    href="#"
-                    aria-label={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Gloxad Academy on ${label}`}
+                    title={label}
                     className="transition-transform hover:scale-110"
                     style={{ color }}
                   >
-                    <Icon size={28} />
+                    <Icon size={24} aria-hidden="true" />
                   </a>
                 ))}
               </div>

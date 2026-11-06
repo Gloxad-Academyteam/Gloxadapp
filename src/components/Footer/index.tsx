@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedinIn, FaFacebookF, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import { HiOutlineMail } from "react-icons/hi";
 import FooterLogo from "@assets/images/footer-logo.png";
+import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
 
 const Footer = () => {
   return (
@@ -14,19 +14,20 @@ const Footer = () => {
           <Link href="/">
             <Image src={FooterLogo} alt="Gloxad Logo" className="h-[48px] lg:h-[72px] w-auto -ml-2 lg:-ml-0" priority={false} />
           </Link>
-          <div className="flex items-center gap-2 lg:gap-4 mt-4 lg:mt-12">
-            <a href="#" className="flex h-[28px] w-[28px] lg:h-[32px] lg:w-[32px] items-center justify-center rounded-[6px] bg-white text-[#2552a0] transition hover:scale-105">
-              <FaLinkedinIn size={14} className="lg:text-[16px]" />
-            </a>
-            <a href="#" className="flex h-[28px] w-[28px] lg:h-[32px] lg:w-[32px] items-center justify-center rounded-[6px] bg-white text-[#2552a0] transition hover:scale-105">
-              <FaFacebookF size={14} className="lg:text-[16px]" />
-            </a>
-            <a href="#" className="flex h-[28px] w-[28px] lg:h-[32px] lg:w-[32px] items-center justify-center rounded-[6px] bg-white text-[#2552a0] transition hover:scale-105">
-              <FaXTwitter size={14} className="lg:text-[16px]" />
-            </a>
-            <a href="#" className="flex h-[28px] w-[28px] lg:h-[32px] lg:w-[32px] items-center justify-center rounded-[6px] bg-white text-[#2552a0] transition hover:scale-105">
-              <FaInstagram size={14} className="lg:text-[16px]" />
-            </a>
+          <div className="mt-4 flex max-w-full flex-wrap items-center gap-2 lg:mt-12 lg:flex-nowrap lg:gap-4">
+            {OFFICIAL_SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Gloxad Academy on ${label}`}
+                title={label}
+                className="flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-white text-[#2552a0] transition hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:h-[32px] lg:w-[32px]"
+              >
+                <Icon size={14} aria-hidden="true" />
+              </a>
+            ))}
           </div>
         </div>
 
