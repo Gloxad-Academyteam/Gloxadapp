@@ -19,10 +19,9 @@ export const institutionImages = {
   avatarMan2: unsplash("photo-1500648767791-00dcc994a43e", 120),
 };
 
-// Landing page. Local files in /public/images/institution were supplied with the design; the rest are Unsplash.
+// Landing page. Hero and dashboard images are local; supporting photos use Unsplash.
 export const landingImages = {
-  // Declan Sun: minimalist white gallery hallway in bright natural light
-  hero: unsplash("photo-1762928289094-197055a5d5c3", 1000, 78),
+  hero: "/images/institution/hero-campus-learning.webp",
   heroBackdrop: "/images/institution/hero-backdrop.webp",
   institutionDashboard: "/images/institution/dashboard-institution.webp",
   studentDashboard: "/images/institution/dashboard-student.png",

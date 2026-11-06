@@ -133,10 +133,12 @@ const LandingPage = () => (
               className="pointer-events-none absolute -right-6 -top-6 w-[96%] rotate-[4deg] opacity-80"
             />
             <div className="relative aspect-[457/468] rotate-[2.4deg] overflow-hidden rounded-[34px] bg-[#c9cdd6] shadow-[0_30px_60px_-30px_rgba(20,30,90,0.45)] sm:rounded-[40px]">
-              <CategoryImage
+              <img
                 src={landingImages.hero}
-                className="h-full w-full object-cover grayscale-[0.55] contrast-[0.95] brightness-[1.04]"
-                fallback={null}
+                alt="A lecturer working with students in a modern campus learning space"
+                loading="eager"
+                decoding="async"
+                className="h-full w-full object-cover"
               />
             </div>
             <div className="absolute -bottom-3 left-0 w-[190px] rounded-[16px] bg-white p-4 shadow-[0_18px_40px_-14px_rgba(30,40,120,0.35)] sm:-left-6 sm:bottom-4">
