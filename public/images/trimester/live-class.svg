@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="An instructor teaching a live class to a grid of learners">
+  <rect width="400" height="250" rx="16" fill="#DBE6FB"/>
+  <rect x="24" y="22" width="352" height="206" rx="14" fill="#0B1F4D"/>
+  <rect x="38" y="36" width="172" height="120" rx="10" fill="#13306f"/><circle cx="124" cy="82" r="22" fill="#8d5a3a"/><path d="M80 148c4-28 22-40 44-40s40 12 44 40z" fill="#2563EB"/>
+  <rect x="46" y="44" width="44" height="17" rx="8.5" fill="#FF5A5F"/><circle cx="57" cy="52.5" r="3.5" fill="#fff"/><rect x="65" y="49.5" width="20" height="6" rx="3" fill="#fff"/>
+  <g><rect x="220" y="36" width="72" height="56" rx="8" fill="#13306f"/><circle cx="256" cy="58" r="12" fill="#c98a5b"/><path d="M236 88c2-14 10-20 20-20s18 6 20 20z" fill="#F5B82E"/></g>
+  <g><rect x="300" y="36" width="64" height="56" rx="8" fill="#13306f"/><circle cx="332" cy="58" r="12" fill="#e0a77a"/><path d="M312 88c2-14 10-20 20-20s18 6 20 20z" fill="#6599FF"/></g>
+  <g><rect x="220" y="100" width="72" height="56" rx="8" fill="#13306f"/><circle cx="256" cy="122" r="12" fill="#6d4429"/><path d="M236 152c2-14 10-20 20-20s18 6 20 20z" fill="#1FA971"/></g>
+  <g><rect x="300" y="100" width="64" height="56" rx="8" fill="#13306f"/><circle cx="332" cy="122" r="12" fill="#a8703f"/><path d="M312 152c2-14 10-20 20-20s18 6 20 20z" fill="#FF5A5F"/><circle cx="352" cy="108" r="9" fill="#F5B82E"/><text x="352" y="112" text-anchor="middle" font-size="11">&#9995;</text></g>
+  <rect x="38" y="166" width="326" height="50" rx="10" fill="#13306f"/>
+  <circle cx="190" cy="191" r="14" fill="#2563EB"/><circle cx="226" cy="191" r="14" fill="#2563EB"/><circle cx="262" cy="191" r="14" fill="#FF5A5F"/><circle cx="154" cy="191" r="14" fill="#2563EB"/>
+  <rect x="46" y="184" width="70" height="14" rx="7" fill="#0B1F4D"/><rect x="288" y="184" width="66" height="14" rx="7" fill="#0B1F4D"/>
+</svg>

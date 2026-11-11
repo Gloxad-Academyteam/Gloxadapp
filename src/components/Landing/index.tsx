@@ -25,9 +25,9 @@ export const LoadingState = ({ rows = 2 }: { rows?: number }) => (
   </div>
 );
 
-export const EmptyState = ({ title, text, href, action }: { title: string; text: string; href?: string; action?: string }) => (
+export const EmptyState = ({ title, text, href, action, image }: { title: string; text: string; href?: string; action?: string; image?: string }) => (
   <div className="flex flex-col items-center rounded-2xl border border-dashed border-[#d7d9e4] bg-white px-6 py-14 text-center">
-    <FiInbox className="text-[30px] text-[#9aa0b4]" aria-hidden />
+    {image ? <img src={image} alt="" className="h-[150px] w-auto" /> : <FiInbox className="text-[30px] text-[#9aa0b4]" aria-hidden />}
     <h2 className="mt-4 text-[20px] font-semibold text-[#201633]">{title}</h2>
     <p className="mt-2 max-w-[460px] text-[14px] leading-[1.7] text-[#5b5e6b]">{text}</p>
     {href && action && <PrimaryLink href={href}>{action}</PrimaryLink>}

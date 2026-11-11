@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-label="An empty calendar with a small plant">
+  <circle cx="150" cy="104" r="86" fill="#DBE6FB"/>
+  <rect x="82" y="52" width="136" height="110" rx="14" fill="#fff" stroke="#b7c1d9" stroke-width="2"/>
+  <path d="M82 66a14 14 0 0 1 14-14h108a14 14 0 0 1 14 14v22H82z" fill="#0B1F4D"/>
+  <rect x="106" y="40" width="8" height="24" rx="4" fill="#6599FF"/><rect x="186" y="40" width="8" height="24" rx="4" fill="#6599FF"/>
+  <g fill="#DBE6FB"><rect x="98" y="102" width="20" height="16" rx="4"/><rect x="128" y="102" width="20" height="16" rx="4"/><rect x="158" y="102" width="20" height="16" rx="4"/><rect x="98" y="126" width="20" height="16" rx="4"/><rect x="128" y="126" width="20" height="16" rx="4"/></g>
+  <rect x="158" y="126" width="20" height="16" rx="4" fill="#F5B82E"/>
+  <g transform="translate(222 130)"><path d="M0 40h26l-3-22H3z" fill="#2563EB"/><path d="M13 18C13 6 4 2 -2 4c0 8 4 14 15 14z" fill="#1FA971"/><path d="M13 18c0-12 9-16 15-14 0 8-4 14-15 14z" fill="#1FA971" opacity=".8"/></g>
+</svg>

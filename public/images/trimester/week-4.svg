@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="A rocket launching from a laptop beside a checklist and a certificate">
+  <rect width="400" height="250" rx="16" fill="#DBE6FB"/><circle cx="60" cy="50" r="52" fill="#fff" opacity=".35"/><circle cx="360" cy="210" r="50" fill="#6599FF" opacity=".25"/>
+  <g fill="#fff" opacity=".9"><circle cx="300" cy="42" r="2"/><circle cx="340" cy="80" r="2.5"/><circle cx="110" cy="34" r="2"/><circle cx="70" cy="110" r="2"/></g>
+  <path d="M96 198h208l-16 22a10 10 0 0 1-8 4H120a10 10 0 0 1-8-4z" fill="#b7c1d9"/><rect x="120" y="136" width="160" height="62" rx="8" fill="#0B1F4D"/><rect x="128" y="144" width="144" height="46" rx="4" fill="#13306f"/>
+  <!-- rocket -->
+  <g transform="translate(200 40) rotate(18)"><path d="M0-10c18 14 22 46 18 70h-36c-4-24 0-56 18-70z" fill="#fff" stroke="#0B1F4D" stroke-width="3"/><circle cx="0" cy="24" r="9" fill="#2563EB" stroke="#0B1F4D" stroke-width="3"/><path d="M-18 48l-16 16 4-26zM18 48l16 16-4-26z" fill="#FF5A5F" stroke="#0B1F4D" stroke-width="3" stroke-linejoin="round"/><path d="M-7 62q7 26 0 40 7-8 14-0 -7-14 0-40z" fill="#F5B82E"/></g>
+  <!-- checklist -->
+  <g><rect x="38" y="128" width="84" height="72" rx="10" fill="#fff" stroke="#b7c1d9"/><rect x="48" y="140" width="14" height="14" rx="4" fill="#1FA971"/><path d="M51 147l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="68" y="144" width="42" height="6" rx="3" fill="#b7c1d9"/><rect x="48" y="162" width="14" height="14" rx="4" fill="#1FA971"/><path d="M51 169l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="68" y="166" width="36" height="6" rx="3" fill="#b7c1d9"/><rect x="48" y="184" width="14" height="10" rx="3" fill="#DBE6FB"/></g>
+  <!-- certificate -->
+  <g transform="translate(286 138)"><rect width="84" height="62" rx="8" fill="#fff" stroke="#0B1F4D" stroke-width="2"/><rect x="12" y="14" width="44" height="6" rx="3" fill="#0B1F4D"/><rect x="12" y="26" width="58" height="5" rx="2.5" fill="#DBE6FB"/><circle cx="62" cy="46" r="10" fill="#F5B82E"/><path d="M57 54l-3 12 8-4 8 4-3-12z" fill="#e59a12"/></g>
+</svg>

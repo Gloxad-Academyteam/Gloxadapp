@@ -87,7 +87,8 @@ const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) => {
       {/* Hero */}
       <header className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#0B1F4D_0%,#1E4FC9_140%)] px-6 py-10 text-white sm:px-10 sm:py-11">
         <span aria-hidden className="absolute -right-16 -top-16 h-[260px] w-[260px] rounded-full bg-white/[0.07]" />
-        <div className="relative">
+        <img src="/images/trimester/hero-learning.svg" alt="" aria-hidden className="pointer-events-none absolute bottom-3 right-4 hidden h-[88%] max-h-[380px] w-auto lg:block xl:right-8" />
+        <div className="relative lg:max-w-[50%]">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <Badge tone="purple">4 weeks</Badge>
             <Badge tone="glass">{trimester.name}</Badge>
@@ -164,6 +165,7 @@ const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) => {
           </section>
 
           <section className={card}>
+            <img src="/images/trimester/live-class.svg" alt="" aria-hidden className="mb-4 w-full rounded-[12px]" />
             <h2 className={sectionTitle}>Live class schedule</h2>
             {sessions.length === 0 ? (
               <p className="text-[13px] text-[#52607A]">Class times will be announced soon.</p>
@@ -211,7 +213,7 @@ const TrimesterPage = () => {
         ) : trimesters.isError ? (
           <ErrorState onRetry={() => trimesters.refetch()} />
         ) : !trimesters.data?.length ? (
-          <EmptyState title="Trimester program not available yet" text="This program has not been published. Please check back soon. In the meantime every Gloxad course is free and self-paced." href="/free" action="Browse free courses" />
+          <EmptyState image="/images/trimester/empty-calendar.svg" title="Trimester program not available yet" text="This program has not been published. Please check back soon. In the meantime every Gloxad course is free and self-paced." href="/free" action="Browse free courses" />
         ) : (
           <div className="flex flex-col gap-12">
             {trimesters.data.map((trimester) => (

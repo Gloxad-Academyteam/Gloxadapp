@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="A web page being built from blocks">
+  <rect width="400" height="250" rx="16" fill="#DBE6FB"/><circle cx="350" cy="40" r="60" fill="#fff" opacity=".35"/><circle cx="40" cy="220" r="44" fill="#6599FF" opacity=".25"/>
+  <rect x="70" y="40" width="260" height="170" rx="12" fill="#fff" stroke="#b7c1d9"/>
+  <path d="M70 52a12 12 0 0 1 12-12h236a12 12 0 0 1 12 12v18H70z" fill="#0B1F4D"/><circle cx="86" cy="55" r="4" fill="#FF5A5F"/><circle cx="100" cy="55" r="4" fill="#F5B82E"/><circle cx="114" cy="55" r="4" fill="#1FA971"/>
+  <rect x="84" y="82" width="232" height="22" rx="6" fill="#DBE6FB"/><rect x="92" y="89" width="60" height="8" rx="4" fill="#2563EB"/>
+  <rect x="84" y="114" width="108" height="76" rx="8" fill="#6599FF"/><rect x="204" y="114" width="112" height="14" rx="5" fill="#0B1F4D"/><rect x="204" y="136" width="96" height="8" rx="4" fill="#b7c1d9"/><rect x="204" y="150" width="104" height="8" rx="4" fill="#b7c1d9"/><rect x="204" y="170" width="52" height="20" rx="10" fill="#F5B82E"/>
+  <g transform="translate(300 150) rotate(12)"><rect width="56" height="36" rx="8" fill="#2563EB"/><text x="28" y="23" text-anchor="middle" font-family="Consolas, monospace" font-size="15" font-weight="700" fill="#fff">&lt;/&gt;</text></g>
+</svg>

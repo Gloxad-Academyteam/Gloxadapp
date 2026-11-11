@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="A responsive layout built from grid tiles">
+  <rect width="400" height="250" rx="16" fill="#DBE6FB"/><circle cx="60" cy="40" r="56" fill="#fff" opacity=".35"/><circle cx="360" cy="220" r="48" fill="#6599FF" opacity=".25"/>
+  <rect x="48" y="36" width="304" height="178" rx="12" fill="#fff" stroke="#b7c1d9"/>
+  <rect x="62" y="50" width="276" height="22" rx="6" fill="#0B1F4D"/>
+  <rect x="62" y="82" width="86" height="64" rx="8" fill="#2563EB"/><rect x="157" y="82" width="86" height="64" rx="8" fill="#6599FF"/><rect x="252" y="82" width="86" height="64" rx="8" fill="#F5B82E"/>
+  <rect x="62" y="156" width="130" height="44" rx="8" fill="#6599FF"/><rect x="201" y="156" width="137" height="44" rx="8" fill="#2563EB"/>
+  <g stroke="#FF5A5F" stroke-width="2" stroke-dasharray="4 3" fill="none"><rect x="58" y="78" width="94" height="72" rx="10"/></g>
+  <g transform="translate(300 40)"><rect width="76" height="46" rx="10" fill="#0B1F4D"/><text x="38" y="29" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="700" fill="#fff">grid</text></g>
+</svg>

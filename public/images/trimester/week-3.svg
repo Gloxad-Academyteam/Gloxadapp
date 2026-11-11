@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" role="img" aria-label="An interactive to-do app with a button and a checklist">
+  <rect width="400" height="250" rx="16" fill="#DBE6FB"/><circle cx="350" cy="50" r="54" fill="#fff" opacity=".35"/><circle cx="50" cy="210" r="46" fill="#6599FF" opacity=".25"/>
+  <rect x="108" y="34" width="184" height="154" rx="12" fill="#0B1F4D"/><rect x="116" y="42" width="168" height="130" rx="6" fill="#fff"/>
+  <rect x="126" y="52" width="76" height="10" rx="5" fill="#0B1F4D"/><rect x="126" y="70" width="110" height="22" rx="6" fill="#DBE6FB"/><rect x="242" y="70" width="32" height="22" rx="6" fill="#2563EB"/>
+  <g><rect x="126" y="102" width="14" height="14" rx="4" fill="#1FA971"/><path d="M129 109l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="148" y="106" width="90" height="7" rx="3.5" fill="#b7c1d9"/></g>
+  <g><rect x="126" y="124" width="14" height="14" rx="4" fill="#1FA971"/><path d="M129 131l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="148" y="128" width="70" height="7" rx="3.5" fill="#b7c1d9"/></g>
+  <g><rect x="126" y="146" width="14" height="14" rx="4" fill="#fff" stroke="#b7c1d9" stroke-width="1.5"/><rect x="148" y="150" width="82" height="7" rx="3.5" fill="#DBE6FB"/></g>
+  <path d="M84 196h232l-18 22a10 10 0 0 1-8 4H110a10 10 0 0 1-8-4z" fill="#b7c1d9"/>
+  <g transform="translate(262 112)"><rect width="104" height="36" rx="18" fill="#F5B82E"/><text x="52" y="23" text-anchor="middle" font-family="DM Sans, Arial, sans-serif" font-size="13" font-weight="700" fill="#0B1F4D">Click me</text></g>
+  <path d="M330 140l4 18 6-6 7 12 5-3-7-12 8-1z" fill="#0B1F4D"/>
+</svg>
