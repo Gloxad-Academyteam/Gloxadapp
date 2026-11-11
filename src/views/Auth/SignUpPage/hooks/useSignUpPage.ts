@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useState } from "react";
 
@@ -69,7 +69,6 @@ const useSignUpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
 
       // New accounts start unverified, so this sends everyone to the email verification step first
@@ -87,7 +86,6 @@ const useSignUpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });

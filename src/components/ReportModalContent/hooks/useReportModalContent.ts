@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { sendReport } from "@services/report";
 import { useForm } from "react-hook-form";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import testLogger from "@utils/testLogger";
 import { MODAL_CLOSED } from "@constants/modal-logs";
 
@@ -36,7 +36,6 @@ const useReportModalContent = (onCancelClick?: () => void) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
 
       handleCancelClick();
@@ -52,7 +51,6 @@ const useReportModalContent = (onCancelClick?: () => void) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });

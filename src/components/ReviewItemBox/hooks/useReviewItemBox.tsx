@@ -1,6 +1,6 @@
 import { sendDownvote, sendUpvote } from "@services/vote";
 import { useMutation } from "@tanstack/react-query";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const useReviewItemBox = () => {
   const { mutate: upVoteMutate, isPending: isUpVoteLoading } = useMutation({
@@ -15,7 +15,6 @@ const useReviewItemBox = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
     onError: () => {
@@ -28,7 +27,6 @@ const useReviewItemBox = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });
@@ -45,7 +43,6 @@ const useReviewItemBox = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
     onError: () => {
@@ -58,7 +55,6 @@ const useReviewItemBox = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     }
   });

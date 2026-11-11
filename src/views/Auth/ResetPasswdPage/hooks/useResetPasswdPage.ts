@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 type TInputs = {
   password: string;
@@ -67,7 +67,6 @@ const useResetPasswdPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });

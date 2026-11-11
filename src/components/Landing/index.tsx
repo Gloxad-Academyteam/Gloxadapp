@@ -91,3 +91,11 @@ export const PrimaryLink = ({ href, children }: { href: string; children: ReactN
 // Admin dates are calendar days stored at midnight UTC, so show them in UTC or they slip a day in some timezones
 export const formatDay = (iso: string | null) =>
   iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : "";
+
+// Class times are shown in Nigerian time, whatever the visitor's own timezone is
+export const formatClassTime = (iso: string) => {
+  const date = new Date(iso);
+  const day = date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "Africa/Lagos" });
+  const time = date.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Lagos" });
+  return `${day}, ${time}`;
+};

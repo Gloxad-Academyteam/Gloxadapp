@@ -2,7 +2,7 @@ import { forgetPasswd } from "@services/auth";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useState } from "react";
 
 type TInputs = {
@@ -39,7 +39,6 @@ const useResetPasswd = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-          transition: Bounce,
         });
       };
 

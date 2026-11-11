@@ -6,7 +6,7 @@ import type { TUser } from "@services/auth/types_";
 import { getPostAuthRoute, safeRedirectPath } from "@utils/getPostAuthRoute";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const useVerifyOtpPage = () => {
   const router = useRouter();
@@ -53,7 +53,6 @@ const useVerifyOtpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });
@@ -71,7 +70,6 @@ const useVerifyOtpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
       setCountdown(60);
     },
@@ -87,7 +85,6 @@ const useVerifyOtpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });
@@ -109,7 +106,6 @@ const useVerifyOtpPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
       return;
     }

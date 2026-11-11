@@ -354,3 +354,75 @@ html {
 body[data-overlay-open] button[aria-label="Scroll to top"] {
   display: none;
 }
+
+/* Toasts: a quiet white card with a tinted icon chip and a thin timer line */
+.Toastify__toast-container {
+  --toastify-toast-width: 380px;
+  --toastify-font-family: inherit;
+  --toastify-color-success: #16a34a;
+  --toastify-color-error: #dc2626;
+  --toastify-color-warning: #d97706;
+  --toastify-color-info: #2563eb;
+  --toastify-color-progress-success: #16a34a;
+  --toastify-color-progress-error: #dc2626;
+  --toastify-color-progress-warning: #d97706;
+  --toastify-color-progress-info: #2563eb;
+  --toastify-color-progress-bgo: 0.12;
+  padding-top: 8px;
+}
+.Toastify__toast-container .Toastify__toast {
+  min-height: 0;
+  margin-bottom: 10px;
+  padding: 12px 14px 13px;
+  align-items: center;
+  background: #fff;
+  color: #201633;
+  border: 1px solid #e9ebf3;
+  border-radius: 14px;
+  box-shadow: 0 14px 34px -10px rgba(15, 23, 42, 0.2), 0 2px 6px rgba(15, 23, 42, 0.05);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.Toastify__toast-container .Toastify__toast-body {
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+.Toastify__toast-container .Toastify__toast-body > div:last-child {
+  flex: 1;
+}
+.Toastify__toast-container .Toastify__toast-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 7px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+.Toastify__toast-container .Toastify__toast-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.Toastify__toast-container .Toastify__toast--success .Toastify__toast-icon { background: #e8f7ee; }
+.Toastify__toast-container .Toastify__toast--error .Toastify__toast-icon { background: #fdecec; }
+.Toastify__toast-container .Toastify__toast--warning .Toastify__toast-icon { background: #fff3e0; }
+.Toastify__toast-container .Toastify__toast--info .Toastify__toast-icon { background: #e8f0ff; }
+.Toastify__toast-container .Toastify__close-button {
+  align-self: center;
+  padding-left: 6px;
+  color: #9aa0b4;
+  opacity: 1;
+}
+.Toastify__toast-container .Toastify__close-button:hover { color: #201633; }
+.Toastify__toast-container .Toastify__progress-bar {
+  height: 3px;
+  opacity: 0.85;
+}
+@media only screen and (max-width: 480px) {
+  .Toastify__toast-container {
+    padding: 8px 12px 0;
+  }
+}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { IconContext } from "react-icons";
-import { ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import ScrollManager from "@components/ScrollManager";
 import ScrollToTopButton from "@components/ScrollToTopButton";
@@ -33,7 +33,7 @@ const Providers = ({ children }: TProps) => {
     <QueryClientProvider client={queryClient}>
       <ReactLenis root options={{ lerp: 0.1, duration: 1.1, smoothWheel: true }}>
         <ScrollManager />
-        <ToastContainer />
+        <ToastContainer position="top-right" autoClose={4000} limit={3} newestOnTop closeOnClick pauseOnFocusLoss={false} transition={Slide} />
         <IconContext.Provider
           value={{
             size: "20px",

@@ -2,7 +2,7 @@ import { getMe, signOut } from "@services/auth";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const useAuth = () => {
   const queryClient = useQueryClient();
@@ -29,7 +29,6 @@ const useAuth = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });

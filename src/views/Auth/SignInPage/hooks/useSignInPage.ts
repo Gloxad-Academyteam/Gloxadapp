@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {AxiosError} from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 type TInputs = {
   email: string;
@@ -45,7 +45,7 @@ const useSignInPage = () => {
         return;
       }
 
-      toast.success("Login successfully", {
+      toast.success("Welcome back, you are signed in", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -54,7 +54,6 @@ const useSignInPage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
 
       router.push(getPostAuthRoute(user, redirectUrl));
@@ -73,7 +72,6 @@ const useSignInPage = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-          transition: Bounce,
         });
       };
 

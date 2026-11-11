@@ -6,6 +6,9 @@ export type TPublicTrimester = {
   id: string;
   name: string;
   programName: string;
+  description: string;
+  seats: number | null;
+  seatsLeft: number | null;
   startsAt: string;
   endsAt: string;
   enrollmentOpensAt: string | null;
@@ -16,6 +19,8 @@ export type TPublicTrimester = {
   enrolmentState: TEnrolmentState;
   enrolled: boolean;
 };
+
+export type TPublicSession = { id: string; title: string; startsAt: string; endsAt: string };
 
 export type TPublicWeek = { weekNumber: number; title: string; text: string; estimatedHours: number; concepts: string[] };
 
@@ -36,7 +41,7 @@ export type TPublicScholarship = {
 
 export const lmsPublicApi = {
   trimesters: async (): Promise<TPublicTrimester[]> => (await axiosInstance.get("/lms/public/trimesters")).data.trimesters,
-  trimester: async (id: string): Promise<{ trimester: TPublicTrimester; weeks: TPublicWeek[] }> => (await axiosInstance.get(`/lms/public/trimesters/${id}`)).data,
+  trimester: async (id: string): Promise<{ trimester: TPublicTrimester; weeks: TPublicWeek[]; sessions: TPublicSession[]; instructors: { name: string }[] }> => (await axiosInstance.get(`/lms/public/trimesters/${id}`)).data,
   enrol: async (id: string): Promise<{ message: string; cohortId: string }> => (await axiosInstance.post(`/lms/trimesters/${id}/enrol`)).data,
   scholarships: async (): Promise<TPublicScholarship[]> => (await axiosInstance.get("/lms/public/scholarships")).data.scholarships,
   apply: async (id: string, body: { statement: string }) => (await axiosInstance.post(`/lms/scholarships/${id}/apply`, body)).data,

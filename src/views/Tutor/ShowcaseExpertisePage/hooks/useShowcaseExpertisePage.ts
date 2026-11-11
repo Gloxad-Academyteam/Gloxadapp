@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { submitExpertise as submitExpertiseService } from "@services/tutor";
 import useAuth from "@hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { toast, Bounce } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const useShowcaseExpertisePage = () => {
   const router = useRouter();
@@ -33,7 +33,6 @@ export const useShowcaseExpertisePage = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
       });
     },
   });
@@ -68,7 +67,6 @@ export const useShowcaseExpertisePage = () => {
         pauseOnHover: true,
         draggable: true,
         theme: "light",
-        transition: Bounce,
       });
       return;
     }
