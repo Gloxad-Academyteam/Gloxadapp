@@ -323,6 +323,7 @@ const Header = () => {
                 <TutorCoursesOnly><Link href="/dashboard/explore" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname.includes('/dashboard/explore') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Our Courses</Link></TutorCoursesOnly>
                 <Link href="/dashboard?tab=trimester" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">Trimester Courses</Link>
                 <Link href="/dashboard?tab=free" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname === '/dashboard' && search.includes('tab=free') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Free Courses</Link>
+                <Link href="/dashboard/practice" className={`h-full flex items-center border-b-2 transition-colors hover:text-[#030069] ${pathname.startsWith('/dashboard/practice') ? 'border-[#030069] text-[#030069]' : 'border-transparent'}`}>Practice</Link>
                 <Link href="/scholarships" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">Scholarships</Link>
                 <Link href="/#faqs" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">FAQs</Link>
                 <Link href="/messages" className="h-full flex items-center border-b-2 border-transparent hover:text-[#030069] transition-colors">Messages</Link>
@@ -440,6 +441,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
         { href: "/dashboard/explore", label: "Our courses", active: isNexusActive, tutorOnly: true },
         { href: "/dashboard?tab=trimester", label: "Trimester courses" },
         { href: "/dashboard?tab=free", label: "Free courses" },
+        { href: "/dashboard/practice", label: "Practice" },
         { href: "/scholarships", label: "Scholarships" },
         { href: "/messages", label: "Messages" },
         { href: "/#faqs", label: "FAQs" },

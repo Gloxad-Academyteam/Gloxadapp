@@ -19,7 +19,8 @@ import {
   PiCompass,
   PiCertificate,
   PiStudent,
-  PiGear
+  PiGear,
+  PiCode
 } from "react-icons/pi";
 import useAuth from "@hooks/useAuth";
 import axiosInstance from "@utils/axiosInstance";
@@ -246,6 +247,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   label="Trimester Courses"
                   to="/dashboard?tab=trimester"
                   active={false}
+                  isOpen={isSidebarOpen}
+                />
+                <SidebarItem
+                  icon={PiCode}
+                  label="Practice"
+                  to="/dashboard/practice"
+                  active={pathname.includes("/dashboard/practice")}
                   isOpen={isSidebarOpen}
                 />
                 <SidebarItem
