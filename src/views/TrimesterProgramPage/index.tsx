@@ -21,7 +21,7 @@ const TrimesterProgramPage = () => {
     <div className="w-full bg-[#F3F6FB]">
       <main className="mx-auto min-h-[60vh] w-full max-w-[1240px] px-4 pb-20 pt-4 sm:px-6 md:pt-6">
         <nav aria-label="Breadcrumb" className="mb-3 flex items-center gap-2 px-1 text-[13px] text-[#52607A]">
-          <Link href="/trimester" className="font-semibold text-[#0B1F4D] hover:underline">Trimester programs</Link>
+          <Link href="/trimester" className="font-semibold text-[#0B1F4D] hover:underline">Trimester courses</Link>
           <span aria-hidden>/</span>
           <span className="truncate">{program.data?.trimester.programName ?? "Program"}</span>
         </nav>
@@ -29,7 +29,7 @@ const TrimesterProgramPage = () => {
         {program.isLoading ? (
           <LoadingState />
         ) : notFound ? (
-          <EmptyState image="/images/trimester/empty-calendar.svg" title="Program not found" text="This program is not published, or the link is wrong. See every available program instead." href="/trimester" action="All trimester programs" />
+          <EmptyState image="/images/trimester/empty-calendar.svg" title="Course not found" text="This course is not published, or the link is wrong. See every available trimester course instead." href="/trimester" action="All trimester courses" />
         ) : program.isError || !program.data ? (
           <ErrorState onRetry={() => program.refetch()} />
         ) : (

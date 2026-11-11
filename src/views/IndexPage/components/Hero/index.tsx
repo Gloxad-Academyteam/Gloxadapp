@@ -9,6 +9,7 @@ import StudentGreen from "@assets/images/landing-student-2.png";
 import StudentRed from "@assets/images/Rectangle 4204.png";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { youtubeFreeCatalogCourses } from "@services/catalog";
 
 // 6 distinct photos, matching the Figma hero grid exactly — no repeats.
 const gridImages = [
@@ -33,6 +34,10 @@ type HeroProps = {
   /** Slim hero for the signed-in student dashboard: smaller text, no photos, dashboard shortcuts. */
   compact?: boolean;
 };
+
+// The providers named in the hero come from the catalogue, so the line never claims more than the site has
+const PROVIDERS = [...new Set(youtubeFreeCatalogCourses.map((course) => course.sourceName))];
+const PROVIDER_LINE = `${PROVIDERS.slice(0, 4).join(", ").replace(/, ([^,]*)$/, " and $1")}`;
 
 const Hero = ({ compact = false }: HeroProps) => {
   const router = useRouter();
@@ -135,11 +140,11 @@ const Hero = ({ compact = false }: HeroProps) => {
           <div className="mt-3 w-full max-w-[600px] lg:mt-6">
             {/* MOBILE: one short line */}
             <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[13px] leading-[1.55] text-white/90 sm:text-[15px] lg:hidden">
-              Build useful skills with free courses, assessments and certificates.
+              Build useful skills with free courses from trusted providers. Every module ends with a quiz and a task, and you get a certificate when you finish.
             </p>
             {/* DESKTOP: full copy */}
-            <p className="hidden text-[15px] leading-[1.6] text-white/90 lg:block">
-              Build practical, future-ready skills through free courses, assessments and completion certificates.
+            <p className="hidden text-[15px] leading-[1.65] text-white/90 lg:block">
+              Build practical, future-ready skills through free courses from trusted providers such as {PROVIDER_LINE}. Every module ends with a quiz and a practical task, and you earn a completion certificate when you finish.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-2 sm:gap-4 lg:mt-7">

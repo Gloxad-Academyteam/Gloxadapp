@@ -505,7 +505,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
         { href: authenticatedUser?.role === "admin" ? "/admin" : "/dashboard", label: authenticatedUser?.role === "admin" ? "Admin dashboard" : authenticatedUser?.role === "instructor" ? "Tutor dashboard" : "My dashboard" },
         { href: "/dashboard?tab=my-courses", label: "My courses" },
         { href: "/dashboard/explore", label: "Our courses", active: isNexusActive, tutorOnly: true },
-        { href: "/dashboard?tab=trimester", label: "Trimester programs" },
+        { href: "/dashboard?tab=trimester", label: "Trimester courses" },
         { href: "/dashboard?tab=free", label: "Free courses" },
         { href: "/scholarships", label: "Scholarships" },
         { href: "/messages", label: "Messages" },
@@ -514,7 +514,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
     : [
         { href: coursesHref(isAuthenticated), label: "Our courses", active: isNexusActive, tutorOnly: true },
         { href: "/free", label: "Free courses" },
-        { href: "/trimester", label: "Trimester programs" },
+        { href: "/trimester", label: "Trimester courses" },
         { href: "/scholarships", label: "Scholarships" },
         { href: "/#faqs", label: "FAQs" },
       ];

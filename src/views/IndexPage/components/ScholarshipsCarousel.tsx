@@ -1,172 +1,108 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import type { StaticImageData } from "next/image";
+import React from "react";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { FiCheckCircle } from "react-icons/fi";
 import ScholarshipGrant from "@assets/images/scholarship-grant.png";
 import ScholarshipTech from "@assets/images/scholarship-tech.png";
+import { formatDay } from "@components/Landing";
+import { lmsPublicApi, type TPublicScholarship } from "@services/lmsPublic";
 
-export interface ScholarshipItem {
-  id: string;
-  title: string;
-  description: string;
-  eligibility: string;
-  deadline: string;
-  closesOn: string;
-  image: StaticImageData;
-  to: string;
-  badge: string;
-}
+const IMAGES = [ScholarshipTech, ScholarshipGrant];
 
-export const SCHOLARSHIPS_DATA: ScholarshipItem[] = [
-  {
-    id: "sch-1",
-    title: "Tech for All Scholarship",
-    description: "Empowering learners with free access to tech courses in design, coding, and data analytics.",
-    eligibility: "Eligibility: Open to anyone passionate about tech, with a strong motivation to learn.",
-    deadline: "Application Deadline: March 25, 2026",
-    closesOn: "2026-03-25",
-    image: ScholarshipTech,
-    to: "/auth/signin?redirect=/scholarships",
-    badge: "Fully Funded",
-  },
-  {
-    id: "sch-2",
-    title: "Student Excellence Grant",
-    description: "Rewarding high-achieving students who demonstrate academic excellence and financial need.",
-    eligibility: "Eligibility: Students with outstanding academic records (GPA 3.5+ or equivalent).",
-    deadline: "Application Deadline: April 15, 2026",
-    closesOn: "2026-04-15",
-    image: ScholarshipGrant,
-    to: "/auth/signin?redirect=/scholarships",
-    badge: "Merit Grant",
-  },
-  {
-    id: "sch-3",
-    title: "Women in Tech Leadership",
-    description: "Empowering women in STEM with full sponsorship, mentorship, and career placement support.",
-    eligibility: "Eligibility: Female students and career switchers pursuing tech and design tracks.",
-    deadline: "Application Deadline: May 01, 2026",
-    closesOn: "2026-05-01",
-    image: ScholarshipTech,
-    to: "/auth/signin?redirect=/scholarships",
-    badge: "Fully Funded",
-  },
-  {
-    id: "sch-4",
-    title: "Gloxad Innovation Grant",
-    description: "Seed grants and mentorship for final project capstone graduates building real products.",
-    eligibility: "Eligibility: Open to top trimester project graduates with verified submissions.",
-    deadline: "Application Deadline: June 10, 2026",
-    closesOn: "2026-06-10",
-    image: ScholarshipGrant,
-    to: "/auth/signin?redirect=/scholarships",
-    badge: "Project Grant",
-  },
+const HOW_IT_WORKS = [
+  "Free access to the course or program the scholarship covers",
+  "Apply online with a short statement. It takes a few minutes",
+  "Follow your application from submitted to approved, with a note from the reviewer",
 ];
 
-// Tripled dataset to ensure enough content for smooth seamless infinite loop on wide screens
-// Only scholarships whose application deadline has not passed
-const OPEN_SCHOLARSHIPS = SCHOLARSHIPS_DATA.filter((item) => new Date(item.closesOn) >= new Date(new Date().toDateString()));
-const DUPLICATED_SCHOLARSHIPS = [...OPEN_SCHOLARSHIPS, ...OPEN_SCHOLARSHIPS, ...OPEN_SCHOLARSHIPS];
+const stateLabel = (item: TPublicScholarship) => (item.state === "open" ? "Open now" : `Opens ${formatDay(item.opensAt)}`);
+
+// One scholarship: the picture, what it is, who can apply, when, and a way in
+const ScholarshipCard = ({ item, index }: { item: TPublicScholarship; index: number }) => (
+  <article className="flex w-[290px] shrink-0 flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,77,0.14)] sm:w-auto">
+    <img src={IMAGES[index % IMAGES.length].src} alt="" className="h-[170px] w-full object-cover" />
+    <div className="flex flex-1 flex-col p-5">
+      <span className={`mb-2 inline-flex w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${item.state === "open" ? "bg-[#e6f6ec] text-[#15803d]" : "bg-[#fff3e0] text-[#b45309]"}`}>
+        {stateLabel(item)}
+      </span>
+      <h3 className="text-[17px] font-bold leading-snug text-[#202127]">{item.title}</h3>
+      {(item.summary || item.description) && <p className="mt-2 line-clamp-3 text-[13px] leading-[1.55] text-[#5b5e6b]">{item.summary || item.description}</p>}
+      {item.eligibility.length > 0 && (
+        <p className="mt-2 line-clamp-2 text-[12.5px] leading-[1.5] text-[#717480]"><b className="font-semibold text-[#4e515c]">Who can apply:</b> {item.eligibility.slice(0, 2).join(", ")}</p>
+      )}
+      <p className="mt-3 text-[12px] font-medium text-[#f27429]">Apply by {formatDay(item.closesAt)}</p>
+      <Link href="/scholarships" className="mt-4 inline-flex h-[40px] items-center justify-center rounded-full bg-[#0B1F4D] text-[13px] font-semibold text-white transition hover:bg-[#13306f]">
+        {item.application ? "See my application" : "Apply now"}
+      </Link>
+    </div>
+  </article>
+);
 
 export const ScholarshipsCarousel: React.FC = () => {
-  const router = useRouter();
-  const [isHovered, setIsHovered] = useState(false);
+  const scholarships = useQuery({ queryKey: ["lms.public.scholarships"], queryFn: lmsPublicApi.scholarships, staleTime: 60_000 });
+  // Open ones first, then the ones that open soon; closed ones have no place on the home page
+  const shown = (scholarships.data ?? [])
+    .filter((item) => item.state !== "closed")
+    .sort((a, b) => Number(b.state === "open") - Number(a.state === "open"))
+    .slice(0, 3);
 
   return (
-    <div className="relative flex min-h-[460px] w-full flex-col overflow-hidden rounded-[24px] md:rounded-[40px] bg-gradient-to-br from-[#6873a7] to-[#d6def4] shadow-sm px-6 pb-12 pt-14 lg:flex-row lg:px-12 lg:pb-14 lg:pt-16">
-      
-      {/* Left Column (Trimester Typography & CTA) */}
-      <div className="flex w-full flex-col justify-center lg:w-[320px] shrink-0 z-10 lg:pr-8">
-        <h2 className="text-[28px] font-semibold leading-[1.2] text-white md:text-[36px] lg:text-[42px]">
+    <div className="relative flex w-full flex-col gap-8 overflow-hidden rounded-[24px] bg-gradient-to-br from-[#5b67a0] to-[#d6def4] px-6 py-10 shadow-sm md:rounded-[40px] md:px-10 md:py-12 lg:flex-row lg:items-center lg:gap-12 lg:px-12 lg:py-14">
+      {/* Text */}
+      <div className="z-10 flex w-full shrink-0 flex-col lg:w-[380px]">
+        <h2 className="text-[28px] font-semibold leading-[1.2] text-white md:text-[36px] lg:text-[40px]">
           Apply for
           <br />
           Scholarships
         </h2>
-        <p className="mt-4 max-w-[380px] text-[14px] leading-[1.5] text-white/90 lg:mt-5 lg:text-[15px]">
-          <span className="sm:hidden">Apply for free access to premium courses.</span>
-          <span className="hidden sm:inline">We believe education should be accessible to all. Apply for our scholarships and get free access to premium courses.</span>
+        <p className="mt-4 max-w-[420px] text-[14px] leading-[1.65] text-white/90 lg:text-[15px]">
+          We believe education should be open to everyone. Apply for a scholarship and get free access to premium courses and programs.
         </p>
-        <div className="mt-4 flex items-center gap-2 text-[13px] font-medium text-[#eaf2fd] lg:hidden animate-pulse">
-          <span>Hover / hold card to pause & explore</span>
-        </div>
-        <button
-          type="button"
-          onClick={() => router.push("/scholarships")}
-          className="mt-8 hidden h-[46px] w-[200px] rounded-full border border-white text-[14px] font-medium text-white transition hover:bg-white hover:text-[#6873a7] lg:block"
-        >
-          View All Scholarships
-        </button>
-      </div>
-
-      {/* Right Column (Expanded Viewport for Cards + Peek Edge) */}
-      <div className="mt-8 w-full flex-1 overflow-hidden lg:mt-0 relative [mask-image:linear-gradient(to_right,transparent_0%,black_3%,black_97%,transparent_100%)] lg:-mr-12">
-        <motion.div 
-          className="flex gap-6 w-max py-2 pl-4 lg:pl-10"
-          animate={{ x: ["0%", "-33.333333%"] }}
-          transition={{
-            duration: isHovered ? 999999 : 25,
-            ease: "linear",
-            repeat: Infinity,
-          }}
-          onHoverStart={() => setIsHovered(true)}
-          onHoverEnd={() => setIsHovered(false)}
-        >
-          {DUPLICATED_SCHOLARSHIPS.map((scholarship, idx) => (
-            <motion.article
-              key={`${scholarship.id}-${idx}`}
-              whileHover={{ y: -6, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 22 }}
-              onClick={() => router.push(scholarship.to)}
-              className="flex w-[280px] lg:w-[340px] shrink-0 cursor-pointer flex-col rounded-[16px] bg-white p-5 shadow-xl transition-shadow hover:shadow-2xl"
-            >
-              <img
-                src={scholarship.image.src}
-                alt={scholarship.title}
-                className="h-[170px] lg:h-[190px] w-full rounded-[12px] object-cover"
-              />
-              <h3 className="mt-4 text-[16px] lg:text-[18px] font-semibold text-[#202127]">
-                {scholarship.title}
-              </h3>
-              <p className="mt-2 text-[12px] lg:text-[13px] leading-[1.4] text-[#717480] line-clamp-2">
-                {scholarship.description}
-              </p>
-              <p className="mt-2 hidden text-[12px] lg:text-[13px] leading-[1.4] text-[#717480] line-clamp-2 sm:block">
-                {scholarship.eligibility}
-              </p>
-              <p className="mt-3 text-[11px] lg:text-[12px] font-medium text-[#f27429]">
-                {scholarship.deadline}
-              </p>
-              <div className="mt-2">
-                <span className="inline-flex h-[24px] items-center rounded-full bg-gray-100 border border-gray-200 px-3 text-[11px] font-medium text-[#4e515c]">
-                  {scholarship.badge}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  router.push(scholarship.to);
-                }}
-                className="mt-4 h-[36px] lg:h-[40px] w-full rounded-full bg-[#181C7B] text-[13px] lg:text-[14px] font-medium text-white transition hover:bg-[#111456]"
-              >
-                Apply Now
-              </button>
-            </motion.article>
+        <ul className="mt-5 flex flex-col gap-2.5">
+          {HOW_IT_WORKS.map((line) => (
+            <li key={line} className="flex items-start gap-2.5 text-[13.5px] leading-[1.5] text-white/95">
+              <FiCheckCircle aria-hidden className="mt-[3px] shrink-0 text-[15px] text-[#cfe0ff]" />
+              {line}
+            </li>
           ))}
-        </motion.div>
+        </ul>
+        <Link
+          href="/scholarships"
+          className="mt-7 inline-flex h-[46px] w-fit items-center justify-center rounded-full border border-white px-7 text-[14px] font-semibold text-white transition hover:bg-white hover:text-[#5b67a0]"
+        >
+          View all scholarships
+        </Link>
       </div>
 
-      {/* Mobile View All Button */}
-      <button
-        type="button"
-        onClick={() => router.push("/scholarships")}
-        className="mt-6 mx-auto h-[46px] rounded-full border border-white px-8 text-[14px] font-medium text-white transition hover:bg-white hover:text-[#6873a7] lg:hidden"
-      >
-        View All Scholarships
-      </button>
+      {/* Scholarships, with room for their pictures */}
+      <div className="relative z-10 min-w-0 flex-1">
+        {scholarships.isLoading ? (
+          <div className="h-[340px] animate-pulse rounded-[18px] bg-white/30" />
+        ) : shown.length > 0 ? (
+          <div className="-mx-6 flex snap-x gap-4 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:-mx-10 md:px-10 sm:mx-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0">
+            {shown.map((item, index) => (
+              <ScholarshipCard key={item.id} item={item} index={index} />
+            ))}
+          </div>
+        ) : (
+          // Nothing is open right now: show the pictures and say when to look again, instead of an empty box
+          <div className="grid gap-4 sm:grid-cols-2">
+            {IMAGES.map((image, index) => (
+              <div key={index} className="overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,77,0.14)]">
+                <img src={image.src} alt="" className="h-[190px] w-full object-cover" />
+                <div className="p-5">
+                  <p className="text-[15px] font-bold text-[#202127]">{index === 0 ? "New scholarships are announced here" : "Applications open for a limited time"}</p>
+                  <p className="mt-1.5 text-[13px] leading-[1.55] text-[#5b5e6b]">
+                    {index === 0 ? "Nothing is open this minute. Check back soon, or see past and upcoming ones." : "Every scholarship has an opening and a closing date, so apply as soon as one opens."}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
