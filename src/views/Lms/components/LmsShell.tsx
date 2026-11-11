@@ -1,4 +1,5 @@
 "use client";
+import { LuLogOut } from "react-icons/lu";
 
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
@@ -9,7 +10,6 @@ import {
   MdDashboard,
   MdForum,
   MdHelp,
-  MdLogout,
   MdMenuBook,
   MdOutlineAccountCircle,
   MdOutlineAssignment,
@@ -144,7 +144,7 @@ const LmsShell = ({ active, topTab = null, search, topBrand, bellDot, topBar, sh
             </Link>
           )}
           <button type="button" onClick={() => handleLogout()} className="flex items-center gap-3 px-1 py-2.5 text-left text-[13px] text-[#4a4d66] hover:text-[#c62828]">
-            <MdLogout size={20} /> Logout
+            <LuLogOut size={20} /> Logout
           </button>
         </div>
         {showUser && (

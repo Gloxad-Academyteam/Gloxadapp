@@ -7,7 +7,8 @@ import { usePathname, useSearchParams } from "next/navigation";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
 import { FaTimes, FaSearch } from "react-icons/fa";
 import Button from "@components/Button";
-import { FiChevronRight, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import { FiChevronRight, FiMenu, FiX } from "react-icons/fi";
+import { LuLogOut } from "react-icons/lu";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
@@ -561,7 +562,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
               disabled={isLoggingOut}
               className="flex h-[46px] w-full items-center justify-center gap-2.5 rounded-full bg-[#fff3f2] text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
             >
-              <FiLogOut size={17} aria-hidden />
+              <LuLogOut size={18} aria-hidden />
               {isLoggingOut ? "Logging out..." : "Log out"}
             </button>
           )}

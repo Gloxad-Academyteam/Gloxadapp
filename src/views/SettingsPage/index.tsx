@@ -5,7 +5,8 @@ import {
   FaUpload, FaEye, FaEyeSlash, FaChevronDown, 
   FaGlobe, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaWhatsapp, FaYoutube 
 } from "react-icons/fa";
-import { FiLogOut, FiUser } from "react-icons/fi";
+import { FiCheck, FiEye, FiEyeOff, FiLock, FiUser, FiX } from "react-icons/fi";
+import { LuLogOut } from "react-icons/lu";
 import { toast } from "react-toastify";
 import useAuth from "@hooks/useAuth";
 import { useS3Upload } from "@hooks/useS3Upload";
@@ -13,6 +14,35 @@ import { useQueryClient } from "@tanstack/react-query";
 import { updatePassword, updateProfile } from "@services/auth";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+
+// One password box: a lock icon, the field, and a show/hide button
+const PasswordField = ({ id, label, name, value, onChange, show, onToggle, placeholder, autoComplete, children }: {
+  id: string; label: string; name: string; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  show: boolean; onToggle: () => void; placeholder?: string; autoComplete?: string; children?: React.ReactNode;
+}) => (
+  <div>
+    <label htmlFor={id} className="mb-2 block text-[13px] font-semibold text-[#2b2f45]">{label}</label>
+    <div className="flex items-center gap-3 rounded-xl border border-[#d6dbea] bg-white px-4 transition-colors focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10">
+      <FiLock aria-hidden className="shrink-0 text-[16px] text-[#8a90a6]" />
+      <input id={id} name={name} type={show ? "text" : "password"} value={value} onChange={onChange} required placeholder={placeholder} autoComplete={autoComplete} className="h-11 flex-1 bg-transparent text-[14px] outline-none" />
+      <button type="button" onClick={onToggle} aria-label={show ? `Hide ${label.toLowerCase()}` : `Show ${label.toLowerCase()}`} className="shrink-0 text-[#8a90a6] transition-colors hover:text-[#0B1F4D]">
+        {show ? <FiEyeOff size={17} /> : <FiEye size={17} />}
+      </button>
+    </div>
+    {children}
+  </div>
+);
+
+// 0 to 4: length, upper and lower case, a number, a symbol
+const passwordStrength = (value: string) =>
+  [value.length >= 8, /[a-z]/.test(value) && /[A-Z]/.test(value), /\d/.test(value), /[^A-Za-z0-9]/.test(value)].filter(Boolean).length;
+const STRENGTH = [
+  { label: "Too weak", bar: "bg-[#e5484d]", text: "text-[#b93832]" },
+  { label: "Weak", bar: "bg-[#e5484d]", text: "text-[#b93832]" },
+  { label: "Fair", bar: "bg-[#f5a524]", text: "text-[#b45309]" },
+  { label: "Good", bar: "bg-[#2f9e5b]", text: "text-[#15803d]" },
+  { label: "Strong", bar: "bg-[#2f9e5b]", text: "text-[#15803d]" },
+];
 
 const SettingsPage = () => {
   const { authenticatedUser, handleLogout, isLoggingOut } = useAuth();
@@ -489,66 +519,61 @@ const SettingsPage = () => {
         </div>
 
         {/* Change Password Card */}
-        <div className="bg-white rounded-2xl border border-[#e3e6f0] shadow-[0_1px_2px_rgba(11,31,77,0.04)] p-6 md:p-8">
-          <h2 className="text-[20px] font-bold text-[#202127] mb-6">Change password</h2>
-          <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-5 max-w-[600px]">
-            {/* Current Password */}
+        <div className="mb-8 rounded-2xl border border-[#e3e6f0] bg-white p-6 shadow-[0_1px_2px_rgba(11,31,77,0.04)] md:p-8">
+          <div className="mb-6 flex items-start gap-4">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#eef1f8] text-[#0B1F4D]"><FiLock size={20} aria-hidden /></span>
             <div>
-              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Current Password</label>
-              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
-                <input type={showCurrentPassword ? "text" : "password"} name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} required placeholder="Password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
-                <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
-                  {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
+              <h2 className="text-[20px] font-bold text-[#202127]">Change password</h2>
+              <p className="mt-1 text-[13px] leading-relaxed text-[#717480]">Choose a strong password: 8 or more characters, with upper and lower case letters, a number and a symbol.</p>
             </div>
+          </div>
+          <form onSubmit={handlePasswordSubmit} className="flex max-w-[520px] flex-col gap-5">
+            <PasswordField id="currentPassword" label="Current password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} show={showCurrentPassword} onToggle={() => setShowCurrentPassword(!showCurrentPassword)} placeholder="Enter your current password" autoComplete="current-password" />
 
-            {/* New Password */}
-            <div>
-              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">New Password</label>
-              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
-                <input type={showNewPassword ? "text" : "password"} name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} required placeholder="Password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
-                <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
-                  {showNewPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-            </div>
+            <PasswordField id="newPassword" label="New password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} show={showNewPassword} onToggle={() => setShowNewPassword(!showNewPassword)} placeholder="Create a new password" autoComplete="new-password">
+              {passwordData.newPassword && (
+                <div className="mt-2.5" aria-live="polite">
+                  <div className="flex gap-1.5">
+                    {[1, 2, 3, 4].map((step) => (
+                      <span key={step} className={`h-1.5 flex-1 rounded-full ${passwordStrength(passwordData.newPassword) >= step ? STRENGTH[passwordStrength(passwordData.newPassword)].bar : "bg-[#e6e9f2]"}`} />
+                    ))}
+                  </div>
+                  <p className={`mt-1.5 text-[12px] font-medium ${STRENGTH[passwordStrength(passwordData.newPassword)].text}`}>{STRENGTH[passwordStrength(passwordData.newPassword)].label}</p>
+                </div>
+              )}
+            </PasswordField>
 
-            {/* Confirm Password */}
-            <div>
-              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Confirm Password</label>
-              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
-                <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} required placeholder="Confirm new password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
-                <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
-                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                </button>
-              </div>
-            </div>
+            <PasswordField id="confirmPassword" label="Confirm new password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} show={showConfirmPassword} onToggle={() => setShowConfirmPassword(!showConfirmPassword)} placeholder="Repeat the new password" autoComplete="new-password">
+              {passwordData.confirmPassword && (
+                <p className={`mt-2 flex items-center gap-1.5 text-[12px] font-medium ${passwordData.confirmPassword === passwordData.newPassword ? "text-[#15803d]" : "text-[#b93832]"}`}>
+                  {passwordData.confirmPassword === passwordData.newPassword ? <><FiCheck aria-hidden /> Passwords match</> : <><FiX aria-hidden /> Passwords do not match yet</>}
+                </p>
+              )}
+            </PasswordField>
 
-            <div className="mt-2">
-              <button disabled={isPasswordLoading} type="submit" className="h-11 px-8 rounded-full bg-[#0B1F4D] text-white text-[14px] font-semibold shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
-                {isPasswordLoading ? "Saving..." : "Save Changes"}
-              </button>
-            </div>
-
-            {/* Logout */}
-            <div className="mt-3 border-t border-[#eef0f6] pt-5">
-              <button
-                type="button"
-                onClick={handleLogout}
-                disabled={isLoggingOut}
-                className="flex w-full max-w-[320px] items-center gap-3 rounded-xl border border-[#f0d8d6] bg-white px-3 py-3 text-left transition hover:border-[#e8b8b5] hover:bg-[#fff9f8] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#ffe5e2] disabled:cursor-wait disabled:opacity-60"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#fff0ef] text-[#b93832]">
-                  <FiLogOut size={18} aria-hidden />
-                </span>
-                <span className="flex flex-col">
-                  <span className="text-[13px] font-semibold text-[#a8342e]">{isLoggingOut ? "Logging out..." : "Log out"}</span>
-                  <span className="mt-0.5 text-[11px] text-[#777c8e]">Sign out of your Gloxad account</span>
-                </span>
+            <div className="pt-1">
+              <button disabled={isPasswordLoading} type="submit" className="h-11 rounded-full bg-[#0B1F4D] px-8 text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
+                {isPasswordLoading ? "Updating..." : "Update password"}
               </button>
             </div>
           </form>
+        </div>
+
+        {/* Sign out */}
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#e3e6f0] bg-white p-6 shadow-[0_1px_2px_rgba(11,31,77,0.04)] md:p-8">
+          <div>
+            <h2 className="text-[16px] font-bold text-[#202127]">Sign out</h2>
+            <p className="mt-1 text-[13px] text-[#717480]">Sign out of your Gloxad account on this device.</p>
+          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="inline-flex h-11 items-center gap-2.5 rounded-full border border-[#f0d8d6] bg-white px-6 text-[14px] font-semibold text-[#b93832] transition hover:bg-[#fff3f2] disabled:cursor-wait disabled:opacity-60"
+          >
+            <LuLogOut size={18} aria-hidden />
+            {isLoggingOut ? "Logging out..." : "Log out"}
+          </button>
         </div>
       </div>
 

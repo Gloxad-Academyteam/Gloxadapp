@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { FiChevronDown, FiGrid, FiLock, FiLogOut, FiUser } from "react-icons/fi";
+import { FiChevronDown, FiGrid, FiLock, FiUser } from "react-icons/fi";
+import { LuLogOut } from "react-icons/lu";
 
 type TProps = {
   authenticatedUser: any;
@@ -97,7 +98,7 @@ const ProfileMenu = ({ authenticatedUser, onLogout, isLoggingOut = false }: TPro
               disabled={isLoggingOut}
               className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[14px] font-semibold text-[#b93832] transition-colors hover:bg-[#fff3f2] disabled:cursor-wait disabled:opacity-60"
             >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#ffe9e7]"><FiLogOut size={16} aria-hidden /></span>
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#ffe9e7]"><LuLogOut size={16} aria-hidden /></span>
               {isLoggingOut ? "Logging out..." : "Log out"}
             </button>
           </div>

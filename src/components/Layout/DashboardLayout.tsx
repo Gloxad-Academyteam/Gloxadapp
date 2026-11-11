@@ -12,7 +12,6 @@ import {
   PiStar, 
   PiMoney, 
   PiUser, 
-  PiSignOut, 
   PiGlobe, 
   PiBell, 
   PiList, 
@@ -26,6 +25,7 @@ import useAuth from "@hooks/useAuth";
 import axiosInstance from "@utils/axiosInstance";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
 import ProfileMenu from "@components/Header/ProfileMenu";
+import { LuLogOut } from "react-icons/lu";
 
 const SidebarItem = ({ icon: Icon, label, to, active, isOpen }: any) => (
   <Link href={to}
@@ -219,7 +219,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   className={`flex items-center gap-4 px-6 py-[14px] text-[#4e515c] hover:bg-[#f4f7fb] hover:text-[#e30000] font-medium transition-colors w-full ${!isSidebarOpen && 'justify-center px-0'}`}
                   title={!isSidebarOpen ? "Logout" : ""}
                 >
-                  <PiSignOut className="text-[20px] shrink-0" />
+                  <LuLogOut className="text-[20px] shrink-0" />
                   {isSidebarOpen && <span className="text-[14px]">Logout</span>}
                 </button>
               </>
@@ -267,7 +267,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                   className={`flex items-center gap-4 px-6 py-[14px] text-[#4e515c] hover:bg-[#f4f7fb] hover:text-[#e30000] font-medium transition-colors w-full ${!isSidebarOpen && 'justify-center px-0'}`}
                   title={!isSidebarOpen ? "Logout" : ""}
                 >
-                  <PiSignOut className="text-[20px] shrink-0" />
+                  <LuLogOut className="text-[20px] shrink-0" />
                   {isSidebarOpen && <span className="text-[14px]">Logout</span>}
                 </button>
               </>
