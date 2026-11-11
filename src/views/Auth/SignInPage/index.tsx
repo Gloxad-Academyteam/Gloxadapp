@@ -66,7 +66,7 @@ const SignInPage = () => {
             isBlock
             testID="log-in-submit"
             disabled={mutationIsLoading}
-            className="!h-[46px] !rounded-full bg-[#07004d] !text-[14px]"
+            className="!h-[48px] !rounded-full !border-transparent !text-[15px] !font-semibold enabled:!bg-[#0B1F4D] enabled:!text-white enabled:shadow-[0_2px_8px_rgba(11,31,77,0.25)] enabled:hover:!bg-[#13306f] focus-visible:!ring-2 focus-visible:!ring-[#0B1F4D]/40 focus-visible:!ring-offset-2"
           />
 
           <div className="text-center text-[13px] text-[#717480]">

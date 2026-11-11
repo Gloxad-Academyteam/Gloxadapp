@@ -53,7 +53,7 @@ const VerifyOtpPage = () => {
               text="Continue"
               onClick={handleContinue}
               isBlock
-              className="!h-[46px] !rounded-full bg-[#07004d] !text-[14px]"
+              className="!h-[48px] !rounded-full !border-transparent !text-[15px] !font-semibold enabled:!bg-[#0B1F4D] enabled:!text-white enabled:shadow-[0_2px_8px_rgba(11,31,77,0.25)] enabled:hover:!bg-[#13306f] focus-visible:!ring-2 focus-visible:!ring-[#0B1F4D]/40 focus-visible:!ring-offset-2"
             />
           </>
         ) : (
@@ -76,7 +76,7 @@ const VerifyOtpPage = () => {
             </div>
 
             <div className="flex w-full flex-col gap-4">
-              <Button text="Continue" onClick={handleVerify} isBlock disabled={isVerifying} className="!h-[46px] !rounded-full bg-[#07004d] !text-[14px]" />
+              <Button text="Continue" onClick={handleVerify} isBlock disabled={isVerifying} className="!h-[48px] !rounded-full !border-transparent !text-[15px] !font-semibold enabled:!bg-[#0B1F4D] enabled:!text-white enabled:shadow-[0_2px_8px_rgba(11,31,77,0.25)] enabled:hover:!bg-[#13306f] focus-visible:!ring-2 focus-visible:!ring-[#0B1F4D]/40 focus-visible:!ring-offset-2" />
 
               <div className="flex flex-col items-center justify-center gap-3 text-center text-[13px] text-[#717480]">
                 {countdown > 0 ? (

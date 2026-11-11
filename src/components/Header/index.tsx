@@ -14,6 +14,12 @@ import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
 import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
 
+// One pair of sign in and sign up buttons for every header: a quiet outlined "Log in" and a solid "Sign up"
+const AUTH_LOGIN_CLASS =
+  "inline-flex h-[40px] items-center justify-center rounded-full border border-[#cfd6ea] bg-white px-5 text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B1F4D]/30";
+const AUTH_SIGNUP_CLASS =
+  "inline-flex h-[40px] items-center justify-center rounded-full bg-[#0B1F4D] px-5 text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B1F4D]/40 focus-visible:ring-offset-2";
+
 const exploreColumns = [
   {
     title: "Explore Categories",
@@ -191,16 +197,8 @@ const LandingHeader = () => {
             <div className="ml-4 flex shrink-0 items-center gap-3 xl:ml-6 xl:gap-4">
               {!isAuthenticated ? (
                 <div className="flex items-center gap-2 xl:gap-3">
-                  <Link href="/auth/signup">
-                    <button className="h-[38px] rounded-full bg-[#4aa3df] px-5 text-[14px] font-bold text-white transition-colors hover:bg-[#3e92cc]">
-                      Sign Up
-                    </button>
-                  </Link>
-                  <Link href="/auth/signin">
-                    <button className="h-[38px] rounded-full border border-[#202127] px-5 text-[14px] font-bold text-[#202127] transition-colors hover:bg-gray-50">
-                      Login
-                    </button>
-                  </Link>
+                  <Link href="/auth/signin" className={AUTH_LOGIN_CLASS}>Log in</Link>
+                  <Link href="/auth/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
                 </div>
               ) : (
                 <>
@@ -378,12 +376,8 @@ const Header = () => {
             <div className="ml-4 flex shrink-0 items-center gap-4 text-[24px] text-[#202127] xl:ml-6 xl:gap-6">
               {!isAuthenticated ? (
                 <div className="flex items-center gap-4">
-                  <Link href="/auth/signin">
-                    <Button text="Login" outline className="!h-[38px] !px-5 !text-[14px]" />
-                  </Link>
-                  <Link href="/auth/signup">
-                    <Button text="Sign Up" className="!h-[38px] !px-5 !text-[14px]" />
-                  </Link>
+                  <Link href="/auth/signin" className={AUTH_LOGIN_CLASS}>Log in</Link>
+                  <Link href="/auth/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
                 </div>
               ) : (
                 <>
@@ -624,8 +618,8 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
           <div className="mt-6 flex flex-col text-[16px] font-medium text-[#202127]">
             {!isAuthenticated ? (
               <div className="flex gap-3 px-6 pt-2">
-                <Link href="/auth/signin" onClick={() => setIsOpen(false)} className="flex h-[42px] flex-1 items-center justify-center rounded-full border border-[#202127] text-[14px] font-bold transition-colors hover:bg-gray-50">Login</Link>
-                <Link href="/auth/signup" onClick={() => setIsOpen(false)} className="flex h-[42px] flex-1 items-center justify-center rounded-full bg-[#0a1b56] text-[14px] font-bold text-white transition-colors hover:bg-[#07006f]">Sign Up</Link>
+                <Link href="/auth/signin" onClick={() => setIsOpen(false)} className="flex h-[44px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]">Log in</Link>
+                <Link href="/auth/signup" onClick={() => setIsOpen(false)} className="flex h-[44px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]">Sign up</Link>
               </div>
             ) : (
               <>

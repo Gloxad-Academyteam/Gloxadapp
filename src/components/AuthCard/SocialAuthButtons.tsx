@@ -10,7 +10,7 @@ const handleSocialAuth = (provider: "Google" | "Apple") => {
 };
 
 const buttonClass =
-  "flex h-[44px] w-full items-center justify-center gap-3 rounded-full border border-[#e6e8ee] bg-white text-[13px] font-medium text-[#202127] transition hover:bg-[#f5f7fb] focus:outline-none focus:ring-4 focus:ring-[#07004d]/10";
+  "flex h-[48px] w-full items-center justify-center gap-3 rounded-full border border-[#d6dbea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition hover:border-[#0B1F4D] hover:bg-[#f4f6fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B1F4D]/30";
 
 /** "or" divider + Continue with Google / Apple, used on sign in and sign up. */
 const SocialAuthButtons = () => (
