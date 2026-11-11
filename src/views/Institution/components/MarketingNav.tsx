@@ -32,13 +32,16 @@ const MarketingNav = () => {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-6 md:flex">
-          <Link href="/auth/signin" className="text-[13px] font-bold uppercase text-[#030069] hover:underline">
-            Login
+        <div className="hidden items-center gap-3 md:flex">
+          <Link
+            href="/auth/signin"
+            className="inline-flex h-[40px] items-center justify-center rounded-full border border-[#cfd6ea] bg-white px-5 text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]"
+          >
+            Log in
           </Link>
           <Link
             href="/institution/activate"
-            className="rounded-[4px] bg-[#3e92cc] px-6 py-3 text-[13px] font-medium uppercase tracking-wide text-white transition-colors hover:bg-[#2f7fb8]"
+            className="inline-flex h-[40px] items-center justify-center rounded-full bg-[#0B1F4D] px-5 text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]"
           >
             Get started
           </Link>
@@ -49,40 +52,42 @@ const MarketingNav = () => {
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
-          className="flex h-10 w-10 items-center justify-center rounded-full text-[#030069] hover:bg-[#f2f3ff] md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#0B1F4D] transition-colors hover:bg-[#f4f6fb] md:hidden"
         >
-          {isOpen ? <LuX size={24} /> : <LuMenu size={24} />}
+          {isOpen ? <LuX size={20} /> : <LuMenu size={20} />}
         </button>
       </div>
 
       {isOpen && (
-        <div className="absolute inset-x-0 top-full z-30 border-b border-[#e8eaf3] bg-white px-4 pb-5 shadow-lg md:hidden">
-          <nav aria-label="Mobile" className="flex flex-col gap-1 text-[16px] font-medium">
+        <div className="absolute inset-x-0 top-full z-30 rounded-b-2xl border-b border-[#e8eaf3] bg-white px-4 pb-5 pt-1 shadow-[0_16px_30px_rgba(11,31,77,0.12)] md:hidden">
+          <nav aria-label="Mobile" className="flex flex-col gap-0.5 text-[15px] font-medium">
             {links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="rounded-[8px] px-3 py-3 text-[#1b1d33] hover:bg-[#f2f3ff]"
+                className="rounded-xl px-3.5 py-3 text-[#2b2f45] transition-colors hover:bg-[#f4f6fb]"
               >
                 {link.label}
               </Link>
             ))}
+          </nav>
+          <div className="mt-3 flex gap-3 border-t border-[#efeff5] pt-4">
             <Link
               href="/auth/signin"
               onClick={() => setIsOpen(false)}
-              className="rounded-[8px] px-3 py-3 font-bold uppercase text-[#030069] hover:bg-[#f2f3ff]"
+              className="flex h-[46px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] hover:border-[#0B1F4D]"
             >
-              Login
+              Log in
             </Link>
             <Link
               href="/institution/activate"
               onClick={() => setIsOpen(false)}
-              className="mt-2 rounded-[4px] bg-[#3e92cc] px-6 py-3.5 text-center font-medium uppercase tracking-wide text-white"
+              className="flex h-[46px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] hover:bg-[#13306f]"
             >
               Get started
             </Link>
-          </nav>
+          </div>
         </div>
       )}
     </header>

@@ -8,7 +8,7 @@ import ImageComponent from "@components/ImageComponent/ImageComponent";
 import { FaTimes, FaSearch } from "react-icons/fa";
 import Button from "@components/Button";
 import { PiUserCircleLight } from "react-icons/pi";
-import { FiLogOut } from "react-icons/fi";
+import { FiChevronRight, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
@@ -462,6 +462,7 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
   const isNexusActive = pathname.startsWith("/courses");
   const isStudentActive = !isTutorActive && !isInstitutionActive && !isNexusActive;
   const isLanding = pathname === "/" || pathname === "/teach";
+  const close = () => setIsOpen(false);
 
   // Close on route change / Escape, and lock page scroll while the drawer is open
   useEffect(() => {
@@ -484,32 +485,62 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
   if (isAuthPage) {
     return (
       <div className="sticky top-0 z-50 lg:hidden">
-        <div
-          className={
-            "h-[64px] px-[20px] py-[10px] items-center justify-center flex border-b border-neutral-4 bg-white relative z-50"
-          }
-        >
-          <Link href="/" onClick={() => setIsOpen(false)}>
-            <ImageComponent
-              width="108px"
-              height="auto"
-              src="/gloxadlogo.png"
-              alt="Logo"
-            />
+        <div className="relative z-50 flex h-[64px] items-center justify-center border-b border-neutral-4 bg-white px-[20px] py-[10px]">
+          <Link href="/" onClick={close}>
+            <ImageComponent width="108px" height="auto" src="/gloxadlogo.png" alt="Logo" />
           </Link>
         </div>
       </div>
     );
   }
 
+  const audience = [
+    { href: "/", label: "Students", active: isStudentActive },
+    { href: "/teach", label: "Tutors", active: isTutorActive },
+    { href: "/institution", label: "Institution", active: isInstitutionActive },
+  ];
+
+  const learnLinks: { href: string; label: string; active?: boolean; tutorOnly?: boolean }[] = isAuthenticated
+    ? [
+        { href: authenticatedUser?.role === "admin" ? "/admin" : "/dashboard", label: authenticatedUser?.role === "admin" ? "Admin dashboard" : authenticatedUser?.role === "instructor" ? "Tutor dashboard" : "My dashboard" },
+        { href: "/dashboard?tab=my-courses", label: "My courses" },
+        { href: "/dashboard/explore", label: "Our courses", active: isNexusActive, tutorOnly: true },
+        { href: "/dashboard?tab=trimester", label: "Trimester programs" },
+        { href: "/dashboard?tab=free", label: "Free courses" },
+        { href: "/scholarships", label: "Scholarships" },
+        { href: "/messages", label: "Messages" },
+        { href: "/#faqs", label: "FAQs" },
+      ]
+    : [
+        { href: coursesHref(isAuthenticated), label: "Our courses", active: isNexusActive, tutorOnly: true },
+        { href: "/free", label: "Free courses" },
+        { href: "/trimester", label: "Trimester programs" },
+        { href: "/scholarships", label: "Scholarships" },
+        { href: "/#faqs", label: "FAQs" },
+      ];
+
+  const row = (link: (typeof learnLinks)[number]) => (
+    <li key={link.href + link.label}>
+      <Link
+        href={link.href}
+        onClick={close}
+        className={`flex items-center justify-between rounded-xl px-3.5 py-3 text-[15px] transition-colors ${
+          link.active || pathname === link.href ? "bg-[#eef1f8] font-semibold text-[#0B1F4D]" : "font-medium text-[#2b2f45] hover:bg-[#f4f6fb]"
+        }`}
+      >
+        {link.label}
+        <FiChevronRight aria-hidden className="text-[16px] text-[#9aa0b4]" />
+      </Link>
+    </li>
+  );
+
   return (
     <div className="sticky top-0 z-50 lg:hidden">
       {/* MOBILE bar: logo on the left, menu button on the right */}
-      <div className="relative z-50 flex h-[56px] items-center justify-between border-b border-[#efeff5] bg-white px-4 sm:h-[60px] sm:px-6">
-        <Link href="/" onClick={() => setIsOpen(false)} className="shrink-0" aria-label="Gloxad Academy home">
+      <div className="relative z-50 flex h-[58px] items-center justify-between border-b border-[#efeff5] bg-white/95 px-4 backdrop-blur sm:h-[62px] sm:px-6">
+        <Link href="/" onClick={close} className="shrink-0" aria-label="Gloxad Academy home">
           {isLanding ? (
-            // Home and Tutors pages: same 40px logo as the institution page on phones
-            <img src="/gloxadlogo.png" alt="Logo" className="h-[40px] w-auto object-contain" />
+            <img src="/gloxadlogo.png" alt="Logo" className="h-[38px] w-auto object-contain" />
           ) : (
             <ImageComponent width="80px" height="auto" src="/gloxadlogo.png" alt="Logo" />
           )}
@@ -517,87 +548,94 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
 
         <button
           type="button"
-          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-label="Open menu"
           aria-expanded={isOpen}
-          onClick={() => setIsOpen(!isOpen)}
-          className="-mr-2 flex h-10 w-10 items-center justify-center rounded-full text-[#202127] transition-colors hover:bg-[#f2f3f8]"
+          aria-controls="mobile-menu"
+          onClick={() => setIsOpen(true)}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#0B1F4D] transition-colors hover:bg-[#f4f6fb] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B1F4D]/30"
         >
-          {isOpen ? <FaTimes className="text-[18px]" /> : <FaBars className="text-[18px]" />}
+          <FiMenu className="text-[19px]" />
         </button>
       </div>
 
-      {/* Backdrop */}
+      {/* The backdrop and drawer share one viewport-sized, clipping layer, so a closed drawer parked off screen can never widen the page */}
       <div
-        className={`fixed inset-0 z-[55] bg-black/50 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-        onClick={() => setIsOpen(false)}
-      />
-
-      {/* Drawer */}
-      <div
-        className={`fixed inset-y-0 right-0 z-[60] h-[100dvh] w-[86vw] max-w-[320px] bg-white shadow-xl transition-transform duration-300 transform flex flex-col overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed inset-0 z-[60] overflow-hidden ${isOpen ? "visible" : "invisible [transition:visibility_0s_linear_0.3s]"}`}
       >
-        {/* Close Button */}
-        <div className="flex justify-end px-6 pt-6 pb-4">
-          <button onClick={() => setIsOpen(false)} className="flex h-8 w-8 items-center justify-center rounded-full border border-[#202127] text-[#202127] hover:bg-gray-50">
-            <FaTimes className="text-[14px]" />
+        <div
+          className={`absolute inset-0 bg-[#0B1F4D]/40 backdrop-blur-[2px] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
+          onClick={close}
+          aria-hidden
+        />
+
+        <aside
+          id="mobile-menu"
+          aria-label="Menu"
+          aria-hidden={!isOpen}
+          className={`absolute inset-y-0 right-0 flex h-[100dvh] w-[88vw] max-w-[340px] flex-col bg-white shadow-[-12px_0_40px_rgba(11,31,77,0.18)] transition-transform duration-300 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        >
+        <div className="flex h-[58px] shrink-0 items-center justify-between border-b border-[#efeff5] px-5 sm:h-[62px]">
+          <img src="/gloxadlogo.png" alt="Gloxad Academy" className="h-[34px] w-auto object-contain" />
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={close}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f1f3f9] text-[#0B1F4D] transition-colors hover:bg-[#e6eaf5] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B1F4D]/30"
+          >
+            <FiX className="text-[18px]" />
           </button>
         </div>
 
-        <div className="flex flex-col pb-10 min-h-full">
-          <nav className="flex flex-col text-[16px] font-medium text-[#202127]">
-            {isAuthenticated ? (
-              <>
-                <Link href={authenticatedUser?.role === "admin" ? "/admin" : "/dashboard"} onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isStudentActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>{authenticatedUser?.role === "admin" ? "Admin Dashboard" : authenticatedUser?.role === "instructor" ? "Tutor Dashboard" : "Students (Home)"}</Link>
-                <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
-                <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
-                <Link href="/dashboard?tab=my-courses" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">My Courses</Link>
-                <TutorCoursesOnly><Link href="/dashboard/explore" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link></TutorCoursesOnly>
-                <Link href="/dashboard?tab=trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
-                <Link href="/dashboard?tab=free" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Free Courses</Link>
-                <Link href="/scholarships" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Scholarships</Link>
-                <Link href="/#faqs" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">FAQs</Link>
-                <Link href="/messages" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Messages</Link>
-              </>
-            ) : (
-              <>
-                <Link href="/" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isStudentActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Students (Home)</Link>
-                <Link href="/teach" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isTutorActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Tutors</Link>
-                <Link href="/institution" onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isInstitutionActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Institution</Link>
-                <TutorCoursesOnly>
-                <Link href={coursesHref(isAuthenticated)} onClick={() => setIsOpen(false)} className={`px-6 py-3 transition-colors ${isNexusActive ? 'bg-[#0a1b56] text-white' : 'hover:text-[#0a1b56]'}`}>Our Courses</Link>
-                </TutorCoursesOnly>
-                <Link href="/free" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Free Courses</Link>
-                <Link href="/trimester" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Trimester Courses</Link>
-                <Link href="/scholarships" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">Scholarships</Link>
-                <Link href="/#faqs" onClick={() => setIsOpen(false)} className="px-6 py-3 hover:text-[#0a1b56] transition-colors">FAQs</Link>
-              </>
-            )}
-          </nav>
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <HeaderSearch variant="mobile" onDone={close} />
 
-          <div className="mt-6 flex flex-col text-[16px] font-medium text-[#202127]">
-            {!isAuthenticated ? (
-              <div className="flex gap-3 px-6 pt-2">
-                <Link href="/auth/signin" onClick={() => setIsOpen(false)} className="flex h-[44px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]">Log in</Link>
-                <Link href="/auth/signup" onClick={() => setIsOpen(false)} className="flex h-[44px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]">Sign up</Link>
-              </div>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  disabled={isLoggingOut}
-                  className="mx-6 my-2 inline-flex h-[44px] items-center gap-3 rounded-xl bg-[#fff3f2] px-4 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
-                >
-                  <FiLogOut size={17} aria-hidden />
-                  {isLoggingOut ? "Logging out..." : "Log out"}
-                </button>
-              </>
-            )}
+          <p className="mb-2 mt-5 px-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#8a90a6]">Switch to</p>
+          <div role="tablist" aria-label="Audience" className="grid grid-cols-3 gap-1 rounded-full border border-[#e3e6f0] bg-[#f4f6fb] p-1">
+            {audience.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={close}
+                role="tab"
+                aria-selected={item.active}
+                className={`flex h-9 items-center justify-center rounded-full text-[13px] font-semibold transition-colors ${
+                  item.active ? "bg-[#0B1F4D] text-white shadow-[0_2px_6px_rgba(11,31,77,0.25)]" : "text-[#52607A] hover:text-[#0B1F4D]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
+
+          <p className="mb-2 mt-6 px-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#8a90a6]">Explore</p>
+          <ul className="flex flex-col gap-0.5">
+            {learnLinks.map((link) => (link.tutorOnly ? <TutorCoursesOnly key={link.label}>{row(link)}</TutorCoursesOnly> : row(link)))}
+          </ul>
         </div>
+
+        <div className="shrink-0 border-t border-[#efeff5] bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4">
+          {!isAuthenticated ? (
+            <div className="flex gap-3">
+              <Link href="/auth/signin" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]">Log in</Link>
+              <Link href="/auth/signup" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]">Sign up</Link>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                handleLogout();
+                close();
+              }}
+              disabled={isLoggingOut}
+              className="flex h-[46px] w-full items-center justify-center gap-2.5 rounded-full bg-[#fff3f2] text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
+            >
+              <FiLogOut size={17} aria-hidden />
+              {isLoggingOut ? "Logging out..." : "Log out"}
+            </button>
+          )}
+          <SocialIcons className="mt-4 justify-center" />
+        </div>
+      </aside>
       </div>
     </div>
   );

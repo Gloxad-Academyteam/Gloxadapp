@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
+import SocialIcons from "@components/Header/SocialIcons";
 
 const pillClass = "rounded-full px-3 py-1.5 transition-colors sm:px-4";
 
@@ -25,28 +25,13 @@ const TopBar = ({ showLogo = false, contained = false }: { showLogo?: boolean; c
           <Link href="/teach" className={`${pillClass} text-[#1b1d33] hover:bg-[#f2f3ff]`}>
             Tutors
           </Link>
-          <Link href="/institution" aria-current="page" className={`${pillClass} bg-[#030069] text-white`}>
+          <Link href="/institution" aria-current="page" className={`${pillClass} bg-[#0B1F4D] text-white`}>
             Institution
           </Link>
         </nav>
       </div>
 
-      <div className="hidden items-center gap-4 sm:flex">
-        {OFFICIAL_SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Gloxad Academy on ${label}`}
-            title={label}
-            className="transition-transform hover:scale-110"
-            style={{ color }}
-          >
-            <Icon size={24} aria-hidden="true" />
-          </a>
-        ))}
-      </div>
+      <SocialIcons className="hidden sm:flex" />
     </div>
   </div>
 );

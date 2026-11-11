@@ -146,7 +146,7 @@ const FreeCourseLayout = ({ course }: TProps) => {
     <div className="w-full bg-white pb-24 text-[#201633]">
       {/* Top: what the course is, and the video */}
       <section className="border-b border-[#eceef5] bg-[#f7f8fc]">
-        <div className="mx-auto grid max-w-[1240px] gap-10 px-5 py-10 md:px-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center lg:gap-14 lg:py-16">
+        <div className="mx-auto grid max-w-[1240px] grid-cols-[minmax(0,1fr)] gap-10 px-5 py-10 md:px-10 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-center lg:gap-14 lg:py-16">
           <div>
             <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-2 text-[13px] text-[#717480]">
               <Link href="/free" className="hover:text-[#07004d]">Free courses</Link>

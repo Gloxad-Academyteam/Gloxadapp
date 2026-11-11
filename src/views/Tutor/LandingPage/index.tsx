@@ -140,18 +140,18 @@ const TutorLandingPage = () => {
 
         <div className="absolute top-[-20%] left-[-10%] h-[500px] w-[500px] rounded-full bg-[#1e27a6] opacity-30 blur-[100px] pointer-events-none" />
         <div className="absolute -right-[100px] top-[20%] h-[616px] w-[621px] rounded-full bg-[#3E92CC] opacity-40 blur-[150px] pointer-events-none" />
-        <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center justify-between px-5 pb-20 pt-16 sm:pt-20 md:px-10 lg:flex-row lg:px-[120px] lg:pb-[120px] lg:pt-0">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center justify-between px-5 pb-20 pt-16 sm:pt-20 md:px-10 lg:flex-row lg:pb-[120px] lg:pl-8 lg:pr-[330px] lg:pt-0 xl:pl-[120px] xl:pr-[570px]">
           {/* Text Content */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="z-10 w-full max-w-[620px] flex-1 text-left lg:w-auto"
+            className="z-10 w-full min-w-0 max-w-[620px] flex-1 text-left lg:w-auto"
           >
             <h2 className="mb-3 pr-[34vw] text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 max-[359px]:pr-0 sm:pr-[200px] sm:text-[14px] lg:mb-4 lg:pr-0 lg:text-[18px] lg:normal-case lg:tracking-normal lg:text-white">
               Gloxad Academy
             </h2>
-            <h1 className="mb-4 pr-[34vw] text-[26px] font-bold leading-[1.15] max-[359px]:pr-0 sm:pr-[200px] sm:text-[38px] md:text-[46px] lg:mb-6 lg:pr-0 lg:text-[64px] lg:leading-[1.2]">
+            <h1 className="mb-4 pr-[34vw] text-[26px] font-bold leading-[1.15] max-[359px]:pr-0 sm:pr-[200px] sm:text-[38px] md:text-[46px] lg:mb-6 lg:pr-0 lg:text-[42px] lg:leading-[1.15] xl:text-[54px] 2xl:text-[64px] 2xl:leading-[1.2]">
               Join Africa&apos;s Most<br className="hidden lg:block" /> Impact-Driven<br className="hidden lg:block" /> Teaching Platform.
             </h1>
             {/* MOBILE: one short line */}
@@ -159,7 +159,7 @@ const TutorLandingPage = () => {
               Teach, mentor and grow your personal brand with Africa&apos;s career-focused learning platform.
             </p>
             {/* DESKTOP: full copy */}
-            <p className="mx-0 mb-8 hidden max-w-[600px] pr-4 text-[16px] leading-[1.6] text-white/90 lg:block">
+            <p className="mx-0 mb-8 hidden max-w-[600px] text-[15px] leading-[1.6] text-white/90 lg:block xl:text-[16px]">
               Africa&apos;s career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Thousands of learners are looking for mentors, not just instructors. Join Gloxad and transform careers while growing your personal brand.
             </p>
             <button
@@ -175,7 +175,7 @@ const TutorLandingPage = () => {
           <img
             src={tutorGridImages[3].image.src}
             alt="Smiling instructor in a blue blazer"
-            className="pointer-events-none absolute right-5 top-16 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[359px]:hidden sm:right-10 sm:top-20 lg:hidden"
+            className="pointer-events-none absolute right-5 top-16 z-0 h-auto w-[26vw] min-w-[96px] max-w-[160px] max-[359px]:hidden sm:right-10 sm:top-20 lg:hidden"
             style={{
               WebkitMaskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
               maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
@@ -187,11 +187,11 @@ const TutorLandingPage = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: [0.9, 1], scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="absolute right-[10px] top-[-100px] bottom-[-100px] hidden w-[600px] lg:block opacity-90 lg:opacity-100 scroll-mask pointer-events-none"
+            className="absolute bottom-[-100px] right-[10px] top-[-100px] hidden w-[300px] opacity-90 pointer-events-none scroll-mask lg:block lg:opacity-100 xl:w-[528px]"
           >
-            <div className="cylinder-wrap flex h-[150%] gap-6 pt-[50px]">
+            <div className="cylinder-wrap flex h-[150%] gap-5 pt-[50px] xl:gap-6">
               {/* Column 1 - Scrolls Up */}
-              <div className="animate-scroll-up flex flex-col gap-6 w-[160px] xl:w-[180px]">
+              <div className="animate-scroll-up flex flex-col gap-6 w-[140px] xl:w-[160px]">
                 {infiniteCol1.map((img, idx) => (
                   <div key={`col1-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-full ${img.bgClass} shrink-0 shadow-2xl`}>
                     <img src={img.image.src} alt={img.alt} className="absolute bottom-0 w-full h-full object-cover" />
@@ -200,7 +200,7 @@ const TutorLandingPage = () => {
               </div>
 
               {/* Column 2 - Scrolls Down */}
-              <div className="animate-scroll-down flex flex-col gap-6 w-[160px] xl:w-[180px] -mt-[150px]">
+              <div className="animate-scroll-down flex flex-col gap-6 w-[140px] xl:w-[160px] -mt-[150px]">
                 {infiniteCol2.map((img, idx) => (
                   <div key={`col2-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-full ${img.bgClass} shrink-0 shadow-2xl`}>
                     <img src={img.image.src} alt={img.alt} className="absolute bottom-0 w-full h-full object-cover" />
@@ -209,7 +209,7 @@ const TutorLandingPage = () => {
               </div>
 
               {/* Column 3 - Scrolls Up (Faster) */}
-              <div className="animate-scroll-up flex flex-col gap-6 w-[160px] xl:w-[180px] mt-[100px]" style={{ animationDuration: '22s' }}>
+              <div className="animate-scroll-up mt-[100px] hidden w-[160px] flex-col gap-6 xl:flex" style={{ animationDuration: '22s' }}>
                 {infiniteCol3.map((img, idx) => (
                   <div key={`col3-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-full ${img.bgClass} shrink-0 shadow-2xl`}>
                     <img src={img.image.src} alt={img.alt} className="absolute bottom-0 w-full h-full object-cover" />

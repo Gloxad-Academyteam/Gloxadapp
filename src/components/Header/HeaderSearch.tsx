@@ -5,18 +5,19 @@ import { useRouter } from "next/navigation";
 import { FiSearch } from "react-icons/fi";
 
 // The search box in the header. It opens the course list with the words typed, which filters it.
-const HeaderSearch = () => {
+const HeaderSearch = ({ variant = "desktop", onDone }: { variant?: "desktop" | "mobile"; onDone?: () => void }) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
 
   return (
     <form
       role="search"
-      className="hidden w-full min-w-0 max-w-[520px] lg:block"
+      className={variant === "mobile" ? "block w-full" : "hidden w-full min-w-0 max-w-[520px] lg:block"}
       onSubmit={(event) => {
         event.preventDefault();
         const text = query.trim();
         router.push(text ? `/free?search=${encodeURIComponent(text)}` : "/free");
+        onDone?.();
       }}
     >
       <div className="group relative flex h-[46px] items-center">

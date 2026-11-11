@@ -106,13 +106,13 @@ const Hero = ({ compact = false }: HeroProps) => {
         `}
       </style>
 
-      <div className="relative mx-auto flex min-h-[340px] w-full max-w-[1512px] flex-col justify-center max-[359px]:min-h-0 sm:min-h-[400px] lg:min-h-0 lg:flex-row lg:justify-between items-center px-5 pb-10 pt-8 sm:px-8 sm:pb-14 sm:pt-12 md:px-10 lg:px-[120px] lg:pt-[120px] lg:pb-32">
+      <div className="relative mx-auto flex min-h-[340px] w-full max-w-[1512px] flex-col justify-center max-[359px]:min-h-0 sm:min-h-[400px] lg:min-h-0 lg:flex-row lg:justify-between items-center px-5 pb-10 pt-8 sm:px-8 sm:pb-14 sm:pt-12 md:px-10 lg:pb-32 lg:pl-8 lg:pr-[330px] lg:pt-[120px] xl:pl-[120px] xl:pr-[570px]">
         {/* ===================== MOBILE / TABLET (below lg) — cut-out photo, no background box.
             Hidden on very small phones (< 360px) so only the text shows. ===================== */}
         <img
           src={HeroCutout.src}
           alt="Smiling student with a backpack"
-          className="pointer-events-none absolute right-0 top-6 z-0 h-auto w-[30vw] min-w-[108px] max-w-[170px] max-[359px]:hidden sm:top-8 lg:hidden"
+          className="pointer-events-none absolute right-0 top-6 z-0 h-auto w-[26vw] min-w-[96px] max-w-[160px] max-[359px]:hidden sm:top-8 lg:hidden"
           style={{
             WebkitMaskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
             maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
@@ -124,12 +124,12 @@ const Hero = ({ compact = false }: HeroProps) => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="relative z-10 flex w-full flex-col items-start pb-[8px] text-left lg:w-auto lg:max-w-[640px] lg:pb-0"
+          className="relative z-10 flex w-full min-w-0 flex-col items-start pb-[8px] text-left lg:max-w-[640px] lg:pb-0"
         >
           <p className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 text-[12px] font-bold uppercase tracking-[0.08em] text-white/80 sm:text-[14px] lg:text-[20px] lg:normal-case lg:tracking-normal lg:text-white">
             Gloxad Academy
           </p>
-          <h1 className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-4 lg:text-[48px] lg:tracking-[-1.8px] lg:leading-[1.08] xl:text-[54px] xl:tracking-[-2px]">
+          <h1 className="pr-[34vw] max-[359px]:pr-0 sm:pr-[200px] lg:pr-0 mt-2 font-['DM_Sans'] font-bold text-[#FFF] text-[26px] leading-[1.12] tracking-[-0.5px] sm:text-[36px] sm:tracking-[-1px] md:text-[46px] md:tracking-[-1.5px] lg:mt-4 lg:text-[44px] lg:tracking-[-1.6px] lg:leading-[1.08] xl:text-[54px] xl:tracking-[-2px]">
             Where Learning Meets Opportunity
           </h1>
           <div className="mt-3 w-full max-w-[600px] lg:mt-6">
@@ -166,11 +166,11 @@ const Hero = ({ compact = false }: HeroProps) => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: [0.9, 1], scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="absolute right-[10px] top-[-100px] bottom-[-100px] hidden w-[600px] lg:block opacity-90 lg:opacity-100 scroll-mask pointer-events-none"
+          className="absolute bottom-[-100px] right-[10px] top-[-100px] hidden w-[300px] opacity-90 pointer-events-none scroll-mask lg:block lg:opacity-100 xl:w-[528px]"
         >
-          <div className="cylinder-wrap flex h-[150%] gap-6 pt-[50px]">
+          <div className="cylinder-wrap flex h-[150%] gap-5 pt-[50px] xl:gap-6">
             {/* Column 1 - Scrolls Up */}
-            <div className="animate-scroll-up flex flex-col gap-6 w-[160px]">
+            <div className="animate-scroll-up flex flex-col gap-6 w-[140px] xl:w-[160px]">
               {infiniteCol1.map((img, idx) => (
                 <div key={`col1-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-[100px] ${img.bgClass} shrink-0 shadow-2xl`}>
                   <img src={img.image.src} alt={img.alt} className="absolute inset-0 h-full w-full object-cover" />
@@ -179,7 +179,7 @@ const Hero = ({ compact = false }: HeroProps) => {
             </div>
 
             {/* Column 2 - Scrolls Down */}
-            <div className="animate-scroll-down flex flex-col gap-6 w-[160px] -mt-[150px]">
+            <div className="animate-scroll-down flex flex-col gap-6 w-[140px] xl:w-[160px] -mt-[150px]">
               {infiniteCol2.map((img, idx) => (
                 <div key={`col2-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-[100px] ${img.bgClass} shrink-0 shadow-2xl`}>
                   <img src={img.image.src} alt={img.alt} className="absolute inset-0 h-full w-full object-cover" />
@@ -188,7 +188,7 @@ const Hero = ({ compact = false }: HeroProps) => {
             </div>
 
             {/* Column 3 - Scrolls Up (Faster) */}
-            <div className="animate-scroll-up flex flex-col gap-6 w-[160px] mt-[100px]" style={{ animationDuration: "22s" }}>
+            <div className="animate-scroll-up mt-[100px] hidden w-[160px] flex-col gap-6 xl:flex" style={{ animationDuration: "22s" }}>
               {infiniteCol3.map((img, idx) => (
                 <div key={`col3-${idx}`} className={`relative w-full h-[400px] overflow-hidden rounded-[100px] ${img.bgClass} shrink-0 shadow-2xl`}>
                   <img src={img.image.src} alt={img.alt} className="absolute inset-0 h-full w-full object-cover" />
