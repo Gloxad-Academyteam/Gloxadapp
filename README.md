@@ -70,6 +70,7 @@ The video lessons come from [freeCodeCamp.org](https://www.youtube.com/@freecode
 | **Public site** | Home page with category tabs, free courses, the course catalogue and course pages, the trimester page (currently shows "Not available", as every course is free and self-paced), tutor and institution landing pages, sign-in and sign-up |
 | **Student dashboard** | My courses, free courses, trimester courses (shows "Not available"), certificates, notifications, messages, settings |
 | **Course pages and player** | Clean course page with a video preview, collapsible module and chapter list, and a Full screen button on every video (the player also has YouTube's own) |
+| **Module quizzes and tasks** | On the free courses every module ends with a quiz and a written task. The menu locks what is not open yet, quiz results show the right answers, a task needs a minimum word count, and the next module opens when both are done. The server enforces the order |
 | **Course player** | Lessons with saved progress, notes and questions, server-scored quizzes, a completion page and a downloadable certificate |
 | **Tutor area** | Dashboard, a step-by-step course upload wizard, credential verification, earnings, reviews, messages |
 | **Admin area** | Courses, tutors, students, reviews, finance, live classes, platform settings |

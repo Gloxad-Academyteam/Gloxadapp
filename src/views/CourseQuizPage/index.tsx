@@ -16,6 +16,9 @@ type TQuizResult = {
   totalQuestions: number;
   correctAnswers: number;
   breakdown: { questionId: string; selectedOptionIndex: number | null; isCorrect: boolean; correctOptionIndex?: number }[];
+  moduleId?: string | null;
+  // Where the module stands after this attempt: "task" means the quiz is passed and the task is next
+  gate?: { stage: string; complete: boolean } | null;
 };
 
 // The route segment is named [moduleId] for historical reasons; it now carries the quiz's id
@@ -63,10 +66,13 @@ export default function CourseQuizPage() {
     onSuccess: (data) => {
       setResult(data);
       queryClient.invalidateQueries({ queryKey: ["enrollment", courseId] });
+      queryClient.invalidateQueries({ queryKey: ["module-gates", courseId] });
       queryClient.invalidateQueries({ queryKey: ["my-courses"] });
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.error || "Could not submit the quiz. Please try again.");
+      // The lessons must be finished first: send the learner back to them
+      if (error.response?.data?.code === "LESSONS_INCOMPLETE" || error.response?.data?.code === "MODULE_LOCKED") router.push(`/learning/${courseId}`);
     },
   });
 
@@ -269,8 +275,12 @@ export default function CourseQuizPage() {
                 </div>
 
                 <div className="mx-auto mt-8 flex max-w-[420px] gap-4">
-                  <button type="button" onClick={() => router.push(`/learning/${courseId}`)} className="h-[40px] flex-1 rounded-[6px] bg-[#07004d] text-[12px] font-semibold text-white hover:bg-[#111456]">
-                    {result.passed ? "Next Module" : "Back to Course"}
+                  <button
+                    type="button"
+                    onClick={() => router.push(result.passed && result.gate?.stage === "task" && result.moduleId ? `/learning/${courseId}?item=task:${result.moduleId}` : `/learning/${courseId}`)}
+                    className="h-[40px] flex-1 rounded-[6px] bg-[#07004d] text-[12px] font-semibold text-white hover:bg-[#111456]"
+                  >
+                    {!result.passed ? "Back to Course" : result.gate?.stage === "task" ? "Continue to Module Task" : "Next Module"}
                   </button>
                   <button type="button" onClick={retake} className="h-[40px] flex-1 rounded-[6px] border border-[#07004d] bg-white text-[12px] font-semibold text-[#07004d] hover:bg-[#eef2ff]">
                     Retake Quiz

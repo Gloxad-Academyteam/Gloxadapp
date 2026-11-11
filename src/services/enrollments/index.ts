@@ -46,3 +46,60 @@ export function getCourseProgress(enrollment: any, course: any): TCourseProgress
   const percent = total > 0 ? Math.round((completed / total) * 100) : Number(enrollment?.progressPercentage) || 0;
   return { completed, total, percent };
 }
+
+// Module order for self-paced courses: lessons, then the module quiz, then the module task, then the next module.
+// The server decides what is open; these calls only read it and send the learner's work.
+export type TModuleGate = {
+  moduleId: string;
+  index: number;
+  unlocked: boolean;
+  complete: boolean;
+  stage: "locked" | "lessons" | "quiz" | "task" | "complete";
+  lessons: { total: number; done: number };
+  quiz: { count: number; quizId: string; passed: boolean; bestScore: number | null; attempts: number; available: boolean } | null;
+  task: { submitted: boolean; submittedAt: string | null; attempts: number; minWords: number; available: boolean } | null;
+};
+
+export type TTaskSubmission = { _id: string; text: string; link: string; wordCount: number; attempt: number; submittedAt: string };
+
+export type TModuleTask = {
+  task: { moduleId: string; title: string; instructions: string; minWords: number };
+  gate: TModuleGate;
+  submissions: TTaskSubmission[];
+};
+
+export async function getModuleGates(courseId: string): Promise<TModuleGate[]> {
+  const response = await axiosInstance.get(`/learning/${courseId}/modules`);
+  return response.data.modules ?? [];
+}
+
+export async function getModuleTask(courseId: string, moduleId: string): Promise<TModuleTask> {
+  const response = await axiosInstance.get(`/learning/${courseId}/modules/${moduleId}/task`);
+  return response.data;
+}
+
+export async function submitModuleTask(courseId: string, moduleId: string, body: { text: string; link?: string }) {
+  const response = await axiosInstance.post(`/learning/${courseId}/modules/${moduleId}/task`, body);
+  return response.data as { message: string; submission: TTaskSubmission; gate: TModuleGate; progressPercentage: number; isCompleted: boolean };
+}
+
+// What a learner has done, out of what the course asks for. Quizzes and tasks count only on courses that go module by module.
+export function getModuleProgress(course: any, completedLessonIds: Set<string>, gates: TModuleGate[] | undefined): TCourseProgress {
+  const lessons = (course?.modules || []).flatMap((mod: any) => mod.lessons || []);
+  const lessonsDone = lessons.filter((l: any) => completedLessonIds.has(String(l._id))).length;
+  let total = lessons.length;
+  let done = lessonsDone;
+  if (course?.sequentialModules) {
+    (gates || []).forEach((gate) => {
+      if (gate.quiz) {
+        total += gate.quiz.count;
+        done += gate.quiz.passed ? gate.quiz.count : 0;
+      }
+      if (gate.task) {
+        total += 1;
+        done += gate.task.submitted ? 1 : 0;
+      }
+    });
+  }
+  return { completed: lessonsDone, total: lessons.length, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+}
