@@ -92,21 +92,25 @@ const SignUpPage = () => {
       headline={role === "instructor" ? ["Inspire & Educate", "Start Teaching Today!"] : ["Unlock Your Potential", "Start Learning Today!"]}
     >
       {/* Role Toggle */}
-      <div className="mx-auto mb-7 flex h-[44px] w-full max-w-[240px] items-center rounded-full bg-[#e3e3fc] p-1">
+      <div role="tablist" aria-label="I am signing up as" className="mx-auto mb-7 flex h-[46px] w-full max-w-[260px] items-center rounded-full border border-[#d6dbea] bg-[#f4f6fb] p-1">
         <button
           type="button"
+          role="tab"
+          aria-selected={role === "student"}
           onClick={() => setRole("student")}
-          className={`flex h-full flex-1 items-center justify-center rounded-full text-[14px] font-medium transition ${
-            role === "student" ? "bg-[#07004d] text-white" : "text-[#5b5e8a]"
+          className={`flex h-full flex-1 items-center justify-center rounded-full text-[14px] font-semibold transition ${
+            role === "student" ? "bg-[#0B1F4D] text-white shadow-[0_2px_6px_rgba(11,31,77,0.25)]" : "text-[#52607A] hover:text-[#0B1F4D]"
           }`}
         >
           Student
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={role === "instructor"}
           onClick={() => setRole("instructor")}
-          className={`flex h-full flex-1 items-center justify-center rounded-full text-[14px] font-medium transition ${
-            role === "instructor" ? "bg-[#07004d] text-white" : "text-[#5b5e8a]"
+          className={`flex h-full flex-1 items-center justify-center rounded-full text-[14px] font-semibold transition ${
+            role === "instructor" ? "bg-[#0B1F4D] text-white shadow-[0_2px_6px_rgba(11,31,77,0.25)]" : "text-[#52607A] hover:text-[#0B1F4D]"
           }`}
         >
           Tutor
