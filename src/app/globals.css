@@ -426,3 +426,14 @@ body[data-overlay-open] button[aria-label="Scroll to top"] {
     padding: 8px 12px 0;
   }
 }
+
+/* Course cards size themselves from the width of their own box, so they stay tidy whether a grid gives them
+   200px or 400px. Titles, padding and the facts line scale with the card; the small tag drops out when it is tiny. */
+.cc { container-type: inline-size; }
+.cc .cc-body { padding: 16px; padding: clamp(12px, 5.5cqi, 18px); }
+.cc .cc-title { font-size: 16px; font-size: clamp(14px, 5cqi, 17px); }
+.cc .cc-meta { font-size: 13px; font-size: clamp(12px, 3.9cqi, 13.5px); }
+.cc .cc-price { font-size: 15px; font-size: clamp(14px, 4.6cqi, 16px); }
+@container (max-width: 219px) { .cc .cc-tag { display: none; } }
+/* Two buttons side by side while there is room, one above the other when the card is narrow */
+@container (max-width: 250px) { .cc .cc-actions { grid-template-columns: 1fr; } }

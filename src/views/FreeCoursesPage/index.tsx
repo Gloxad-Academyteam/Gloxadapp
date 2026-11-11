@@ -1,5 +1,6 @@
 "use client";
 
+import { COURSE_GRID } from "@components/CourseCard";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -213,7 +214,7 @@ const FreeCoursesContent = () => {
             {hasFilters && <button type="button" onClick={clearFilters} className="mt-5 rounded-full bg-[#07004d] px-5 py-2.5 text-[13px] font-semibold text-white">Clear filters</button>}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={COURSE_GRID}>
             {shownCourses.map((course) => {
               const hours = durationInHours(course);
               const slug = course.slug || course._id;
@@ -221,26 +222,26 @@ const FreeCoursesContent = () => {
               const category = courseCategory(course);
               const lessonCount = courseLessonCount(course);
               return (
-                <article key={course._id || course.slug} className="flex h-full flex-col overflow-hidden rounded-2xl border border-[#e3e5ee] bg-white transition hover:border-[#c3c7d9] hover:shadow-[0_8px_24px_rgba(20,20,60,0.08)]">
+                <article key={course._id || course.slug} className="cc flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e3e5ee] bg-white transition hover:border-[#c3c7d9] hover:shadow-[0_8px_24px_rgba(20,20,60,0.08)]">
                   <Link href={`/courses/${slug}`} className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#07004d]">
                     <div className="relative aspect-video w-full overflow-hidden bg-[#eef0f7]">
                       <img src={thumbnail} alt="" loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]" />
                       <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[11px] font-bold text-[#167343] shadow-sm">Free</span>
                     </div>
                   </Link>
-                  <div className="flex flex-1 flex-col p-4 sm:p-5">
+                  <div className="cc-body flex flex-1 flex-col">
                     <p className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#4b4ca5]">{category}</p>
-                    <Link href={`/courses/${slug}`} className="mt-1 text-[16px] font-bold leading-snug text-[#202127] hover:text-[#07004d] focus-visible:underline">
+                    <Link href={`/courses/${slug}`} className="cc-title mt-1 line-clamp-2 font-bold leading-snug text-[#202127] hover:text-[#07004d] focus-visible:underline">
                       {course.title}
                     </Link>
-                    <p className="mt-2 line-clamp-2 text-[13px] text-[#717480]">{course.subtitle || course.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-x-3 gap-y-2 text-[12px] text-[#555866]">
+                    <p className="cc-meta mt-2 line-clamp-2 text-[#717480]">{course.subtitle || course.description}</p>
+                    <div className="cc-meta mt-4 flex flex-wrap gap-x-3 gap-y-2 text-[#555866]">
                       {courseLevel(course) && <span>{courseLevel(course)}</span>}
                       <span className="inline-flex items-center gap-1"><FiBookOpen aria-hidden="true" /> {lessonCount} lessons</span>
                       {hours > 0 && <span className="inline-flex items-center gap-1"><FiClock aria-hidden="true" /> {hours} hours</span>}
                       {getYouTubeSourceName(course) && <span className="truncate">By {getYouTubeSourceName(course)}</span>}
                     </div>
-                    <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
+                    <div className="cc-actions mt-auto grid grid-cols-2 gap-2 pt-5">
                       <Link href={`/courses/${slug}`} className="inline-flex h-10 items-center justify-center rounded-full border border-[#07004d] px-3 text-[12px] font-semibold text-[#07004d] transition hover:bg-[#f6f6fb]">
                         View course
                       </Link>

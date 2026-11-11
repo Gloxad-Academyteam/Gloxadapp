@@ -12,7 +12,8 @@ import { FiLogOut } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
-import { OFFICIAL_SOCIAL_LINKS } from "@constants/socialLinks";
+import HeaderSearch from "./HeaderSearch";
+import SocialIcons from "./SocialIcons";
 
 // One pair of sign in and sign up buttons for every header: a quiet outlined "Log in" and a solid "Sign up"
 const AUTH_LOGIN_CLASS =
@@ -80,66 +81,50 @@ const LandingHeader = () => {
         {/* Row 1 */}
         <div className="relative z-20 h-[48px] border-b border-[#efeff5] bg-white">
           <div className="mx-auto flex h-full w-full max-w-[1512px] items-center px-5 md:px-10 lg:px-8 xl:px-[120px]">
-            <nav className="flex items-center gap-3 text-[16px] font-medium text-[#4e515c] xl:gap-6">
+            <nav className="flex items-center gap-1 text-[14px] font-semibold text-[#52607A]">
               <Link
                 href="/"
-                className={`rounded-[16px] px-4 py-1 transition-colors ${
+                className={`rounded-full px-4 py-1.5 transition-colors ${
                   isStudentActive
-                    ? "bg-[#0a1b56] text-white"
-                    : "hover:text-[#0a1b56]"
+                    ? "bg-[#0B1F4D] text-white"
+                    : "hover:bg-[#f1f3f9] hover:text-[#0B1F4D]"
                 }`}
               >
                 Students
               </Link>
               <Link
                 href="/teach"
-                className={`hidden sm:block rounded-[16px] px-4 py-1 transition-colors ${
+                className={`hidden sm:block rounded-full px-4 py-1.5 transition-colors ${
                   isTutorActive
-                    ? "bg-[#0a1b56] text-white"
-                    : "hover:text-[#0a1b56]"
+                    ? "bg-[#0B1F4D] text-white"
+                    : "hover:bg-[#f1f3f9] hover:text-[#0B1F4D]"
                 }`}
               >
                 Tutors
               </Link>
               <Link
                 href="/institution"
-                className={`hidden sm:block rounded-[16px] px-4 py-1 transition-colors ${
+                className={`hidden sm:block rounded-full px-4 py-1.5 transition-colors ${
                   isInstitutionActive
-                    ? "bg-[#0a1b56] text-white"
-                    : "hover:text-[#0a1b56]"
+                    ? "bg-[#0B1F4D] text-white"
+                    : "hover:bg-[#f1f3f9] hover:text-[#0B1F4D]"
                 }`}
               >
                 Institution
               </Link>
               <Link
                 href={coursesHref(isAuthenticated)}
-                className={`hidden md:block rounded-[16px] px-4 py-1 transition-colors ${
+                className={`hidden md:block rounded-full px-4 py-1.5 transition-colors ${
                   isNexusActive
-                    ? "bg-[#0a1b56] text-white"
-                    : "hover:text-[#0a1b56]"
+                    ? "bg-[#0B1F4D] text-white"
+                    : "hover:bg-[#f1f3f9] hover:text-[#0B1F4D]"
                 }`}
               >
                 Gloxad Nexus
               </Link>
             </nav>
             <div className="flex flex-1 items-center justify-end gap-4 text-[#202127]">
-              {/* Same social links, sizes and brand colours as the institution page's top bar */}
-              <div className="flex items-center gap-4">
-                {OFFICIAL_SOCIAL_LINKS.map(({ label, href, Icon, color }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Gloxad Academy on ${label}`}
-                    title={label}
-                    className="transition-transform hover:scale-110"
-                    style={{ color }}
-                  >
-                    <Icon size={24} aria-hidden="true" />
-                  </a>
-                ))}
-              </div>
+              <SocialIcons />
             </div>
           </div>
         </div>
@@ -170,26 +155,13 @@ const LandingHeader = () => {
                   <button
                     type="button"
                     onClick={() => setIsExploreOpen((value) => !value)}
-                    className="hidden h-[42px] items-center gap-2 rounded-full border border-[#0a1b56] px-5 text-[14px] font-bold text-[#0a1b56] md:flex hover:bg-gray-50 transition-colors"
+                    className="hidden h-[44px] items-center gap-2 rounded-full bg-[#f1f3f9] px-5 text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:bg-[#e6eaf5] md:flex"
                   >
                     Explore
-                    <FaChevronDown className="text-[12px] text-[#0a1b56]" />
+                    <FaChevronDown className="text-[11px] text-[#6b7389]" />
                   </button>
 
-                  <form className="hidden h-[46px] w-full min-w-0 max-w-[500px] items-center rounded-full border border-[#dedee7] pl-5 pr-1.5 lg:flex hover:border-gray-300 transition-colors">
-                    <input
-                      aria-label="Search courses"
-                      placeholder="What do you want to learn?"
-                      className="w-full border-0 bg-transparent p-0 text-[15px] placeholder:text-[#a4a5ad] focus:ring-0"
-                    />
-                    <button
-                      type="submit"
-                      aria-label="Submit search"
-                      className="btn-interactive flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[#1e4ed8] text-white hover:bg-blue-800 transition-colors"
-                    >
-                      <FaSearch className="text-[14px]" />
-                    </button>
-                  </form>
+                  <HeaderSearch />
                 </>
               )}
             </div>
@@ -351,26 +323,13 @@ const Header = () => {
               <button
                 type="button"
                 onClick={() => setIsExploreOpen(!isExploreOpen)}
-                className="hidden h-[42px] items-center gap-2 rounded-full border border-[#1e4ed8] px-5 text-[14px] font-medium text-[#202127] md:flex hover:bg-gray-50 transition-colors"
+                className="hidden h-[44px] items-center gap-2 rounded-full bg-[#f1f3f9] px-5 text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:bg-[#e6eaf5] md:flex"
               >
-                <span className="text-[#1e4ed8] font-bold">Explore</span>
-                <FaChevronDown className="text-[12px] text-[#1e4ed8]" />
+                <span>Explore</span>
+                <FaChevronDown className="text-[11px] text-[#6b7389]" />
               </button>
 
-              <form className="hidden h-[46px] w-full min-w-0 max-w-[500px] items-center rounded-full border border-[#dedee7] pl-5 pr-1.5 lg:flex hover:border-gray-300 transition-colors">
-                <input
-                  aria-label="Search courses"
-                  placeholder="What do you want to learn?"
-                  className="w-full border-0 bg-transparent p-0 text-[15px] placeholder:text-[#a4a5ad] focus:ring-0"
-                />
-                <button
-                  type="submit"
-                  aria-label="Submit search"
-                  className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[#1e4ed8] text-white hover:bg-blue-800 transition-colors"
-                >
-                  <FaSearch className="text-[14px]" />
-                </button>
-              </form>
+              <HeaderSearch />
             </div>
 
             <div className="ml-4 flex shrink-0 items-center gap-4 text-[24px] text-[#202127] xl:ml-6 xl:gap-6">

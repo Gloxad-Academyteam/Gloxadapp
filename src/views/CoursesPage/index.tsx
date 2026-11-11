@@ -1,5 +1,6 @@
 "use client";
 
+import { COURSE_GRID } from "@components/CourseCard";
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -135,7 +136,7 @@ const CoursesPageContent = () => {
                     {courseGroups.get(categoryName)?.length} {courseGroups.get(categoryName)?.length === 1 ? "course" : "courses"}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className={COURSE_GRID}>
                   {(courseGroups.get(categoryName) || []).map((course: any) => {
                     const isFreeYouTube = isFreeYouTubeCourse(course);
                     const frontendCourse = {

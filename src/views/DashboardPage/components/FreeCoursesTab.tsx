@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import CourseCard from "@components/CourseCard";
+import CourseCard, { COURSE_GRID } from "@components/CourseCard";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@utils/axiosInstance";
 import { toast } from "react-toastify";
@@ -60,7 +60,7 @@ const FreeCoursesTab = () => {
       {/* Courses Grid */}
       <div className="mx-auto max-w-[1512px] px-5 md:px-10 lg:px-[120px] pb-24">
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className={COURSE_GRID}>
             {[...Array(6)].map((_, i) => (
               <div key={i} className="rounded-[16px] border border-[#e2e8f0] bg-white overflow-hidden animate-pulse">
                 <div className="h-[180px] bg-[#f0f4f8]" />
@@ -79,7 +79,7 @@ const FreeCoursesTab = () => {
             <p className="text-[14px] text-[#717480]">Check back soon — free courses will appear here.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={COURSE_GRID}>
             {courses.map((course) => (
               <CourseCard
                 key={course._id}

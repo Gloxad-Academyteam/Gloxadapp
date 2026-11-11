@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import useAuth from "@hooks/useAuth";
+import ComingSoon from "@components/ComingSoon";
 import { EmptyState, ErrorState, LoadingState, formatClassTime, formatDay } from "@components/Landing";
 import { errorMessage, lmsPublicApi, type TPublicTrimester } from "@services/lmsPublic";
 
@@ -219,6 +220,7 @@ const TrimesterPage = () => {
             {trimesters.data.map((trimester) => (
               <ProgramLanding key={trimester.id} trimester={trimester} />
             ))}
+            <ComingSoon variant="banner" title="More trimester programs are coming" text="New programs, cohorts and live classes will appear here as soon as they are published." />
           </div>
         )}
       </main>

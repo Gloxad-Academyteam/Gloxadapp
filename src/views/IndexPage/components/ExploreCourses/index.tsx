@@ -8,12 +8,14 @@ import { MdOutlineDeveloperMode } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
 import { PiBriefcase } from "react-icons/pi";
 import CourseCard from "@components/CourseCard";
+import ComingSoon from "@components/ComingSoon";
 import ScrollReveal from "@components/ScrollReveal";
 import { visibleCatalogCourses, categorySlug } from "@services/catalog";
 import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Tabs map onto the catalog categories (services/catalog); "All Courses" lists the full catalog
 const ALL_COURSES = "All Courses";
+const PREVIEW_COUNT = 5;
 const courseTabs = [
   { id: ALL_COURSES, title: ALL_COURSES, icon: FaLayerGroup },
   { id: "Software Development", title: "Software Development", icon: MdOutlineDeveloperMode },
@@ -40,6 +42,8 @@ const ExploreCourses = () => {
   const featuredCourses = visibleCatalogCourses
     .filter((course) => activeTabId === ALL_COURSES || course.category === activeTabId)
     .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"));
+  // A handful per tab: the full list lives on its own page
+  const shown = featuredCourses.slice(0, PREVIEW_COUNT);
 
   const checkScroll = () => {
     if (tabsRef.current) {
@@ -128,9 +132,9 @@ const ExploreCourses = () => {
       {/* No per-card scroll reveal: with every course listed the grid is taller than the screen, and inside the
           mobile carousel cards scrolled in sideways never registered as in view, so they stayed invisible */}
       <div
-        className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3"
+        className="mt-8 flex w-full max-w-[1272px] gap-4 overflow-x-auto pb-2 snap-x snap-mandatory -mx-5 px-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-[repeat(auto-fill,minmax(min(100%,264px),1fr))] sm:gap-[clamp(14px,2vw,24px)] sm:overflow-visible sm:px-0 sm:pb-0"
       >
-        {featuredCourses.map((course) => (
+        {shown.map((course) => (
           <div key={course.slug} className="w-[82vw] shrink-0 snap-center sm:w-auto sm:shrink sm:snap-none">
             <CourseCard
               href={`/courses/${course.slug}`}
@@ -144,6 +148,9 @@ const ExploreCourses = () => {
             />
           </div>
         ))}
+        <div className="w-[82vw] shrink-0 snap-center sm:w-auto sm:shrink sm:snap-none">
+          <ComingSoon title="More courses coming soon" text={featuredCourses.length > PREVIEW_COUNT ? `Plus ${featuredCourses.length - PREVIEW_COUNT} more in the full list.` : "New courses are being added to this category."} />
+        </div>
       </div>
 
       <div className="w-full max-w-[1272px] flex justify-start">

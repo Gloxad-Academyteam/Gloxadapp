@@ -1,6 +1,6 @@
 import Hero from "./components/Hero";
 import ExploreCourses from "./components/ExploreCourses";
-import TrimesterBanner from "./components/TrimesterBanner";
+import TrimesterPrograms from "./components/TrimesterPrograms";
 import { ScholarshipsCarousel } from "./components/ScholarshipsCarousel";
 import TrustedPartners from "./components/TrustedPartners";
 import FreeCourses from "./components/FreeCourses";
@@ -25,8 +25,8 @@ const IndexPage = ({ variant = "public" }: IndexPageProps) => {
           <ExploreCourses />
         </TutorCoursesOnly>
 
-        <div className="mx-auto flex flex-col gap-8 w-full max-w-[1272px] px-5 md:px-10 lg:px-0 mb-16">
-          <TrimesterBanner />
+        <div className="mx-auto mb-16 flex w-full max-w-[1512px] flex-col gap-12 px-5 md:px-10 lg:px-[120px]">
+          <TrimesterPrograms />
           <ScholarshipsCarousel />
         </div>
 
