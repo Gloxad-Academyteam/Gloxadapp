@@ -437,3 +437,12 @@ body[data-overlay-open] button[aria-label="Scroll to top"] {
 @container (max-width: 219px) { .cc .cc-tag { display: none; } }
 /* Two buttons side by side while there is room, one above the other when the card is narrow */
 @container (max-width: 250px) { .cc .cc-actions { grid-template-columns: 1fr; } }
+
+/* Skeleton loaders: a soft shimmer for boxes that stand in for content that is still loading */
+.skeleton {
+  background: linear-gradient(90deg, #eceff7 25%, #f6f8fc 50%, #eceff7 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.3s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }

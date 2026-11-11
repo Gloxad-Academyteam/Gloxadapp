@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import CourseCard, { COURSE_GRID } from "@components/CourseCard";
 import ComingSoon from "@components/ComingSoon";
+import { CourseGridSkeleton } from "@components/CourseCard/Skeleton";
 import { EmptyState, ErrorState, LoadingState, formatDay } from "@components/Landing";
 import { lmsPublicApi, type TPublicTrimester } from "@services/lmsPublic";
 import ProgramLanding from "./ProgramLanding";
@@ -42,7 +43,7 @@ const TrimesterPage = () => {
         </header>
 
         {trimesters.isLoading ? (
-          <LoadingState />
+          <CourseGridSkeleton count={3} />
         ) : trimesters.isError ? (
           <ErrorState onRetry={() => trimesters.refetch()} />
         ) : programs.length === 0 ? (

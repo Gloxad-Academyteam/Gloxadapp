@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import CourseCard, { COURSE_GRID } from "@components/CourseCard";
+import { CourseGridSkeleton } from "@components/CourseCard/Skeleton";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@utils/axiosInstance";
 import { toast } from "react-toastify";
@@ -60,18 +61,7 @@ const FreeCoursesTab = () => {
       {/* Courses Grid */}
       <div className="mx-auto max-w-[1512px] px-5 md:px-10 lg:px-[120px] pb-24">
         {isLoading ? (
-          <div className={COURSE_GRID}>
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="rounded-[16px] border border-[#e2e8f0] bg-white overflow-hidden animate-pulse">
-                <div className="h-[180px] bg-[#f0f4f8]" />
-                <div className="p-5 space-y-3">
-                  <div className="h-4 bg-[#f0f4f8] rounded w-3/4" />
-                  <div className="h-3 bg-[#f0f4f8] rounded w-1/2" />
-                  <div className="h-3 bg-[#f0f4f8] rounded w-2/3" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <CourseGridSkeleton count={6} />
         ) : courses.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <div className="text-5xl mb-4">📚</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { COURSE_GRID } from "@components/CourseCard";
+import { CourseGridSkeleton } from "@components/CourseCard/Skeleton";
 import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -112,9 +113,7 @@ const CoursesPageContent = () => {
       {/* Main Content Area */}
       <div className="w-full">
         {isLoading ? (
-          <div className="w-full h-[40vh] flex items-center justify-center">
-            <p className="text-title-large text-neutral-8 animate-pulse">Loading courses...</p>
-          </div>
+          <CourseGridSkeleton count={6} />
         ) : error ? (
           <div className="w-full h-[40vh] flex items-center justify-center">
             <p className="text-title-large text-error-5">Failed to load courses. Please try again.</p>

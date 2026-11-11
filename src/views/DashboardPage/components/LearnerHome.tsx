@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { FiChevronRight, FiAward, FiBookOpen, FiUser } from "react-icons/fi";
+import { CourseRowSkeleton } from "@components/CourseCard/Skeleton";
 import useAuth from "@hooks/useAuth";
 import axiosInstance from "../../../utils/axiosInstance";
 import { getMyEnrollments } from "@services/enrollments";
@@ -104,7 +105,7 @@ const LearnerHome = () => {
               <Link href="/dashboard?tab=my-courses" className="text-[12px] font-semibold text-[#07004d] hover:underline">View All Courses</Link>
             </div>
             {isLoading ? (
-              <p className="text-[14px] text-[#717480]">Loading your courses...</p>
+              <div role="status" aria-label="Loading your courses" className="flex flex-col gap-4"><CourseRowSkeleton /></div>
             ) : inProgress.length === 0 ? (
               <div className="rounded-2xl border border-[#e5e7ef] bg-white p-8 text-center">
                 <FiBookOpen className="mx-auto mb-3 text-[28px] text-[#07004d]" />

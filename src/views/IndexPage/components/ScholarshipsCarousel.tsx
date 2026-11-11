@@ -79,7 +79,20 @@ export const ScholarshipsCarousel: React.FC = () => {
       {/* Scholarships, with room for their pictures */}
       <div className="relative z-10 min-w-0 flex-1">
         {scholarships.isLoading ? (
-          <div className="h-[340px] animate-pulse rounded-[18px] bg-white/30" />
+          <div className="grid gap-4 sm:grid-cols-2" role="status" aria-label="Loading scholarships">
+            {[0, 1].map((i) => (
+              <div key={i} className="overflow-hidden rounded-[18px] bg-white/90 shadow-[0_10px_30px_rgba(11,31,77,0.14)]">
+                <div className="skeleton h-[170px] w-full" />
+                <div className="p-5">
+                  <div className="skeleton h-[12px] w-20 rounded-full" />
+                  <div className="skeleton mt-4 h-[16px] w-4/5 rounded-full" />
+                  <div className="skeleton mt-3 h-[11px] w-full rounded-full" />
+                  <div className="skeleton mt-2 h-[11px] w-2/3 rounded-full" />
+                  <div className="skeleton mt-5 h-[40px] w-full rounded-full" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : shown.length > 0 ? (
           <div className="-mx-6 flex snap-x gap-4 overflow-x-auto px-6 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:-mx-10 md:px-10 sm:mx-0 sm:grid sm:grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0">
             {shown.map((item, index) => (
