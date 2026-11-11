@@ -3,14 +3,10 @@
 import Link from "next/link";
 import CourseCard, { COURSE_GRID } from "@components/CourseCard";
 import ScrollReveal from "@components/ScrollReveal";
-import { youtubeFreeCatalogCourses } from "@services/catalog";
+import { pickDiverse, youtubeFreeCatalogCourses } from "@services/catalog";
 
-// One free course from each of four fields: enough to get a feel, with the full list a click away
-const FEATURED_CATEGORIES = ["Software Development", "Data Science & Analytics", "Artificial Intelligence", "Design"];
-
-const featured = FEATURED_CATEGORIES.map((category) => youtubeFreeCatalogCourses.find((course) => course.category === category)).filter(
-  (course): course is (typeof youtubeFreeCatalogCourses)[number] => Boolean(course)
-);
+// Four free courses, each from a different provider when there is a choice: enough to get a feel, with the full list a click away
+const featured = pickDiverse(youtubeFreeCatalogCourses.filter((course) => course.level === "Beginner"), 4);
 
 const FreeCourses = () => (
   <ScrollReveal className="mx-auto w-full max-w-[1512px] px-5 py-12 md:px-10 md:py-16 lg:px-[120px]">

@@ -7,7 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { FiBookOpen, FiCheck, FiClock, FiSearch } from "react-icons/fi";
 import axiosInstance from "@utils/axiosInstance";
-import { CATALOG_CATEGORIES, categorySlug, youtubeFreeCatalogCourses, CATALOG_VIDEO_CREDIT, normaliseApiCourse } from "@services/catalog";
+import { CATALOG_CATEGORIES, categorySlug, youtubeFreeCatalogCourses, CATALOG_PROVIDER_NOTE, normaliseApiCourse } from "@services/catalog";
 import { getYouTubeSourceName, isCourseVisible, isFreeYouTubeCourse } from "@utils/courseSource";
 
 const PAGE_SIZE = 12;
@@ -263,7 +263,7 @@ const FreeCoursesContent = () => {
             </button>
           </div>
         )}
-        <p className="mt-12 text-center text-[12px] leading-relaxed text-[#858795]">{CATALOG_VIDEO_CREDIT}</p>
+        <p className="mt-12 text-center text-[12px] leading-relaxed text-[#858795]">{CATALOG_PROVIDER_NOTE}</p>
       </main>
     </div>
   );

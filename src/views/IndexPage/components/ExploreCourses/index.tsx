@@ -10,7 +10,7 @@ import { PiBriefcase } from "react-icons/pi";
 import CourseCard from "@components/CourseCard";
 import ComingSoon from "@components/ComingSoon";
 import ScrollReveal from "@components/ScrollReveal";
-import { visibleCatalogCourses, categorySlug } from "@services/catalog";
+import { visibleCatalogCourses, categorySlug, pickDiverse } from "@services/catalog";
 import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Tabs map onto the catalog categories (services/catalog); "All Courses" lists the full catalog
@@ -43,7 +43,8 @@ const ExploreCourses = () => {
     .filter((course) => activeTabId === ALL_COURSES || course.category === activeTabId)
     .sort((a, b) => Number(b.type === "academic") - Number(a.type === "academic"));
   // A handful per tab: the full list lives on its own page
-  const shown = featuredCourses.slice(0, PREVIEW_COUNT);
+  // ...and when there is a choice, from different providers
+  const shown = pickDiverse(featuredCourses, PREVIEW_COUNT);
 
   const checkScroll = () => {
     if (tabsRef.current) {

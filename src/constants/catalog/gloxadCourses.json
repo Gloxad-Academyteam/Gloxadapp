@@ -4622,6 +4622,403 @@
         "Explain system design trade-offs",
         "Practise with full mock interviews"
       ]
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "6 lessons, about 13.8 hours",
+      "level": "Beginner",
+      "slug": "cs50-introduction-to-computer-science",
+      "title": "CS50: Introduction to Computer Science",
+      "category": "Software Development",
+      "subtitle": "Harvard's famous first course in computer science, taught by David J. Malan.",
+      "description": "Six lectures from Harvard's CS50x: computational thinking, Scratch, C, arrays, algorithms, memory and data structures. No programming experience is needed.",
+      "skills": [
+        "Computational thinking",
+        "C programming",
+        "Algorithms",
+        "Memory and data structures"
+      ],
+      "videos": [
+        {
+          "youtubeId": "IDDmrzzB14M",
+          "title": "CS50x 2023 - Lecture 0 - Scratch",
+          "length": "2:09:30",
+          "duration": "2h 9m",
+          "url": "https://www.youtube.com/watch?v=IDDmrzzB14M"
+        },
+        {
+          "youtubeId": "ywg7cW0Txs4",
+          "title": "CS50x 2023 - Lecture 1 - C",
+          "length": "2:29:34",
+          "duration": "2h 29m",
+          "url": "https://www.youtube.com/watch?v=ywg7cW0Txs4"
+        },
+        {
+          "youtubeId": "XmYnsO7iSI8",
+          "title": "CS50x 2023 - Lecture 2 - Arrays",
+          "length": "2:24:20",
+          "duration": "2h 24m",
+          "url": "https://www.youtube.com/watch?v=XmYnsO7iSI8"
+        },
+        {
+          "youtubeId": "4oqjcKenCH8",
+          "title": "CS50x 2023 - Lecture 3 - Algorithms",
+          "length": "2:01:36",
+          "duration": "2h 1m",
+          "url": "https://www.youtube.com/watch?v=4oqjcKenCH8"
+        },
+        {
+          "youtubeId": "AcWIE9qazLI",
+          "title": "CS50x 2023 - Lecture 4 - Memory",
+          "length": "2:25:20",
+          "duration": "2h 25m",
+          "url": "https://www.youtube.com/watch?v=AcWIE9qazLI"
+        },
+        {
+          "youtubeId": "X8h4dq9Hzq8",
+          "title": "CS50x 2023 - Lecture 5 - Data Structures",
+          "length": "2:16:12",
+          "duration": "2h 16m",
+          "url": "https://www.youtube.com/watch?v=X8h4dq9Hzq8"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/IDDmrzzB14M/maxresdefault.jpg",
+      "videoHours": 13.8,
+      "whatYouWillLearn": [
+        "Think about problems the way a programmer does",
+        "Write and read programs in Scratch and C",
+        "Compare algorithms by how fast they run",
+        "Understand how memory and data structures work"
+      ],
+      "videoCredit": "Video lessons by CS50 (youtube.com/@cs50), embedded through YouTube's official player."
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "6 lessons, about 4.4 hours",
+      "level": "Beginner",
+      "slug": "mit-introduction-to-programming-in-python",
+      "title": "Introduction to Programming with Python (MIT)",
+      "category": "Foundations",
+      "subtitle": "MIT's 6.0001 lectures: what computation is, and how to write your first Python programs.",
+      "description": "Six lectures from MIT's Introduction to Computer Science and Programming in Python: computation, branching and iteration, strings, functions, lists and tuples, recursion and dictionaries.",
+      "skills": [
+        "Python basics",
+        "Functions",
+        "Lists and dictionaries",
+        "Recursion"
+      ],
+      "videos": [
+        {
+          "youtubeId": "nykOeWgQcHM",
+          "title": "1. What is Computation?",
+          "length": "43:06",
+          "duration": "43 min",
+          "url": "https://www.youtube.com/watch?v=nykOeWgQcHM"
+        },
+        {
+          "youtubeId": "0jljZRnHwOI",
+          "title": "2. Branching and Iteration",
+          "length": "43:31",
+          "duration": "43 min",
+          "url": "https://www.youtube.com/watch?v=0jljZRnHwOI"
+        },
+        {
+          "youtubeId": "SE4P7IVCunE",
+          "title": "3. String Manipulation, Guess and Check, Approximations, Bisection",
+          "length": "45:02",
+          "duration": "45 min",
+          "url": "https://www.youtube.com/watch?v=SE4P7IVCunE"
+        },
+        {
+          "youtubeId": "MjbuarJ7SE0",
+          "title": "4. Decomposition, Abstraction, and Functions",
+          "length": "41:09",
+          "duration": "41 min",
+          "url": "https://www.youtube.com/watch?v=MjbuarJ7SE0"
+        },
+        {
+          "youtubeId": "RvRKT-jXvko",
+          "title": "5. Tuples, Lists, Aliasing, Mutability, and Cloning",
+          "length": "41:28",
+          "duration": "41 min",
+          "url": "https://www.youtube.com/watch?v=RvRKT-jXvko"
+        },
+        {
+          "youtubeId": "WPSeyjX1-4s",
+          "title": "6. Recursion and Dictionaries",
+          "length": "48:22",
+          "duration": "48 min",
+          "url": "https://www.youtube.com/watch?v=WPSeyjX1-4s"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/nykOeWgQcHM/maxresdefault.jpg",
+      "videoHours": 4.4,
+      "whatYouWillLearn": [
+        "Explain what computation is",
+        "Control a program with branching and loops",
+        "Break programs into functions",
+        "Use lists, tuples, dictionaries and recursion"
+      ],
+      "videoCredit": "Video lessons by MIT OpenCourseWare (youtube.com/@mitocw), embedded through YouTube's official player."
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "5 lessons, about 1.2 hours",
+      "level": "Beginner",
+      "slug": "neural-networks-explained-visually",
+      "title": "Neural Networks, Explained Visually",
+      "category": "Artificial Intelligence",
+      "subtitle": "A clear, visual introduction to how neural networks learn, from 3Blue1Brown.",
+      "description": "Five short, animated lessons: what a neural network is, how gradient descent trains it, how backpropagation works, and a short explanation of large language models.",
+      "skills": [
+        "Neural networks",
+        "Gradient descent",
+        "Backpropagation",
+        "Large language models"
+      ],
+      "videos": [
+        {
+          "youtubeId": "aircAruvnKk",
+          "title": "But what is a neural network? | Deep learning chapter 1",
+          "length": "18:40",
+          "duration": "18 min",
+          "url": "https://www.youtube.com/watch?v=aircAruvnKk"
+        },
+        {
+          "youtubeId": "IHZwWFHWa-w",
+          "title": "Gradient descent, how neural networks learn | Deep Learning Chapter 2",
+          "length": "20:33",
+          "duration": "20 min",
+          "url": "https://www.youtube.com/watch?v=IHZwWFHWa-w"
+        },
+        {
+          "youtubeId": "Ilg3gGewQ5U",
+          "title": "Backpropagation, intuitively | Deep Learning Chapter 3",
+          "length": "12:47",
+          "duration": "12 min",
+          "url": "https://www.youtube.com/watch?v=Ilg3gGewQ5U"
+        },
+        {
+          "youtubeId": "tIeHLnjs5U8",
+          "title": "Backpropagation calculus | Deep Learning Chapter 4",
+          "length": "10:18",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=tIeHLnjs5U8"
+        },
+        {
+          "youtubeId": "LPZh9BOjkQs",
+          "title": "Large Language Models explained briefly",
+          "length": "7:58",
+          "duration": "7 min",
+          "url": "https://www.youtube.com/watch?v=LPZh9BOjkQs"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/aircAruvnKk/maxresdefault.jpg",
+      "videoHours": 1.2,
+      "whatYouWillLearn": [
+        "Describe how a neural network recognises patterns",
+        "Explain gradient descent and why it works",
+        "Understand backpropagation at an intuitive level",
+        "Get a first picture of how large language models work"
+      ],
+      "videoCredit": "Video lessons by 3Blue1Brown (youtube.com/@3blue1brown), embedded through YouTube's official player."
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "5 lessons, about 1 hours",
+      "level": "Beginner",
+      "slug": "statistics-and-probability-essentials",
+      "title": "Statistics and Probability: The Essentials",
+      "category": "Data Science & Analytics",
+      "subtitle": "The core ideas of statistics and probability, explained step by step by Khan Academy.",
+      "description": "Five short lessons: mean, median and mode, standard deviation, probability, the normal distribution, and the difference between correlation and causation.",
+      "skills": [
+        "Descriptive statistics",
+        "Probability",
+        "Normal distribution",
+        "Correlation"
+      ],
+      "videos": [
+        {
+          "youtubeId": "h8EYEJ32oQ8",
+          "title": "Statistics intro: Mean, median, and mode | Data and statistics | 6th grade | Khan Academy",
+          "length": "8:54",
+          "duration": "8 min",
+          "url": "https://www.youtube.com/watch?v=h8EYEJ32oQ8"
+        },
+        {
+          "youtubeId": "PWiWkqHmum0",
+          "title": "Population standard deviation | Descriptive statistics | Probability and Statistics | Khan Academy",
+          "length": "8:05",
+          "duration": "8 min",
+          "url": "https://www.youtube.com/watch?v=PWiWkqHmum0"
+        },
+        {
+          "youtubeId": "uzkc-qNVoOk",
+          "title": "Probability explained | Independent and dependent events | Probability and Statistics | Khan Academy",
+          "length": "8:18",
+          "duration": "8 min",
+          "url": "https://www.youtube.com/watch?v=uzkc-qNVoOk"
+        },
+        {
+          "youtubeId": "hgtMWR3TFnY",
+          "title": "Introduction to the normal distribution | Probability and Statistics | Khan Academy",
+          "length": "26:24",
+          "duration": "26 min",
+          "url": "https://www.youtube.com/watch?v=hgtMWR3TFnY"
+        },
+        {
+          "youtubeId": "ROpbdO-gRUo",
+          "title": "Correlation and causality | Statistical studies | Probability and Statistics | Khan Academy",
+          "length": "10:45",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=ROpbdO-gRUo"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/h8EYEJ32oQ8/maxresdefault.jpg",
+      "videoHours": 1.0,
+      "whatYouWillLearn": [
+        "Summarise data with mean, median and mode",
+        "Measure spread with standard deviation",
+        "Work out simple probabilities",
+        "Tell correlation apart from causation"
+      ],
+      "videoCredit": "Video lessons by Khan Academy (youtube.com/@khanacademy), embedded through YouTube's official player."
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "5 lessons, about 0.9 hours",
+      "level": "Beginner",
+      "slug": "how-computers-work",
+      "title": "How Computers Work",
+      "category": "Foundations",
+      "subtitle": "A friendly tour of how computers are built, from early machines to logic gates and binary.",
+      "description": "The first five episodes of Crash Course Computer Science: early computing, electronic computing, Boolean logic and logic gates, binary, and the arithmetic logic unit.",
+      "skills": [
+        "How computers work",
+        "Binary numbers",
+        "Logic gates",
+        "Computer history"
+      ],
+      "videos": [
+        {
+          "youtubeId": "O5nskjZ_GoI",
+          "title": "Early Computing: Crash Course Computer Science #1",
+          "length": "11:53",
+          "duration": "11 min",
+          "url": "https://www.youtube.com/watch?v=O5nskjZ_GoI"
+        },
+        {
+          "youtubeId": "LN0ucKNX0hc",
+          "title": "Electronic Computing: Crash Course Computer Science #2",
+          "length": "10:44",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=LN0ucKNX0hc"
+        },
+        {
+          "youtubeId": "gI-qXk7XojA",
+          "title": "Boolean Logic & Logic Gates: Crash Course Computer Science #3",
+          "length": "10:07",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=gI-qXk7XojA"
+        },
+        {
+          "youtubeId": "1GSjbWt0c9M",
+          "title": "Representing Numbers and Letters with Binary: Crash Course Computer Science #4",
+          "length": "10:46",
+          "duration": "10 min",
+          "url": "https://www.youtube.com/watch?v=1GSjbWt0c9M"
+        },
+        {
+          "youtubeId": "1I5ZMmrOfnA",
+          "title": "How Computers Calculate - the ALU: Crash Course Computer Science #5",
+          "length": "11:10",
+          "duration": "11 min",
+          "url": "https://www.youtube.com/watch?v=1I5ZMmrOfnA"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/O5nskjZ_GoI/maxresdefault.jpg",
+      "videoHours": 0.9,
+      "whatYouWillLearn": [
+        "Trace how computing grew from early machines to electronics",
+        "Read simple Boolean logic and logic gates",
+        "Explain how numbers and letters are stored in binary",
+        "Describe what the ALU does"
+      ],
+      "videoCredit": "Video lessons by CrashCourse (youtube.com/@crashcourse), embedded through YouTube's official player."
+    },
+    {
+      "type": "short",
+      "programme": "Short Course",
+      "price": 0,
+      "priceLabel": "Free",
+      "duration": "4 lessons, about 5 hours",
+      "level": "Beginner",
+      "slug": "yale-financial-markets",
+      "title": "Financial Markets (Yale)",
+      "category": "Business & Entrepreneurship",
+      "subtitle": "Yale economist Robert Shiller on why finance matters and how markets manage risk.",
+      "description": "Four lectures from Yale's Financial Markets course: why finance matters, risk and financial crises, technology and invention in finance, and portfolio diversification.",
+      "skills": [
+        "Finance basics",
+        "Risk",
+        "Diversification",
+        "Financial institutions"
+      ],
+      "videos": [
+        {
+          "youtubeId": "vTs2IQ8OefQ",
+          "title": "1. Why Finance?",
+          "length": "1:14:17",
+          "duration": "1h 14m",
+          "url": "https://www.youtube.com/watch?v=vTs2IQ8OefQ"
+        },
+        {
+          "youtubeId": "QbosMr2JVrc",
+          "title": "2. Risk and Financial Crises",
+          "length": "1:09:44",
+          "duration": "1h 9m",
+          "url": "https://www.youtube.com/watch?v=QbosMr2JVrc"
+        },
+        {
+          "youtubeId": "Iij2mpilSJo",
+          "title": "3. Technology and Invention in Finance",
+          "length": "1:15:29",
+          "duration": "1h 15m",
+          "url": "https://www.youtube.com/watch?v=Iij2mpilSJo"
+        },
+        {
+          "youtubeId": "_B_24GUWdSM",
+          "title": "4. Portfolio Diversification and Supporting Financial Institutions",
+          "length": "1:18:01",
+          "duration": "1h 18m",
+          "url": "https://www.youtube.com/watch?v=_B_24GUWdSM"
+        }
+      ],
+      "thumbnail": "https://i.ytimg.com/vi/vTs2IQ8OefQ/hqdefault.jpg",
+      "videoHours": 5.0,
+      "whatYouWillLearn": [
+        "Explain what the financial system is for",
+        "Understand risk and how crises happen",
+        "See how invention shapes finance",
+        "Describe portfolio diversification"
+      ],
+      "videoCredit": "Video lessons by YaleCourses (youtube.com/@YaleCourses), embedded through YouTube's official player."
     }
   ]
 }

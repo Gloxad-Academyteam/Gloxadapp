@@ -3,7 +3,8 @@ import { formatLength } from "@utils/youtube";
 import { getYouTubeSourceName, isCourseVisible, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Gloxad Academy's 2026 course list (constants/catalog/gloxadCourses.json), shown on the site until
-// the courses exist in the database. Lessons are freeCodeCamp.org videos, used with permission.
+// the courses exist in the database. Lessons are YouTube videos from their original creators (freeCodeCamp.org
+// for most courses, others for the rest), each credited on its course; they play in YouTube's official player.
 // Regenerate the backend seed from the same file with `node scripts/build-course-seed.mjs`.
 
 // A chapter the video's creator published on YouTube: where it starts and ends, in seconds
@@ -39,6 +40,8 @@ type TCatalogEntry = {
   videos: TCatalogVideo[];
   videoHours: number;
   videoNote?: string;
+  // Who made the videos, e.g. "Video lessons by CS50 (youtube.com/@cs50), ...". Falls back to the catalogue-wide credit.
+  videoCredit?: string;
   thumbnail: string;
 };
 
@@ -71,6 +74,9 @@ export type TCatalogCourse = TCatalogEntry & {
 };
 
 export const CATALOG_VIDEO_CREDIT: string = catalogData.videoCredit;
+
+// Shown under course lists: each course names its own provider, so there is no single credit line
+export const CATALOG_PROVIDER_NOTE = "Lessons come from their original creators and play through YouTube's official player. Each course names its provider.";
 
 const lengthToSeconds = (length: string) => length.split(":").map(Number).reduce((total, part) => total * 60 + part, 0);
 
@@ -113,8 +119,8 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   aboutCourseText: entry.description,
   // No avatarUrl: the course page falls back to an initials avatar
   instructor: { firstName: "Gloxad", lastName: "Academy", avatarUrl: "" },
-  sourceName: getYouTubeSourceName({ videoCredit: CATALOG_VIDEO_CREDIT }),
-  videoCredit: CATALOG_VIDEO_CREDIT,
+  sourceName: getYouTubeSourceName({ videoCredit: entry.videoCredit ?? CATALOG_VIDEO_CREDIT }),
+  videoCredit: entry.videoCredit ?? CATALOG_VIDEO_CREDIT,
   // Without the chapters file each video is one lesson; withChapters() upgrades a course once it has loaded
   modules: buildModules(entry, {}),
 });
@@ -122,6 +128,18 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
 export const catalogCourses: TCatalogCourse[] = (catalogData.courses as TCatalogEntry[]).map(toCourse);
 export const visibleCatalogCourses = catalogCourses.filter(isCourseVisible);
 export const youtubeFreeCatalogCourses = catalogCourses.filter(isFreeYouTubeCourse);
+
+// Picks up to `count` courses taking one provider at a time, so a short list shows several providers instead of one
+export const pickDiverse = <T extends { sourceName: string }>(courses: T[], count: number): T[] => {
+  const byProvider = new Map<string, T[]>();
+  courses.forEach((course) => byProvider.set(course.sourceName, [...(byProvider.get(course.sourceName) ?? []), course]));
+  const queues = [...byProvider.values()];
+  const picked: T[] = [];
+  for (let round = 0; picked.length < count && queues.some((queue) => queue[round]); round++) {
+    for (const queue of queues) if (queue[round] && picked.length < count) picked.push(queue[round]);
+  }
+  return picked;
+};
 
 // Categories in the order the home page tabs show them
 export const CATALOG_CATEGORIES = [

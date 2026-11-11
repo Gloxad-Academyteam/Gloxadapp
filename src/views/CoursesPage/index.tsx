@@ -9,7 +9,7 @@ import { FaSearch } from "react-icons/fa";
 import { useCoursesPage } from "./hooks/useCoursesPage";
 import ExploreCourseCard from "./components/ExploreCourseCard";
 import { getYouTubeSourceName, isFreeCourse, isFreeYouTubeCourse } from "@utils/courseSource";
-import { CATALOG_CATEGORIES, CATALOG_VIDEO_CREDIT, categorySlug } from "@services/catalog";
+import { CATALOG_CATEGORIES, CATALOG_PROVIDER_NOTE, categorySlug } from "@services/catalog";
 
 // The public /courses list needs an account; /dashboard/explore is already behind the dashboard guard
 const CoursesPageGate = () => {
@@ -162,7 +162,7 @@ const CoursesPageContent = () => {
         )}
       </div>
 
-      <p className="mt-14 text-center text-[12px] text-[#8a8c95]">{CATALOG_VIDEO_CREDIT}</p>
+      <p className="mt-14 text-center text-[12px] text-[#8a8c95]">{CATALOG_PROVIDER_NOTE}</p>
     </div>
   );
 };
