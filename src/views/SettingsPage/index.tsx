@@ -22,9 +22,9 @@ const PasswordField = ({ id, label, name, value, onChange, show, onToggle, place
 }) => (
   <div>
     <label htmlFor={id} className="mb-2 block text-[13px] font-semibold text-[#2b2f45]">{label}</label>
-    <div className="flex items-center gap-3 rounded-xl border border-[#d6dbea] bg-white px-4 transition-colors focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10">
+    <div className="flex items-center gap-3 rounded-xl border border-transparent bg-[#f1f3f9] px-4 transition-colors focus-within:border-[#0B1F4D]/25 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#0B1F4D]/10">
       <FiLock aria-hidden className="shrink-0 text-[16px] text-[#8a90a6]" />
-      <input id={id} name={name} type={show ? "text" : "password"} value={value} onChange={onChange} required placeholder={placeholder} autoComplete={autoComplete} className="h-11 flex-1 bg-transparent text-[14px] outline-none" />
+      <input id={id} name={name} type={show ? "text" : "password"} value={value} onChange={onChange} required placeholder={placeholder} autoComplete={autoComplete} className="h-11 flex-1 border-0 bg-transparent p-0 text-[14px] shadow-none outline-none ring-0 focus:border-0 focus:ring-0" />
       <button type="button" onClick={onToggle} aria-label={show ? `Hide ${label.toLowerCase()}` : `Show ${label.toLowerCase()}`} className="shrink-0 text-[#8a90a6] transition-colors hover:text-[#0B1F4D]">
         {show ? <FiEyeOff size={17} /> : <FiEye size={17} />}
       </button>
@@ -296,15 +296,15 @@ const SettingsPage = () => {
             <div>
               <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Full name</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input required type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="First name" className="h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
-                <input required type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder="Last name" className="h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input required type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="First name" className="h-11 px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input required type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder="Last name" className="h-11 px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             
             {/* Username */}
             <div>
               <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Username</label>
-              <input required type="text" name="username" value={formData.username} onChange={handleInputChange} placeholder="Enter your username" className="w-full h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+              <input required type="text" name="username" value={formData.username} onChange={handleInputChange} placeholder="Enter your username" className="w-full h-11 px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
             </div>
 
             {/* Phone Number */}
@@ -315,15 +315,15 @@ const SettingsPage = () => {
                 defaultCountry="NG"
                 value={formData.phoneNumber}
                 onChange={(value) => setFormData(prev => ({ ...prev, phoneNumber: value || "" }))}
-                className="flex items-center h-11 px-4 border border-[#d6dbea] rounded-xl bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors text-[14px] outline-none"
+                className="flex items-center h-11 px-4 border border-transparent rounded-xl bg-white focus-within:border-[#0B1F4D]/25 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors text-[14px] outline-none"
               />
             </div>
 
             {/* Title */}
             <div>
               <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Title</label>
-              <div className="flex items-center border border-[#d6dbea] rounded-xl pl-4 pr-3 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
-                <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your role or professional title" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
+              <div className="flex items-center border border-transparent rounded-xl pl-4 pr-3 bg-white focus-within:border-[#0B1F4D]/25 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
+                <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your role or professional title" className="flex-1 h-11 border-0 bg-transparent p-0 text-[14px] shadow-none outline-none ring-0 focus:border-0 focus:ring-0" />
                 <span className="text-[12px] text-[#4e515c] font-medium ml-2">{formData.title.length}/50</span>
               </div>
             </div>
@@ -331,14 +331,14 @@ const SettingsPage = () => {
             {/* Skills */}
             <div>
               <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Skills</label>
-              <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} placeholder="e.g. UI/UX, Figma, React" className="w-full h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+              <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} placeholder="e.g. UI/UX, Figma, React" className="w-full h-11 px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               <p className="text-[12px] text-[#717480] mt-1">Separate skills with commas</p>
             </div>
 
             {/* Biography */}
             <div>
               <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Biography</label>
-              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Share a little about your background, interests, and goals." className="w-full h-[120px] p-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors resize-none"></textarea>
+              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Share a little about your background, interests, and goals." className="w-full h-[120px] p-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors resize-none"></textarea>
             </div>
 
             <div className="mt-2">
@@ -402,7 +402,7 @@ const SettingsPage = () => {
               <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                 <FaGlobe className="text-[#52607A] text-[18px]" />
               </div>
-              <input type="text" name="website" value={formData.website} onChange={handleInputChange} placeholder="Personal website or portfolio url..." className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+              <input type="text" name="website" value={formData.website} onChange={handleInputChange} placeholder="Personal website or portfolio url..." className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
             </div>
           </div>
           
@@ -414,7 +414,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaFacebookF className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="facebook" value={formData.facebook} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="facebook" value={formData.facebook} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Instagram */}
@@ -424,7 +424,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaInstagram className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="instagram" value={formData.instagram} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="instagram" value={formData.instagram} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Linkedin */}
@@ -434,7 +434,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaLinkedinIn className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Twitter */}
@@ -444,7 +444,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaTwitter className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="twitter" value={formData.twitter} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="twitter" value={formData.twitter} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Whatsapp */}
@@ -454,7 +454,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaWhatsapp className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} placeholder="Phone number" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} placeholder="Phone number" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Youtube */}
@@ -464,7 +464,7 @@ const SettingsPage = () => {
                 <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
                   <FaYoutube className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="youtube" value={formData.youtube} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input type="text" name="youtube" value={formData.youtube} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-transparent bg-[#f1f3f9] text-[14px] outline-none focus:border-[#0B1F4D]/25 focus:bg-white focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
           </div>
@@ -569,7 +569,7 @@ const SettingsPage = () => {
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="inline-flex h-11 items-center gap-2.5 rounded-full border border-[#f0d8d6] bg-white px-6 text-[14px] font-semibold text-[#b93832] transition hover:bg-[#fff3f2] disabled:cursor-wait disabled:opacity-60"
+            className="inline-flex h-11 items-center gap-2.5 rounded-full border border-transparent bg-[#fff3f2] px-6 text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
           >
             <LuLogOut size={18} aria-hidden />
             {isLoggingOut ? "Logging out..." : "Log out"}
