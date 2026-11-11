@@ -8,14 +8,13 @@ import { MdOutlineDeveloperMode } from "react-icons/md";
 import { FaChartSimple } from "react-icons/fa6";
 import { PiBriefcase } from "react-icons/pi";
 import CourseCard from "@components/CourseCard";
-import ComingSoon from "@components/ComingSoon";
 import ScrollReveal from "@components/ScrollReveal";
 import { visibleCatalogCourses, categorySlug, pickDiverse } from "@services/catalog";
 import { getYouTubeSourceName, isFreeYouTubeCourse } from "@utils/courseSource";
 
 // Tabs map onto the catalog categories (services/catalog); "All Courses" lists the full catalog
 const ALL_COURSES = "All Courses";
-const PREVIEW_COUNT = 5;
+const PREVIEW_COUNT = 6;
 const courseTabs = [
   { id: ALL_COURSES, title: ALL_COURSES, icon: FaLayerGroup },
   { id: "Software Development", title: "Software Development", icon: MdOutlineDeveloperMode },
@@ -149,9 +148,6 @@ const ExploreCourses = () => {
             />
           </div>
         ))}
-        <div className="w-[82vw] shrink-0 snap-center sm:w-auto sm:shrink sm:snap-none">
-          <ComingSoon title="More courses coming soon" text={featuredCourses.length > PREVIEW_COUNT ? `Plus ${featuredCourses.length - PREVIEW_COUNT} more in the full list.` : "New courses are being added to this category."} />
-        </div>
       </div>
 
       <div className="w-full max-w-[1272px] flex justify-start">

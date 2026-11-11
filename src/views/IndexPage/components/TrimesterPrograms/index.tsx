@@ -15,7 +15,7 @@ const stateLabel = (trimester: TPublicTrimester) =>
 // A short look at the published trimester programs, linking to each program's landing page, with a marker that more are coming
 const ProgramTile = ({ trimester }: { trimester: TPublicTrimester }) => (
   <Link
-    href="/trimester"
+    href={`/trimester/${trimester.id}`}
     className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#0B1F4D_0%,#1E4FC9_140%)] p-6 text-white transition-shadow hover:shadow-[0_10px_30px_rgba(11,31,77,0.3)]"
   >
     <div className="flex flex-wrap items-center gap-2">
@@ -48,7 +48,7 @@ const TrimesterPrograms = () => {
             Guided, cohort based learning with live classes, assignments, a final project and a certificate.
           </p>
         </div>
-        <Link href="/trimester" className="text-[14px] font-semibold text-[#0B1F4D] hover:underline">See the program page</Link>
+        <Link href="/trimester" className="text-[14px] font-semibold text-[#0B1F4D] hover:underline">All trimester programs</Link>
       </div>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,300px),1fr))] gap-[clamp(14px,2vw,24px)]">
