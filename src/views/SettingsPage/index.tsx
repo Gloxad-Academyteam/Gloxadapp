@@ -253,7 +253,7 @@ const SettingsPage = () => {
     <div className="mx-auto max-w-[1512px] px-5 md:px-10 lg:px-[120px] pt-8 pb-24">
       
       {/* Account Settings Card */}
-      <div className="bg-white rounded-[12px] border border-[#dedee7] shadow-sm mb-8 p-6 md:p-8 flex flex-col md:flex-row gap-8">
+      <div className="bg-white rounded-2xl border border-[#e3e6f0] shadow-[0_1px_2px_rgba(11,31,77,0.04)] mb-8 p-6 md:p-8 flex flex-col md:flex-row gap-8">
         
         {/* Left: Form */}
         <div className="flex-1 order-2 md:order-1">
@@ -264,35 +264,35 @@ const SettingsPage = () => {
           <form onSubmit={handleProfileSubmit} className="flex flex-col gap-6">
             {/* Full name */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Full name</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Full name</label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input required type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="First name" className="h-11 px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
-                <input required type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder="Last name" className="h-11 px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input required type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="First name" className="h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
+                <input required type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} placeholder="Last name" className="h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             
             {/* Username */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Username</label>
-              <input required type="text" name="username" value={formData.username} onChange={handleInputChange} placeholder="Enter your username" className="w-full h-11 px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Username</label>
+              <input required type="text" name="username" value={formData.username} onChange={handleInputChange} placeholder="Enter your username" className="w-full h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
             </div>
 
             {/* Phone Number */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Phone Number</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Phone Number</label>
               <PhoneInput
                 international
                 defaultCountry="NG"
                 value={formData.phoneNumber}
                 onChange={(value) => setFormData(prev => ({ ...prev, phoneNumber: value || "" }))}
-                className="flex items-center h-11 px-4 border border-[#dedee7] rounded-[6px] bg-white focus-within:border-[#181C7B] transition-colors text-[14px] outline-none"
+                className="flex items-center h-11 px-4 border border-[#d6dbea] rounded-xl bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors text-[14px] outline-none"
               />
             </div>
 
             {/* Title */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Title</label>
-              <div className="flex items-center border border-[#dedee7] rounded-[6px] pl-4 pr-3 bg-white focus-within:border-[#181C7B] transition-colors">
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Title</label>
+              <div className="flex items-center border border-[#d6dbea] rounded-xl pl-4 pr-3 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
                 <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Your role or professional title" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <span className="text-[12px] text-[#4e515c] font-medium ml-2">{formData.title.length}/50</span>
               </div>
@@ -300,19 +300,19 @@ const SettingsPage = () => {
 
             {/* Skills */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Skills</label>
-              <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} placeholder="e.g. UI/UX, Figma, React" className="w-full h-11 px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Skills</label>
+              <input type="text" name="skills" value={formData.skills} onChange={handleInputChange} placeholder="e.g. UI/UX, Figma, React" className="w-full h-11 px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               <p className="text-[12px] text-[#717480] mt-1">Separate skills with commas</p>
             </div>
 
             {/* Biography */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Biography</label>
-              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Share a little about your background, interests, and goals." className="w-full h-[120px] p-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors resize-none"></textarea>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Biography</label>
+              <textarea name="biography" value={formData.biography} onChange={handleInputChange} placeholder="Share a little about your background, interests, and goals." className="w-full h-[120px] p-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors resize-none"></textarea>
             </div>
 
             <div className="mt-2">
-              <button disabled={isLoading} type="submit" className="h-11 px-8 rounded-[6px] bg-[#0a1b56] text-white text-[14px] font-medium transition hover:bg-[#07004d] disabled:opacity-70">
+              <button disabled={isLoading} type="submit" className="h-11 px-8 rounded-full bg-[#0B1F4D] text-white text-[14px] font-semibold shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
                 {isLoading ? "Saving..." : "Save Changes"}
               </button>
             </div>
@@ -321,7 +321,7 @@ const SettingsPage = () => {
 
         {/* Right: Profile photo */}
         <aside className="order-1 w-full shrink-0 md:order-2 md:w-[280px]">
-          <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-[10px] border border-[#e5e7ef] bg-[#fafbff] px-6 py-8 text-center">
+          <div className="flex h-full min-h-[280px] flex-col items-center justify-center rounded-2xl border border-[#e3e6f0] bg-[#f8f9fd] px-6 py-8 text-center">
             <div className={`flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-[#e9edff] text-[#24327d] shadow-sm ring-1 ring-[#dfe3f2] transition ${isUploadingAvatar ? "ring-4 ring-[#b8c4ff]" : ""}`}>
               {formData.avatarUrl && !avatarImageFailed ? (
                 <img
@@ -363,84 +363,84 @@ const SettingsPage = () => {
       </div>
 
       {/* Social Profile Card */}
-      <div className="bg-white rounded-[12px] border border-[#dedee7] shadow-sm mb-8 p-6 md:p-8">
+      <div className="bg-white rounded-2xl border border-[#e3e6f0] shadow-[0_1px_2px_rgba(11,31,77,0.04)] mb-8 p-6 md:p-8">
         <h2 className="text-[20px] font-bold text-[#202127] mb-6">Social Profile</h2>
         <form onSubmit={handleSocialSubmit} className="flex flex-col gap-6">
           <div>
-            <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Personal Website</label>
+            <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Personal Website</label>
             <div className="flex items-center gap-3">
-              <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                <FaGlobe className="text-[#4e515c] text-[20px]" />
+              <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                <FaGlobe className="text-[#52607A] text-[18px]" />
               </div>
-              <input type="text" name="website" value={formData.website} onChange={handleInputChange} placeholder="Personal website or portfolio url..." className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+              <input type="text" name="website" value={formData.website} onChange={handleInputChange} placeholder="Personal website or portfolio url..." className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
             </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Facebook */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Facebook</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Facebook</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaFacebookF className="text-[#1877F2] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaFacebookF className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="facebook" value={formData.facebook} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="facebook" value={formData.facebook} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Instagram */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Instagram</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Instagram</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaInstagram className="text-[#E4405F] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaInstagram className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="instagram" value={formData.instagram} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="instagram" value={formData.instagram} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Linkedin */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Linkedin</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Linkedin</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaLinkedinIn className="text-[#0A66C2] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaLinkedinIn className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="linkedin" value={formData.linkedin} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Twitter */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Twitter</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Twitter</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaTwitter className="text-[#1DA1F2] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaTwitter className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="twitter" value={formData.twitter} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="twitter" value={formData.twitter} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Whatsapp */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Whatsapp</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Whatsapp</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaWhatsapp className="text-[#25D366] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaWhatsapp className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} placeholder="Phone number" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="whatsapp" value={formData.whatsapp} onChange={handleInputChange} placeholder="Phone number" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
             {/* Youtube */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Youtube</label>
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Youtube</label>
               <div className="flex items-center gap-3">
-                <div className="w-[44px] h-[44px] shrink-0 bg-[#f5f6f8] border border-[#dedee7] flex items-center justify-center rounded-[6px]">
-                  <FaYoutube className="text-[#FF0000] text-[20px]" />
+                <div className="w-[44px] h-[44px] shrink-0 bg-[#f1f3f9] flex items-center justify-center rounded-xl">
+                  <FaYoutube className="text-[#52607A] text-[18px]" />
                 </div>
-                <input type="text" name="youtube" value={formData.youtube} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-[6px] border border-[#dedee7] bg-white text-[14px] outline-none focus:border-[#181C7B] transition-colors" />
+                <input type="text" name="youtube" value={formData.youtube} onChange={handleInputChange} placeholder="Username" className="flex-1 h-[44px] px-4 rounded-xl border border-[#d6dbea] bg-white text-[14px] outline-none focus:border-[#0B1F4D] focus:ring-4 focus:ring-[#0B1F4D]/10 transition-colors" />
               </div>
             </div>
           </div>
 
           <div className="mt-2">
-            <button disabled={isSocialLoading} type="submit" className="h-11 px-8 rounded-[6px] bg-[#0a1b56] text-white text-[14px] font-medium transition hover:bg-[#07004d] disabled:opacity-70">
+            <button disabled={isSocialLoading} type="submit" className="h-11 px-8 rounded-full bg-[#0B1F4D] text-white text-[14px] font-semibold shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
               {isSocialLoading ? "Saving..." : "Save Changes"}
             </button>
           </div>
@@ -449,7 +449,7 @@ const SettingsPage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Notifications Card */}
-        <div className="bg-white rounded-[12px] border border-[#dedee7] shadow-sm p-6 md:p-8">
+        <div className="bg-white rounded-2xl border border-[#e3e6f0] shadow-[0_1px_2px_rgba(11,31,77,0.04)] p-6 md:p-8">
           <h2 className="text-[20px] font-bold text-[#202127] mb-6">Notifications</h2>
           <form onSubmit={handleNotificationsSubmit} className="flex flex-col gap-4">
             <label className="flex items-center gap-3 cursor-pointer">
@@ -481,7 +481,7 @@ const SettingsPage = () => {
               <span className="text-[14px] text-[#202127] font-medium">I want to know who download my lecture attach file.</span>
             </label>
             <div className="mt-4">
-              <button disabled={isNotificationsLoading} type="submit" className="h-11 px-8 rounded-[6px] bg-[#0a1b56] text-white text-[14px] font-medium transition hover:bg-[#07004d] disabled:opacity-70">
+              <button disabled={isNotificationsLoading} type="submit" className="h-11 px-8 rounded-full bg-[#0B1F4D] text-white text-[14px] font-semibold shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
                 {isNotificationsLoading ? "Saving..." : "Save Changes"}
               </button>
             </div>
@@ -489,13 +489,13 @@ const SettingsPage = () => {
         </div>
 
         {/* Change Password Card */}
-        <div className="bg-white rounded-[12px] border border-[#dedee7] shadow-sm p-6 md:p-8">
+        <div className="bg-white rounded-2xl border border-[#e3e6f0] shadow-[0_1px_2px_rgba(11,31,77,0.04)] p-6 md:p-8">
           <h2 className="text-[20px] font-bold text-[#202127] mb-6">Change password</h2>
           <form onSubmit={handlePasswordSubmit} className="flex flex-col gap-5 max-w-[600px]">
             {/* Current Password */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Current Password</label>
-              <div className="flex items-center border border-[#dedee7] rounded-[6px] px-4 bg-white focus-within:border-[#181C7B] transition-colors">
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Current Password</label>
+              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
                 <input type={showCurrentPassword ? "text" : "password"} name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} required placeholder="Password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
                   {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
@@ -505,8 +505,8 @@ const SettingsPage = () => {
 
             {/* New Password */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">New Password</label>
-              <div className="flex items-center border border-[#dedee7] rounded-[6px] px-4 bg-white focus-within:border-[#181C7B] transition-colors">
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">New Password</label>
+              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
                 <input type={showNewPassword ? "text" : "password"} name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} required placeholder="Password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
                   {showNewPassword ? <FaEyeSlash /> : <FaEye />}
@@ -516,8 +516,8 @@ const SettingsPage = () => {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-[13px] font-medium text-[#4e515c] mb-2">Confirm Password</label>
-              <div className="flex items-center border border-[#dedee7] rounded-[6px] px-4 bg-white focus-within:border-[#181C7B] transition-colors">
+              <label className="block text-[13px] font-semibold text-[#2b2f45] mb-2">Confirm Password</label>
+              <div className="flex items-center border border-[#d6dbea] rounded-xl px-4 bg-white focus-within:border-[#0B1F4D] focus-within:ring-4 focus-within:ring-[#0B1F4D]/10 transition-colors">
                 <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} required placeholder="Confirm new password" className="flex-1 h-11 bg-transparent text-[14px] outline-none" />
                 <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="text-[#a4a5ad] hover:text-[#4e515c] transition-colors">
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -526,7 +526,7 @@ const SettingsPage = () => {
             </div>
 
             <div className="mt-2">
-              <button disabled={isPasswordLoading} type="submit" className="h-11 px-8 rounded-[6px] bg-[#0a1b56] text-white text-[14px] font-medium transition hover:bg-[#07004d] disabled:opacity-70">
+              <button disabled={isPasswordLoading} type="submit" className="h-11 px-8 rounded-full bg-[#0B1F4D] text-white text-[14px] font-semibold shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition hover:bg-[#13306f] disabled:opacity-70">
                 {isPasswordLoading ? "Saving..." : "Save Changes"}
               </button>
             </div>

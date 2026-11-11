@@ -7,13 +7,13 @@ import { usePathname, useSearchParams } from "next/navigation";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
 import { FaTimes, FaSearch } from "react-icons/fa";
 import Button from "@components/Button";
-import { PiUserCircleLight } from "react-icons/pi";
 import { FiChevronRight, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import useAuth from "@hooks/useAuth";
 import { coursesHref } from "@utils/coursesHref";
 import { FaBars, FaChevronDown } from "react-icons/fa6";
 import HeaderSearch from "./HeaderSearch";
 import SocialIcons from "./SocialIcons";
+import ProfileMenu from "./ProfileMenu";
 
 // One pair of sign in and sign up buttons for every header: a quiet outlined "Log in" and a solid "Sign up"
 const AUTH_LOGIN_CLASS =
@@ -174,45 +174,10 @@ const LandingHeader = () => {
                 </div>
               ) : (
                 <>
-                  <Link href={authenticatedUser?.role === "admin" ? "/admin" : "/dashboard"}>
-                    <button className="h-[38px] rounded-full bg-[#0a1b56] px-5 text-[14px] font-medium text-white transition-colors hover:bg-[#07006f]">
-                      Dashboard
-                    </button>
+                  <Link href={authenticatedUser?.role === "admin" ? "/admin" : "/dashboard"} className={AUTH_SIGNUP_CLASS}>
+                    Dashboard
                   </Link>
-                  <Button
-                    key="button-link-landing"
-                    ghost
-                    renderContent={() => (
-                      <button aria-label="Profile" className="hover:text-[#1e4ed8] transition-colors flex items-center">
-                        {authenticatedUser?.avatar ? (
-                          <img src={authenticatedUser.avatar} alt="User" className="w-[32px] h-[32px] rounded-full object-cover border border-gray-200" />
-                        ) : (
-                          <PiUserCircleLight className="text-[32px]" />
-                        )}
-                      </button>
-                    )}
-                    renderDropdown={() => (
-                      <div className="flex min-w-[220px] flex-col rounded-2xl border border-[#07004d] bg-white px-6 py-5 shadow-lg">
-                        <p className="text-[16px] text-[#0b1a4a]">Profile</p>
-                        <div className="my-3 h-px bg-[#c9c9d1]" />
-                        <Link href="/dashboard?tab=settings" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
-                          Basic Information
-                        </Link>
-                        <Link href="/dashboard?tab=settings&section=password" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
-                          Change Password
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => handleLogout()}
-                          disabled={isLoggingOut}
-                          className="mt-2 inline-flex h-[42px] w-full items-center gap-3 rounded-xl bg-[#fff3f2] px-3 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
-                        >
-                          <FiLogOut size={17} aria-hidden />
-                          {isLoggingOut ? "Logging out..." : "Log out"}
-                        </button>
-                      </div>
-                    )}
-                  />
+                  <ProfileMenu authenticatedUser={authenticatedUser} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
                 </>
               )}
             </div>
@@ -340,40 +305,7 @@ const Header = () => {
                 </div>
               ) : (
                 <>
-                  <Button
-                    key="button-link"
-                    ghost
-                    renderContent={() => (
-                      <button aria-label="Profile" className="hover:text-[#1e4ed8] transition-colors flex items-center">
-                        {authenticatedUser?.avatar ? (
-                          <img src={authenticatedUser.avatar} alt="User" className="w-[32px] h-[32px] rounded-full object-cover border border-gray-200" />
-                        ) : (
-                          <PiUserCircleLight className="text-[32px]" />
-                        )}
-                      </button>
-                    )}
-                    renderDropdown={() => (
-                      <div className="flex min-w-[220px] flex-col rounded-2xl border border-[#07004d] bg-white px-6 py-5 shadow-lg">
-                        <p className="text-[16px] text-[#0b1a4a]">Profile</p>
-                        <div className="my-3 h-px bg-[#c9c9d1]" />
-                        <Link href="/dashboard?tab=settings" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
-                          Basic Information
-                        </Link>
-                        <Link href="/dashboard?tab=settings&section=password" className="py-2 text-[15px] text-[#201633] hover:text-[#07004d]">
-                          Change Password
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => handleLogout()}
-                          disabled={isLoggingOut}
-                          className="mt-2 inline-flex h-[42px] w-full items-center gap-3 rounded-xl bg-[#fff3f2] px-3 text-left text-[14px] font-semibold text-[#b93832] transition hover:bg-[#ffe9e7] disabled:cursor-wait disabled:opacity-60"
-                        >
-                          <FiLogOut size={17} aria-hidden />
-                          {isLoggingOut ? "Logging out..." : "Log out"}
-                        </button>
-                      </div>
-                    )}
-                  />
+                  <ProfileMenu authenticatedUser={authenticatedUser} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
                 </>
               )}
             </div>

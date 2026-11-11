@@ -25,6 +25,7 @@ import {
 import useAuth from "@hooks/useAuth";
 import axiosInstance from "@utils/axiosInstance";
 import ImageComponent from "@components/ImageComponent/ImageComponent";
+import ProfileMenu from "@components/Header/ProfileMenu";
 
 const SidebarItem = ({ icon: Icon, label, to, active, isOpen }: any) => (
   <Link href={to}
@@ -43,7 +44,7 @@ const SidebarItem = ({ icon: Icon, label, to, active, isOpen }: any) => (
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() ?? "";
   const router = useRouter();
-  const { authenticatedUser, handleLogout } = useAuth();
+  const { authenticatedUser, handleLogout, isLoggingOut } = useAuth();
   const user: any = authenticatedUser;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,9 +117,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="What do you want to learn?" 
-              className="w-full h-[48px] pl-6 pr-14 rounded-full border border-neutral-4 bg-white focus:outline-none focus:border-[#4aa3df] focus:ring-1 focus:ring-[#4aa3df] transition-all text-[14px] shadow-sm"
+              className="w-full h-[46px] pl-5 pr-14 rounded-full border border-transparent bg-[#f1f3f9] text-[14px] text-[#201633] placeholder:text-[#8a90a6] outline-none transition hover:bg-[#eceff7] focus:border-[#0B1F4D]/25 focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,31,77,0.08)]"
             />
-            <button type="submit" className="absolute right-2 w-10 h-10 rounded-full bg-[#1e4ed8] text-white flex items-center justify-center hover:bg-[#07006f] transition-colors shadow-sm">
+            <button type="submit" aria-label="Search" className="absolute right-1.5 flex h-[34px] w-[34px] items-center justify-center rounded-full bg-[#0B1F4D] text-white transition-colors hover:bg-[#13306f]">
               <PiMagnifyingGlass className="text-[18px]" />
             </button>
           </form>
@@ -126,29 +127,23 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
         {/* Right Side: Icons + Profile */}
         <div className="flex items-center gap-3 md:gap-6">
-          <button className="hidden md:flex w-10 h-10 rounded-full items-center justify-center text-neutral-8 hover:bg-neutral-2 transition-colors">
-            <PiGlobe className="text-[24px]" />
+          <button aria-label="Language" className="hidden md:flex flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#52607A] transition-colors hover:bg-[#f4f6fb] hover:text-[#0B1F4D]">
+            <PiGlobe className="text-[20px]" />
           </button>
           
           {/* Mobile Search Button */}
-          <button className="md:hidden w-10 h-10 rounded-full flex items-center justify-center text-neutral-8 hover:bg-neutral-2 transition-colors">
-            <PiMagnifyingGlass className="text-[24px]" />
+          <button aria-label="Search" className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#52607A] transition-colors hover:bg-[#f4f6fb] hover:text-[#0B1F4D]">
+            <PiMagnifyingGlass className="text-[20px]" />
           </button>
 
-          <Link href="/dashboard/notifications" className="w-10 h-10 rounded-full flex items-center justify-center text-neutral-8 hover:bg-neutral-2 transition-colors relative">
-            <PiBell className="text-[24px]" />
+          <Link href="/dashboard/notifications" aria-label="Notifications" className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#52607A] transition-colors hover:bg-[#f4f6fb] hover:text-[#0B1F4D]">
+            <PiBell className="text-[20px]" />
             {hasUnread && (
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-error-5 border border-white"></span>
+              <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#e5484d]"></span>
             )}
           </Link>
           
-          <Link href="/dashboard/settings" className="w-10 h-10 rounded-full overflow-hidden border border-[#dedee7] hover:border-[#1e4ed8] transition-colors shadow-sm cursor-pointer ml-1 md:ml-2 bg-primary-2 flex items-center justify-center shrink-0">
-            {(user?.avatar || user?.avatarUrl) ? (
-              <img src={user.avatar || user.avatarUrl} alt="User avatar" loading="lazy" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.style.display = 'none'; }} />
-            ) : (
-              <PiUser className="text-[22px] text-neutral-6" />
-            )}
-          </Link>
+          <ProfileMenu authenticatedUser={authenticatedUser} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
         </div>
       </header>
 
