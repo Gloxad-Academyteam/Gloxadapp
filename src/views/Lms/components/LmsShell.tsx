@@ -1,4 +1,5 @@
 "use client";
+import NotificationBell from "@components/Notifications/NotificationBell";
 import UserAvatar from "@components/Avatar";
 import { LuLogOut } from "react-icons/lu";
 
@@ -243,10 +244,7 @@ const LmsShell = ({ active, topTab = null, search, topBrand, bellDot, topBar, sh
                   <MdOutlineSearch size={24} />
                 </button>
               )}
-              <button type="button" aria-label="Notifications" onClick={() => soon("Notifications")} className="relative flex h-10 w-10 items-center justify-center rounded-full text-[#14162b] hover:bg-[#eceefd]">
-                <MdOutlineNotificationsNone size={24} />
-                {bellDot && <span className="absolute right-2.5 top-2 h-2 w-2 rounded-full bg-[#e5322d]" />}
-              </button>
+              <NotificationBell />
               <button type="button" aria-label="Messages" onClick={() => soon("Messages")} className="flex h-10 w-10 items-center justify-center rounded-full text-[#14162b] hover:bg-[#eceefd]">
                 <MdOutlineMailOutline size={24} />
               </button>

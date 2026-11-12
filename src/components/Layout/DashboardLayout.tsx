@@ -1,5 +1,6 @@
 "use client";
 
+import NotificationBell from "@components/Notifications/NotificationBell";
 import TutorCoursesOnly from "@components/TutorCoursesOnly";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -49,7 +50,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const user: any = authenticatedUser;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [hasUnread, setHasUnread] = useState(false);
+  
 
   // window isn't available on the server, so the sidebar's initial open/closed
   // state has to be decided after mount rather than in the useState initializer.
@@ -57,20 +58,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     setIsSidebarOpen(window.innerWidth >= 768);
   }, []);
 
-  useEffect(() => {
-    const checkNotifications = async () => {
-      try {
-        const res = await axiosInstance.get("/notifications");
-        const unread = res.data.notifications?.some((n: any) => !n.isRead);
-        setHasUnread(unread);
-      } catch (err) {
-        console.error("Failed to fetch notifications");
-      }
-    };
-    if (user) {
-      checkNotifications();
-    }
-  }, [user, pathname]);
+
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -137,12 +125,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <PiMagnifyingGlass className="text-[20px]" />
           </button>
 
-          <Link href="/dashboard/notifications" aria-label="Notifications" className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#e3e6f0] bg-white text-[#52607A] transition-colors hover:bg-[#f4f6fb] hover:text-[#0B1F4D]">
-            <PiBell className="text-[20px]" />
-            {hasUnread && (
-              <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#e5484d]"></span>
-            )}
-          </Link>
+          <NotificationBell />
           
           <ProfileMenu authenticatedUser={authenticatedUser} onLogout={handleLogout} isLoggingOut={isLoggingOut} />
         </div>

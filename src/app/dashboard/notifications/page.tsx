@@ -1,4 +1,4 @@
-import NotificationsPage from "@pages/Tutor/NotificationsPage";
+import NotificationsPage from "@pages/NotificationsPage";
 
 export default function Page() {
   return <NotificationsPage />;

@@ -1,5 +1,6 @@
 "use client";
 
+import NotificationBell from "@components/Notifications/NotificationBell";
 import UserAvatar from "@components/Avatar";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
@@ -237,6 +238,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           <Link href="/" target="_blank" className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] font-medium text-[#4a4f6b] hover:bg-[#f0f1f7] lg:inline-flex">
             View site <HiOutlineArrowTopRightOnSquare size={15} />
           </Link>
+
+          <NotificationBell />
 
           <div ref={menuRef} className="relative">
             <button

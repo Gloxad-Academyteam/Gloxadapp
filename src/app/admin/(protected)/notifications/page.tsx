@@ -1,5 +1,5 @@
-import NotificationCenterPage from "@pages/Admin/NotificationCenterPage";
+import NotificationsPage from "@pages/NotificationsPage";
 
 export default function Page() {
-  return <NotificationCenterPage />;
+  return <NotificationsPage />;
 }
