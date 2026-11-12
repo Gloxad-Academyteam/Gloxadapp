@@ -7,7 +7,7 @@ import { LuBell, LuCheckCheck } from "react-icons/lu";
 import { useQueryClient } from "@tanstack/react-query";
 import useNotifications from "@hooks/useNotifications";
 import { useSocket } from "@hooks/useSocket";
-import { styleForType, timeAgo } from "./typeStyle";
+import { getSoundEnabled, playChime, styleForType, timeAgo } from "./typeStyle";
 
 type TProps = { className?: string };
 
@@ -19,6 +19,14 @@ const NotificationBell = ({ className = "" }: TProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const socket = useSocket();
+
+  // A soft chime when the unread count goes up, if the person turned sound on
+  const previousUnread = useRef<number | null>(null);
+  useEffect(() => {
+    if (isLoading) return;
+    if (previousUnread.current !== null && unreadCount > previousUnread.current && getSoundEnabled()) playChime();
+    previousUnread.current = unreadCount;
+  }, [unreadCount, isLoading]);
 
   // A new notification arrives by socket: refresh the list so it shows at once
   useEffect(() => {

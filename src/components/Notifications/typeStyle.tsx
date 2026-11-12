@@ -31,3 +31,64 @@ export const timeAgo = (iso: string) => {
   if (days < 7) return `${days}d ago`;
   return new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" });
 };
+
+export type TCategory = "courses" | "classes" | "learning" | "payments" | "updates";
+
+export const CATEGORY_LABELS: Record<TCategory, string> = {
+  courses: "Courses",
+  classes: "Live classes",
+  learning: "Learning",
+  payments: "Payments",
+  updates: "Updates",
+};
+
+/** Groups the many notification types into a few categories people can filter by. */
+export const categoryForType = (type: string): TCategory => {
+  const value = type.toLowerCase();
+  if (value.includes("live_class") || value.includes("session")) return "classes";
+  if (value.includes("payment")) return "payments";
+  if (value.includes("assignment") || value.includes("submission") || value.includes("graded") || value.includes("certificate") || value.includes("scholarship") || value.includes("enrol")) return "learning";
+  if (value.includes("course") || value.includes("review")) return "courses";
+  return "updates";
+};
+
+// A short, soft two-note chime made in the browser, so no sound file is needed
+export const playChime = () => {
+  try {
+    const Context = window.AudioContext || (window as any).webkitAudioContext;
+    if (!Context) return;
+    const context = new Context();
+    const now = context.currentTime;
+    [660, 880].forEach((frequency, index) => {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = "sine";
+      oscillator.frequency.value = frequency;
+      gain.gain.setValueAtTime(0.0001, now + index * 0.14);
+      gain.gain.exponentialRampToValueAtTime(0.12, now + index * 0.14 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.14 + 0.28);
+      oscillator.connect(gain).connect(context.destination);
+      oscillator.start(now + index * 0.14);
+      oscillator.stop(now + index * 0.14 + 0.3);
+    });
+    setTimeout(() => context.close().catch(() => undefined), 800);
+  } catch {
+    // Sound is a nice extra; ignore browsers that block it
+  }
+};
+
+const SOUND_KEY = "gloxad.notificationSound";
+export const getSoundEnabled = () => {
+  try {
+    return localStorage.getItem(SOUND_KEY) === "on";
+  } catch {
+    return false;
+  }
+};
+export const setSoundEnabled = (on: boolean) => {
+  try {
+    localStorage.setItem(SOUND_KEY, on ? "on" : "off");
+  } catch {
+    // Storage can be blocked; the setting then lasts until the page closes
+  }
+};

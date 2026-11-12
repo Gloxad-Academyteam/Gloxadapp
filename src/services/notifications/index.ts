@@ -38,3 +38,15 @@ export const markNotificationsRead = (ids: string[]) => axiosInstance.post("/not
 export const markAllNotificationsRead = () => axiosInstance.post("/notifications/mark-read", { markAll: true });
 export const markNotificationsUnread = (ids: string[]) => axiosInstance.post("/notifications/mark-unread", { notificationIds: ids });
 export const deleteNotification = (id: string) => axiosInstance.delete(`/notifications/${id}`);
+
+export type TNotificationPreferences = { emailAlerts: boolean };
+
+export async function getNotificationPreferences(): Promise<TNotificationPreferences> {
+  const { data } = await axiosInstance.get("/notifications/preferences");
+  return { emailAlerts: Boolean(data.preferences?.emailAlerts) };
+}
+
+export async function updateNotificationPreferences(preferences: TNotificationPreferences): Promise<TNotificationPreferences> {
+  const { data } = await axiosInstance.put("/notifications/preferences", preferences);
+  return { emailAlerts: Boolean(data.preferences?.emailAlerts) };
+}

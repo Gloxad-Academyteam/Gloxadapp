@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LuBell, LuCheck, LuCheckCheck, LuMailOpen, LuTrash2 } from "react-icons/lu";
+import { LuBell, LuCheck, LuCheckCheck, LuMailOpen, LuSettings2, LuTrash2 } from "react-icons/lu";
 import useNotifications from "@hooks/useNotifications";
 import { ListSkeleton } from "@components/Skeleton";
 import { dialog } from "@components/Dialog";
-import { styleForType, timeAgo } from "@components/Notifications/typeStyle";
-import type { TNotification } from "@services/notifications";
+import { CATEGORY_LABELS, categoryForType, getSoundEnabled, playChime, setSoundEnabled, styleForType, timeAgo, type TCategory } from "@components/Notifications/typeStyle";
+import { getNotificationPreferences, updateNotificationPreferences, type TNotification } from "@services/notifications";
 
 const dayLabel = (iso: string) => {
   const date = new Date(iso);
@@ -22,13 +23,75 @@ const dayLabel = (iso: string) => {
 
 const ORDER = ["Today", "Yesterday", "This week", "Earlier"];
 
+const Switch = ({ checked, onChange, label }: { checked: boolean; onChange: (value: boolean) => void; label: string }) => (
+  <button type="button" role="switch" aria-checked={checked} aria-label={label} onClick={() => onChange(!checked)} className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${checked ? "bg-[#5d5fef]" : "bg-[#d3d6e6]"}`}>
+    <span className={`absolute top-[3px] h-[18px] w-[18px] rounded-full bg-white shadow transition-all ${checked ? "left-[23px]" : "left-[3px]"}`} />
+  </button>
+);
+
+/** Small panel with the alert options: an email for each notification and a sound for new ones. */
+const AlertSettings = () => {
+  const [open, setOpen] = useState(false);
+  const [sound, setSound] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
+  const prefs = useQuery({ queryKey: ["notifications", "preferences"], queryFn: getNotificationPreferences, enabled: open });
+  const save = useMutation({
+    mutationFn: updateNotificationPreferences,
+    onSuccess: (data) => queryClient.setQueryData(["notifications", "preferences"], data),
+  });
+
+  useEffect(() => setSound(getSoundEnabled()), []);
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (event: MouseEvent) => ref.current && !ref.current.contains(event.target as Node) && setOpen(false);
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button type="button" aria-label="Alert settings" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#dfe2ee] bg-white text-[#52607A] transition hover:bg-[#f6f7fb]">
+        <LuSettings2 size={17} />
+      </button>
+      {open && (
+        <div role="dialog" aria-label="Alert settings" className="absolute right-0 top-12 z-30 w-[300px] max-w-[calc(100vw-32px)] rounded-2xl border border-[#e8eaf3] bg-white p-4 shadow-[0_24px_60px_-16px_rgba(18,20,43,0.3)]">
+          <h2 className="mb-3 text-[14px] font-semibold text-[#12142b]">Alerts</h2>
+          <div className="flex items-start justify-between gap-4 py-2.5">
+            <div>
+              <p className="text-[13.5px] font-medium text-[#12142b]">Email me too</p>
+              <p className="text-[12px] leading-snug text-[#8a90a8]">Get each new notification in your inbox.</p>
+            </div>
+            <Switch checked={Boolean(prefs.data?.emailAlerts)} label="Email alerts" onChange={(value) => save.mutate({ emailAlerts: value })} />
+          </div>
+          <div className="flex items-start justify-between gap-4 border-t border-[#f0f1f7] py-2.5">
+            <div>
+              <p className="text-[13.5px] font-medium text-[#12142b]">Play a sound</p>
+              <p className="text-[12px] leading-snug text-[#8a90a8]">A soft chime when a new one arrives while you are here.</p>
+            </div>
+            <Switch checked={sound} label="Notification sound" onChange={(value) => { setSound(value); setSoundEnabled(value); if (value) playChime(); }} />
+          </div>
+          {prefs.isError && <p className="mt-2 text-[12px] text-[#b42323]">Email alerts could not be loaded right now.</p>}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /** The one notifications page, for students and tutors alike. */
 const NotificationsPage = () => {
   const router = useRouter();
   const { items, unreadCount, isLoading, isError, refetch, markRead, markUnread, markAllRead, remove, isMarkingAll } = useNotifications();
   const [tab, setTab] = useState<"all" | "unread">("all");
+  const [category, setCategory] = useState<"" | TCategory>("");
 
-  const visible = tab === "unread" ? items.filter((item) => !item.isRead) : items;
+  const present = useMemo(() => (Object.keys(CATEGORY_LABELS) as TCategory[]).filter((key) => items.some((item) => categoryForType(item.type) === key)), [items]);
+  const visible = items.filter((item) => (tab === "all" || !item.isRead) && (!category || categoryForType(item.type) === category));
   const groups = useMemo(() => {
     const map = new Map<string, TNotification[]>();
     for (const item of visible) {
@@ -58,16 +121,28 @@ const NotificationsPage = () => {
           <h1 className="text-[26px] font-semibold tracking-tight text-[#12142b]">Notifications</h1>
           <p className="mt-1 text-[14px] text-[#6b7087]">{unreadCount > 0 ? `${unreadCount} unread` : "You are all caught up"}</p>
         </div>
-        <button type="button" onClick={markAllRead} disabled={unreadCount === 0 || isMarkingAll} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#dfe2ee] bg-white px-4 text-[13.5px] font-semibold text-[#3f41c4] transition hover:bg-[#f6f7fb] disabled:cursor-not-allowed disabled:opacity-40">
-          <LuCheckCheck size={16} /> Mark all as read
-        </button>
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={markAllRead} disabled={unreadCount === 0 || isMarkingAll} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#dfe2ee] bg-white px-4 text-[13.5px] font-semibold text-[#3f41c4] transition hover:bg-[#f6f7fb] disabled:cursor-not-allowed disabled:opacity-40">
+            <LuCheckCheck size={16} /> Mark all as read
+          </button>
+          <AlertSettings />
+        </div>
       </div>
 
-      <div role="tablist" aria-label="Filter notifications" className="mb-5 inline-flex gap-1 rounded-full border border-[#e8eaf3] bg-white p-1">
+      <div className="mb-5 flex flex-wrap items-center gap-3">
+      <div role="tablist" aria-label="Filter notifications" className="inline-flex gap-1 rounded-full border border-[#e8eaf3] bg-white p-1">
         <button type="button" role="tab" aria-selected={tab === "all"} onClick={() => setTab("all")} className={tabClass(tab === "all")}>All</button>
         <button type="button" role="tab" aria-selected={tab === "unread"} onClick={() => setTab("unread")} className={tabClass(tab === "unread")}>
           Unread{unreadCount > 0 ? ` (${unreadCount})` : ""}
         </button>
+      </div>
+      {present.length > 1 && (
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by type">
+          {present.map((key) => (
+            <button key={key} type="button" aria-pressed={category === key} onClick={() => setCategory(category === key ? "" : key)} className={`h-8 rounded-full border px-3 text-[12.5px] font-medium transition ${category === key ? "border-[#3f41c4] bg-[#eef0ff] text-[#3f41c4]" : "border-[#dfe2ee] bg-white text-[#4a4f6b] hover:bg-[#f6f7fb]"}`}>{CATEGORY_LABELS[key]}</button>
+          ))}
+        </div>
+      )}
       </div>
 
       {isLoading ? (
