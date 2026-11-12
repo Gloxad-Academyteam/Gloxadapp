@@ -14,10 +14,13 @@ const RoleGuard = ({
   children,
   allowedRoles,
   returnAfterLogin = false,
+  loginPath = "/auth/signin",
 }: {
   children: ReactNode;
   allowedRoles?: string[];
   returnAfterLogin?: boolean;
+  // Where signed-out visitors go (the admin area has its own login)
+  loginPath?: string;
 }) => {
   const { isLoading, isAuthenticated, authenticatedUser } = useAuth();
   const router = useRouter();
@@ -28,7 +31,7 @@ const RoleGuard = ({
     if (isLoading) return;
 
     if (!isAuthenticated) {
-      router.replace(returnAfterLogin && pathname ? `/auth/signin?redirect=${encodeURIComponent(pathname)}` : "/auth/signin");
+      router.replace(returnAfterLogin && pathname ? `${loginPath}?redirect=${encodeURIComponent(pathname)}` : loginPath);
       return;
     }
 
@@ -42,7 +45,7 @@ const RoleGuard = ({
       toast.error("You do not have permission to access this page.");
       router.replace(userRole === "admin" ? "/admin" : "/dashboard");
     }
-  }, [isLoading, isAuthenticated, authenticatedUser, mustVerify, allowedRoles, router, pathname, returnAfterLogin]);
+  }, [isLoading, isAuthenticated, authenticatedUser, mustVerify, allowedRoles, router, pathname, returnAfterLogin, loginPath]);
 
   if (isLoading) {
     return <div className="w-full min-h-screen flex items-center justify-center bg-[#fcfcfd]">Loading...</div>;

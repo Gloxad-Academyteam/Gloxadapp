@@ -167,6 +167,24 @@ export const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) =
             </div>
           </div>
 
+          <hr className="my-5 border-[#DCE5F7]" />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <img src="/images/trimester/photos/mentor-session.webp" alt="A tutor and a learner reviewing her work together at a laptop" loading="lazy" className="h-[150px] w-full rounded-[14px] object-cover sm:w-[220px] sm:shrink-0" />
+            <div>
+              <h2 className="mb-1.5 text-[14px] font-bold text-[#0B1F4D]">Tutors you can actually talk to</h2>
+              <p className="text-[13.5px] leading-[1.6] text-[#37456b]">Live classes, feedback on your assignments and a support line when you get stuck, so nobody learns alone.</p>
+            </div>
+          </div>
+
+          <hr className="my-5 border-[#DCE5F7]" />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <img src="/images/trimester/photos/certificate.webp" alt="A learner holding a Gloxad Academy certificate" loading="lazy" className="h-[150px] w-full rounded-[14px] object-cover sm:w-[220px] sm:shrink-0" />
+            <div>
+              <h2 className="mb-1.5 text-[14px] font-bold text-[#0B1F4D]">Finish with a certificate you can show</h2>
+              <p className="text-[13.5px] leading-[1.6] text-[#37456b]">Complete the weeks and your final project and you earn a certificate with a number anyone can check.</p>
+            </div>
+          </div>
+
           {(trimester.skills?.length ?? 0) > 0 && (
             <>
               <hr className="my-5 border-[#DCE5F7]" />

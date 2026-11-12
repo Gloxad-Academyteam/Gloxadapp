@@ -135,6 +135,16 @@ const ScholarshipsPage = () => {
         <EmptyState title="No scholarships are published right now" text="New scholarships will appear here as soon as they are announced." href="/free" action="Browse free courses" />
       ) : (
         <div className="flex flex-col gap-5">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <figure className="overflow-hidden rounded-2xl border border-[#e5e7ef] bg-white">
+              <img src="/images/trimester/photos/scholarship-accepted.webp" alt="A learner in Lagos laughing in disbelief as she reads her scholarship message" loading="lazy" className="h-[220px] w-full object-cover" />
+              <figcaption className="p-4 text-[13.5px] leading-[1.6] text-[#5b5e6b]">Scholarships are for learners who are ready to work but cannot cover the fee alone.</figcaption>
+            </figure>
+            <figure className="overflow-hidden rounded-2xl border border-[#e5e7ef] bg-white">
+              <img src="/images/trimester/photos/scholarship-family.webp" alt="A mother wiping away happy tears as her daughter shows her the good news on a laptop" loading="lazy" className="h-[220px] w-full object-cover" />
+              <figcaption className="p-4 text-[13.5px] leading-[1.6] text-[#5b5e6b]">Apply while the window is open. We tell you the outcome here and by email.</figcaption>
+            </figure>
+          </div>
           {scholarships.data.map((scholarship) => (
             <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
           ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { resendVerification, signIn } from "@services/auth";
+import { resendVerification, signIn, WrongLoginAreaError } from "@services/auth";
 import { getPostAuthRoute, needsEmailVerification, safeRedirectPath, verifyEmailRoute } from "@utils/getPostAuthRoute";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {AxiosError} from "axios";
@@ -74,6 +74,11 @@ const useSignInPage = () => {
           theme: "light",
         });
       };
+
+      if (error instanceof WrongLoginAreaError) {
+        handleToast(error.message);
+        return;
+      }
 
       if (err?.response?.status === 401) {
         handleToast("Invalid email or password");

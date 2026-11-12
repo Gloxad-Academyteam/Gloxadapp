@@ -153,18 +153,44 @@ async function resetPasswd({
   return { data: true };
 }
 
+export class WrongLoginAreaError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "WrongLoginAreaError";
+  }
+}
+
+/**
+ * Signs in. The public site and the admin area have separate logins:
+ * `area: "admin"` only accepts admin accounts and `area: "public"` (default) refuses them.
+ * The token is only stored once the account is confirmed for the area, so a refused
+ * sign-in never leaves a session behind (and never replaces one that was already there).
+ */
 async function signIn({
   email,
   password,
   rememberMe,
+  area = "public",
 }: {
   email: string;
   password: string;
   rememberMe?: boolean;
+  area?: "public" | "admin";
 }): Promise<TService<any>> {
+  const checkArea = (user: any) => {
+    const isAdmin = user?.role === "admin";
+    if (area === "admin" && !isAdmin) {
+      throw new WrongLoginAreaError("This account does not have admin access. Use the main sign-in instead.");
+    }
+    if (area === "public" && isAdmin) {
+      throw new WrongLoginAreaError("Admin accounts sign in from the admin portal at /admin/login.");
+    }
+  };
+
   // Demo accounts skip the backend entirely (see utils/demoAuth.ts)
   const demo = matchDemoLogin(email, password);
   if (demo) {
+    checkArea(demo.user);
     localStorage.setItem("token", demo.token);
     return { data: { token: demo.token, user: demo.user } };
   }
@@ -175,11 +201,14 @@ async function signIn({
     rememberMe,
   });
 
+  const user = normalizeUser(response.data?.user);
+  checkArea(user);
+
   if (response.data?.token) {
     localStorage.setItem("token", response.data.token);
   }
 
-  return { data: { ...response.data, user: normalizeUser(response.data?.user) } };
+  return { data: { ...response.data, user } };
 }
 
 async function signUp({
