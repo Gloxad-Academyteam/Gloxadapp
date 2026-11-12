@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 // Icons
-import { FaGlobe, FaClock, FaMoneyBillWave, FaUsers, FaCheckCircle, FaUserCheck, FaBriefcase, FaComments, FaChartLine, FaVideo, FaCertificate, FaRobot, FaRocket, FaGraduationCap } from "react-icons/fa";
+import { FaGlobe, FaClock, FaMoneyBillWave, FaUsers, FaCheckCircle, FaUserCheck, FaBriefcase, FaChartLine, FaVideo, FaCertificate, FaRobot, FaRocket, FaGraduationCap, FaLaptopCode, FaPaintBrush, FaChartPie, FaBullhorn, FaLanguage, FaHeartbeat, FaBookOpen, FaCalculator } from "react-icons/fa";
 
 // Placeholder images - using existing ones or standard URLs for the layout
-import HeroImage1 from "@assets/images/landing-student-1.png";
 import HeroImage2 from "@assets/images/landing-student-2.png";
 import HeroImage3 from "@assets/images/landing-student-3.png";
 
@@ -74,36 +73,70 @@ const TutorLandingPage = () => {
 
   const faqs = [
     {
-      question: "How do I create a course?",
-      answer: "Choose a course topic, sign in to your tutor account, and follow the simple step-by-step course builder on your dashboard."
+      question: "How do I become a tutor?",
+      answer: "Create a tutor account, add a short bio and your credentials, and submit your application. Our team reviews it, and once you are approved you can build and publish courses from your dashboard."
     },
     {
       question: "Do I need prior teaching experience?",
-      answer: "Not necessarily. If you are an expert in your field and have a passion for sharing your knowledge, our platform provides the tools to help you succeed."
+      answer: "No. What matters is that you know your subject well and explain it clearly. The course builder walks you through each step, from sections and lectures to quizzes and a trailer."
     },
     {
-      question: "What subjects can I teach?",
-      answer: "You can teach a wide variety of subjects including Tech, Business, Arts, Sciences, and more. If you have a skill, there is an audience for it."
+      question: "What can I teach?",
+      answer: "Anything people want to learn for work or life: software, design, business, data, languages, creative skills, health and exam preparation. If you can show someone how, there is a learner for it."
     },
     {
-      question: "Are there any guidelines for course creation?",
-      answer: "Yes, we have a set of quality guidelines ensuring clear audio, good video quality, and structured curricula to provide the best learning experience."
+      question: "How do I get paid?",
+      answer: "You set the price of your course in naira, or make it free. Payments from paid enrolments show on your earnings page, and you can see what you have earned this month and to date."
     },
     {
-      question: "Can I update my course after publishing?",
-      answer: "Absolutely! You can continuously update your course content, add new lectures, or modify existing ones to keep your material relevant."
+      question: "What are the rules for course quality?",
+      answer: "Courses need clear audio and video, a sensible structure and honest descriptions. Every course is reviewed before it goes live, and you get feedback if something needs to change."
+    },
+    {
+      question: "Can I change my course after it is published?",
+      answer: "Yes. You can add lectures, replace videos, fix mistakes and update your notes whenever you like, so your course stays current."
+    },
+    {
+      question: "Can I run live classes?",
+      answer: "Yes. Live classes with video, chat, polls and attendance are built into the platform, so you can teach a cohort in real time as well as through recorded lessons."
     }
   ];
 
   const benefits = [
-    { icon: <FaUserCheck />, label: "Verified instructor profile" },
-    { icon: <FaBriefcase />, label: "Professional portfolio" },
-    { icon: <FaUsers />, label: "Student community" },
-    { icon: <FaRobot />, label: "AI-powered teaching tools" },
-    { icon: <FaMoneyBillWave />, label: "Revenue dashboard" },
-    { icon: <FaVideo />, label: "Live webinars" },
-    { icon: <FaChartLine />, label: "Course analytics" },
-    { icon: <FaCertificate />, label: "Certificates" },
+    { icon: <FaUserCheck />, label: "Verified tutor profile", desc: "A profile learners can trust, with your credentials on show." },
+    { icon: <FaVideo />, label: "Live classes built in", desc: "Teach in real time with video, chat, polls and attendance." },
+    { icon: <FaBookOpen />, label: "Simple course builder", desc: "Sections, lectures, quizzes and resources in one place." },
+    { icon: <FaMoneyBillWave />, label: "Earnings in naira", desc: "See what you earn this month and to date at a glance." },
+    { icon: <FaChartLine />, label: "Course insights", desc: "Know who enrolled, how far they have got and what to improve." },
+    { icon: <FaCertificate />, label: "Certificates", desc: "Learners who finish your course earn a certificate you stand behind." },
+    { icon: <FaUsers />, label: "A learner community", desc: "Answer questions, read reviews and build a following." },
+    { icon: <FaRobot />, label: "Tools that save time", desc: "Less admin, so more of your week goes into teaching." },
+  ];
+
+  const topics = [
+    { icon: <FaLaptopCode />, label: "Software & Tech" },
+    { icon: <FaPaintBrush />, label: "Design & Creative" },
+    { icon: <FaChartPie />, label: "Data & AI" },
+    { icon: <FaBullhorn />, label: "Marketing & Sales" },
+    { icon: <FaCalculator />, label: "Business & Finance" },
+    { icon: <FaLanguage />, label: "Languages" },
+    { icon: <FaHeartbeat />, label: "Health & Wellness" },
+    { icon: <FaGraduationCap />, label: "Exam Prep" },
+  ];
+
+  // SAMPLE QUOTES. These are written as placeholders to show the layout and tone. Before you rely on this page,
+  // replace each one with a real quote (with the tutor's permission), their real name, role and photo.
+  const testimonials = [
+    { name: "Chidinma O.", role: "UI/UX Design Tutor, Lagos", quote: "I had been meaning to turn my design workshops into a course for years. The builder broke it into small steps, so I finally finished and published it. Seeing learners post their first projects is the best part.", img: HeroImage2.src, position: "50% 20%" },
+    { name: "Tunde A.", role: "Backend Engineering Mentor, Abuja", quote: "Live classes are what made the difference for me. I teach a cohort in the evening after work, answer questions in the chat and share recordings for people who could not join.", img: "/images/trimester/photos/mentor-session.webp", position: "78% 25%" },
+    { name: "Emeka N.", role: "Data Analysis Instructor, Enugu", quote: "I like that I can see how far each learner has got and fix the lessons people struggle with. My course is better now than the day I launched it.", img: HeroImage3.src, position: "50% 15%" },
+  ];
+
+  const steps = [
+    { icon: <FaVideo />, title: "Create your course", desc: "Plan your sections, record or upload your lessons and add quizzes and notes. Save as a draft and come back anytime." },
+    { icon: <FaCheckCircle />, title: "Get approved", desc: "Submit for review. Our team checks quality and tells you what to change if anything needs work." },
+    { icon: <FaRocket />, title: "Publish and share", desc: "Your course goes live in the catalogue. Share the link with your audience and start enrolling learners." },
+    { icon: <FaMoneyBillWave />, title: "Earn in naira", desc: "Each paid enrolment adds to your earnings. Track it on your dashboard." },
   ];
 
   return (
@@ -160,14 +193,27 @@ const TutorLandingPage = () => {
             </p>
             {/* DESKTOP: full copy */}
             <p className="mx-0 mb-8 hidden max-w-[600px] text-[15px] leading-[1.6] text-white/90 lg:block xl:text-[16px]">
-              Africa&apos;s career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Thousands of learners are looking for mentors, not just instructors. Join Gloxad and transform careers while growing your personal brand.
+              Africa&apos;s career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Learners are looking for mentors, not just instructors. Join Gloxad, help people move forward in their careers and grow your own name while you do it.
             </p>
-            <button
-              onClick={() => router.push("/signup/instructor")}
-              className="h-[40px] whitespace-nowrap rounded-full bg-[#4aa3df] px-5 text-[13px] font-medium text-white shadow-md transition hover:bg-[#3e92cc] sm:h-[46px] sm:px-7 sm:text-[15px] lg:h-[52px] lg:px-8 lg:text-[16px]"
-            >
-              Become an Instructor
-            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => router.push("/signup/instructor")}
+                className="h-[40px] whitespace-nowrap rounded-full bg-[#4aa3df] px-5 text-[13px] font-medium text-white shadow-md transition hover:bg-[#3e92cc] sm:h-[46px] sm:px-7 sm:text-[15px] lg:h-[52px] lg:px-8 lg:text-[16px]"
+              >
+                Become an Instructor
+              </button>
+              <a
+                href="#how-it-works"
+                className="inline-flex h-[40px] items-center gap-2 whitespace-nowrap rounded-full border border-white/40 px-5 text-[13px] font-medium text-white transition hover:bg-white/10 sm:h-[46px] sm:px-7 sm:text-[15px] lg:h-[52px] lg:px-8 lg:text-[16px]"
+              >
+                See how it works
+              </a>
+            </div>
+            <ul className="mt-6 flex max-w-[480px] flex-wrap gap-x-5 gap-y-2 pr-[34vw] text-[12px] text-white/85 max-[359px]:pr-0 sm:pr-[200px] sm:text-[13px] lg:pr-0">
+              {["Free to apply", "Set your own price", "Paid in naira"].map((item) => (
+                <li key={item} className="inline-flex items-center gap-1.5"><FaCheckCircle className="text-[#7fd1ff]" aria-hidden /> {item}</li>
+              ))}
+            </ul>
           </motion.div>
 
           {/* ===================== MOBILE / TABLET (below lg) — one photo, like the student hero.
@@ -223,40 +269,56 @@ const TutorLandingPage = () => {
 
       <main className="bg-white rounded-t-[60px] relative z-10 -mt-[60px] pt-16 pb-10">
       {/* 2. Why Teach on Gloxad */}
-      <section className="relative z-20 pt-4 pb-20 px-5 lg:px-[120px] bg-white">
-        <motion.div 
+      <section className="relative z-20 pt-4 pb-16 px-5 lg:px-[120px] bg-white">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mx-auto max-w-[1272px]"
         >
-          <div className="text-left mb-12">
-            <h2 className="text-[32px] md:text-[36px] font-bold text-[#202127] mb-2">Why Teach on Gloxad</h2>
-            <p className="text-[15px] md:text-[16px] text-[#717480]">Join thousands of tutors who are making an impact while earning on their own schedule.</p>
+          <div className="mx-auto mb-12 max-w-[640px] text-center">
+            <h2 className="mb-3 text-[30px] font-bold text-[#202127] md:text-[38px]">Why teach on Gloxad</h2>
+            <p className="text-[15px] leading-relaxed text-[#717480] md:text-[16px]">Share what you know, build a name for yourself and earn from it, on your own schedule.</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: <FaGlobe />, title: "Global Reach", desc: "No geographical limits, reach students worldwide from the comfort of your home." },
-              { icon: <FaClock />, title: "Flexibility", desc: "Create and manage courses at your pace, teach when it's convenient for you." },
-              { icon: <FaMoneyBillWave />, title: "Earnings", desc: "Get paid for every student who enrolls in your course—turn knowledge into income." },
-              { icon: <FaUsers />, title: "Global Audience", desc: "Your courses are available to thousands of learners worldwide." },
-            ].map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center rounded-[12px] border border-[#e4e7ec] p-6 transition hover:border-[#4aa3df] hover:shadow-md bg-white">
-                <div className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-[#eef4ff] text-[#122b7a] text-[24px] mb-5">
+              { icon: <FaGlobe />, title: "Reach learners", desc: "Your course sits in a catalogue learners browse every day, from Lagos to across Africa and beyond." },
+              { icon: <FaClock />, title: "Teach on your time", desc: "Build your course at your own pace and update it whenever you like. No fixed hours." },
+              { icon: <FaMoneyBillWave />, title: "Get paid for your skill", desc: "Set your price in naira. Every paid enrolment is added to your earnings." },
+              { icon: <FaCertificate />, title: "Build your name", desc: "A verified profile, reviews and certificates make you the tutor people look for." },
+            ].map((item) => (
+              <div key={item.title} className="group flex flex-col rounded-[20px] border border-[#e4e7ec] bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-[#4aa3df] hover:shadow-[0_18px_40px_-20px_rgba(18,43,122,0.35)]">
+                <div className="mb-5 flex h-[52px] w-[52px] items-center justify-center rounded-2xl bg-[#eef4ff] text-[22px] text-[#122b7a] transition group-hover:bg-[#122b7a] group-hover:text-white">
                   {item.icon}
                 </div>
-                <h3 className="text-[16px] font-bold text-[#202127] mb-3">{item.title}</h3>
-                <p className="text-[14px] text-[#717480] leading-[1.6]">{item.desc}</p>
+                <h3 className="mb-2 text-[17px] font-bold text-[#202127]">{item.title}</h3>
+                <p className="text-[14px] leading-[1.65] text-[#717480]">{item.desc}</p>
               </div>
             ))}
           </div>
         </motion.div>
       </section>
 
+      {/* 2.5 What you can teach */}
+      <section className="px-5 pb-16 lg:px-[120px] bg-white">
+        <div className="mx-auto max-w-[1272px] rounded-[28px] bg-[#F4F7FC] px-6 py-12 text-center md:px-12">
+          <h2 className="mb-2 text-[24px] font-bold text-[#202127] md:text-[30px]">What can you teach?</h2>
+          <p className="mx-auto mb-8 max-w-[560px] text-[15px] text-[#717480]">If people use it at work or want to learn it, it belongs here.</p>
+          <ul className="flex flex-wrap justify-center gap-3">
+            {topics.map((topic) => (
+              <li key={topic.label} className="inline-flex items-center gap-2.5 rounded-full border border-[#dbe3f3] bg-white px-5 py-3 text-[14px] font-medium text-[#202127] shadow-sm">
+                <span className="text-[#122b7a]" aria-hidden>{topic.icon}</span>
+                {topic.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* 3. How It Works */}
-      <section className="py-20 px-5 lg:px-[120px] bg-white">
+      <section id="how-it-works" className="scroll-mt-24 py-16 px-5 lg:px-[120px] bg-white">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -271,105 +333,83 @@ const TutorLandingPage = () => {
           
           {/* Right Content Box */}
           <div className="w-full lg:w-1/2 bg-[#0B105E] rounded-[32px] p-8 md:p-12 lg:p-16 text-white shadow-2xl flex flex-col justify-center">
-            <h2 className="text-[32px] md:text-[40px] font-bold mb-4">How It Works</h2>
-            <p className="text-[16px] text-white/80 mb-10 leading-relaxed">We make it easy for you to create, publish, and profit from your courses.</p>
-            
-            <div className="flex flex-col gap-4">
-              {[
-                { icon: <FaVideo />, title: "Create Your Course", desc: "We make it easy for you to create, publish, and profit from your courses." },
-                { icon: <FaRocket />, title: "Publish & Promote", desc: "Make your course live and let our platform feature it. Share on social media to attract more students." },
-                { icon: <FaGraduationCap />, title: "Students Enroll", desc: "Watch learners sign up for your course and start engaging with your content." },
-                { icon: <FaMoneyBillWave />, title: "Earn Money", desc: "Receive payments every month based on student enrollments and engagement." },
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-start border border-white/20 rounded-[20px] p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 hover:border-white/40 cursor-pointer">
-                  <div className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-white text-[#0B105E] text-[18px] mb-4 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    {item.icon}
+            <h2 className="text-[32px] md:text-[40px] font-bold mb-4">How it works</h2>
+            <p className="text-[16px] text-white/80 mb-8 leading-relaxed">From idea to your first paid learner in four steps.</p>
+
+            <ol className="flex flex-col gap-4">
+              {steps.map((item, idx) => (
+                <li key={item.title} className="flex gap-4 rounded-[20px] border border-white/15 p-5 transition-all duration-300 hover:bg-white/10 hover:border-white/35">
+                  <span className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-white text-[15px] font-bold text-[#0B105E]">{idx + 1}</span>
+                  <div>
+                    <h3 className="mb-1 flex items-center gap-2 text-[16px] md:text-[18px] font-bold">{item.title}</h3>
+                    <p className="text-[14px] text-white/80 leading-[1.6]">{item.desc}</p>
                   </div>
-                  <h3 className="text-[16px] md:text-[18px] font-bold mb-2">{item.title}</h3>
-                  <p className="text-[14px] text-white/80 leading-[1.6]">{item.desc}</p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </motion.div>
       </section>
 
-      {/* 4. As an Instructor You'll Get */}
-      <section className="py-20 px-5 lg:px-[120px] bg-[#F4F7FC]">
-        <motion.div 
+      {/* 4. What you get */}
+      <section className="py-16 px-5 lg:px-[120px] bg-[#F4F7FC]">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mx-auto max-w-[1272px]"
         >
-          <div className="text-left mb-10">
-            <h2 className="text-[32px] md:text-[36px] font-bold text-[#202127] mb-2">As an Instructor You'll Get</h2>
-            <p className="text-[15px] md:text-[16px] text-[#717480]">We help experts build influence.</p>
+          <div className="mx-auto mb-12 max-w-[640px] text-center">
+            <h2 className="mb-3 text-[30px] font-bold text-[#202127] md:text-[38px]">Everything you need to teach well</h2>
+            <p className="text-[15px] leading-relaxed text-[#717480] md:text-[16px]">The tools are built in, so you spend your time on your learners, not on setup.</p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {benefits.map((benefit, idx) => (
-              <div 
-                key={idx} 
-                className={`flex items-center justify-center rounded-2xl py-5 px-4 text-white font-medium text-[15px] text-center shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300 cursor-pointer ${
-                  idx % 2 === 0 ? "bg-[#0B105E] hover:bg-[#111456]" : "bg-[#7A8BFF] hover:bg-[#6878e6]"
-                }`}
-              >
-                <span>{benefit.label}</span>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {benefits.map((benefit) => (
+              <div key={benefit.label} className="rounded-[18px] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <span className="mb-4 flex h-[44px] w-[44px] items-center justify-center rounded-xl bg-[#0B105E] text-[18px] text-white">{benefit.icon}</span>
+                <h3 className="mb-1.5 text-[16px] font-bold text-[#202127]">{benefit.label}</h3>
+                <p className="text-[13.5px] leading-[1.6] text-[#717480]">{benefit.desc}</p>
               </div>
             ))}
           </div>
         </motion.div>
       </section>
 
-      {/* 4.5 Testimonials (Hear from Our Tutors) */}
-      <section className="py-20 px-5 lg:px-[120px] bg-[#F4F7FC]">
-        <motion.div 
+      {/* 4.5 Tutor comments */}
+      <section className="py-16 px-5 lg:px-[120px] bg-white">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="mx-auto max-w-[1272px]"
         >
-          <div className="text-left mb-10">
-            <h2 className="text-[32px] md:text-[36px] font-bold text-[#202127] mb-2">Hear from Our Tutors</h2>
-            <p className="text-[15px] md:text-[16px] text-[#717480]">Hear from our Tutors who have been using our platform</p>
+          <div className="mx-auto mb-12 max-w-[640px] text-center">
+            <h2 className="mb-3 text-[30px] font-bold text-[#202127] md:text-[38px]">What tutors say</h2>
+            <p className="text-[15px] leading-relaxed text-[#717480] md:text-[16px]">In their own words: why they teach here and what it changed.</p>
           </div>
 
-          <div className="flex flex-col gap-10 max-w-[1100px] mx-auto">
-            {[
-              { name: "David A.", role: "Web Development Instructor", quote: "Teaching on this platform has been life-changing. I've helped over 2,000 students and earned a stable income. The best part is seeing my students land jobs in tech after taking my courses. The platform's tools make it easy to track student progress and engagement.", align: "left", img: HeroImage1 },
-              { name: "Jane B.", role: "Digital Marketing Tutor", quote: "I love the flexibility! I can teach at my own pace and still make a great living. The reach is amazing, I have students from different continents learning from me. The interactive features help me stay connected with my learners, making the teaching experience more engaging.", align: "right", img: HeroImage2 },
-              { name: "Michael H.", role: "Data Science Instructor", quote: "This platform gave me the opportunity to turn my expertise into a source of income while making an impact. Teaching online is more rewarding than I ever imagined.", align: "left", img: HeroImage3 }
-            ].map((tutor, idx) => (
-              <div key={idx} className={`flex flex-col sm:flex-row items-center gap-10 group cursor-default ${tutor.align === 'right' ? 'sm:flex-row-reverse' : ''}`}>
-                <div className="h-[100px] w-[100px] md:h-[130px] md:w-[130px] rounded-full overflow-hidden shrink-0 z-10 bg-gray-200 transition-transform duration-500 group-hover:scale-110 group-hover:shadow-xl">
-                  <img src={tutor.img.src} alt={tutor.name} className="h-full w-full object-cover object-top" />
-                </div>
-                <div className={`relative flex-1 rounded-md bg-[#0B105E] p-8 text-white shadow-sm transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl ${tutor.align === 'right' ? 'bg-[#5B55A9]' : ''}`}>
-                   {/* Mobile Pointer (Up) */}
-                   <div className={`absolute -top-[16px] left-1/2 -translate-x-1/2 h-0 w-0 border-x-[16px] border-x-transparent border-b-[16px] sm:hidden ${
-                     tutor.align === 'right' ? "border-b-[#5B55A9]" : "border-b-[#0B105E]"
-                   }`} />
-                   
-                   {/* Desktop Pointer (Left/Right) */}
-                   <div className={`hidden sm:block absolute top-1/2 -translate-y-1/2 h-0 w-0 border-y-[16px] border-y-transparent ${
-                      tutor.align === 'right' 
-                        ? "-right-[16px] border-l-[16px] border-l-[#5B55A9]" 
-                        : "-left-[16px] border-r-[16px] border-r-[#0B105E]"
-                    }`} />
-                   <h4 className="text-[18px] font-bold mb-1">{tutor.name}</h4>
-                   <p className="text-[14px] text-white/70 mb-4 font-medium">{tutor.role}</p>
-                   <p className="text-[15px] leading-[1.7]">"{tutor.quote}"</p>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {testimonials.map((tutor) => (
+              <figure key={tutor.name} className="relative flex flex-col rounded-[22px] border border-[#e4e7ec] bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-20px_rgba(18,43,122,0.35)]">
+                <span aria-hidden className="absolute right-6 top-4 font-serif text-[72px] leading-none text-[#e6ecf7]">&ldquo;</span>
+                <blockquote className="relative flex-1 text-[15px] leading-[1.75] text-[#2b2f45]">{tutor.quote}</blockquote>
+                <figcaption className="mt-6 flex items-center gap-3.5 border-t border-[#eef0f6] pt-5">
+                  <img src={tutor.img} alt={tutor.name} loading="lazy" className="h-[52px] w-[52px] shrink-0 rounded-full object-cover" style={{ objectPosition: tutor.position }} />
+                  <span>
+                    <span className="block text-[15px] font-bold text-[#202127]">{tutor.name}</span>
+                    <span className="block text-[13px] text-[#717480]">{tutor.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </motion.div>
       </section>
 
-      {/* 5. Trusted Network of Industry Leaders */}
+      {/* 5. Skills in demand */}
       <section className="py-20 px-5 lg:px-[120px] bg-white overflow-hidden">
         <style>
           {`
@@ -391,6 +431,9 @@ const TutorLandingPage = () => {
               width: max-content;
               animation: marqueeRight 30s linear infinite;
             }
+            @media (prefers-reduced-motion: reduce) {
+              .animate-marquee-left, .animate-marquee-right, .animate-scroll-up, .animate-scroll-down { animation: none; }
+            }
           `}
         </style>
         
@@ -400,9 +443,10 @@ const TutorLandingPage = () => {
           viewport={{ once: true }}
           className="mx-auto flex w-full max-w-[1272px] flex-col items-center gap-10 md:gap-14 border border-[#e4e7ec] rounded-[40px] py-14 px-4 overflow-hidden"
         >
-          <h2 className="text-center text-[20px] font-bold text-[#202127] md:text-[24px]">
-            Trusted Network of Industry Leaders
-          </h2>
+          <div className="text-center">
+            <h2 className="text-[20px] font-bold text-[#202127] md:text-[26px]">Teach the skills these companies hire for</h2>
+            <p className="mt-2 text-[14px] text-[#717480]">The tools and platforms our learners want to master.</p>
+          </div>
           
           <div className="flex flex-col gap-10 w-[200vw] sm:w-[150vw] md:w-full overflow-hidden">
             {/* Row 1 - Slides Left */}
@@ -443,8 +487,8 @@ const TutorLandingPage = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 mx-auto max-w-[1000px] text-center"
         >
-          <h2 className="text-[28px] md:text-[36px] font-bold text-[#202127] mb-2">Frequently Asked Questions (FAQs)</h2>
-          <p className="text-[15px] text-[#717480] mb-12">Find answers to the most common questions about Gloxad Academy</p>
+          <h2 className="text-[28px] md:text-[36px] font-bold text-[#202127] mb-2">Questions tutors ask</h2>
+          <p className="text-[15px] text-[#717480] mb-12">Short answers to what most people want to know before they start.</p>
 
           <div className="flex flex-col gap-4 text-left">
             {faqs.map((faq, idx) => (
@@ -481,7 +525,7 @@ const TutorLandingPage = () => {
               Your Knowledge. Your Income.<br/>Your Impact.
             </h2>
             <p className="text-[16px] md:text-[18px] text-white/90 mb-10 leading-relaxed max-w-[600px] mx-auto">
-              Join a community of expert tutors, impact lives, and earn money while doing what you love. <br className="hidden md:block" />Start your teaching journey today!
+              Apply in a few minutes, build your first course at your own pace and start earning from what you know.
             </p>
             <button
               onClick={() => router.push("/signup/instructor")}
@@ -489,6 +533,7 @@ const TutorLandingPage = () => {
             >
               Become an Instructor
             </button>
+            <p className="mt-4 text-[13px] text-white/75">Free to apply. Takes a few minutes.</p>
           </div>
         </motion.div>
       </section>
