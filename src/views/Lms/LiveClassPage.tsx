@@ -1,26 +1,27 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { MdCallEnd, MdOutlineBackHand, MdOutlineOndemandVideo, MdOutlineSend } from "react-icons/md";
+import { io, Socket } from "socket.io-client";
+import { MdOutlineBackHand, MdOutlineOndemandVideo, MdOutlineSend } from "react-icons/md";
 import { LuMenu } from "react-icons/lu";
 import { toast } from "react-toastify";
-import useAuth from "@hooks/useAuth";
-import { lmsApi, TLiveSession, TStream } from "@services/lms";
+import { lmsApi, TLiveMessage, TLiveSession, TRoomCredentials } from "@services/lms";
 import LmsShell from "./components/LmsShell";
-import LiveCodePanel from "./components/LiveCodePanel";
+import LiveRoomStage, { TRoomPerson } from "./components/LiveRoomStage";
 import LiveClassPreview from "./LiveClassPreview";
 import useDemoMode from "./useDemoMode";
 
-type TTab = "chat" | "polls" | "code" | "people";
+type TTab = "chat" | "polls" | "people";
+
+const SOCKET_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://gloxard-backend.onrender.com";
 
 const timeLabel = (iso: string) => new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 const dateLabel = (iso: string) => new Date(iso).toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 const errorText = (error: unknown, fallback: string) => (error as AxiosError<{ error?: string }>)?.response?.data?.error ?? fallback;
-const instructorName = (session: TLiveSession) => (typeof session.instructor === "object" ? session.instructor.name : "Instructor");
+const instructorName = (session: TLiveSession) => (typeof session.instructor === "object" ? session.instructor.name : "Tutor");
 
 const countdownLabel = (target: number, now: number) => {
   const seconds = Math.max(0, Math.floor((target - now) / 1000));
@@ -32,6 +33,54 @@ const countdownLabel = (target: number, now: number) => {
   return `${minutes}m ${String(seconds % 60).padStart(2, "0")}s`;
 };
 
+type TChannelHandlers = { onPoll: () => void; onEnded: () => void };
+
+/** The class's real-time channel: chat, raised hands, new polls and the end of the class. */
+const useLiveChannel = (sessionId: string | undefined, active: boolean, handlers: TChannelHandlers) => {
+  const socketRef = useRef<Socket | null>(null);
+  const handlersRef = useRef(handlers);
+  handlersRef.current = handlers;
+  const [live, setLive] = useState<TLiveMessage[]>([]);
+  const [hands, setHands] = useState<Record<string, string>>({});
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
+    if (!sessionId || !active) return undefined;
+    const socket = io(`${SOCKET_URL}/live`, { auth: { token: localStorage.getItem("token") }, transports: ["websocket", "polling"] });
+    socketRef.current = socket;
+    socket.on("connect", () => {
+      setConnected(true);
+      socket.emit("session:join", { sessionId });
+    });
+    socket.on("disconnect", () => setConnected(false));
+    socket.on("chat:message", (message: { _id: string; authorId: string; authorName: string; text: string; createdAt: string }) =>
+      setLive((current) => (current.some((item) => item._id === message._id) ? current : [...current, { _id: message._id, system: false, text: message.text, author: { _id: message.authorId, name: message.authorName }, createdAt: message.createdAt }]))
+    );
+    socket.on("hand:raise", (data: { userId: string; name: string }) => setHands((current) => ({ ...current, [data.userId]: data.name })));
+    socket.on("hand:lower", (data: { userId: string }) =>
+      setHands((current) => {
+        const { [data.userId]: _removed, ...rest } = current;
+        return rest;
+      })
+    );
+    socket.on("poll:launched", () => handlersRef.current.onPoll());
+    socket.on("poll:closed", () => handlersRef.current.onPoll());
+    socket.on("session:ended", () => handlersRef.current.onEnded());
+    return () => {
+      socket.emit("session:leave", { sessionId });
+      socket.disconnect();
+      socketRef.current = null;
+      setConnected(false);
+      setLive([]);
+      setHands({});
+    };
+  }, [sessionId, active]);
+
+  const send = useCallback((text: string) => socketRef.current?.emit("chat:message", { sessionId, text }), [sessionId]);
+  const hand = useCallback((raised: boolean) => socketRef.current?.emit(raised ? "hand:raise" : "hand:lower", { sessionId }), [sessionId]);
+  return { live, hands, connected, send, hand };
+};
+
 const LiveClassPage = () => {
   const demo = useDemoMode();
   if (demo === null) return null;
@@ -39,15 +88,15 @@ const LiveClassPage = () => {
 };
 
 const LiveClassLive = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
-  const { authenticatedUser: user } = useAuth();
   const [tab, setTab] = useState<TTab>("chat");
   const [text, setText] = useState("");
   const [now, setNow] = useState(() => Date.now());
-  const [streamLink, setStreamLink] = useState("");
   const [pollQuestion, setPollQuestion] = useState("");
   const [pollOptions, setPollOptions] = useState("");
+  const [credentials, setCredentials] = useState<TRoomCredentials | null>(null);
+  const [people, setPeople] = useState<TRoomPerson[]>([]);
+  const [handUp, setHandUp] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,12 +109,7 @@ const LiveClassLive = () => {
   const cohortId = activeCohort?._id;
   const isTeacher = activeCohort?.role === "instructor" || activeCohort?.role === "admin";
 
-  const sessionsQuery = useQuery({
-    queryKey: ["lms", "live-sessions", cohortId],
-    queryFn: () => lmsApi.liveSessions(cohortId),
-    enabled: Boolean(cohortId),
-    refetchInterval: 20000,
-  });
+  const sessionsQuery = useQuery({ queryKey: ["lms", "live-sessions", cohortId], queryFn: () => lmsApi.liveSessions(cohortId), enabled: Boolean(cohortId), refetchInterval: 20000 });
 
   // The class to show: whatever is live, else the next one coming up, else the most recent
   const session = useMemo(() => {
@@ -78,111 +122,89 @@ const LiveClassLive = () => {
   }, [sessionsQuery.data]);
   const sessionId = session?._id;
 
-  const detailQuery = useQuery({
-    queryKey: ["lms", "live-session", sessionId],
-    queryFn: () => lmsApi.liveSession(sessionId as string),
-    enabled: Boolean(sessionId),
-    refetchInterval: tab === "code" ? 2500 : 8000,
-  });
+  const detailQuery = useQuery({ queryKey: ["lms", "live-session", sessionId], queryFn: () => lmsApi.liveSession(sessionId as string), enabled: Boolean(sessionId), refetchInterval: credentials ? 30000 : 10000 });
   const detail = detailQuery.data ?? session;
+  const joined = Boolean(credentials);
 
-  const joinable = Boolean(session?.canJoin);
-  const streamQuery = useQuery<TStream>({
-    queryKey: ["lms", "live-stream", sessionId, session?.status, session?.hasStream],
-    queryFn: () => lmsApi.join(sessionId as string),
-    enabled: Boolean(sessionId) && joinable,
-    staleTime: 60000,
-    refetchInterval: (query) => (query.state.data?.configured ? false : 15000),
-  });
-  const stream = streamQuery.data;
-
-  const chatQuery = useQuery({
-    queryKey: ["lms", "live-chat", sessionId],
-    queryFn: () => lmsApi.chat(sessionId as string),
-    enabled: Boolean(sessionId) && joinable,
-    refetchInterval: 4000,
-  });
-  const peopleQuery = useQuery({
-    queryKey: ["lms", "live-people", sessionId],
-    queryFn: () => lmsApi.people(sessionId as string),
-    enabled: Boolean(sessionId) && joinable && tab === "people",
-    refetchInterval: 15000,
-  });
-
-  const refreshAll = () => {
+  const refreshAll = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ["lms", "live-sessions"] });
     queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] });
-    queryClient.invalidateQueries({ queryKey: ["lms", "live-stream"] });
-  };
-  const fail = (fallback: string) => (error: unknown) => toast.error(errorText(error, fallback));
+  }, [queryClient, sessionId]);
 
-  const send = useMutation({
-    mutationFn: (value: string) => lmsApi.sendChat(sessionId as string, value),
-    onSuccess: () => {
-      setText("");
-      queryClient.invalidateQueries({ queryKey: ["lms", "live-chat", sessionId] });
+  const leaveRoom = useCallback(() => {
+    if (sessionId && credentials) void lmsApi.leave(sessionId).catch(() => undefined);
+    setCredentials(null);
+    setPeople([]);
+    setHandUp(false);
+  }, [sessionId, credentials]);
+
+  const channel = useLiveChannel(sessionId, joined, {
+    onPoll: () => queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] }),
+    onEnded: () => {
+      toast.info("The class has ended.");
+      leaveRoom();
+      refreshAll();
     },
-    onError: fail("Could not send your message."),
   });
-  const hand = useMutation({
-    mutationFn: () => lmsApi.toggleHand(sessionId as string),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] }),
-    onError: fail("Could not update your hand."),
-  });
+
+  const historyQuery = useQuery({ queryKey: ["lms", "live-chat", sessionId], queryFn: () => lmsApi.chat(sessionId as string), enabled: Boolean(sessionId) && joined });
+  const messages = useMemo(() => {
+    const history = historyQuery.data ?? [];
+    const seen = new Set(history.map((item) => item._id));
+    return [...history, ...channel.live.filter((item) => !seen.has(item._id))];
+  }, [historyQuery.data, channel.live]);
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
+  }, [messages.length, tab]);
+
+  const fail = (fallback: string) => (error: unknown) => toast.error(errorText(error, fallback));
+  const join = useMutation({ mutationFn: () => lmsApi.join(sessionId as string), onSuccess: (result) => setCredentials(result), onError: fail("Could not join the class.") });
   const vote = useMutation({
-    mutationFn: ({ pollId, option }: { pollId: string; option: number }) => lmsApi.vote(sessionId as string, pollId, option),
+    mutationFn: ({ pollId, option }: { pollId: string; option: number }) => lmsApi.vote(pollId, option),
     onSuccess: () => {
       toast.success("Your vote was recorded.");
-      queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] });
+      refreshAll();
     },
     onError: fail("Could not record your vote."),
   });
-  const saveStream = useMutation({
-    mutationFn: (link: string) => lmsApi.setStream(sessionId as string, link),
-    onSuccess: (result) => {
-      toast.success(result.message);
-      setStreamLink("");
-      refreshAll();
-    },
-    onError: fail("Could not save the YouTube link."),
-  });
-  const start = useMutation({ mutationFn: () => lmsApi.startSession(sessionId as string), onSuccess: () => { toast.success("The class is live."); refreshAll(); }, onError: fail("Could not start the class.") });
-  const end = useMutation({ mutationFn: () => lmsApi.endSession(sessionId as string), onSuccess: () => { toast.success("The class has ended."); refreshAll(); }, onError: fail("Could not end the class.") });
   const createPoll = useMutation({
     mutationFn: () => lmsApi.createPoll(sessionId as string, pollQuestion.trim(), pollOptions.split("\n").map((line) => line.trim()).filter(Boolean)),
     onSuccess: () => {
       toast.success("Poll launched.");
       setPollQuestion("");
       setPollOptions("");
-      queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] });
+      refreshAll();
     },
     onError: fail("Could not launch the poll."),
   });
-  const closePoll = useMutation({
-    mutationFn: (pollId: string) => lmsApi.closePoll(sessionId as string, pollId),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["lms", "live-session", sessionId] }),
-    onError: fail("Could not close the poll."),
+  const closePoll = useMutation({ mutationFn: (pollId: string) => lmsApi.closePoll(pollId), onSuccess: refreshAll, onError: fail("Could not close the poll.") });
+  const end = useMutation({
+    mutationFn: () => lmsApi.endSession(sessionId as string),
+    onSuccess: () => {
+      toast.success("The class has ended.");
+      leaveRoom();
+      refreshAll();
+    },
+    onError: fail("Could not end the class."),
   });
-
-  const messages = chatQuery.data ?? [];
-  useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
-  }, [messages.length, tab]);
 
   const submitChat = (event: FormEvent) => {
     event.preventDefault();
-    if (text.trim() && sessionId) send.mutate(text.trim());
+    if (!text.trim() || !channel.connected) return;
+    channel.send(text.trim());
+    setText("");
   };
-  const submitPoll = (event: FormEvent) => {
-    event.preventDefault();
-    createPoll.mutate();
+  const toggleHand = () => {
+    channel.hand(!handUp);
+    setHandUp((value) => !value);
   };
 
-  const isLive = detail?.status === "live";
+  const status = detail?.status;
+  const isLive = status === "live";
   const startsAt = detail ? new Date(detail.startsAt).getTime() : 0;
-  const chatOpen = isLive && joinable;
+  const mayEnter = Boolean(detail && status !== "ended" && (isTeacher || detail.canJoin));
   const polls = detailQuery.data?.polls ?? [];
-  const handRaised = Boolean(detailQuery.data?.myHandRaised);
+  const raised = Object.values(channel.hands);
 
   const topBar = (openMenu: () => void) => (
     <header className="sticky top-0 z-30 flex h-[68px] items-center justify-between gap-3 border-b border-[#dedcec] bg-white px-4 sm:px-6">
@@ -195,58 +217,57 @@ const LiveClassLive = () => {
             <span className="h-2 w-2 rounded-full bg-[#d62828]" /> Live Now
           </span>
         ) : (
-          <span className="shrink-0 rounded-full bg-[#e7e8fb] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-[#1a1a7a]">{detail?.status === "ended" ? "Ended" : "Upcoming"}</span>
+          <span className="shrink-0 rounded-full bg-[#e7e8fb] px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-[#1a1a7a]">{status === "ended" ? "Ended" : "Upcoming"}</span>
         )}
         <h1 className="truncate text-[15px] font-medium text-[#14162b] sm:text-[20px]">{detail?.title ?? "Live Class"}</h1>
       </div>
-      {isTeacher && detail && (
-        <div className="flex shrink-0 items-center gap-2">
-          {detail.status === "scheduled" && (
-            <button type="button" disabled={start.isPending} onClick={() => start.mutate()} className="rounded-[4px] bg-[#020060] px-4 py-2 text-[13px] font-medium text-white hover:bg-[#10107a] disabled:opacity-60">
-              Start class
-            </button>
-          )}
-          {detail.status === "live" && (
-            <button type="button" disabled={end.isPending} onClick={() => end.mutate()} className="rounded-[4px] bg-[#d62828] px-4 py-2 text-[13px] font-medium text-white hover:bg-[#b81f1f] disabled:opacity-60">
-              End class
-            </button>
-          )}
-        </div>
+      {isTeacher && detail && status !== "ended" && joined && (
+        <button type="button" disabled={end.isPending} onClick={() => end.mutate()} className="shrink-0 rounded-[4px] bg-[#d62828] px-4 py-2 text-[13px] font-medium text-white hover:bg-[#b81f1f] disabled:opacity-60">
+          End class for everyone
+        </button>
       )}
     </header>
   );
 
-  const renderVideo = () => {
+  const renderStage = () => {
     if (!detail) return null;
-    if (detail.status === "ended" || detail.status === "cancelled") {
-      return <Placeholder title={detail.status === "ended" ? "This class has ended" : "This class was cancelled"} text={`${detail.title} was scheduled for ${dateLabel(detail.startsAt)}.`} />;
-    }
-    if (!joinable) {
-      return <Placeholder title="This class hasn't started yet" text={`Starts ${dateLabel(detail.startsAt)} (in ${countdownLabel(startsAt, now)}). You can join 15 minutes before.`} />;
-    }
-    if (stream?.configured && stream.embedUrl) {
-      return (
-        <iframe
-          title={detail.title}
-          src={stream.embedUrl}
-          className="absolute inset-0 h-full w-full"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
-      );
-    }
+    if (joined && credentials) return <LiveRoomStage credentials={credentials} onLeave={leaveRoom} onPeople={setPeople} />;
     return (
-      <Placeholder
-        title={isLive ? "Stream starting soon" : "Waiting for the stream"}
-        text={isTeacher ? "Add your YouTube live link below and students will see the video here." : "The video appears here as soon as your instructor adds the YouTube link."}
-      />
+      <div className="relative flex aspect-video flex-col items-center justify-center gap-3 overflow-hidden rounded-[18px] bg-[#1b2230] px-6 text-center text-white shadow-[0_20px_50px_-24px_rgba(20,20,80,0.5)]">
+        <MdOutlineOndemandVideo size={44} className="text-white/70" aria-hidden />
+        {status === "ended" ? (
+          <>
+            <p className="text-[18px] font-bold">This class has ended</p>
+            <p className="max-w-[420px] text-[14px] text-white/75">{detail.title} was held on {dateLabel(detail.startsAt)}.</p>
+          </>
+        ) : mayEnter ? (
+          <>
+            <p className="text-[18px] font-bold">{isLive ? "The class is live" : "The class is about to start"}</p>
+            <p className="max-w-[420px] text-[14px] text-white/75">{isTeacher ? "Join to start teaching. Your camera and microphone stay off until you turn them on." : "Join to watch and take part. Your camera and microphone stay off."}</p>
+            <button type="button" disabled={join.isPending} onClick={() => join.mutate()} className="mt-1 rounded-full bg-[#FF5A5F] px-8 py-3 text-[15px] font-bold text-white transition hover:bg-[#f0444a] disabled:opacity-60">
+              {join.isPending ? "Joining..." : isTeacher ? "Start and join" : "Join class"}
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="text-[18px] font-bold">This class has not started yet</p>
+            <p className="max-w-[420px] text-[14px] text-white/75">Starts {dateLabel(detail.startsAt)}. Joining opens in {countdownLabel(startsAt - 10 * 60 * 1000, now)}, 10 minutes before the start.</p>
+            <span className="rounded-full bg-white/15 px-6 py-2.5 text-[14px] font-semibold text-white/80">Join opens 10 minutes before</span>
+          </>
+        )}
+      </div>
     );
   };
 
+  const tabButton = (key: TTab, label: string) => (
+    <button key={key} type="button" role="tab" aria-selected={tab === key} onClick={() => setTab(key)} className={`flex-1 px-3 py-3 text-[13px] font-medium transition-colors ${tab === key ? "border-b-2 border-[#020060] text-[#020060]" : "text-[#4a4d66] hover:text-[#14162b]"}`}>
+      {label}
+    </button>
+  );
+
   return (
     <LmsShell active="live" topBar={topBar} showUser flush>
-      <div className={`grid min-h-[calc(100vh-68px)] ${tab === "code" ? "lg:grid-cols-[minmax(0,1fr)_480px] xl:grid-cols-[minmax(0,1fr)_620px]" : "lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px]"}`}>
+      <div className="grid min-h-[calc(100vh-68px)] lg:grid-cols-[minmax(0,1fr)_380px]">
         <section aria-label="Class video" className="min-w-0 p-4 sm:p-6">
           {meQuery.isLoading || sessionsQuery.isLoading ? (
             <p className="py-24 text-center text-[14px] text-[#4a4d66]">Loading your live classes...</p>
@@ -255,10 +276,10 @@ const LiveClassLive = () => {
           ) : !cohortId ? (
             <Empty title="You're not in a trimester cohort yet" text="Once you're added to a cohort, your live classes show up here." />
           ) : !detail ? (
-            <Empty title="No live classes scheduled" text="Your instructor hasn't scheduled a class yet. Check back soon." />
+            <Empty title="No live classes scheduled" text="Your tutor hasn't scheduled a class yet. Check back soon." />
           ) : (
             <>
-              <div className="relative aspect-video overflow-hidden rounded-[18px] bg-[#1b2230] shadow-[0_20px_50px_-24px_rgba(20,20,80,0.5)]">{renderVideo()}</div>
+              {renderStage()}
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h2 className="text-[18px] font-bold text-[#14162b]">{detail.title}</h2>
@@ -266,195 +287,121 @@ const LiveClassLive = () => {
                     {instructorName(detail)} &bull; {dateLabel(detail.startsAt)} - {timeLabel(detail.endsAt)}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  {stream?.watchUrl && (
-                    <a href={stream.watchUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-[6px] border border-[#c9c8dc] bg-white px-3 py-2.5 text-[13px] font-medium text-[#1b1d33] hover:bg-[#f3f2fb]">
-                      <MdOutlineOndemandVideo size={18} aria-hidden /> Open on YouTube
-                    </a>
-                  )}
-                  <button type="button" onClick={() => router.push("/lms")} className="inline-flex items-center gap-2 rounded-[6px] bg-[#d62828] px-3 py-2.5 text-[13px] font-medium text-white hover:bg-[#b81f1f]">
-                    <MdCallEnd size={18} aria-hidden /> Leave class
+                {joined && !isTeacher && (
+                  <button type="button" onClick={toggleHand} aria-pressed={handUp} className={`inline-flex items-center gap-2 rounded-[6px] border px-3 py-2.5 text-[13px] font-medium ${handUp ? "border-[#d9a400] bg-[#fff6d6] text-[#7a5b00]" : "border-[#c9c8dc] bg-white text-[#1b1d33] hover:bg-[#f3f2fb]"}`}>
+                    <MdOutlineBackHand size={18} aria-hidden /> {handUp ? "Lower hand" : "Raise hand"}
                   </button>
-                </div>
+                )}
               </div>
-
-              {isTeacher && detail.status !== "ended" && detail.status !== "cancelled" && (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    saveStream.mutate(streamLink.trim());
-                  }}
-                  className="mt-5 rounded-[12px] border border-[#dedcec] bg-white p-4"
-                >
-                  <label htmlFor="yt-link" className="text-[13px] font-bold text-[#14162b]">YouTube live link</label>
-                  <p className="mt-1 text-[12px] text-[#4a4d66]">Create the broadcast in YouTube Studio (Unlisted works well), then paste its link. Students watch it here.</p>
-                  <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                    <input
-                      id="yt-link"
-                      value={streamLink}
-                      onChange={(event) => setStreamLink(event.target.value)}
-                      placeholder="https://www.youtube.com/watch?v=..."
-                      className="h-11 flex-1 rounded-[6px] border border-[#d6d4e6] px-3 text-[14px] outline-none focus:border-[#020060]"
-                    />
-                    <button type="submit" disabled={saveStream.isPending || !streamLink.trim()} className="h-11 rounded-[6px] bg-[#020060] px-5 text-[14px] font-medium text-white hover:bg-[#10107a] disabled:opacity-60">
-                      {stream?.configured ? "Replace link" : "Save link"}
-                    </button>
-                  </div>
-                </form>
-              )}
+              {detail.description && <p className="mt-3 max-w-[720px] text-[14px] leading-relaxed text-[#2a2c42]">{detail.description}</p>}
+              <p className="mt-4 text-[13px] text-[#6a6d83]">
+                <Link href="/lms/curriculum" className="font-medium text-[#1a1a7a] hover:underline">Back to the weekly path</Link>
+              </p>
             </>
           )}
         </section>
 
-        <aside className="flex min-h-[520px] flex-col border-t border-[#dedcec] bg-white lg:min-h-0 lg:border-l lg:border-t-0">
-          <div role="tablist" aria-label="Class panels" className="flex border-b border-[#dedcec]">
-            {([
-              ["chat", "Live Chat"],
-              ["polls", "Polls"],
-              ["code", "Code"],
-              ["people", `People${peopleQuery.data ? ` (${peopleQuery.data.total})` : ""}`],
-            ] as [TTab, string][]).map(([key, label]) => (
-              <button
-                key={key}
-                type="button"
-                role="tab"
-                aria-selected={tab === key}
-                onClick={() => setTab(key)}
-                className={`-mb-px flex-1 whitespace-nowrap border-b-2 px-1.5 py-4 text-[13px] transition-colors sm:text-[14px] ${tab === key ? "border-[#1a1a7a] font-bold text-[#1a1a7a]" : "border-transparent text-[#4a4d66] hover:text-[#1a1a7a]"}`}
-              >
-                {label}
-              </button>
-            ))}
+        <aside aria-label="Class tools" className="flex min-h-[420px] flex-col border-t border-[#dedcec] bg-white lg:border-l lg:border-t-0">
+          <div role="tablist" aria-label="Class tools" className="flex border-b border-[#dedcec]">
+            {tabButton("chat", "Chat")}
+            {tabButton("polls", `Polls${polls.some((poll) => poll.isOpen) ? " •" : ""}`)}
+            {tabButton("people", `People${people.length ? ` (${people.length})` : ""}`)}
           </div>
 
-          <div ref={listRef} className="flex-1 overflow-y-auto p-5">
-            {!joinable && <p className="text-[13px] text-[#4a4d66]">Chat, polls and shared code open when you can join the class.</p>}
-
-            {joinable && tab === "chat" && (
-              <ul className="flex flex-col gap-4">
-                {messages.length === 0 && <li className="text-center text-[13px] text-[#4a4d66]">No messages yet. Say hello.</li>}
-                {messages.map((message) =>
-                  message.system ? (
-                    <li key={message._id} className="text-center">
-                      <span className="inline-block rounded-full bg-[#e3eef8] px-4 py-1.5 text-[12px] text-[#1a4a7a]">{message.text}</span>
-                    </li>
-                  ) : (
-                    <li key={message._id}>
-                      <p className="text-[12px]">
-                        <span className="font-bold text-[#14162b]">{message.author?.name ?? "Member"}</span> <span className="text-[#4a4d66]">{timeLabel(message.createdAt)}</span>
-                      </p>
-                      <p className={`mt-1.5 break-words rounded-[8px] px-4 py-3 text-[14px] leading-[1.6] text-[#14162b] ${message.author?._id === user?._id ? "bg-[#e7e8fb]" : "bg-[#f3f1fa]"}`}>{message.text}</p>
-                    </li>
-                  )
+          {tab === "chat" && (
+            <>
+              <div ref={listRef} role="log" aria-live="polite" className="flex-1 overflow-y-auto p-4">
+                {!joined ? (
+                  <p className="text-[13.5px] text-[#4a4d66]">Join the class to read and send messages.</p>
+                ) : messages.length === 0 ? (
+                  <p className="text-[13.5px] text-[#4a4d66]">No messages yet. Say hello.</p>
+                ) : (
+                  messages.map((message) => (
+                    <div key={message._id} className="mb-3 text-[13.5px]">
+                      <b className="text-[#14162b]">{message.author?.name ?? "Someone"}</b> <span className="text-[11px] text-[#6a6d83]">{timeLabel(message.createdAt)}</span>
+                      <p className="mt-0.5 break-words text-[#2a2c42]">{message.text}</p>
+                    </div>
+                  ))
                 )}
-              </ul>
-            )}
+              </div>
+              <form onSubmit={submitChat} className="flex gap-2 border-t border-[#dedcec] p-3">
+                <input value={text} onChange={(event) => setText(event.target.value)} disabled={!joined || !channel.connected} maxLength={500} placeholder={joined ? (channel.connected ? "Type a message" : "Connecting chat...") : "Join to chat"} aria-label="Message" className="min-w-0 flex-1 rounded-full border border-[#c9c8dc] px-4 py-2.5 text-[14px] outline-none focus:border-[#020060] disabled:bg-[#f4f4fa]" />
+                <button type="submit" disabled={!joined || !channel.connected || !text.trim()} aria-label="Send message" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#020060] text-white disabled:opacity-40">
+                  <MdOutlineSend size={18} />
+                </button>
+              </form>
+            </>
+          )}
 
-            {joinable && tab === "polls" && (
-              <div className="flex flex-col gap-6">
-                {polls.length === 0 && <p className="text-[13px] text-[#4a4d66]">No polls yet.</p>}
-                {polls.map((poll) => (
-                  <div key={poll._id}>
-                    <p className={`text-[11px] font-bold uppercase tracking-wide ${poll.isOpen ? "text-[#c62828]" : "text-[#4a4d66]"}`}>{poll.isOpen ? "Live poll" : "Closed poll"}</p>
-                    <h3 className="mt-2 text-[16px] font-bold leading-snug text-[#14162b]">{poll.question}</h3>
-                    <ul className="mt-4 flex flex-col gap-2.5">
+          {tab === "polls" && (
+            <div className="flex-1 overflow-y-auto p-4">
+              {isTeacher && joined && (
+                <form onSubmit={(event) => { event.preventDefault(); createPoll.mutate(); }} className="mb-5 rounded-[12px] bg-[#f4f4fa] p-3">
+                  <input value={pollQuestion} onChange={(event) => setPollQuestion(event.target.value)} placeholder="Ask a question" aria-label="Poll question" className="mb-2 w-full rounded-[8px] border border-[#c9c8dc] px-3 py-2 text-[13.5px]" />
+                  <textarea value={pollOptions} onChange={(event) => setPollOptions(event.target.value)} placeholder={"One answer per line\nAt least two"} aria-label="Poll answers" rows={3} className="w-full rounded-[8px] border border-[#c9c8dc] px-3 py-2 text-[13.5px]" />
+                  <button type="submit" disabled={createPoll.isPending || !pollQuestion.trim() || pollOptions.split("\n").filter((line) => line.trim()).length < 2} className="mt-2 rounded-full bg-[#020060] px-4 py-2 text-[13px] font-medium text-white disabled:opacity-50">Launch poll</button>
+                </form>
+              )}
+              {polls.length === 0 ? (
+                <p className="text-[13.5px] text-[#4a4d66]">No polls yet.</p>
+              ) : (
+                [...polls].reverse().map((poll) => (
+                  <div key={poll._id} className="mb-4 rounded-[12px] border border-[#dedcec] p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <b className="text-[14px] text-[#14162b]">{poll.question}</b>
+                      <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-bold ${poll.isOpen ? "bg-[#e6f6ec] text-[#15803d]" : "bg-[#eef1f8] text-[#52607A]"}`}>{poll.isOpen ? "Open" : "Closed"}</span>
+                    </div>
+                    <ul className="mt-2 flex flex-col gap-1.5">
                       {poll.options.map((option) => {
-                        const chosen = poll.myVote === option.index;
-                        const showResults = !poll.isOpen || poll.myVote !== null || isTeacher;
                         const percent = poll.totalVotes ? Math.round((option.votes / poll.totalVotes) * 100) : 0;
+                        const canVote = poll.isOpen && poll.myVote === null && joined && !isTeacher;
                         return (
                           <li key={option.index}>
-                            <button
-                              type="button"
-                              disabled={!poll.isOpen || vote.isPending}
-                              onClick={() => vote.mutate({ pollId: poll._id, option: option.index })}
-                              className={`relative flex w-full items-center justify-between overflow-hidden rounded-[8px] border px-4 py-3 text-left text-[14px] transition-colors disabled:cursor-default ${chosen ? "border-[#020060] bg-[#eef0fd] font-bold text-[#1a1a7a]" : "border-[#dedcec] hover:bg-[#f7f6fd]"}`}
-                            >
-                              {showResults && <span aria-hidden className="absolute inset-y-0 left-0 bg-[#d6ebf8]/60" style={{ width: `${percent}%` }} />}
-                              <span className="relative">{option.text} {chosen && <span className="text-[12px]">(your vote)</span>}</span>
-                              {showResults && <span className="relative text-[12px]">{percent}%</span>}
+                            <button type="button" disabled={!canVote || vote.isPending} onClick={() => vote.mutate({ pollId: poll._id, option: option.index })} className={`relative w-full overflow-hidden rounded-[8px] border px-3 py-2 text-left text-[13px] ${poll.myVote === option.index ? "border-[#020060]" : "border-[#dedcec]"} ${canVote ? "hover:bg-[#f4f4fa]" : "cursor-default"}`}>
+                              <span aria-hidden className="absolute inset-y-0 left-0 bg-[#e3e6fb]" style={{ width: `${percent}%` }} />
+                              <span className="relative flex justify-between gap-2"><span>{option.text}</span><span className="text-[#4a4d66]">{poll.myVote !== null || !poll.isOpen || isTeacher ? `${percent}%` : ""}</span></span>
                             </button>
                           </li>
                         );
                       })}
                     </ul>
+                    <p className="mt-2 text-[11.5px] text-[#6a6d83]">{poll.totalVotes} {poll.totalVotes === 1 ? "vote" : "votes"}{poll.myVote !== null ? " · you voted" : ""}</p>
                     {isTeacher && poll.isOpen && (
-                      <button type="button" onClick={() => closePoll.mutate(poll._id)} className="mt-3 text-[13px] font-medium text-[#00658f] hover:underline">Close poll</button>
+                      <button type="button" disabled={closePoll.isPending} onClick={() => closePoll.mutate(poll._id)} className="mt-2 rounded-full border border-[#c9c8dc] px-3 py-1 text-[12px] font-medium text-[#14162b] hover:bg-[#f4f4fa]">Close poll</button>
                     )}
                   </div>
-                ))}
-                {isTeacher && isLive && (
-                  <form onSubmit={submitPoll} className="rounded-[10px] border border-[#dedcec] p-4">
-                    <p className="text-[13px] font-bold text-[#14162b]">Launch a poll</p>
-                    <input value={pollQuestion} onChange={(event) => setPollQuestion(event.target.value)} placeholder="Question" aria-label="Poll question" className="mt-3 h-10 w-full rounded-[6px] border border-[#d6d4e6] px-3 text-[14px] outline-none focus:border-[#020060]" />
-                    <textarea value={pollOptions} onChange={(event) => setPollOptions(event.target.value)} placeholder={"One option per line (2 to 6)"} aria-label="Poll options" rows={4} className="mt-2 w-full rounded-[6px] border border-[#d6d4e6] px-3 py-2 text-[14px] outline-none focus:border-[#020060]" />
-                    <button type="submit" disabled={createPoll.isPending || !pollQuestion.trim() || pollOptions.split("\n").filter((line) => line.trim()).length < 2} className="mt-3 rounded-[6px] bg-[#020060] px-4 py-2 text-[13px] font-medium text-white disabled:opacity-60">Launch poll</button>
-                  </form>
-                )}
-              </div>
-            )}
+                ))
+              )}
+            </div>
+          )}
 
-            {joinable && tab === "code" && sessionId && (
-              <LiveCodePanel sessionId={sessionId} isTeacher={isTeacher} instructor={detail ? instructorName(detail) : undefined} remote={detailQuery.data?.sharedCode ?? null} canEdit={detail?.status !== "ended" && detail?.status !== "cancelled"} />
-            )}
-
-            {joinable && tab === "people" && (
-              <ul className="flex flex-col divide-y divide-[#eceaf5]">
-                {(peopleQuery.data?.people ?? []).map((person) => (
-                  <li key={person._id} className="flex items-center gap-3 py-2.5 text-[14px] text-[#14162b]">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e7e8fb] text-[11px] font-bold text-[#1a1a7a]">
-                      {person.name.split(" ").map((part) => part[0]).slice(0, 2).join("")}
-                    </span>
-                    <span className="flex-1">{person.name}{person.isYou ? " (You)" : ""}</span>
-                    {person.handRaised && <MdOutlineBackHand size={18} className="text-[#00658f]" aria-label="Hand raised" />}
-                    <span className={`h-2 w-2 rounded-full ${person.joined ? "bg-[#2e9e5b]" : "bg-[#c9cbd9]"}`} aria-label={person.joined ? "Joined" : "Not joined"} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <div className="border-t border-[#dedcec] p-5">
-            {!isTeacher && (
-              <button
-                type="button"
-                aria-pressed={handRaised}
-                disabled={!chatOpen || hand.isPending}
-                onClick={() => hand.mutate()}
-                className={`flex w-full items-center justify-center gap-2 rounded-[6px] border px-4 py-3 text-[14px] font-medium transition-colors disabled:opacity-50 ${handRaised ? "border-[#00658f] bg-[#e3f1f8] text-[#00658f]" : "border-[#00658f] bg-white text-[#00658f] hover:bg-[#eef6fb]"}`}
-              >
-                <MdOutlineBackHand size={20} /> {handRaised ? "Lower Hand" : "Raise Hand"}
-              </button>
-            )}
-            {isTeacher && detail && <p className="text-[13px] text-[#4a4d66]">{detail.handsRaised} {detail.handsRaised === 1 ? "hand" : "hands"} raised</p>}
-            <form onSubmit={submitChat} className="relative mt-3">
-              <input
-                value={text}
-                onChange={(event) => setText(event.target.value)}
-                disabled={!chatOpen}
-                maxLength={1000}
-                aria-label="Type a message"
-                placeholder={chatOpen ? "Type a message..." : "Chat opens when the class is live"}
-                className="h-[52px] w-full rounded-[6px] border border-[#d6d4e6] bg-white pl-4 pr-12 text-[14px] text-[#14162b] outline-none placeholder:text-[#8d8fa6] focus:border-[#020060] disabled:bg-[#f6f5fb]"
-              />
-              <button type="submit" aria-label="Send message" disabled={!chatOpen || !text.trim() || send.isPending} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1a1a7a] disabled:text-[#b6b7c8]">
-                <MdOutlineSend size={22} />
-              </button>
-            </form>
-          </div>
+          {tab === "people" && (
+            <div className="flex-1 overflow-y-auto p-4">
+              {!joined ? (
+                <p className="text-[13.5px] text-[#4a4d66]">Join the class to see who is in the room.</p>
+              ) : (
+                <ul className="flex flex-col gap-2.5">
+                  {people.map((person) => (
+                    <li key={person.identity} className="flex items-center justify-between gap-2 text-[13.5px]">
+                      <span className="flex items-center gap-2.5">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#020060] text-[11px] font-bold text-white">{person.name.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()}</span>
+                        <span>{person.name}{person.isYou ? " (you)" : ""}</span>
+                      </span>
+                      <span className="flex items-center gap-1.5 text-[11.5px] text-[#6a6d83]">
+                        {raised.includes(person.name) && <MdOutlineBackHand aria-label="Hand raised" className="text-[#d9a400]" size={16} />}
+                        {person.canPublish ? "Tutor" : "Student"}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </aside>
       </div>
     </LmsShell>
   );
 };
-
-const Placeholder = ({ title, text }: { title: string; text: string }) => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center text-white">
-    <MdOutlineOndemandVideo size={44} className="text-white/70" aria-hidden />
-    <p className="text-[18px] font-bold">{title}</p>
-    <p className="max-w-[420px] text-[14px] text-white/75">{text}</p>
-  </div>
-);
 
 const Empty = ({ title, text }: { title: string; text: string }) => (
   <div className="mx-auto max-w-[460px] py-24 text-center">

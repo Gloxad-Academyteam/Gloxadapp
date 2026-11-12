@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import axiosInstance from "@utils/axiosInstance";
 import { lmsApi, TApiWeek } from "@services/lms";
 import useDemoMode from "./useDemoMode";
 import Link from "next/link";
@@ -286,7 +285,7 @@ const LiveWeeklyPath = () => {
   const weekQuery = useQuery({ queryKey: ["lms", "week", cohortId, selected], queryFn: () => lmsApi.week(selected, cohortId), enabled: Boolean(cohortId) && Boolean(curriculumQuery.data) });
 
   const toggle = useMutation({
-    mutationFn: ({ itemId, done }: { itemId: string; done: boolean }) => axiosInstance.post("/lms/progress", { itemId, completed: done, cohortId }),
+    mutationFn: ({ itemId, done }: { itemId: string; done: boolean }) => lmsApi.setProgress(itemId, done, cohortId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lms", "week", cohortId] });
       queryClient.invalidateQueries({ queryKey: ["lms", "curriculum", cohortId] });

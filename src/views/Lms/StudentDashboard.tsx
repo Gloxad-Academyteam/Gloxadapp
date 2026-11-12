@@ -18,8 +18,7 @@ import {
 } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "@hooks/useAuth";
-import axiosInstance from "@utils/axiosInstance";
-import { lmsApi } from "@services/lms";
+import { lmsApi, type TApiDashboard } from "@services/lms";
 import useDemoMode from "./useDemoMode";
 import LmsShell, { soon } from "./components/LmsShell";
 import { cardClass } from "./components/ui";
@@ -62,15 +61,6 @@ const demoModel: TModel = {
   announcements: ANNOUNCEMENTS,
 };
 
-type TApiDashboard = {
-  cohort: { trimester: { name: string; programName: string } };
-  currentWeek: number;
-  progress: { overall: number; week: { weekNumber: number; percent: number }; assignments: { done: number; total: number }; attendance: { attended: number; total: number; percent: number | null } };
-  upNext: { kind: string; label: string; title: string; module: string; labSlug: string | null } | null;
-  upcoming: { type: string; title: string; detail: string; dueAt: string; labSlug?: string | null }[];
-  announcements: { title: string; text: string; createdAt: string }[];
-};
-
 const KIND_LABEL: Record<string, string> = { video: "Video", reading: "Reading", code: "Coding Lab", check: "Quiz", live: "Live Class", problems: "Assignment", review: "Peer Review", submission: "Milestone" };
 const KIND_TONE: Record<string, string> = { video: "reading", reading: "reading", code: "reading", check: "milestone", live: "live", problems: "assignment", review: "assignment", submission: "milestone" };
 const KIND_HREF = (kind: string, labSlug?: string | null) =>
@@ -111,7 +101,7 @@ const StudentDashboard = () => {
   const cohortId = meQuery.data?.activeCohortId ?? meQuery.data?.cohorts[0]?._id;
   const dashboardQuery = useQuery({
     queryKey: ["lms", "dashboard", cohortId],
-    queryFn: async () => (await axiosInstance.get("/lms/dashboard", { params: { cohortId } })).data as TApiDashboard,
+    queryFn: () => lmsApi.dashboard(cohortId),
     enabled: Boolean(cohortId),
   });
 

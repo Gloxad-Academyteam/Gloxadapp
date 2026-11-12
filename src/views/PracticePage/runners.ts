@@ -12,7 +12,7 @@ importScripts(${JSON.stringify(PYODIDE_BASE + "pyodide.js")});
 let pyodidePromise = null;
 const load = () => (pyodidePromise ||= loadPyodide({ indexURL: ${JSON.stringify(PYODIDE_BASE)} }));
 self.onmessage = async (event) => {
-  const { type, code } = event.data;
+  const { type, code, stdin } = event.data;
   if (type === "warm") {
     try { await load(); self.postMessage({ type: "ready" }); } catch (err) { self.postMessage({ type: "failed", error: String((err && err.message) || err) }); }
     return;
@@ -26,6 +26,10 @@ self.onmessage = async (event) => {
     const push = (level) => (text) => { if (logs.length < 500) logs.push({ level, text }); };
     pyodide.setStdout({ batched: push("log") });
     pyodide.setStderr({ batched: push("error") });
+    // input() reads the lines of the test input, then reports end of input
+    const stdinLines = String(stdin || "").split("\\n");
+    let stdinIndex = 0;
+    pyodide.setStdin({ stdin: () => (stdinIndex < stdinLines.length ? stdinLines[stdinIndex++] : null) });
     // A fresh namespace each run, so one run never leaks names into the next
     const globals = pyodide.globals.get("dict")();
     try { await pyodide.runPythonAsync(code, { globals }); } finally { globals.destroy(); }
@@ -39,7 +43,7 @@ self.onmessage = async (event) => {
 };
 `;
 
-type TPythonSession = { run: (code: string, timeoutMs?: number) => Promise<TRunResult>; warm: () => void; dispose: () => void; onStatus: (cb: (status: "idle" | "loading" | "ready" | "failed") => void) => void };
+type TPythonSession = { run: (code: string, timeoutMs?: number, stdin?: string) => Promise<TRunResult>; warm: () => void; dispose: () => void; onStatus: (cb: (status: "idle" | "loading" | "ready" | "failed") => void) => void };
 
 export const createPythonSession = (): TPythonSession => {
   let worker: Worker | null = null;
@@ -80,7 +84,7 @@ export const createPythonSession = (): TPythonSession => {
       };
       w.postMessage({ type: "warm" });
     },
-    run: (code, timeoutMs = 10000) =>
+    run: (code, timeoutMs = 10000, stdin = "") =>
       new Promise((resolve) => {
         const w = start();
         const began = performance.now();
@@ -118,7 +122,7 @@ export const createPythonSession = (): TPythonSession => {
           statusCb("failed");
           resolve({ logs: [], tests: [], error: "Python could not be loaded. Check your internet connection and try again.", ms: 0 });
         };
-        w.postMessage({ type: "run", code });
+        w.postMessage({ type: "run", code, stdin });
       }),
     dispose: stop,
   };

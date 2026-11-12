@@ -21,15 +21,15 @@ import {
 } from "react-icons/md";
 import { LuFileCode2 } from "react-icons/lu";
 import { toast } from "react-toastify";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { AxiosError } from "axios";
-import axiosInstance from "@utils/axiosInstance";
 import { lmsApi } from "@services/lms";
 import useDemoMode from "./useDemoMode";
 import LmsShell from "./components/LmsShell";
 import { cardClass, outlineButton } from "./components/ui";
 import { runCode, TRunResult } from "./components/runCode";
+import { buildLabRunner } from "./components/labRunner";
 import { CODE_LAB as CODE_LAB_DEMO, TLabFile } from "./data";
 
 const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
@@ -84,9 +84,16 @@ type TViewProps = {
   savedFiles?: Record<string, string>;
   savedSolved?: boolean;
   onSubmit?: TSubmitFn;
+  // Replaces the built-in test file: runs the code against the lab's input and output tests
+  runner?: (code: string) => Promise<TRunResult>;
+  // Called whenever the student edits a file, so the page can autosave it
+  onCodeChange?: (file: string, value: string) => void;
+  note?: string;
+  // False for labs with no automatic checks: the student can submit without a passing run
+  requireChecks?: boolean;
 };
 
-const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) => {
+const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit, runner, onCodeChange, note, requireChecks = true }: TViewProps) => {
   const CODE_LAB = lab;
   const DONE_KEY = doneKey(lab.id);
   const storageKey_ = (file: string) => storageKey(lab.id, file);
@@ -129,8 +136,9 @@ const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) =
       if (file.readOnly) return;
       setContents((current) => ({ ...current, [file.name]: value }));
       writeStored(storageKey_(file.name), value);
+      onCodeChange?.(file.name, value);
     },
-    [file]
+    [file, onCodeChange]
   );
 
   const run = useCallback(async () => {
@@ -138,14 +146,14 @@ const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) =
     runningRef.current = true;
     setIsRunning(true);
     try {
-      const outcome = await runCode(code, testsFile?.content);
+      const outcome = runner ? await runner(code) : await runCode(code, testsFile?.content);
       setResult(outcome);
       setPanel(outcome.error || outcome.tests.length === 0 ? "console" : "tests");
     } finally {
       runningRef.current = false;
       setIsRunning(false);
     }
-  }, [code, testsFile]);
+  }, [code, testsFile, runner]);
 
   const reset = () => {
     for (const entry of CODE_LAB.files) if (!entry.readOnly) writeStored(storageKey_(entry.name), null);
@@ -158,7 +166,7 @@ const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) =
 
   const submit = async () => {
     if (isSubmitting) return;
-    if (onSubmit && result) {
+    if (onSubmit && (result || !requireChecks)) {
       setIsSubmitting(true);
       try {
         await onSubmit(CODE_LAB.files.filter((entry) => !entry.readOnly).map((entry) => ({ name: entry.name, content: contents[entry.name] })), passed, total);
@@ -252,12 +260,12 @@ const CodingLabView = ({ lab, savedFiles, savedSolved, onSubmit }: TViewProps) =
               <button
                 type="button"
                 onClick={submit}
-                disabled={(!allPassed && !isSolved) || isSubmitting}
+                disabled={(requireChecks && !allPassed && !isSolved) || isSubmitting}
                 className="mt-6 inline-flex w-full items-center justify-center rounded-[8px] bg-[#020060] px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#10107a] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSolved ? "Submitted" : isSubmitting ? "Submitting..." : "Submit solution"}
               </button>
-              {!allPassed && !isSolved && <p className="mt-2 text-center text-[12px] text-[#6a6d83]">Pass every check to submit.</p>}
+              {!allPassed && !isSolved && <p className="mt-2 text-center text-[12px] text-[#6a6d83]">{note ?? "Pass every check to submit."}</p>}
               <Link href="/lms/curriculum" className="mt-4 block text-center text-[13px] font-medium text-[#1a1a7a] hover:underline">Back to the weekly path</Link>
             </section>
           </aside>
@@ -360,60 +368,86 @@ const LabState = ({ title, text }: { title: string; text: string }) => (
   </LmsShell>
 );
 
+const FILE_NAME: Record<string, string> = { javascript: "main.js", typescript: "main.ts", python: "main.py", html: "index.html", css: "style.css", sql: "query.sql" };
+const EDITOR_LANGUAGE: Record<string, TLabFile["language"]> = { javascript: "javascript", typescript: "javascript", python: "python", html: "html", css: "css", sql: "javascript" };
+const RUN_NOTE: Record<string, string> = {
+  javascript: "Read the test input from the variable input and print the answer with console.log.",
+  typescript: "Write plain JavaScript. Read the test input from the variable input and print the answer with console.log.",
+  python: "Read the test input with input() and print the answer.",
+};
+
 const LiveCodingLab = () => {
   const params = useSearchParams();
   const requested = params.get("lab");
 
+  const queryClient = useQueryClient();
   const meQuery = useQuery({ queryKey: ["lms", "me"], queryFn: lmsApi.me });
   const activeCohort = meQuery.data?.cohorts.find((cohort) => cohort._id === meQuery.data?.activeCohortId) ?? meQuery.data?.cohorts[0];
-  const labsQuery = useQuery({ queryKey: ["lms", "labs"], queryFn: lmsApi.labs });
-  const slug = requested ?? labsQuery.data?.find((entry) => !entry.submitted)?.slug ?? labsQuery.data?.[0]?.slug;
+  const cohortId = activeCohort?._id;
+  const labsQuery = useQuery({ queryKey: ["lms", "labs", cohortId], queryFn: () => lmsApi.labs(cohortId), enabled: Boolean(cohortId) });
+  const labId = requested ?? labsQuery.data?.find((entry) => entry.status !== "submitted")?._id ?? labsQuery.data?.[0]?._id;
 
-  const labQuery = useQuery({
-    queryKey: ["lms", "lab", slug],
-    queryFn: async () => (await axiosInstance.get(`/lms/code-labs/${slug}`)).data.lab,
-    enabled: Boolean(slug),
-  });
-  const submissionsQuery = useQuery({
-    queryKey: ["lms", "lab-submissions", slug],
-    queryFn: async () => (await axiosInstance.get(`/lms/code-labs/${slug}/submissions/me`)).data.submissions as { files: { name: string; content: string }[]; reportedPassed: number; reportedTotal: number }[],
-    enabled: Boolean(slug),
-  });
+  const labQuery = useQuery({ queryKey: ["lms", "lab", labId], queryFn: () => lmsApi.lab(labId as string), enabled: Boolean(labId), refetchOnWindowFocus: false, staleTime: Infinity });
+  const raw = labQuery.data;
 
-  const submit = useMutation({
-    mutationFn: async ({ files, passed, total }: { files: { name: string; content: string }[]; passed: number; total: number }) =>
-      axiosInstance.post(`/lms/code-labs/${slug}/submissions`, { files, passed, total }),
-  });
+  // Autosave about every few seconds after the student stops typing
+  const timer = useRef<number>();
+  const latest = useRef("");
+  const onCodeChange = useCallback(
+    (_file: string, value: string) => {
+      latest.current = value;
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => {
+        if (labId) void lmsApi.autosaveLab(labId, latest.current).catch(() => undefined);
+      }, 4000);
+    },
+    [labId]
+  );
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
+  const runner = useMemo(() => (raw ? buildLabRunner(raw.language, raw.testCases) : null), [raw]);
   const lab = useMemo<TLab | null>(() => {
-    const raw = labQuery.data;
     if (!raw) return null;
+    const instructions = (raw.instructions || raw.description || "").split("\n").map((line) => line.trim()).filter(Boolean);
+    const guide = RUN_NOTE[raw.language];
     return {
-      id: raw.slug,
+      id: raw._id,
       trimester: (activeCohort?.trimester.name ?? "Trimester").toUpperCase(),
-      module: raw.module || "Coding Lab",
+      module: "Coding Lab",
       title: raw.title,
-      estimate: raw.estimate || "",
-      steps: raw.steps ?? [],
-      hints: raw.hints ?? [],
-      files: raw.files ?? [],
+      estimate: raw.dueAt ? `Due ${new Date(raw.dueAt).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}` : "",
+      steps: guide ? [...instructions, guide] : instructions,
+      hints: [],
+      files: [{ name: FILE_NAME[raw.language] ?? "main.txt", language: EDITOR_LANGUAGE[raw.language] ?? "javascript", content: raw.draftCode }],
     };
-  }, [labQuery.data, activeCohort]);
+  }, [raw, activeCohort]);
 
-  const latest = submissionsQuery.data?.[0];
-  const savedFiles = useMemo(() => (latest ? Object.fromEntries(latest.files.map((file) => [file.name, file.content])) : undefined), [latest]);
-  const solved = Boolean(submissionsQuery.data?.some((entry) => entry.reportedTotal > 0 && entry.reportedPassed === entry.reportedTotal));
+  const visible = raw?.testCases.filter((test) => !test.hidden).length ?? 0;
+  const hiddenCount = (raw?.testCases.length ?? 0) - visible;
+  const note = !raw
+    ? undefined
+    : runner
+      ? hiddenCount > 0
+        ? `Pass every check to submit. ${hiddenCount} more ${hiddenCount === 1 ? "test is" : "tests are"} kept hidden for your tutor.`
+        : undefined
+      : "This lab is reviewed by your tutor, so there are no automatic checks. You can submit when you are ready.";
 
-  if (meQuery.isLoading || labsQuery.isLoading || labQuery.isLoading || submissionsQuery.isLoading) return <LabState title="Loading your lab..." text="One moment." />;
-  if (!slug || !lab) return <LabState title="No coding lab yet" text="Your instructor hasn't published a lab for this week. Check back soon." />;
+  if (meQuery.isLoading || labsQuery.isLoading || labQuery.isLoading) return <LabState title="Loading your lab..." text="One moment." />;
+  if (labQuery.isError) return <LabState title="We couldn't open this lab" text={(labQuery.error as AxiosError<{ error?: string }>).response?.data?.error ?? "Check your connection and try again."} />;
+  if (!labId || !lab || !raw) return <LabState title="No coding lab yet" text="Your tutor hasn't published a lab for this week. Check back soon." />;
   return (
     <CodingLabView
       key={lab.id}
       lab={lab}
-      savedFiles={savedFiles}
-      savedSolved={solved}
+      savedSolved={raw.status === "submitted" && raw.totalTests > 0 && raw.passedTests === raw.totalTests}
+      runner={runner ?? undefined}
+      onCodeChange={onCodeChange}
+      note={note}
+      requireChecks={Boolean(runner)}
       onSubmit={async (files, passed, total) => {
-        await submit.mutateAsync({ files, passed, total });
+        window.clearTimeout(timer.current);
+        await lmsApi.submitLab(raw._id, files[0]?.content ?? "", passed, total);
+        queryClient.invalidateQueries({ queryKey: ["lms", "labs"] });
       }}
     />
   );

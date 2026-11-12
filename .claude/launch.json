@@ -15,6 +15,7 @@
       "runtimeExecutable": "env",
       "runtimeArgs": [
         "BACKEND_URL=http://localhost:4011",
+        "NEXT_PUBLIC_BACKEND_URL=http://localhost:4011",
         "npx",
         "next",
         "dev",
