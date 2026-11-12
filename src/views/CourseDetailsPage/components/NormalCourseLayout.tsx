@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import React, { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -148,13 +149,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
             <div className="flex flex-col gap-3 mb-6">
               {/* Primary Instructor */}
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-gray-300 overflow-hidden shrink-0">
-                  <img 
-                    src={course.instructor?.avatarUrl || "https://ui-avatars.com/api/?name=" + (course.instructor?.firstName || "Instructor")} 
-                    alt="Instructor" 
-                    className="w-full h-full object-cover" 
-                  />
-                </div>
+                <UserAvatar src={course.instructor?.avatarUrl} alt="Instructor" className="h-8 w-8" />
                 <p className="text-[14px] text-[#4e515c]">
                   Instructor: <span className="font-bold underline cursor-pointer">{course.instructor?.firstName || "Judith"} {course.instructor?.lastName || "McKenzie"}</span>
                 </p>
@@ -166,13 +161,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
                   <p className="text-[10px] text-[#717480] font-bold uppercase tracking-wider">Co-Instructors</p>
                   {course.instructors.map((inst: any) => (
                     <div key={inst._id} className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-full bg-gray-200 overflow-hidden shrink-0 border border-[#e2e8f0]">
-                        <img 
-                          src={inst.avatarUrl || "https://ui-avatars.com/api/?name=" + inst.firstName} 
-                          alt={inst.firstName} 
-                          className="w-full h-full object-cover" 
-                        />
-                      </div>
+                      <UserAvatar src={inst.avatarUrl} alt={inst.firstName} className="h-7 w-7 border border-[#e2e8f0]" />
                       <p className="text-[13px] text-[#4e515c]">
                         <span className="font-semibold text-[#202127]">{inst.firstName} {inst.lastName}</span>
                         {inst.title && <span className="text-[11px] text-[#717480] ml-1.5">({inst.title})</span>}

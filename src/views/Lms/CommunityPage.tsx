@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { FormEvent, useEffect, useState } from "react";
 import { MdOutlineChatBubbleOutline, MdOutlineShare, MdOutlineThumbUp, MdThumbUp } from "react-icons/md";
 import { LuPlus, LuX } from "react-icons/lu";
@@ -115,14 +116,7 @@ const CommunityPage = () => {
               <article key={post.id} id={post.id} className={`${cardClass} p-5 sm:p-6`}>
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <span className={`relative flex h-[50px] w-[50px] shrink-0 items-center justify-center overflow-hidden rounded-[8px] text-[16px] font-bold ${post.instructor ? "bg-[#d3e8f8] text-[#1a1a7a]" : "bg-[#e7e8fb] text-[#1a1a7a]"}`}>
-                      {post.initials}
-                      {post.image && (
-                        <span className="absolute inset-0">
-                          <CategoryImage src={post.image} className="h-full w-full object-cover" fallback={null} />
-                        </span>
-                      )}
-                    </span>
+                    <UserAvatar src={post.image} alt={post.author} className="h-[50px] w-[50px] !rounded-[8px]" placeholderClassName={post.instructor ? "bg-[#d3e8f8] text-[#7f9bc4]" : "bg-[#e6e9f5] text-[#98a0c0]"} />
                     <div>
                       <p className="flex flex-wrap items-center gap-2 text-[15px] font-bold text-[#1a1a7a]">
                         {post.author}

@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React from "react";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
@@ -28,7 +30,7 @@ export default function FeedbackPage() {
   }, [id]);
 
   if (isLoading) {
-    return <div className="p-10">Loading feedback...</div>;
+    return <DetailSkeleton />;
   }
 
   if (!course) {
@@ -148,9 +150,7 @@ export default function FeedbackPage() {
           <div className="bg-[#fcfcfd] rounded-[16px] border border-[#e2e8f0] p-8 shadow-sm relative overflow-hidden">
             <div className="absolute right-[-20px] bottom-[-40px] text-[180px] font-serif text-[#e2e8f0] opacity-50 select-none">"</div>
             <div className="flex items-center gap-4 mb-6 relative z-10">
-              <div className="w-12 h-12 rounded-full bg-[#cbd5e1] overflow-hidden">
-                <img src="https://i.pravatar.cc/150?u=reviewer" alt="reviewer" className="w-full h-full object-cover" />
-              </div>
+              <UserAvatar className="h-12 w-12" />
               <div>
                 <p className="text-[14px] font-bold text-[#202127]">Reviewer's Note</p>
                 <p className="text-[12px] text-[#717480]">Platform Moderator • Senior Quality Specialist</p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -90,7 +91,7 @@ export default function CourseQuizPage() {
   if (isEnrollmentError) return null;
 
   if (isLoading || isEnrollmentLoading || !courseData) {
-    return <div className="p-20 text-center text-[#717480]">Loading quiz...</div>;
+    return <DetailSkeleton />;
   }
 
   if (!quiz || totalQuestions === 0) {

@@ -1,3 +1,4 @@
+import UserAvatar from "@components/Avatar";
 import React from "react";
 import { FiSearch, FiArchive, FiFlag, FiLink, FiTrash2, FiUploadCloud } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsFileEarmarkWord } from "react-icons/bs";
@@ -77,7 +78,7 @@ const GroupSettingsPage = () => {
               ].map((user, i) => (
                 <div key={i} className="flex items-center justify-between p-3 rounded-[8px] hover:bg-[#f8fafc] transition-colors">
                   <div className="flex items-center gap-4">
-                    <img src={`https://i.pravatar.cc/150?u=${user.name}`} className="w-10 h-10 rounded-full object-cover" alt={user.name} />
+                    <UserAvatar alt={user.name} className="h-10 w-10" />
                     <div>
                       <h4 className="text-[14px] font-bold text-[#202127]">{user.name}</h4>
                       <p className="text-[12px] text-[#717480]">{user.role}</p>

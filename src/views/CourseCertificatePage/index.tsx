@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -51,7 +52,7 @@ export default function CourseCertificatePage() {
         <FiChevronLeft /> Back
       </button>
 
-      {isLoading && <p className="py-20 text-center text-[#717480]">Loading certificate...</p>}
+      {isLoading && <Skeleton className="mx-auto my-10 h-[420px] w-full max-w-[860px] rounded-2xl" />}
 
       {isError && (
         <div className="mx-auto max-w-[520px] py-20 text-center">

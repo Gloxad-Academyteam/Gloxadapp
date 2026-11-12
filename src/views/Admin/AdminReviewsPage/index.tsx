@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -51,7 +53,7 @@ const AdminReviewsPage = () => {
         </div>
 
         {isLoading ? (
-          <div className="p-10 text-center text-[#717480]">Loading reviews...</div>
+          <div className="p-6"><ListSkeleton rows={4} /></div>
         ) : reviews.length === 0 ? (
           <div className="p-10 text-center text-[#717480]">No reviews found.</div>
         ) : (
@@ -61,13 +63,7 @@ const AdminReviewsPage = () => {
                 
                 {/* Author Info */}
                 <div className="w-[200px] shrink-0 flex items-center gap-3">
-                  {review.student?.profileImage ? (
-                    <img src={review.student.profileImage} alt="Profile" className="w-12 h-12 rounded-full object-cover" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-[#e2e8f0] flex items-center justify-center font-bold text-[#202127]">
-                      {(review.student?.firstName?.charAt(0) || "") + (review.student?.lastName?.charAt(0) || "")}
-                    </div>
-                  )}
+                  <UserAvatar src={review.student?.profileImage || review.student?.avatarUrl} className="h-12 w-12" />
                   <div>
                     <p className="font-bold text-[#202127] text-[14px]">
                       {review.student?.firstName} {review.student?.lastName}

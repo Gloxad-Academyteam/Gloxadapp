@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDashboardStats } from "@services/tutor";
@@ -121,14 +122,8 @@ const TutorDashboardPage = () => {
       {/* 1. Welcome Banner Card */}
       <div className="mb-8 flex flex-col md:flex-row items-center justify-between rounded-[20px] border border-[#f0f4f8] bg-white p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)]">
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-[#00b8d9]">
-            {user?.avatar || user?.avatarUrl ? (
-              <img src={user.avatar || user.avatarUrl} alt="User avatar" className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-[#26a69a] text-white font-bold text-2xl">
-                {tutorName.charAt(0)}
-              </div>
-            )}
+          <div className="relative h-16 w-16 shrink-0">
+            <UserAvatar src={user?.avatar || user?.avatarUrl} alt="User avatar" className="h-full w-full" />
             <HiCheckCircle className="absolute bottom-0 right-0 text-[20px] text-[#3e92cc] bg-white rounded-full" />
           </div>
           <div>

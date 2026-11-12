@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useHasTutorCourses } from "@hooks/useHasTutorCourses";
@@ -13,7 +14,7 @@ const OnlyWithTutorCourses = ({ children, fallback }: { children: React.ReactNod
     if (!isLoading && !hasTutorCourses) router.replace(fallback);
   }, [isLoading, hasTutorCourses, fallback, router]);
 
-  if (isLoading) return <div className="p-20 text-center text-[#717480]">Loading courses...</div>;
+  if (isLoading) return <div className="p-6 sm:p-10"><CardGridSkeleton count={3} /></div>;
   return hasTutorCourses ? <>{children}</> : null;
 };
 

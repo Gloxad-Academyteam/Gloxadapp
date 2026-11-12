@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { AiOutlineWarning } from "react-icons/ai";
@@ -145,13 +146,7 @@ const TutorsManagementPage = () => {
                   <tr key={tutor._id} className="border-b border-[#f0f4f8] last:border-none hover:bg-[#f8fafc] transition-colors">
                     <td className="py-4 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        {tutor.profileImage ? (
-                          <img src={tutor.profileImage} alt={tutor.firstName} className="w-10 h-10 rounded-full object-cover" />
-                        ) : (
-                          <div className="w-10 h-10 rounded-full bg-[#e2e8f0] flex items-center justify-center font-bold text-[#202127]">
-                            {(tutor.firstName?.charAt(0) || "") + (tutor.lastName?.charAt(0) || "")}
-                          </div>
-                        )}
+                        <UserAvatar src={tutor.profileImage || tutor.avatarUrl} alt={tutor.firstName} className="h-10 w-10" />
                         <div>
                           <p className="font-bold text-[#202127] text-[14px]">{tutor.firstName} {tutor.lastName}</p>
                           <p className="text-[#A0AEC0] text-[13px]">{tutor.email}</p>

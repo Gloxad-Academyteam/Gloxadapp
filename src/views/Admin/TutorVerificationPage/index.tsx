@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -69,7 +71,7 @@ const TutorVerificationPage = () => {
   };
 
   if (isLoading) {
-    return <div className="p-10 text-center text-[#717480]">Loading tutor profile...</div>;
+    return <DetailSkeleton />;
   }
   if (isError || !data) {
     return <div className="p-10 text-center text-red-500">Failed to load tutor. Please try again.</div>;
@@ -128,12 +130,7 @@ const TutorVerificationPage = () => {
         {/* Left Column — Profile */}
         <div className="space-y-8">
           <div className="bg-white border border-[#e2e8f0] rounded-[12px] p-8 shadow-sm flex flex-col items-center text-center">
-            <div className="w-[100px] h-[100px] rounded-full border-4 border-[#e2e8f0] overflow-hidden mb-4 bg-[#181C7B] flex items-center justify-center text-white text-[36px] font-bold">
-              {tutor.avatarUrl
-                ? <img src={tutor.avatarUrl} alt={fullName} className="w-full h-full object-cover" />
-                : tutor.firstName?.charAt(0)
-              }
-            </div>
+            <UserAvatar src={tutor.avatarUrl} alt={fullName} className="mb-4 h-[100px] w-[100px] border-4 border-[#e2e8f0]" />
             <h2 className="text-[20px] font-bold text-[#202127] mb-1">{fullName}</h2>
             <span className={`px-4 py-1.5 rounded-full text-[12px] font-bold mb-6 inline-block ${status === "approved" ? "bg-[#e6f7ef] text-[#048848]" : status === "rejected" ? "bg-[#ffe8e8] text-[#e02b2b]" : "bg-[#fff9e6] text-[#d48806]"}`}>
               {status.toUpperCase()}

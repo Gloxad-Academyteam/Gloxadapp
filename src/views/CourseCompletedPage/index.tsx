@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@components/Skeleton";
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +11,7 @@ export default function CourseCompletedPage() {
   const { id: courseId } = useParams()!;
   const router = useRouter();
 
-  const { data: course } = useQuery({
+  const { data: course, isLoading } = useQuery({
     queryKey: ["course.completed", courseId],
     queryFn: async () => {
       const res = await axiosInstance.get(`/courses/${courseId}`);
@@ -42,7 +43,7 @@ export default function CourseCompletedPage() {
 
           <div className="mx-auto mt-10 max-w-[620px] text-[14px] leading-[1.9]">
             <p>🎉 Congratulations!</p>
-            <p>You have successfully completed your {course?.title || "course"}.</p>
+            {isLoading ? <Skeleton className="mx-auto h-5 w-72" /> : <p>You have successfully completed your {course?.title || "course"}.</p>}
             <p>All of us at Gloxad celebrate you and your achievement.</p>
             <p>We're proud of your dedication and growth — this is just the beginning of your learning journey!</p>
           </div>

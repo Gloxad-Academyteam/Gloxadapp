@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaSearch, FaPaperPlane, FaCircle } from "react-icons/fa";
 import axiosInstance from "@utils/axiosInstance";
@@ -244,14 +246,14 @@ export default function MessagesPage() {
 
             <div className="flex-1 overflow-y-auto pb-4">
               {isLoadingConvs ? (
-                <div className="p-6 text-center text-[13px] text-[#717480]">Loading...</div>
+                <ListSkeleton rows={5} className="p-4" />
               ) : filteredConvs.length === 0 ? (
                 <div className="p-6 text-center text-[13px] text-[#717480]">No conversations yet.</div>
               ) : (
                 filteredConvs.map((conv) => {
                   const other = getOtherParticipant(conv);
                   const name = other ? `${other.firstName} ${other.lastName}` : conv.course?.title || "Conversation";
-                  const avatarUrl = other?.avatarUrl || `https://i.pravatar.cc/150?u=${other?._id}`;
+                  const avatarUrl = other?.avatarUrl || "";
                   const isActive = conv._id === activeConvId;
 
                   return (
@@ -263,7 +265,7 @@ export default function MessagesPage() {
                       }`}
                     >
                       <div className="relative shrink-0">
-                        <img src={avatarUrl} alt={name} className="w-[42px] h-[42px] rounded-full object-cover" />
+                        <UserAvatar src={avatarUrl} alt={name} className="h-[42px] w-[42px]" />
                         {other?.role === "instructor" && (
                           <div className="absolute bottom-0 right-0 w-[12px] h-[12px] bg-[#22c55e] border-[2px] border-white rounded-full" />
                         )}
@@ -304,11 +306,7 @@ export default function MessagesPage() {
                   {activeOther ? (
                     <>
                       <div className="relative">
-                        <img
-                          src={activeOther.avatarUrl || `https://i.pravatar.cc/150?u=${activeOther._id}`}
-                          alt={`${activeOther.firstName} ${activeOther.lastName}`}
-                          className="w-[44px] h-[44px] rounded-full object-cover"
-                        />
+                        <UserAvatar src={activeOther.avatarUrl} alt={`${activeOther.firstName} ${activeOther.lastName}`} className="h-[44px] w-[44px]" />
                         <div className="absolute bottom-0 right-0 w-[12px] h-[12px] bg-[#22c55e] border-[2px] border-white rounded-full" />
                       </div>
                       <div>
@@ -336,7 +334,7 @@ export default function MessagesPage() {
                   </div>
 
                   {isLoadingMsgs ? (
-                    <div className="flex-1 flex items-center justify-center text-[#717480]">Loading messages...</div>
+                    <div className="flex flex-1 flex-col gap-4 p-6"><Skeleton className="h-12 w-2/3" /><Skeleton className="ml-auto h-12 w-1/2" /><Skeleton className="h-12 w-3/5" /></div>
                   ) : messages.length === 0 ? (
                     <div className="flex-1 flex items-center justify-center text-[#717480] text-[14px]">
                       No messages yet. Say hello! 👋
@@ -350,11 +348,7 @@ export default function MessagesPage() {
                           className={`flex gap-3 max-w-[72%] ${isMe ? "self-end flex-row-reverse" : "self-start"}`}
                         >
                           {!isMe && activeOther && (
-                            <img
-                              src={activeOther.avatarUrl || `https://i.pravatar.cc/150?u=${activeOther._id}`}
-                              alt="avatar"
-                              className="w-[30px] h-[30px] rounded-full object-cover shrink-0 mt-5"
-                            />
+                            <UserAvatar src={activeOther.avatarUrl} alt="avatar" className="mt-5 h-[30px] w-[30px]" />
                           )}
                           <div className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}>
                             <span className="text-[10px] text-[#a0aab8] mb-1 px-1">

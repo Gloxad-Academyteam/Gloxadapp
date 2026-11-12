@@ -1,3 +1,4 @@
+import UserAvatar from "@components/Avatar";
 import React, { useState } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -141,9 +142,7 @@ const CourseReviews = ({ courseId, reviews = [], averageRating = 0, reviewCount 
           <div className="flex flex-col gap-4">
             {reviews.length > 0 ? reviews.slice(0, 3).map((review, index) => (
               <div key={index} className="border border-[#e2e8f0] rounded-[8px] bg-white p-6 shadow-sm flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#e2e8f0] overflow-hidden shrink-0">
-                  <img src={review.student?.avatarUrl || `https://ui-avatars.com/api/?name=${review.student?.firstName}+${review.student?.lastName}&background=181C7B&color=fff`} alt={review.student?.firstName} className="w-full h-full object-cover" />
-                </div>
+                <UserAvatar src={review.student?.avatarUrl} alt={review.student?.firstName} className="h-12 w-12" />
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-bold text-[14px] text-[#202127]">{review.student?.firstName} {review.student?.lastName}</span>

@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { useState } from "react";
 import Link from "next/link";
 import { MdOutlineArrowForward, MdOutlineBarChart, MdOutlineFilterList, MdOutlineMailOutline, MdOutlineMoreHoriz, MdOutlineMoreVert, MdOutlineSearch, MdOutlineTrendingUp, MdOutlineVideoCall } from "react-icons/md";
@@ -18,14 +19,7 @@ const STATUS_STYLE: Record<TRosterStudent["status"], string> = {
 };
 
 const Face = ({ student }: { student: Pick<TRosterStudent, "image" | "initials" | "name"> }) => (
-  <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#e7e8fb] text-[11px] font-bold text-[#1a1a7a]">
-    {student.initials ?? student.name.split(" ").map((part) => part[0]).slice(0, 2).join("")}
-    {student.image && (
-      <span className="absolute inset-0">
-        <CategoryImage src={student.image} className="h-full w-full object-cover" fallback={null} />
-      </span>
-    )}
-  </span>
+  <UserAvatar src={student.image} alt={student.name} className="h-9 w-9" />
 );
 
 const InstructorDashboard = () => {

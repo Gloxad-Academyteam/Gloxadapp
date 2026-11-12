@@ -1,5 +1,6 @@
 "use client";
 
+import { PageSpinner, Spinner } from "@components/Spinner";
 import { useEffect, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "@hooks/useAuth";
@@ -21,7 +22,7 @@ const DashboardGuard = ({ children }: { children: ReactNode }) => {
   }, [isLoading, isAuthenticated, mustVerify, authenticatedUser, router]);
 
   if (isLoading) {
-    return <div className="w-full min-h-screen flex items-center justify-center bg-[#fcfcfd]">Loading...</div>;
+    return <PageSpinner />;
   }
 
   if (!isAuthenticated || mustVerify) return null;

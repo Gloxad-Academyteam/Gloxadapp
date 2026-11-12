@@ -10,7 +10,7 @@ import { LIVE_SHARED_CODE } from "../data";
 
 const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
   ssr: false,
-  loading: () => <div className="flex h-[300px] items-center justify-center rounded-[8px] bg-[#1e1e1e] text-[13px] text-[#9da0b5]">Loading code...</div>,
+  loading: () => <div className="skeleton h-[300px] w-full rounded-[8px]" role="status" aria-label="Loading code" />,
 });
 
 // Read-only view of the code the instructor is sharing in the live class

@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -36,7 +37,7 @@ export default function CertificatesPage() {
     },
   });
 
-  if (isLoading) return <div className="p-8 text-[#717480]">Loading certificates...</div>;
+  if (isLoading) return <div className="p-8"><CardGridSkeleton count={3} /></div>;
 
   // The API may return a list or an object wrapping one; anything else shows the empty state instead of crashing
   const enrollmentList: any[] = Array.isArray(enrollments)

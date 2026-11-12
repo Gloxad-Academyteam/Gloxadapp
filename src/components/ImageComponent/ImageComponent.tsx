@@ -6,6 +6,9 @@ type ImageComponentProps = {
   alt: string;
 };
 
+// A plain grey tile shown when an image cannot load (nothing is requested from another site)
+const EMPTY_IMAGE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'><rect width='4' height='3' fill='%23e8e8e8'/></svg>";
+
 const ImageComponent = ({
   width,
   height,
@@ -36,7 +39,7 @@ const ImageComponent = ({
           className="top-0 left-0 object-cover w-full h-full object-fit"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(alt || "?")}&background=e8e8e8&color=999&size=200`;
+            e.currentTarget.src = EMPTY_IMAGE;
           }}
         />
       </div>

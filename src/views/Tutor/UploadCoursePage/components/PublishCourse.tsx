@@ -1,3 +1,4 @@
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FaSearch, FaTimes, FaUserPlus } from "react-icons/fa";
 import { searchInstructors } from "@services/tutor/courses";
@@ -108,11 +109,7 @@ export default function PublishCourse({ data, updateData, onPrev, onSubmit, isLo
                     className="flex items-center justify-between px-4 py-3 hover:bg-[#f0f4ff] cursor-pointer transition-colors border-b border-[#f1f5f9] last:border-0"
                   >
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={instructor.avatarUrl || "https://ui-avatars.com/api/?name=" + instructor.firstName} 
-                        alt={instructor.firstName}
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
+                      <UserAvatar src={instructor.avatarUrl} alt={instructor.firstName} className="h-8 w-8" />
                       <div>
                         <p className="text-[13px] font-bold text-[#202127]">
                           {instructor.firstName} {instructor.lastName}
@@ -142,11 +139,7 @@ export default function PublishCourse({ data, updateData, onPrev, onSubmit, isLo
           {selectedInstructors.map(inst => (
             <div key={inst._id} className="flex items-center justify-between bg-[#fcfcfd] border border-[#e2e8f0] rounded-[8px] p-3 w-full sm:w-[280px]">
               <div className="flex items-center gap-3">
-                <img 
-                  src={inst.avatarUrl || "https://ui-avatars.com/api/?name=" + inst.firstName} 
-                  alt={inst.firstName}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+                <UserAvatar src={inst.avatarUrl} alt={inst.firstName} className="h-10 w-10" />
                 <div>
                   <p className="text-[14px] font-bold text-[#202127] leading-tight">{inst.firstName} {inst.lastName}</p>
                   <p className="text-[12px] text-[#717480] truncate max-w-[150px]">{inst.title || inst.email || "Co-instructor"}</p>

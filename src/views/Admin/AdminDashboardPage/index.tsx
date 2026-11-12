@@ -1,5 +1,7 @@
 "use client";
 
+import { TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -165,9 +167,7 @@ const AdminDashboardPage = () => {
             <ul className="space-y-4">
               {topTutors.map((tutor) => (
                 <li key={tutor.id} className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#e9eaff] text-[14px] font-semibold text-[#3f41c4]">
-                    {tutor.avatar ? <img src={tutor.avatar} alt="" className="h-full w-full object-cover" onError={(event) => { (event.currentTarget as HTMLImageElement).style.display = "none"; }} /> : tutor.name.charAt(0)}
-                  </span>
+                  <UserAvatar src={tutor.avatar} className="h-10 w-10" />
                   <div className="min-w-0">
                     <p className="truncate text-[14px] font-medium">{tutor.name}</p>
                     <p className="text-[12.5px] text-[#8a90a8]">{tutor.students} learners · {tutor.courses} {tutor.courses === 1 ? "course" : "courses"}</p>
@@ -201,7 +201,7 @@ const AdminDashboardPage = () => {
               </thead>
               <tbody>
                 {regLoading ? (
-                  <tr><td colSpan={3} className="py-8 text-center text-[#8a90a8]">Loading...</td></tr>
+                  <TableRowsSkeleton rows={6} columns={3} />
                 ) : registrations.length === 0 ? (
                   <tr><td colSpan={3} className="py-8 text-center text-[#8a90a8]">No registrations yet.</td></tr>
                 ) : (

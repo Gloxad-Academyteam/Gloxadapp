@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FiCheckCircle } from "react-icons/fi";
@@ -51,7 +52,7 @@ const ModuleTask = ({ courseId, moduleId, moduleNumber, nextModuleNumber, onCont
     onError: (error: any) => toast.error(error.response?.data?.error || "Could not submit the task. Please try again."),
   });
 
-  if (task.isLoading) return <p className="py-10 text-center text-[13px] text-[#717480]">Loading task...</p>;
+  if (task.isLoading) return <div className="space-y-3 py-6"><Skeleton className="h-5 w-1/3" /><Skeleton className="h-4 w-full" /><Skeleton className="h-4 w-4/5" /></div>;
   if (task.isError || !task.data) {
     return (
       <div role="alert" className="rounded-2xl border border-[#f3c9c9] bg-[#fff6f6] p-6 text-[13px] text-[#201633]">

@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -174,7 +175,9 @@ const WeeklyPathView = ({ program, tabs, selected, onSelect, week, message, onTo
           </div>
         </div>
 
-        {!week ? (
+        {!week && (!message || message.title.startsWith("Loading")) ? (
+          <div className="mt-8"><DetailSkeleton className="!p-0" /></div>
+        ) : !week ? (
           <div className="mt-16 text-center">
             <h2 className="text-[20px] font-bold text-[#14162b]">{message?.title ?? "Loading..."}</h2>
             {message?.text && <p className="mt-2 text-[14px] text-[#4a4d66]">{message.text}</p>}

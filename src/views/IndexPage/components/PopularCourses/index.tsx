@@ -1,3 +1,4 @@
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import CourseBox from "@components/CourseItem/CourseItemBox";
 import ScrollReveal from "@components/ScrollReveal";
 import { useQuery } from "@tanstack/react-query";
@@ -33,9 +34,7 @@ const PopularCourses = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full py-12 flex justify-center items-center">
-        <p className="text-title-medium text-neutral-8 animate-pulse">Loading popular courses...</p>
-      </div>
+      <div className="w-full px-4 py-12"><CardGridSkeleton count={3} className="mx-auto grid max-w-[1200px] gap-5 sm:grid-cols-2 lg:grid-cols-3" /></div>
     );
   }
 

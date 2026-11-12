@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -270,7 +272,7 @@ const LiveClassLive = () => {
       <div className="grid min-h-[calc(100vh-68px)] lg:grid-cols-[minmax(0,1fr)_380px]">
         <section aria-label="Class video" className="min-w-0 p-4 sm:p-6">
           {meQuery.isLoading || sessionsQuery.isLoading ? (
-            <p className="py-24 text-center text-[14px] text-[#4a4d66]">Loading your live classes...</p>
+            <div className="space-y-4 py-6"><Skeleton className="aspect-video w-full rounded-[18px]" /><Skeleton className="h-5 w-1/3" /><Skeleton className="h-4 w-2/3" /></div>
           ) : meQuery.isError ? (
             <Empty title="We couldn't load your classes" text={errorText(meQuery.error, "Check your connection and refresh the page.")} />
           ) : !cohortId ? (
@@ -384,7 +386,7 @@ const LiveClassLive = () => {
                   {people.map((person) => (
                     <li key={person.identity} className="flex items-center justify-between gap-2 text-[13.5px]">
                       <span className="flex items-center gap-2.5">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#020060] text-[11px] font-bold text-white">{person.name.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()}</span>
+                        <UserAvatar className="h-8 w-8" placeholderClassName="bg-[#e6e9f5] text-[#98a0c0]" />
                         <span>{person.name}{person.isYou ? " (you)" : ""}</span>
                       </span>
                       <span className="flex items-center gap-1.5 text-[11.5px] text-[#6a6d83]">

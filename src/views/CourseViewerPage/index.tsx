@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -312,7 +313,7 @@ export default function CourseViewerPage() {
   }
 
   if (isLoading || !courseData) {
-    return <div className="p-20 text-center text-[#717480]">Loading course...</div>;
+    return <DetailSkeleton />;
   }
 
   const { completed: completedCount, total: totalCount, percent: progressPercent } = strict

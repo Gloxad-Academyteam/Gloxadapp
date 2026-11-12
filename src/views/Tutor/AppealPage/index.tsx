@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { useRouter, useParams } from "next/navigation";
 import { FaInfoCircle, FaTimes, FaCloudUploadAlt } from "react-icons/fa";
@@ -44,7 +45,7 @@ export default function AppealPage() {
     }
   };
 
-  if (isLoading) return <div className="p-10">Loading...</div>;
+  if (isLoading) return <DetailSkeleton />;
   if (!course) return <div className="p-10">Course not found.</div>;
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Participant, Room, RoomEvent, Track } from "livekit-client";
 import { MdCallEnd, MdMic, MdMicOff, MdOutlineScreenShare, MdOutlineStopScreenShare, MdVideocam, MdVideocamOff } from "react-icons/md";
@@ -32,7 +33,6 @@ const TrackVideo = ({ participant, source, muted }: { participant: Participant; 
   return <video ref={ref} autoPlay playsInline muted={muted} className="h-full w-full object-contain" />;
 };
 
-const initials = (name: string) => name.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase() || "?";
 
 const ControlButton = ({ label, active, danger, onClick, children }: { label: string; active?: boolean; danger?: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button
@@ -147,7 +147,7 @@ const LiveRoomStage = ({ credentials, onLeave, onPeople }: TProps) => {
               <TrackVideo participant={speaker} source={speakerSource} muted={speaker === local} />
             ) : (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center text-white">
-                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/15 text-[22px] font-bold">{initials(people.find((p) => p.permissions?.canPublish && p !== local)?.name ?? "Tutor")}</span>
+                <UserAvatar className="h-16 w-16" placeholderClassName="bg-white/15 text-white/70" />
                 <p className="text-[16px] font-semibold">{isHost ? "Turn on your camera to begin" : "Waiting for the tutor's video"}</p>
                 <p className="text-[13px] text-white/70">{people.length} {people.length === 1 ? "person is" : "people are"} in the room</p>
               </div>

@@ -1,4 +1,5 @@
 "use client";
+import UserAvatar from "@components/Avatar";
 import { LuLogOut } from "react-icons/lu";
 
 import { FormEvent, ReactNode, useEffect, useState } from "react";
@@ -70,18 +71,9 @@ type TProps = {
 const Avatar = ({ size = 40 }: { size?: number }) => {
   const { authenticatedUser: user } = useAuth();
   const src = user?.avatarUrl || user?.avatar;
-  const initials = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase() || "U";
   return (
-    <span
-      className="relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#d9d7ea] bg-[#e7e8fb] text-[13px] font-bold text-[#1a1a7a]"
-      style={{ width: size, height: size }}
-    >
-      {initials}
-      {src && (
-        <span className="absolute inset-0">
-          <CategoryImage src={src} className="h-full w-full object-cover" fallback={null} />
-        </span>
-      )}
+    <span className="inline-flex rounded-full border border-[#d9d7ea]" style={{ width: size, height: size }}>
+      <UserAvatar src={src} className="h-full w-full" />
     </span>
   );
 };

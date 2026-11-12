@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { COURSE_GRID } from "@components/CourseCard";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
@@ -270,7 +271,7 @@ const FreeCoursesContent = () => {
 };
 
 const FreeCoursesPage = () => (
-  <Suspense fallback={<div className="min-h-[60vh] bg-white" aria-label="Loading free courses" />}>
+  <Suspense fallback={<div className="min-h-[60vh] bg-white p-6"><CardGridSkeleton /></div>}>
     <FreeCoursesContent />
   </Suspense>
 );

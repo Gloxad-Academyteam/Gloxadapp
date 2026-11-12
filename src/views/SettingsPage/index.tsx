@@ -1,5 +1,6 @@
 "use client";
 
+import { DefaultAvatarIcon } from "@components/Avatar";
 import React, { useState, useRef, useEffect } from "react";
 import { 
   FaUpload, FaEye, FaEyeSlash, FaChevronDown, 
@@ -361,10 +362,7 @@ const SettingsPage = () => {
                   onError={() => setAvatarImageFailed(true)}
                 />
               ) : (
-                <span className="text-[28px] font-bold" aria-hidden="true">
-                  {formData.firstName[0]?.toUpperCase() || formData.lastName[0]?.toUpperCase() || <FiUser size={30} />}
-                  {formData.firstName[0] && formData.lastName[0] ? formData.lastName[0].toUpperCase() : ""}
-                </span>
+                <DefaultAvatarIcon className="h-full w-full text-[#a9b1d6]" />
               )}
             </div>
             <h3 className="mt-4 text-[15px] font-bold text-[#202127]">Profile photo</h3>

@@ -117,7 +117,7 @@ const toCourse = (entry: TCatalogEntry): TCatalogCourse => ({
   trailerVideoUrl: entry.videos[0]?.url ?? "",
   whatYouWillTeach: entry.whatYouWillLearn,
   aboutCourseText: entry.description,
-  // No avatarUrl: the course page falls back to an initials avatar
+  // No avatarUrl: the course page shows the default avatar icon
   instructor: { firstName: "Gloxad", lastName: "Academy", avatarUrl: "" },
   sourceName: getYouTubeSourceName({ videoCredit: entry.videoCredit ?? CATALOG_VIDEO_CREDIT }),
   videoCredit: entry.videoCredit ?? CATALOG_VIDEO_CREDIT,

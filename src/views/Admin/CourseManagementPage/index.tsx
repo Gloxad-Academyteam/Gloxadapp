@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FiSearch, FiFilter } from "react-icons/fi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -61,7 +63,7 @@ const CourseManagementPage = () => {
           id: c._id,
           title: c.title,
           tutorName: c.instructor ? `${c.instructor.firstName} ${c.instructor.lastName}` : "Unknown",
-          tutorAvatar: c.instructor?.avatarUrl || "https://ui-avatars.com/api/?name=Instructor&background=181C7B&color=fff",
+          tutorAvatar: c.instructor?.avatarUrl || "",
           category: (typeof c.category === "string" ? c.category : c.category?.name) || "Uncategorized",
           dateSubmitted: new Date(c.createdAt).toLocaleDateString(),
           dateRejected: c.status === "rejected" ? new Date(c.reviewedAt || c.updatedAt).toLocaleDateString() : undefined,
@@ -216,7 +218,7 @@ const CourseManagementPage = () => {
       {/* Tab Content */}
       {activeTab === "Categories" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {isLoadingCategories && <p className="text-[14px] text-[#A0AEC0]">Loading categories...</p>}
+          {isLoadingCategories && Array.from({ length: 3 }).map((_, i) => <BlockSkeleton key={i} className="h-[150px]" />)}
           {!isLoadingCategories && categories.length === 0 && (
             <p className="text-[14px] text-[#A0AEC0]">No categories yet. Add one to get started.</p>
           )}

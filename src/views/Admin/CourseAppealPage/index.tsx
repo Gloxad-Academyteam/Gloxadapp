@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { FiArrowLeft, FiXCircle, FiFileText, FiPaperclip, FiRefreshCw } from "react-icons/fi";
 import { HiOutlineSpeakerphone } from "react-icons/hi";
@@ -54,7 +55,7 @@ const CourseAppealPage = () => {
     }
   };
 
-  if (isLoading) return <div className="p-10">Loading...</div>;
+  if (isLoading) return <DetailSkeleton />;
   if (!appeal) return <div className="p-10">Appeal not found.</div>;
 
   return (

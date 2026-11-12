@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FaCheck, FaExclamation, FaTimes, FaBook, FaUserPlus, FaStar, FaInfoCircle, FaArrowRight } from "react-icons/fa";
@@ -79,7 +80,7 @@ export default function NotificationsPage() {
       {/* Notifications Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {isLoading ? (
-          <p className="text-[#717480]">Loading notifications...</p>
+          <><BlockSkeleton /><BlockSkeleton /></>
         ) : notifications.length === 0 ? (
           <p className="text-[#717480]">You have no notifications right now.</p>
         ) : (

@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IconType } from "react-icons";
@@ -142,7 +143,9 @@ const DashboardView = ({ model }: { model: TModel }) => {
           {weekday || " "}
         </p>
 
-        {model.message ? (
+        {model.message?.title.startsWith("Loading") ? (
+          <div className="mt-8"><DetailSkeleton className="!p-0" /></div>
+        ) : model.message ? (
           <div className="mt-20 text-center">
             <h2 className="text-[20px] font-bold text-[#14162b]">{model.message.title}</h2>
             {model.message.text && <p className="mt-2 text-[14px] text-[#4a4d66]">{model.message.text}</p>}

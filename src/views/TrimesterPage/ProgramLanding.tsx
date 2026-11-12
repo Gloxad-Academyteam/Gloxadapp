@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -36,7 +37,6 @@ const Badge = ({ children, tone = "blue" }: { children: React.ReactNode; tone?: 
 const money = (trimester: TPublicTrimester) =>
   trimester.price > 0 ? new Intl.NumberFormat("en-NG", { style: "currency", currency: trimester.currency, maximumFractionDigits: 0 }).format(trimester.price) : "Free";
 
-const initials = (name: string) => name.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
 
 // The page for one program. What the main button says depends on who is looking and on the enrolment window, which the server decides.
 export const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) => {
@@ -262,7 +262,7 @@ export const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) =
               <ul className="flex flex-wrap gap-4">
                 {instructors.map((person) => (
                   <li key={person.name} className="flex items-center gap-2.5">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B1F4D] text-[11.5px] font-bold text-white">{initials(person.name)}</span>
+                    <UserAvatar className="h-8 w-8" />
                     <b className="text-[13px] text-[#1F2A44]">{person.name}</b>
                   </li>
                 ))}

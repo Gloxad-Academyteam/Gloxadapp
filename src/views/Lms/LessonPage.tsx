@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -31,8 +32,8 @@ const clock = (seconds: number) => `${String(Math.floor(seconds / 60)).padStart(
 
 const KIND_ICON = { video: MdOutlineVideocam, reading: MdOutlineBook, quiz: MdOutlineQuiz } as const;
 
-const Person = ({ initials, tone }: { initials: string; tone?: "instructor" }) => (
-  <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[12px] font-bold ${tone ? "bg-[#d3e8f8] text-[#1a1a7a]" : "bg-[#e7e8fb] text-[#1a1a7a]"}`}>{initials}</span>
+const Person = ({ tone }: { initials?: string; tone?: "instructor" }) => (
+  <UserAvatar className="h-9 w-9" placeholderClassName={tone ? "bg-[#d3e8f8] text-[#7f9bc4]" : "bg-[#e6e9f5] text-[#98a0c0]"} />
 );
 
 const LessonPage = () => {
@@ -72,7 +73,7 @@ const LessonPage = () => {
   const renderComment = (comment: TComment, isReply = false) => (
     <div key={comment.id} className={isReply ? "ml-0 mt-5 border-l border-[#dedcec] pl-5 sm:ml-12" : "mt-6"}>
       <div className="flex items-start gap-3">
-        <Person initials={comment.initials} tone={comment.role ? "instructor" : undefined} />
+        <Person tone={comment.role ? "instructor" : undefined} />
         <div className="min-w-0 flex-1">
           <p className="flex flex-wrap items-center gap-2 text-[13px]">
             <span className="font-bold text-[#14162b]">{comment.name}</span>
@@ -176,7 +177,7 @@ const LessonPage = () => {
               </h2>
               <form onSubmit={post} className="mt-5">
                 <div className="flex items-start gap-3">
-                  <Person initials={initials} />
+                  <Person />
                   <textarea
                     ref={draftRef}
                     value={draft}

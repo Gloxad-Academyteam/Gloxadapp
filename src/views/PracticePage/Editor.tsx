@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Extension } from "@codemirror/state";
@@ -19,7 +20,7 @@ import { languageLabel, STARTERS } from "./starters";
 
 const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
   ssr: false,
-  loading: () => <div className="flex h-[400px] items-center justify-center bg-[#1e1e1e] text-[13px] text-[#9da0b5]">Loading editor...</div>,
+  loading: () => <div className="skeleton h-[400px] w-full" role="status" aria-label="Loading editor" />,
 });
 
 const extensionFor = (fileName: string): Extension => {
@@ -443,7 +444,7 @@ const Editor = ({ workspace, cloud, onDelete, onSaved }: TProps) => {
             <button type="button" onClick={() => setHistoryOpen(false)} aria-label="Close history" className="text-[#717480] hover:text-[#14162b]"><LuX /></button>
           </div>
           {versions.isLoading ? (
-            <p className="mt-3 text-[13px] text-[#717480]">Loading...</p>
+            <div className="mt-3 space-y-2"><Skeleton className="h-4 w-full" /><Skeleton className="h-4 w-4/5" /></div>
           ) : versions.data && versions.data.versions.length > 0 ? (
             <ul className="mt-3 flex max-h-[220px] flex-col divide-y divide-[#eef1f8] overflow-auto">
               {versions.data.versions.map((entry) => (

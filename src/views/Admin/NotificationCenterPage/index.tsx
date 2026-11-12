@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { FiCheck, FiEye, FiAlertTriangle, FiDollarSign } from "react-icons/fi";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -105,7 +106,7 @@ const NotificationCenterPage: React.FC = () => {
           {/* Notification Cards */}
           <div className="space-y-4">
             {isLoading ? (
-              <p className="text-[#717480] text-[14px] text-center py-8">Loading notifications...</p>
+              <ListSkeleton rows={4} />
             ) : notifications.length === 0 ? (
               <p className="text-[#717480] text-[14px] text-center py-8">No notifications to display.</p>
             ) : notifications.map((n: any) => (

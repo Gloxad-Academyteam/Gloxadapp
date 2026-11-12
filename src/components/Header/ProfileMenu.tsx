@@ -1,5 +1,6 @@
 "use client";
 
+import Avatar from "@components/Avatar";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { FiChevronDown, FiGrid, FiLock, FiUser } from "react-icons/fi";
@@ -11,14 +12,9 @@ type TProps = {
   isLoggingOut?: boolean;
 };
 
-const initialsOf = (name: string) =>
-  name.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "U";
-
 // The signed-in person's avatar and menu: who they are, where to go, and log out
 const ProfileMenu = ({ authenticatedUser, onLogout, isLoggingOut = false }: TProps) => {
   const [open, setOpen] = useState(false);
-  // A picture that fails to load falls back to the person's initials
-  const [brokenImage, setBrokenImage] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // Close on a click outside or Escape
@@ -40,12 +36,7 @@ const ProfileMenu = ({ authenticatedUser, onLogout, isLoggingOut = false }: TPro
   const role = authenticatedUser?.role === "instructor" ? "Tutor" : authenticatedUser?.role === "admin" ? "Admin" : "Student";
   const dashboard = authenticatedUser?.role === "admin" ? "/admin" : "/dashboard";
 
-  const avatar = (size: string, text: string) =>
-    authenticatedUser?.avatar && !brokenImage ? (
-      <img src={authenticatedUser.avatar} alt="" onError={() => setBrokenImage(true)} className={`${size} rounded-full object-cover`} />
-    ) : (
-      <span className={`${size} flex items-center justify-center rounded-full bg-[#0B1F4D] font-semibold text-white ${text}`}>{initialsOf(name)}</span>
-    );
+  const avatar = (size: string, _text: string) => <Avatar src={authenticatedUser?.avatar} className={size} placeholderClassName="bg-[#e6e9f5] text-[#98a0c0]" />;
 
   const item = "flex items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] font-medium text-[#2b2f45] transition-colors hover:bg-[#f1f3f9] hover:text-[#0B1F4D]";
   const icon = "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f1f3f9] text-[#52607A]";

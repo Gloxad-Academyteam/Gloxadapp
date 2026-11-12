@@ -1,5 +1,6 @@
 "use client";
 
+import { PageSpinner, Spinner } from "@components/Spinner";
 import { useEffect, ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -48,7 +49,7 @@ const RoleGuard = ({
   }, [isLoading, isAuthenticated, authenticatedUser, mustVerify, allowedRoles, router, pathname, returnAfterLogin, loginPath]);
 
   if (isLoading) {
-    return <div className="w-full min-h-screen flex items-center justify-center bg-[#fcfcfd]">Loading...</div>;
+    return <PageSpinner />;
   }
 
   if (!isAuthenticated || mustVerify) return null;

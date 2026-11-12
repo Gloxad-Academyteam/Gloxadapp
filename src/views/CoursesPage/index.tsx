@@ -1,5 +1,6 @@
 "use client";
 
+import { PageSpinner, Spinner } from "@components/Spinner";
 import { COURSE_GRID } from "@components/CourseCard";
 import { CourseGridSkeleton } from "@components/CourseCard/Skeleton";
 import React, { Suspense, useEffect, useState } from "react";
@@ -38,7 +39,7 @@ const CoursesPageGate = () => {
   if ((isLoading && !hasStoredSession) || needsSignIn) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-5 text-center">
-        <p className="text-[15px] text-[#4e515c]">{needsSignIn ? "Sign in to explore our courses…" : "Loading…"}</p>
+        {needsSignIn ? <p className="text-[15px] text-[#4e515c]">Sign in to explore our courses…</p> : <Spinner className="h-10 w-10 text-[#0B1F4D]" />}
       </div>
     );
   }

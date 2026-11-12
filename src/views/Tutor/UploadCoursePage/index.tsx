@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { PiStack, PiClipboardText, PiPlayCircle, PiCheckCircle } from "react-icons/pi";
@@ -425,12 +426,7 @@ export default function UploadCoursePage() {
 
   if (isLoadingCourse) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-[#fcfcfd] py-24">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-[#07004d] border-t-transparent rounded-full animate-spin" />
-          <p className="text-[14px] font-bold text-[#717480]">Loading course data...</p>
-        </div>
-      </div>
+      <DetailSkeleton />
     );
   }
 

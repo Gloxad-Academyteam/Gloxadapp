@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FiCheckCircle, FiXCircle, FiPlayCircle, FiDownload, FiSettings, FiMaximize, FiArrowLeft } from "react-icons/fi";
 import { useParams, useRouter } from "next/navigation";
@@ -59,7 +61,7 @@ const CourseApprovalDetailsPage = () => {
   };
 
   if (isLoading) {
-    return <div className="w-full min-h-screen flex items-center justify-center bg-[#fcfcfd]">Loading course details...</div>;
+    return <DetailSkeleton />;
   }
 
   if (error || !course) {
@@ -106,11 +108,7 @@ const CourseApprovalDetailsPage = () => {
           
           <div className="flex flex-wrap items-center gap-8">
             <div className="flex items-center gap-3">
-              <img 
-                src={course.instructor?.avatarUrl || "https://ui-avatars.com/api/?name=Instructor&background=181C7B&color=fff"} 
-                alt={instructorName} 
-                className="w-10 h-10 rounded-full object-cover border border-[#e2e8f0]" 
-              />
+              <UserAvatar src={course.instructor?.avatarUrl} alt={instructorName} className="h-10 w-10 border border-[#e2e8f0]" />
               <div>
                 <p className="font-bold text-[#202127] text-[14px]">{instructorName}</p>
                 <p className="text-[#717480] text-[12px]">{course.instructor?.title || course.instructor?.skills || "Course Instructor"}</p>

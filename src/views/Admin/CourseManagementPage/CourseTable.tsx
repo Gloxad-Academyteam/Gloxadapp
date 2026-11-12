@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { getCategoryName } from "@utils/courseSource";
@@ -53,7 +54,7 @@ const CourseTable: React.FC<CourseTableProps> = ({ courses, activeTab }) => {
                 </td>
                 <td className="py-4 px-6 whitespace-nowrap">
                   <div className="flex items-center gap-3">
-                    <img src={course.tutorAvatar} alt={course.tutorName} className="w-8 h-8 rounded-full object-cover" />
+                    <UserAvatar src={course.tutorAvatar} alt={course.tutorName} className="h-8 w-8" />
                     <span className="text-[#4e515c] font-medium">{course.tutorName}</span>
                   </div>
                 </td>

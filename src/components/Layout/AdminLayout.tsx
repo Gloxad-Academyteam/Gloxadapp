@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -64,7 +65,6 @@ const NAV: TNavGroup[] = [
 
 const ALL_ITEMS = NAV.flatMap((group) => group.items);
 const isActive = (pathname: string, item: TNavItem) => (item.exact ? pathname === item.to : pathname === item.to || pathname.startsWith(`${item.to}/`));
-const initialsOf = (name?: string) => (name || "Admin").split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
 
 const NavLink = ({ item, active, collapsed, onNavigate }: { item: TNavItem; active: boolean; collapsed: boolean; onNavigate: () => void }) => {
   const Icon = item.icon;
@@ -160,7 +160,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div className="shrink-0 border-t border-white/[0.06] p-3">
         <div className={`flex items-center gap-3 rounded-lg p-2 ${isCollapsed ? "justify-center" : ""}`}>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#5d5fef] text-[12.5px] font-semibold">{initialsOf(name)}</span>
+          <UserAvatar src={authenticatedUser?.avatar || authenticatedUser?.avatarUrl} className="h-9 w-9" placeholderClassName="bg-[#2a2d52] text-[#8d92c4]" />
           {!isCollapsed && (
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13.5px] font-medium">{name}</p>
@@ -243,9 +243,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               aria-expanded={menuOpen}
               aria-label="Account menu"
               onClick={() => setMenuOpen((value) => !value)}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#12142b] text-[13px] font-semibold text-white ring-2 ring-transparent transition hover:ring-[#5d5fef]/30"
+              className="flex h-10 w-10 items-center justify-center rounded-full ring-2 ring-transparent transition hover:ring-[#5d5fef]/30"
             >
-              {initialsOf(name)}
+              <UserAvatar src={authenticatedUser?.avatar || authenticatedUser?.avatarUrl} className="h-10 w-10" />
             </button>
             {menuOpen && (
               <div role="menu" className="absolute right-0 top-12 z-30 w-[240px] overflow-hidden rounded-xl border border-[#e8eaf3] bg-white shadow-xl">

@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { ChangeEvent, DragEvent, FormEvent, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import {
@@ -272,7 +273,7 @@ const HelpCenterPage = () => {
         <aside className="flex flex-col gap-6 xl:mt-[4px]">
           <section aria-labelledby="recent-title" className={`${cardClass} p-6`}>
             <h2 id="recent-title" className="border-b border-[#e1dff0] pb-4 text-[22px] font-bold text-[#1a1a7a]">Recent Inquiries</h2>
-            {!demo && inquiriesQuery.isLoading && <p className="mt-5 text-[14px] text-[#4a4d66]">Loading...</p>}
+            {!demo && inquiriesQuery.isLoading && <ListSkeleton rows={3} className="mt-5" />}
             {!demo && !inquiriesQuery.isLoading && inquiries.length === 0 && <p className="mt-5 text-[14px] text-[#4a4d66]">No inquiries yet. Anything you send shows up here.</p>}
             <ul className="mt-5 flex flex-col gap-4">
               {inquiries.slice(0, 3).map((item) => (

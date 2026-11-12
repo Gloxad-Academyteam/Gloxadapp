@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -34,7 +35,7 @@ import { CODE_LAB as CODE_LAB_DEMO, TLabFile } from "./data";
 
 const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
   ssr: false,
-  loading: () => <div className="flex h-[440px] items-center justify-center bg-[#1e1e1e] text-[13px] text-[#9da0b5]">Loading editor...</div>,
+  loading: () => <div className="skeleton h-[440px] w-full" role="status" aria-label="Loading editor" />,
 });
 
 const languageExtension = (language: TLabFile["language"]): Extension => {
@@ -432,7 +433,7 @@ const LiveCodingLab = () => {
         : undefined
       : "This lab is reviewed by your tutor, so there are no automatic checks. You can submit when you are ready.";
 
-  if (meQuery.isLoading || labsQuery.isLoading || labQuery.isLoading) return <LabState title="Loading your lab..." text="One moment." />;
+  if (meQuery.isLoading || labsQuery.isLoading || labQuery.isLoading) return <LmsShell active="code" topTab="trimesters" search="Search curriculum..."><DetailSkeleton className="!p-0" /></LmsShell>;
   if (labQuery.isError) return <LabState title="We couldn't open this lab" text={(labQuery.error as AxiosError<{ error?: string }>).response?.data?.error ?? "Check your connection and try again."} />;
   if (!labId || !lab || !raw) return <LabState title="No coding lab yet" text="Your tutor hasn't published a lab for this week. Check back soon." />;
   return (

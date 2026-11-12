@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar, FaFlag, FaReply, FaThumbsUp, FaDownload, FaFilter } from "react-icons/fa";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -65,7 +67,7 @@ export default function ReviewsPage() {
   };
 
   if (isLoading) {
-    return <div className="p-10 text-[#202127]">Loading reviews...</div>;
+    return <div className="p-6"><ListSkeleton rows={4} /></div>;
   }
 
   const reviews = data?.reviews || [];
@@ -209,7 +211,7 @@ export default function ReviewsPage() {
             </div>
 
             <div className="flex items-center gap-4 mb-4">
-              <img src={review.student?.avatarUrl || "https://i.pravatar.cc/150?img=32"} alt={review.student?.firstName} className="w-[48px] h-[48px] rounded-full object-cover" />
+              <UserAvatar src={review.student?.avatarUrl} alt={review.student?.firstName} className="h-[48px] w-[48px]" />
               <div>
                 <h4 className="text-[16px] font-bold text-[#202127] leading-none mb-1">{review.student?.firstName} {review.student?.lastName}</h4>
                 <p className="text-[12px] text-[#717480]">

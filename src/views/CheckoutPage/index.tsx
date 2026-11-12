@@ -1,5 +1,6 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FiLock, FiCheck } from "react-icons/fi";
@@ -42,7 +43,7 @@ export default function CheckoutPage() {
     }
   });
 
-  if (isLoading) return <div className="p-20 text-center text-[#717480]">Loading checkout...</div>;
+  if (isLoading) return <DetailSkeleton />;
   if (!course) return <div className="p-20 text-center text-[#717480]">Course not found.</div>;
 
   const price: number = course.price || 0;

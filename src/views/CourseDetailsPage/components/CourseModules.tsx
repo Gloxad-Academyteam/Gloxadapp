@@ -1,3 +1,4 @@
+import UserAvatar from "@components/Avatar";
 import { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaPlay } from 'react-icons/fa';
 import { formatLength, formatTimestamp } from '@utils/youtube';
@@ -142,13 +143,7 @@ const CourseModules = ({ course, onPlayLesson }: TProps) => {
         <div className="bg-white border border-[#e2e8f0] rounded-[8px] p-6 mb-6 shadow-sm">
           <h3 className="text-[18px] font-bold text-[#202127] mb-2">Instructor</h3>
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 bg-[#181C7B] text-white flex items-center justify-center text-[16px] font-bold">
-              {course?.instructor?.avatarUrl ? (
-                <img src={course.instructor.avatarUrl} alt="Instructor" className="w-full h-full object-cover" />
-              ) : (
-                `${(course?.instructor?.firstName || "G")[0]}${(course?.instructor?.lastName || "A")[0]}`
-              )}
-            </div>
+            <UserAvatar src={course?.instructor?.avatarUrl} alt="Instructor" className="h-14 w-14" />
             <div>
               <h4 className="text-[15px] font-bold text-[#202127] mb-1">
                 {course?.instructor?.firstName || "Gloxad"} {course?.instructor?.lastName || "Academy"}

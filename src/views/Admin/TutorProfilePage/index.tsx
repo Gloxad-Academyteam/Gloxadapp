@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React from "react";
 import { useParams, useRouter } from "next/navigation";
 import { FiMail, FiShield, FiSlash, FiBook, FiDollarSign, FiUsers } from "react-icons/fi";
@@ -20,7 +22,7 @@ const TutorProfilePage = () => {
     enabled: !!id
   });
 
-  if (isLoading) return <div className="p-10 text-center text-[#717480]">Loading tutor profile...</div>;
+  if (isLoading) return <DetailSkeleton />;
   if (isError || !data) return <div className="p-10 text-center text-red-500">Failed to load tutor profile.</div>;
 
   const tutor = data;
@@ -41,12 +43,7 @@ const TutorProfilePage = () => {
       <div className="flex flex-col lg:flex-row lg:items-start justify-between mb-8">
         <div className="flex gap-6 items-center">
           <div className="relative w-24 h-24">
-            <div className="w-full h-full rounded-[16px] overflow-hidden bg-[#181C7B] flex items-center justify-center text-white text-[36px] font-bold shadow-sm">
-              {tutor.avatarUrl
-                ? <img src={tutor.avatarUrl} alt={fullName} className="w-full h-full object-cover" />
-                : tutor.firstName?.charAt(0)
-              }
-            </div>
+            <UserAvatar src={tutor.avatarUrl} alt={fullName} className="h-full w-full !rounded-[16px] shadow-sm" />
             {status === "approved" && (
               <div className="absolute -bottom-2 -right-2 bg-[#181C7B] text-white w-6 h-6 rounded-full flex items-center justify-center border-2 border-white">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>

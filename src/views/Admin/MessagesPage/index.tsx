@@ -1,5 +1,6 @@
 "use client";
 
+import UserAvatar from "@components/Avatar";
 import React, { useState, useEffect, useRef } from "react";
 import { FiSearch, FiSettings, FiImage, FiPaperclip, FiSmile, FiSend, FiMoreVertical } from "react-icons/fi";
 import { useRouter } from "next/navigation";
@@ -124,7 +125,7 @@ const MessagesPage = () => {
             // Determine display name and avatar (if direct message, use other participant's info)
             const isGroupChat = chat.course != null;
             let displayTitle = "Unknown";
-            let displayAvatar = "https://ui-avatars.com/api/?name=G&background=random";
+            let displayAvatar = "";
 
             if (isGroupChat) {
               displayTitle = chat.course.title;
@@ -132,7 +133,7 @@ const MessagesPage = () => {
               const other = chat.participants.find((p: any) => p._id !== user?._id);
               if (other) {
                 displayTitle = `${other.firstName} ${other.lastName}`;
-                displayAvatar = other.avatarUrl || `https://ui-avatars.com/api/?name=${other.firstName}+${other.lastName}&background=random`;
+                displayAvatar = other.avatarUrl || "";
               }
             }
 
@@ -145,7 +146,7 @@ const MessagesPage = () => {
                 }`}
               >
                 <div className="relative shrink-0">
-                  <img src={displayAvatar} alt={displayTitle} className="w-10 h-10 rounded-full object-cover" />
+                  <UserAvatar src={displayAvatar} alt={displayTitle} className="h-10 w-10" />
                   <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -197,12 +198,12 @@ const MessagesPage = () => {
                 // find sender in participants
                 const senderUser = activeChat.participants.find((p: any) => p._id === msg.sender);
                 const senderName = isMe ? "Me" : senderUser ? `${senderUser.firstName} ${senderUser.lastName}` : "Unknown";
-                const avatar = senderUser?.avatarUrl || `https://ui-avatars.com/api/?name=${senderName}&background=random`;
+                const avatar = senderUser?.avatarUrl || "";
 
                 return (
                   <div key={msg._id} className={`flex flex-col gap-1 ${isMe ? 'items-end' : 'items-start'}`}>
                     <div className="flex items-center gap-2 mb-1">
-                      {!isMe && <img src={avatar} alt="User" className="w-6 h-6 rounded-full" />}
+                      {!isMe && <UserAvatar src={avatar} alt="User" className="h-6 w-6" />}
                       <span className="text-[11px] text-[#A0AEC0]">{formatTime(msg.createdAt)}</span>
                     </div>
                     <div className={`${isMe ? 'bg-[#d8d8fc] text-[#202127] rounded-br-none mr-2' : 'bg-[#eef2ff] text-[#202127] rounded-bl-none ml-2'} rounded-[8px] px-4 py-3 max-w-[70%] text-[13px] shadow-sm`}>
@@ -247,7 +248,7 @@ const MessagesPage = () => {
           </div>
           
           <div className="flex-1 overflow-y-auto p-6">
-            <img src="https://ui-avatars.com/api/?name=Course&background=random" alt="Cover" className="w-full h-[140px] object-cover rounded-[8px] mb-4" />
+            
             <h3 className="text-[16px] font-bold text-[#181C7B] mb-2">{activeChat.course.title}</h3>
             <p className="text-[12px] text-[#717480] leading-relaxed mb-6">
               Official group chat for {activeChat.course.title}.
@@ -273,7 +274,7 @@ const MessagesPage = () => {
             <div className="space-y-4 mb-8">
               {activeChat.participants.map((p: any) => (
                 <div key={p._id} className="flex items-center gap-3">
-                  <img src={p.avatarUrl || `https://ui-avatars.com/api/?name=${p.firstName}+${p.lastName}&background=random`} className="w-8 h-8 rounded-full" alt="User" />
+                  <UserAvatar src={p.avatarUrl} alt="User" className="h-8 w-8" />
                   <div>
                     <p className="text-[13px] font-bold text-[#202127]">{p.firstName} {p.lastName}</p>
                     <p className="text-[10px] text-[#717480]">{p.role}</p>
@@ -282,22 +283,6 @@ const MessagesPage = () => {
               ))}
             </div>
 
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-[12px] font-bold text-[#A0AEC0] uppercase tracking-wider">Shared Media</h4>
-              <button className="text-[#3b82f6] text-[11px] font-bold hover:underline">View all</button>
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              <div className="aspect-square bg-gray-200 rounded-[6px] overflow-hidden">
-                <img src="https://i.pravatar.cc/150?u=media1" className="w-full h-full object-cover" alt="Media" />
-              </div>
-              <div className="aspect-square bg-gray-200 rounded-[6px] overflow-hidden">
-                <img src="https://i.pravatar.cc/150?u=media2" className="w-full h-full object-cover" alt="Media" />
-              </div>
-              <div className="aspect-square bg-gray-200 rounded-[6px] overflow-hidden relative">
-                <img src="https://i.pravatar.cc/150?u=media3" className="w-full h-full object-cover opacity-50" alt="Media" />
-                <div className="absolute inset-0 flex items-center justify-center text-white text-[12px] font-bold">+18</div>
-              </div>
-            </div>
 
           </div>
         </div>

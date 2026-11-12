@@ -1,5 +1,7 @@
 "use client";
 
+import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FiTrash2, FiChevronLeft, FiChevronRight, FiSend, FiLink, FiImage, FiSmile, FiList } from "react-icons/fi";
 import { AiOutlineUndo, AiOutlineRedo } from "react-icons/ai";
@@ -56,9 +58,6 @@ const StudentsManagementPage = () => {
     broadcastMutation.mutate(broadcastMessage);
   };
 
-  const getInitials = (first: string, last: string) => {
-    return `${(first || "").charAt(0)}${(last || "").charAt(0)}`.toUpperCase();
-  };
 
   return (
     <div className="w-full pb-20">
@@ -93,7 +92,7 @@ const StudentsManagementPage = () => {
             </thead>
             <tbody>
               {isLoading ? (
-                <tr><td colSpan={6} className="py-10 text-center text-[#717480]">Loading students...</td></tr>
+                <TableRowsSkeleton rows={6} columns={6} />
               ) : students.length === 0 ? (
                 <tr><td colSpan={6} className="py-10 text-center text-[#717480]">No students found.</td></tr>
               ) : (
@@ -101,9 +100,7 @@ const StudentsManagementPage = () => {
                   <tr key={student._id} className="border-b border-[#f0f4f8] last:border-none hover:bg-[#f8fafc] transition-colors">
                     <td className="py-4 px-6 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-[13px] uppercase bg-[#e2e8f0] text-[#202127]">
-                          {getInitials(student.firstName, student.lastName)}
-                        </div>
+                        <UserAvatar src={student.avatarUrl || student.avatar} className="h-10 w-10" />
                         <span className="font-bold text-[#202127] text-[14px]">
                           {student.firstName}<br/>{student.lastName}
                         </span>
@@ -171,12 +168,7 @@ const StudentsManagementPage = () => {
                   <div>
                     <h4 className="font-bold text-[13px] text-[#202127] mb-0.5 line-clamp-1">{tx.course?.title || "Unknown Course"}</h4>
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 rounded-full bg-[#e2e8f0] overflow-hidden">
-                        {tx.student?.avatarUrl
-                          ? <img src={tx.student.avatarUrl} alt="" className="w-full h-full object-cover" />
-                          : <span className="text-[9px] font-bold text-[#202127] flex items-center justify-center h-full">{tx.student?.firstName?.charAt(0)}</span>
-                        }
-                      </div>
+                      <UserAvatar src={tx.student?.avatarUrl} className="h-4 w-4" />
                       <span className="text-[11px] text-[#717480]">{tx.student?.firstName} {tx.student?.lastName}</span>
                     </div>
                   </div>
