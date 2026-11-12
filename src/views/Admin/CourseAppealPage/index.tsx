@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { FiArrowLeft, FiXCircle, FiFileText, FiPaperclip, FiRefreshCw } from "react-icons/fi";
@@ -45,11 +46,11 @@ const CourseAppealPage = () => {
       if (publish && courseId) await updateCourseStatus(courseId, { status: "published" });
       await queryClient.invalidateQueries({ queryKey: ["admin.appeals"] });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.all"] });
-      alert(`Appeal ${actionStatus} successfully!`);
+      await dialog.success(`Appeal ${actionStatus}`, "The tutor has been told the outcome.");
       router.push("/admin/courses"); // Or another route like /admin/appeals if it exists
     } catch (err) {
       console.error(err);
-      alert("Failed to process appeal.");
+      dialog.error("Could not process the appeal", "Check your connection and try again.");
     } finally {
       setIsProcessing(false);
     }

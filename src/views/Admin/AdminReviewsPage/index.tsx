@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React from "react";
@@ -91,8 +92,8 @@ const AdminReviewsPage = () => {
                 {/* Actions */}
                 <div className="shrink-0 flex sm:flex-col items-center sm:items-end justify-center sm:justify-start gap-3">
                   <button 
-                    onClick={() => {
-                      if (window.confirm("Are you sure you want to delete this review?")) {
+                    onClick={async () => {
+                      if (await dialog.confirm({ title: "Delete this review?", message: "It will be removed from the course page.", tone: "danger" })) {
                         deleteMutation.mutate(review._id);
                       }
                     }}

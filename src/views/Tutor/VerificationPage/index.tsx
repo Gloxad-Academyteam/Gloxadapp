@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { HiCheckCircle, HiOutlineClock, HiOutlineDocumentCheck, HiOutlineCloudArrowUp, HiTrash } from "react-icons/hi2";
@@ -36,7 +37,7 @@ export default function VerificationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (files.length === 0 && !bio.trim()) {
-      alert("Please upload at least one document or enter a brief bio.");
+      dialog.error("Add something to review", "Upload at least one document or write a short bio.");
       return;
     }
 

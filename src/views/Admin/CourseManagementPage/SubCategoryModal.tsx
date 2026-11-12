@@ -1,3 +1,4 @@
+import { dialog } from "@components/Dialog";
 import React, { useState } from "react";
 import { FiX, FiEdit2, FiTrash2, FiCheck } from "react-icons/fi";
 import { TCategory, TSubCategory } from "@services/categories";
@@ -52,8 +53,8 @@ const SubCategoryModal: React.FC<SubCategoryModalProps> = ({
     setEditingIndex(null);
   };
 
-  const deleteRow = (index: number) => {
-    if (!window.confirm(`Remove "${subCategories[index].name}" from ${category.name}?`)) return;
+  const deleteRow = async (index: number) => {
+    if (!(await dialog.confirm({ title: `Remove "${subCategories[index].name}"?`, message: `It will be taken out of ${category.name}.`, confirmLabel: "Remove", tone: "danger" }))) return;
     onSaveSubCategories(subCategories.filter((_, i) => i !== index));
   };
 

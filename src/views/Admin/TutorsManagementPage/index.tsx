@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
@@ -180,8 +181,8 @@ const TutorsManagementPage = () => {
                           View details
                         </button>
                         <button 
-                          onClick={() => {
-                            if (window.confirm(`Remove ${tutor.firstName} ${tutor.lastName} as tutor? This cannot be undone.`)) {
+                          onClick={async () => {
+                            if (await dialog.confirm({ title: `Remove ${tutor.firstName} ${tutor.lastName}?`, message: "They will no longer be a tutor. This cannot be undone.", confirmLabel: "Remove", tone: "danger" })) {
                               deleteMutation.mutate(tutor._id);
                             }
                           }}

@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { DetailSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
@@ -60,12 +61,12 @@ const TutorVerificationPage = () => {
     onError: (err: any) => toast.error(err?.message || "Failed to reject tutor")
   });
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!rejectionReason.trim()) {
-      toast.error("Please enter a rejection reason first.");
+      dialog.error("Add a reason first", "Tell the tutor why the application is being rejected.");
       return;
     }
-    if (window.confirm("Are you sure you want to reject this tutor application?")) {
+    if (await dialog.confirm({ title: "Reject this application?", message: "The tutor will be told it was rejected and why.", confirmLabel: "Reject", tone: "danger" })) {
       rejectMutation.mutate();
     }
   };

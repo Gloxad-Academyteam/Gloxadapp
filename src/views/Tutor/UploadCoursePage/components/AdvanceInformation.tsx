@@ -1,3 +1,4 @@
+import { dialog } from "@components/Dialog";
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -58,7 +59,7 @@ export default function AdvanceInformation({ data, updateData, onNext, onPrev, i
         updateData({ trailer: url });
       }
     } catch (err) {
-      alert(`Failed to upload ${type}`);
+      dialog.error(`Could not upload the ${type}`, "Check the file and your connection, then try again.");
     }
   };
 

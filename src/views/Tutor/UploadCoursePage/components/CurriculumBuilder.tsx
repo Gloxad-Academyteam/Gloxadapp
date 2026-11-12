@@ -1,3 +1,4 @@
+import { dialog } from "@components/Dialog";
 import React, { useState, useRef, useEffect } from "react";
 import { FaPlus, FaRegEdit, FaRegTrashAlt, FaBars } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -43,8 +44,8 @@ export default function CurriculumBuilder({ data, updateData, onNext, onPrev, is
     updateData({ modules: [...modules, newModule] });
   };
 
-  const handleDeleteModule = (modId: string) => {
-    if (!window.confirm("Delete this section and all its lectures?")) return;
+  const handleDeleteModule = async (modId: string) => {
+    if (!(await dialog.confirm({ title: "Delete this section?", message: "All the lectures inside it will be deleted too.", tone: "danger" }))) return;
     updateData({ modules: modules.filter((m: any) => m.id !== modId) });
   };
 
@@ -75,8 +76,8 @@ export default function CurriculumBuilder({ data, updateData, onNext, onPrev, is
     updateData({ modules: updated });
   };
 
-  const handleDeleteLecture = (modId: string, lecId: string) => {
-    if (!window.confirm("Delete this lecture?")) return;
+  const handleDeleteLecture = async (modId: string, lecId: string) => {
+    if (!(await dialog.confirm({ title: "Delete this lecture?", tone: "danger" }))) return;
     const updated = modules.map((m: any) =>
       m.id === modId
         ? { ...m, lectures: m.lectures.filter((l: any) => l.id !== lecId) }

@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
@@ -32,11 +33,11 @@ const CourseApprovalDetailsPage = () => {
       await updateCourseStatus(id, { status: "published" });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.all"] });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.detail", id] });
-      alert("Course approved successfully!");
+      await dialog.success("Course approved", "It is now published and visible to learners.");
       router.push("/admin/courses");
     } catch (error) {
       console.error(error);
-      alert("Failed to approve course.");
+      dialog.error("Could not approve the course", "Check your connection and try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -44,17 +45,17 @@ const CourseApprovalDetailsPage = () => {
 
   const handleReject = async () => {
     if (!id) return;
-    if (!rejectionReason) return alert("Please provide a rejection reason.");
+    if (!rejectionReason) { dialog.error("Add a reason first", "Tell the tutor why the course is being rejected."); return; }
     try {
       setIsProcessing(true);
       await updateCourseStatus(id, { status: "rejected", rejectionReason });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.all"] });
       await queryClient.invalidateQueries({ queryKey: ["admin.courses.detail", id] });
-      alert("Course rejected successfully!");
+      await dialog.success("Course rejected", "The tutor has been told why.");
       router.push("/admin/courses");
     } catch (error) {
       console.error(error);
-      alert("Failed to reject course.");
+      dialog.error("Could not reject the course", "Check your connection and try again.");
     } finally {
       setIsProcessing(false);
     }

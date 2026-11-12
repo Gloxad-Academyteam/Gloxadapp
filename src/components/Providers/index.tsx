@@ -6,6 +6,7 @@ import { IconContext } from "react-icons";
 import { Slide, ToastContainer } from "react-toastify";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import ScrollManager from "@components/ScrollManager";
+import { DialogHost } from "@components/Dialog";
 import ScrollToTopButton from "@components/ScrollToTopButton";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,6 +34,7 @@ const Providers = ({ children }: TProps) => {
     <QueryClientProvider client={queryClient}>
       <ReactLenis root options={{ lerp: 0.1, duration: 1.1, smoothWheel: true }}>
         <ScrollManager />
+        <DialogHost />
         <ToastContainer position="top-right" autoClose={4000} limit={3} newestOnTop closeOnClick pauseOnFocusLoss={false} transition={Slide} />
         <IconContext.Provider
           value={{

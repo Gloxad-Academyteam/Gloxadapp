@@ -11,6 +11,7 @@ import {
   HiOutlineArrowTopRightOnSquare,
   HiOutlineBars3,
   HiOutlineBookOpen,
+  HiOutlineClipboardDocumentList,
   HiOutlineChartBar,
   HiOutlineSignal,
   HiOutlineChatBubbleOvalLeft,
@@ -36,6 +37,7 @@ const NAV: TNavGroup[] = [
       { label: "Dashboard", to: "/admin", icon: HiOutlineSquares2X2, exact: true },
       { label: "Analytics", to: "/admin/analytics", icon: HiOutlineChartBar },
       { label: "Live now", to: "/admin/live", icon: HiOutlineSignal },
+      { label: "Activity", to: "/admin/activity", icon: HiOutlineClipboardDocumentList },
     ],
   },
   {

@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
@@ -10,6 +11,7 @@ import CategoryCard from "./CategoryCard";
 import CategoryFormModal from "./CategoryFormModal";
 import SubCategoryModal from "./SubCategoryModal";
 import CourseTable from "./CourseTable";
+import FreeCoursesPanel from "./FreeCoursesPanel";
 import { getAllAdminCourses } from "@services/admin/courses";
 import {
   TCategory,
@@ -22,7 +24,7 @@ import {
   updateCategory,
 } from "@services/categories";
 
-const TABS = ["Categories", "All Courses", "Pending Approval", "Approved", "Rejected"];
+const TABS = ["Free Courses", "Categories", "All Courses", "Pending Approval", "Approved", "Rejected"];
 
 const COURSE_STATUS: Record<string, string> = {
   pending: "PENDING",
@@ -34,7 +36,7 @@ const getErrorMessage = (error: any, fallback: string) => error?.response?.data?
 
 const CourseManagementPage = () => {
   const queryClient = useQueryClient();
-  const [activeTab, setActiveTab] = useState("Pending Approval");
+  const [activeTab, setActiveTab] = useState("Free Courses");
   const [searchQuery, setSearchQuery] = useState("");
   
   // Modal States
@@ -114,8 +116,8 @@ const CourseManagementPage = () => {
     onError: (error) => toast.error(getErrorMessage(error, "Failed to delete category")),
   });
 
-  const handleDeleteCategory = (category: TCategory) => {
-    if (window.confirm(`Are you sure you want to delete ${category.name}?`)) {
+  const handleDeleteCategory = async (category: TCategory) => {
+    if (await dialog.confirm({ title: `Delete ${category.name}?`, message: "The category and its sub-categories will be removed.", tone: "danger" })) {
       deleteMutation.mutate(category._id);
     }
   };
@@ -146,7 +148,18 @@ const CourseManagementPage = () => {
           <p className="text-[14px] text-[#717480] mt-1">Review, approve, and manage the curriculum catalog.</p>
         </div>
         
-        {activeTab === "Categories" ? (
+        {activeTab === "Free Courses" ? (
+          <div className="relative hidden md:block">
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A0AEC0]" />
+            <input
+              type="text"
+              placeholder="Search free courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-[#f8fafc] border border-[#e2e8f0] rounded-[8px] pl-10 pr-4 py-2 text-[14px] outline-none focus:border-[#3b82f6] w-[250px]"
+            />
+          </div>
+        ) : activeTab === "Categories" ? (
           <div className="flex items-center gap-3">
             <div className="relative hidden md:block">
               <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A0AEC0]" />
@@ -216,7 +229,9 @@ const CourseManagementPage = () => {
       </div>
 
       {/* Tab Content */}
-      {activeTab === "Categories" ? (
+      {activeTab === "Free Courses" ? (
+        <FreeCoursesPanel search={searchQuery} />
+      ) : activeTab === "Categories" ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isLoadingCategories && Array.from({ length: 3 }).map((_, i) => <BlockSkeleton key={i} className="h-[150px]" />)}
           {!isLoadingCategories && categories.length === 0 && (

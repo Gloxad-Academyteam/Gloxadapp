@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { LuCloudOff, LuCode, LuGlobe, LuPlus, LuTerminal } from "react-icons/lu";
@@ -182,7 +183,7 @@ const PracticePage = () => {
                 workspace={current}
                 cloud={cloud}
                 onSaved={refreshList}
-                onDelete={cloud ? () => window.confirm("Delete this practice? You will not be able to get it back.") && remove.mutate(current.id) : undefined}
+                onDelete={cloud ? async () => { if (await dialog.confirm({ title: "Delete this practice?", message: "You will not be able to get it back.", tone: "danger" })) remove.mutate(current.id); } : undefined}
               />
             ) : (
               <div className="skeleton h-[520px] w-full rounded-2xl" role="status" aria-label="Loading your practice" />

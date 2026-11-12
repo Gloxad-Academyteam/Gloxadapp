@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
@@ -266,8 +267,8 @@ const Editor = ({ workspace, cloud, onDelete, onSaved }: TProps) => {
     }
   };
 
-  const reset = () => {
-    if (!window.confirm("Reset to the starter code? Your current code is kept in version history.")) return;
+  const reset = async () => {
+    if (!(await dialog.confirm({ title: "Reset to the starter code?", message: "Your current code is kept in version history.", confirmLabel: "Reset", tone: "warning" }))) return;
     const starter = STARTERS[workspace.language];
     filesRef.current = starter;
     setFiles(starter);
@@ -363,7 +364,7 @@ const Editor = ({ workspace, cloud, onDelete, onSaved }: TProps) => {
   // ----- history -----
   const versions = useQuery({ queryKey: ["practice", "versions", id, historyOpen], queryFn: () => practiceApi.versions(id), enabled: cloud && historyOpen, gcTime: 0 });
   const restore = async (version: number) => {
-    if (!window.confirm(`Go back to version ${version}? Your current code is kept in history.`)) return;
+    if (!(await dialog.confirm({ title: `Go back to version ${version}?`, message: "Your current code is kept in history.", confirmLabel: "Go back", tone: "warning" }))) return;
     try {
       applyServerCopy(await practiceApi.restore(id, version));
       setHistoryOpen(false);

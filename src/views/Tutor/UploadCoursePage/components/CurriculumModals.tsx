@@ -1,3 +1,4 @@
+import { dialog } from "@components/Dialog";
 import React, { useState } from "react";
 import { FaTimes, FaCloudUploadAlt, FaFileAlt } from "react-icons/fa";
 import ReactQuill from "react-quill";
@@ -74,7 +75,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
       setUploadedUrl(url);
       if (folder === "videos") setIsVideoUploaded(true);
     } catch {
-      alert("Failed to upload file. Please try again.");
+      dialog.error("Could not upload the file", "Please try again.");
     }
   };
 
@@ -86,7 +87,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
       setCaptionUrl(url);
       setCaptionFileName(file.name);
     } catch {
-      alert("Failed to upload caption file. Please try again.");
+      dialog.error("Could not upload the caption file", "Please try again.");
     }
   };
 
@@ -97,7 +98,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
         title="Upload Video"
         onClose={onClose}
         onSaveClick={() => {
-          if (!uploadedUrl) { alert("Please upload a video first."); return; }
+          if (!uploadedUrl) { dialog.error("Upload a video first", "Add the lesson video before saving."); return; }
           onSave({ videoUrl: uploadedUrl });
         }}
       >
@@ -153,7 +154,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
         title="Attach File"
         onClose={onClose}
         onSaveClick={() => {
-          if (!uploadedUrl) { alert("Please upload a file first."); return; }
+          if (!uploadedUrl) { dialog.error("Upload a file first", "Add the file before saving."); return; }
           onSave({ fileUrl: uploadedUrl });
         }}
       >
@@ -201,7 +202,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
         title="Add Lecture Caption"
         onClose={onClose}
         onSaveClick={() => {
-          if (!captionUrl) { alert("Please upload a caption file first."); return; }
+          if (!captionUrl) { dialog.error("Upload a caption file first", "Add the caption file before saving."); return; }
           onSave({ captionUrl, captionFileName });
         }}
       >
@@ -295,7 +296,7 @@ export default function CurriculumModals({ activeModal, onClose, onSave }: Modal
         onClose={onClose}
         onSaveClick={() => {
           const validQuestions = quizQuestions.filter((q) => q.question.trim() !== "");
-          if (validQuestions.length === 0) { alert("Please add at least one question."); return; }
+          if (validQuestions.length === 0) { dialog.error("Add a question", "A quiz needs at least one question with its answers."); return; }
           onSave({ questions: validQuestions, timerMinutes: quizTimer });
         }}
       >

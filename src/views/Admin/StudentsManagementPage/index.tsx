@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
@@ -124,8 +125,8 @@ const StudentsManagementPage = () => {
                           View<br/>more
                         </button>
                         <button
-                          onClick={() => {
-                            if (window.confirm(`Delete ${student.firstName} ${student.lastName}? This cannot be undone.`)) {
+                          onClick={async () => {
+                            if (await dialog.confirm({ title: `Delete ${student.firstName} ${student.lastName}?`, message: "Their account will be removed. This cannot be undone.", tone: "danger" })) {
                               deleteMutation.mutate(student._id);
                             }
                           }}

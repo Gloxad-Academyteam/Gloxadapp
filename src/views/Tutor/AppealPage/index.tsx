@@ -1,5 +1,6 @@
 "use client";
 
+import { dialog } from "@components/Dialog";
 import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
 import React from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -31,15 +32,15 @@ export default function AppealPage() {
 
   const handleSubmit = async () => {
     if (!id) return;
-    if (!reason) return alert("Please provide a justification statement.");
+    if (!reason) { dialog.error("Add your reason", "Explain why the decision should be reviewed."); return; }
     try {
       setIsSubmitting(true);
       await fileAppeal(id as string, { message: reason });
-      alert("Appeal submitted successfully.");
+      await dialog.success("Appeal submitted", "We will review it and get back to you.");
       router.push("/dashboard/courses");
     } catch (err) {
       console.error(err);
-      alert("Failed to submit appeal.");
+      dialog.error("Could not submit your appeal", "Check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }

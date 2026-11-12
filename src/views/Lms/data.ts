@@ -386,44 +386,6 @@ const ROSTER_SEED: TRosterStudent[] = [
 
 export const ROSTER = ROSTER_SEED;
 
-/* ---------- Admin analytics ---------- */
-export const ADMIN_STATS = [
-  { label: "Total Revenue", value: "₦124.5K", note: "+12% from last trimester", tone: "up", icon: "chart" },
-  { label: "Enrollment Counts", value: "3,492", note: "+5.4% new students", tone: "up", icon: "users" },
-  { label: "Completion Rates", value: "87%", note: "Steady across cohorts", tone: "flat", icon: "cap" },
-  { label: "Platform Health", value: "99.9%", note: "Uptime this month", tone: "ok", icon: "shield" },
-] as const;
-
-export const ENROLLMENT_TRENDS = [38, 62, 46, 78, 95, 68];
-
-export const RECENT_CERTIFICATES = [
-  { title: "Advanced Data Science", who: "Sarah J.", ago: "2 mins ago" },
-  { title: "Corporate Leadership", who: "Michael T.", ago: "15 mins ago" },
-  { title: "UI/UX Masterclass", who: "Elena R.", ago: "1 hr ago" },
-  { title: "Business Strategy", who: "David L.", ago: "3 hrs ago" },
-];
-
-export type TAdminUser = { name: string; email: string; role: "Instructor" | "Student"; status: "Active" | "Suspended"; lastLogin: string; image?: string };
-
-const FIRST = ["Alice", "Bob", "Charlie", "Diana", "Ethan", "Fiona", "George", "Hannah", "Ian", "Julia", "Kevin", "Laura", "Mohammed", "Nina", "Oscar"];
-const LAST = ["Freeman", "Johnson", "Davis", "Okafor", "Nguyen", "Silva", "Kowalski", "Haddad", "Murphy", "Tanaka", "Adeyemi", "Rossi"];
-
-export const ADMIN_USERS: TAdminUser[] = Array.from({ length: 45 }, (_, index) => {
-  if (index === 0) return { name: "Alice Freeman", email: "alice@example.com", role: "Instructor", status: "Active", lastLogin: "Today, 09:41 AM", image: lmsImages.womanB };
-  if (index === 1) return { name: "Bob Johnson", email: "bob.j@example.com", role: "Student", status: "Active", lastLogin: "Yesterday, 14:20 PM" };
-  if (index === 2) return { name: "Charlie Davis", email: "charlie.d@example.com", role: "Student", status: "Suspended", lastLogin: "Oct 12, 2023", image: lmsImages.manB };
-  const first = FIRST[index % FIRST.length];
-  const last = LAST[(index * 7) % LAST.length];
-  return {
-    name: `${first} ${last}`,
-    email: `${first.toLowerCase()}.${last.toLowerCase()}@example.com`,
-    role: index % 9 === 0 ? "Instructor" : "Student",
-    status: index % 11 === 0 ? "Suspended" : "Active",
-    lastLogin: index % 4 === 0 ? `Oct ${(index % 27) + 1}, 2023` : index % 3 === 0 ? "Yesterday, 10:05 AM" : "Today, 08:30 AM",
-  };
-});
-
-
 /* ---------- Weekly learning path (Curriculum) ---------- */
 export type TDayItem = {
   kind: "video" | "reading" | "code" | "check" | "live" | "problems" | "review" | "submission";

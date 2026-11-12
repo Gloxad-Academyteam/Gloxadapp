@@ -3,10 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
+import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import { FiActivity, FiAward, FiClock, FiCreditCard, FiDatabase, FiUserPlus, FiUsers, FiVideo } from "react-icons/fi";
 import { getLiveMetrics, type TLiveMetrics } from "@services/admin/metrics";
 import { Skeleton } from "../../../components/Skeleton";
-import { card, duration, Empty, ErrorBox, naira, Panel, timeAgo } from "../shared";
+import { card, duration, Empty, ErrorBox, naira, Panel, timeAgo, tooltipStyle } from "../shared";
 
 const REFRESH_MS = 5000;
 
@@ -62,7 +63,7 @@ const AdminLivePage = () => {
     );
   }
 
-  const { online, liveClasses, upcomingClasses, today, queue, recent, system } = data;
+  const { online, liveClasses, upcomingClasses, today, queue, recent, system, traffic } = data;
   const inClass = liveClasses.reduce((sum, session) => sum + session.participants, 0);
   const queueItems = [
     { count: queue.pendingTutors, text: "Tutor applications", href: "/admin/tutors" },
@@ -135,7 +136,32 @@ const AdminLivePage = () => {
             )}
           </Panel>
 
-          <Panel title="Activity" subtitle="Latest things that happened on the platform">
+          <Panel title="Traffic" subtitle="Requests to the app in the last 30 minutes">
+            <div className="mb-4 flex flex-wrap gap-x-8 gap-y-2 text-[13.5px] text-[#4a4f6b]">
+              <span><b className="text-[#12142b]">{traffic.perMinute}</b> requests a minute</span>
+              <span><b className="text-[#12142b]">{traffic.requests}</b> in 30 min</span>
+              <span><b className={traffic.errors > 0 ? "text-[#c43232]" : "text-[#12142b]"}>{traffic.errors}</b> failed</span>
+              {traffic.serverErrors > 0 && <span><b className="text-[#c43232]">{traffic.serverErrors}</b> server errors</span>}
+            </div>
+            <div className="h-[150px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={traffic.series.map((point) => ({ ...point, label: new Date(point.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) }))} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="trafficFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#5d5fef" stopOpacity={0.25} />
+                      <stop offset="100%" stopColor="#5d5fef" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#8a90a8" }} interval={Math.floor(traffic.series.length / 5)} />
+                  <Tooltip {...tooltipStyle} cursor={{ stroke: "#d3d6ea" }} formatter={(value: any, name: any) => [value, name === "errors" ? "Failed" : "Requests"]} />
+                  <Area type="monotone" dataKey="requests" stroke="#5d5fef" strokeWidth={2} fill="url(#trafficFill)" />
+                  <Area type="monotone" dataKey="errors" stroke="#d93a3a" strokeWidth={1.5} fill="none" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+
+          <Panel title="Activity" subtitle="Latest things that happened on the platform" action={<Link href="/admin/activity" className="text-[13px] font-medium text-[#5d5fef] hover:underline">See everything</Link>}>
             {recent.length === 0 ? (
               <Empty text="Nothing has happened yet." />
             ) : (
