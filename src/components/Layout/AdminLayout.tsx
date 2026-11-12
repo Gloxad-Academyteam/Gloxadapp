@@ -10,6 +10,8 @@ import {
   HiOutlineArrowTopRightOnSquare,
   HiOutlineBars3,
   HiOutlineBookOpen,
+  HiOutlineChartBar,
+  HiOutlineSignal,
   HiOutlineChatBubbleOvalLeft,
   HiOutlineChevronDoubleLeft,
   HiOutlineCloudArrowUp,
@@ -19,7 +21,6 @@ import {
   HiOutlineSquares2X2,
   HiOutlineStar,
   HiOutlineUserGroup,
-  HiOutlineVideoCamera,
   HiOutlineXMark,
 } from "react-icons/hi2";
 import useAuth from "@hooks/useAuth";
@@ -28,7 +29,14 @@ type TNavItem = { label: string; to: string; icon: React.ElementType; exact?: bo
 type TNavGroup = { title: string; items: TNavItem[] };
 
 const NAV: TNavGroup[] = [
-  { title: "Overview", items: [{ label: "Dashboard", to: "/admin", icon: HiOutlineSquares2X2, exact: true }] },
+  {
+    title: "Overview",
+    items: [
+      { label: "Dashboard", to: "/admin", icon: HiOutlineSquares2X2, exact: true },
+      { label: "Analytics", to: "/admin/analytics", icon: HiOutlineChartBar },
+      { label: "Live now", to: "/admin/live", icon: HiOutlineSignal },
+    ],
+  },
   {
     title: "People",
     items: [
@@ -41,7 +49,6 @@ const NAV: TNavGroup[] = [
     items: [
       { label: "Courses", to: "/admin/courses", icon: HiOutlineBookOpen },
       { label: "Upload courses", to: "/admin/upload", icon: HiOutlineCloudArrowUp },
-      { label: "Live sessions", to: "/admin/live", icon: HiOutlineVideoCamera },
       { label: "Reviews", to: "/admin/reviews", icon: HiOutlineStar },
     ],
   },

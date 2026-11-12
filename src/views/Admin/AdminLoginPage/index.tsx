@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { FiAlertCircle, FiArrowLeft, FiEye, FiEyeOff, FiLock, FiMail, FiShield } from "react-icons/fi";
+import { FiAlertCircle, FiArrowLeft, FiEye, FiEyeOff, FiLock, FiMail } from "react-icons/fi";
 import { signIn, WrongLoginAreaError } from "@services/auth";
 
 const messageFor = (error: any) => {
@@ -43,10 +43,10 @@ const AdminLoginPage = () => {
 
   return (
     <main className="grid min-h-screen bg-[#0b0d1a] lg:grid-cols-[1.05fr_1fr]">
-      {/* Brand panel */}
+      {/* Brand panel with photo background */}
       <section className="relative hidden overflow-hidden lg:flex lg:flex-col lg:justify-between lg:p-14">
-        <div className="pointer-events-none absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-[#5d5fef]/30 blur-[110px]" />
-        <div className="pointer-events-none absolute -bottom-32 right-0 h-[380px] w-[380px] rounded-full bg-[#2f80ed]/20 blur-[120px]" />
+        <img src="/images/trimester/photos/mentor-session.webp" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0d1a] via-[#0b0d1a]/70 to-[#0b0d1a]/45" />
         <div className="relative flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
             <Image src="/gloxadlogo.png" alt="" width={26} height={26} className="h-6 w-auto object-contain" />
@@ -54,15 +54,12 @@ const AdminLoginPage = () => {
           <span className="text-[18px] font-semibold tracking-tight text-white">Gloxad Admin</span>
         </div>
         <div className="relative max-w-[460px]">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[12px] font-medium text-white/70">
-            <FiShield /> Restricted area
-          </span>
           <h1 className="text-[40px] font-semibold leading-[1.12] tracking-tight text-white">Run Gloxad Academy from one calm place.</h1>
-          <p className="mt-4 text-[15.5px] leading-relaxed text-white/60">
-            Manage tutors, courses, learners, live classes and revenue. Access is limited to approved administrators and every sign-in is checked.
+          <p className="mt-4 text-[15.5px] leading-relaxed text-white/75">
+            Manage tutors, courses, learners, live classes and revenue, with live numbers as they happen.
           </p>
         </div>
-        <p className="relative text-[12.5px] text-white/40">© {new Date().getFullYear()} Gloxad Academy</p>
+        <p className="relative text-[12.5px] text-white/50">© {new Date().getFullYear()} Gloxad Academy</p>
       </section>
 
       {/* Form panel */}

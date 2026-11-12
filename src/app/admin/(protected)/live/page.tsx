@@ -1,5 +1,5 @@
-import ComingSoonPage from "@pages/ComingSoonPage";
+import AdminLivePage from "@pages/Admin/AdminLivePage";
 
 export default function Page() {
-  return <ComingSoonPage />;
+  return <AdminLivePage />;
 }
