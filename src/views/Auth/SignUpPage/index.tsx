@@ -185,7 +185,7 @@ const SignUpPage = () => {
         </div>
 
         <div className="mt-2 text-center text-[13px] text-[#717480]">
-          Already have an account? <TextLink text="Sign In" to={redirectUrl === "/dashboard" ? "/auth/signin" : `/auth/signin?redirect=${encodeURIComponent(redirectUrl)}`} className="font-bold text-[#07004d]" />
+          Already have an account? <TextLink text="Sign In" to={redirectUrl === "/dashboard" ? "/login" : `/login?redirect=${encodeURIComponent(redirectUrl)}`} className="font-bold text-[#07004d]" />
         </div>
 
         <SocialAuthButtons />

@@ -26,7 +26,7 @@ const PopularCourses = () => {
 
   const handleViewMore = () => {
     if (!isAuthenticated) {
-      navigate("/auth/signin?redirect=/courses");
+      navigate("/login?redirect=/courses");
     } else {
       navigate("/courses");
     }

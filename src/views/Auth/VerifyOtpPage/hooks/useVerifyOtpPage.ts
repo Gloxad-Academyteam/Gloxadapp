@@ -21,7 +21,7 @@ const useVerifyOtpPage = () => {
 
   useEffect(() => {
     if (!email) {
-      router.push("/auth/forgot-password");
+      router.push("/forgot-password");
     }
   }, [email, router]);
 
@@ -115,7 +115,7 @@ const useVerifyOtpPage = () => {
   // Where the "Continue" button goes after a successful verification
   const handleContinue = () => {
     if (type === "reset") {
-      router.push(`/auth/reset-password?email=${encodeURIComponent(email)}&otp=${otp}`);
+      router.push(`/reset-password?email=${encodeURIComponent(email)}&otp=${otp}`);
       return;
     }
     const cached = queryClient.getQueryData<{ data?: TUser } | null>(["auth.me"]);
@@ -125,7 +125,7 @@ const useVerifyOtpPage = () => {
     }
     // Verified but no session (e.g. the page was reloaded after signup): sign in to continue
     toast.info("Email verified! Please sign in to continue.");
-    router.push(redirectUrl === "/dashboard" ? "/auth/signin" : `/auth/signin?redirect=${encodeURIComponent(redirectUrl)}`);
+    router.push(redirectUrl === "/dashboard" ? "/login" : `/login?redirect=${encodeURIComponent(redirectUrl)}`);
   };
 
   const handleResend = () => {

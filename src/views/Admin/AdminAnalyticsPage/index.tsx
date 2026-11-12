@@ -67,6 +67,7 @@ const AdminAnalyticsPage = () => {
   }
 
   const { totals, period, series, engagement, courseStatus, topCourses, topTutors, programme } = data;
+  const analyticsSource = data.source;
   const hasRevenue = series.revenue.some((point) => point.value > 0);
   const hasSignups = series.signups.some((point) => point.total > 0);
   const hasEnrolments = series.enrolments.some((point) => point.value > 0);
@@ -77,12 +78,15 @@ const AdminAnalyticsPage = () => {
   return (
     <div className="mx-auto w-full max-w-[1400px] pb-10">
       {header}
+      {analyticsSource === "basic" && (
+        <p className="mb-4 rounded-xl border border-[#e8eaf3] bg-white px-4 py-3 text-[13px] text-[#6b7087]">Showing the numbers this server can provide right now. Comparisons with the previous period, top courses and programme figures appear after the next server update.</p>
+      )}
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
-        <KpiCard label="Revenue" value={naira(period.revenue)} change={period.revenueChange} hint={`${period.transactions} successful payments`} icon={FiCreditCard} tint="bg-[#efe9ff] text-[#6a3fd0]" />
-        <KpiCard label="New members" value={`${period.newUsers}`} change={period.newUsersChange} hint={`${totals.users} in total`} icon={FiUserPlus} tint="bg-[#e9eaff] text-[#4a4cd6]" />
-        <KpiCard label="Enrolments" value={`${period.enrolments}`} change={period.enrolmentsChange} hint={`${totals.enrolments} all time`} icon={FiBookOpen} tint="bg-[#fff1df] text-[#b8650b]" />
-        <KpiCard label="Completion rate" value={totals.completionRate === null ? "No data yet" : `${totals.completionRate}%`} hint={`${totals.certificatesIssued} certificates issued`} icon={FiCheckCircle} tint="bg-[#e3f6ec] text-[#13804d]" />
+        <KpiCard label="Revenue" value={naira(period.revenue)} change={analyticsSource === "basic" ? undefined : period.revenueChange} hint={`${period.transactions} successful payments`} icon={FiCreditCard} tint="bg-[#efe9ff] text-[#6a3fd0]" />
+        <KpiCard label="New members" value={`${period.newUsers}`} change={analyticsSource === "basic" ? undefined : period.newUsersChange} hint={`${totals.users} in total`} icon={FiUserPlus} tint="bg-[#e9eaff] text-[#4a4cd6]" />
+        <KpiCard label="Enrolments" value={`${analyticsSource === "basic" ? totals.enrolments : period.enrolments}`} change={analyticsSource === "basic" ? undefined : period.enrolmentsChange} hint={analyticsSource === "basic" ? "All time" : `${totals.enrolments} all time`} icon={FiBookOpen} tint="bg-[#fff1df] text-[#b8650b]" />
+        <KpiCard label="Completion rate" value={totals.completionRate === null ? "No data yet" : `${totals.completionRate}%`} hint={analyticsSource === "basic" ? undefined : `${totals.certificatesIssued} certificates issued`} icon={FiCheckCircle} tint="bg-[#e3f6ec] text-[#13804d]" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">

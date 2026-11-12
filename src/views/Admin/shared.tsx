@@ -98,8 +98,8 @@ export const tooltipStyle = {
 
 export const ErrorBox = ({ onRetry }: { onRetry: () => void }) => (
   <div className={`${card} p-10 text-center`}>
-    <p className="text-[16px] font-semibold">We could not load these numbers</p>
-    <p className="mt-1 text-[14px] text-[#6b7087]">Check your connection and try again.</p>
+    <p className="text-[16px] font-semibold">These numbers are not available yet</p>
+    <p className="mt-1 text-[14px] text-[#6b7087]">The server may be starting up or needs its latest update. Try again in a moment.</p>
     <button type="button" onClick={onRetry} className="mt-5 h-10 rounded-lg bg-[#12142b] px-5 text-[14px] font-semibold text-white">Try again</button>
   </div>
 );

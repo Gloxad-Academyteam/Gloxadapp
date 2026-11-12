@@ -163,7 +163,7 @@ const TutorLandingPage = () => {
               Africa&apos;s career-focused learning and talent ecosystem, where education leads directly to mentorship, employment, freelancing, entrepreneurship, and startup opportunities. Thousands of learners are looking for mentors, not just instructors. Join Gloxad and transform careers while growing your personal brand.
             </p>
             <button
-              onClick={() => router.push("/auth/signup/instructor")}
+              onClick={() => router.push("/signup/instructor")}
               className="h-[40px] whitespace-nowrap rounded-full bg-[#4aa3df] px-5 text-[13px] font-medium text-white shadow-md transition hover:bg-[#3e92cc] sm:h-[46px] sm:px-7 sm:text-[15px] lg:h-[52px] lg:px-8 lg:text-[16px]"
             >
               Become an Instructor
@@ -484,7 +484,7 @@ const TutorLandingPage = () => {
               Join a community of expert tutors, impact lives, and earn money while doing what you love. <br className="hidden md:block" />Start your teaching journey today!
             </p>
             <button
-              onClick={() => router.push("/auth/signup/instructor")}
+              onClick={() => router.push("/signup/instructor")}
               className="h-[50px] rounded-full bg-[#3F48A0] hover:bg-[#343d8a] px-10 text-[15px] font-medium text-white transition shadow-md"
             >
               Become an Instructor

@@ -1,5 +1,6 @@
 "use client";
 
+import { isAuthPath } from "@utils/authPaths";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import TutorCoursesOnly from "@components/TutorCoursesOnly";
@@ -48,10 +49,10 @@ const LandingHeader = () => {
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const { isAuthenticated, authenticatedUser, handleLogout, isLoggingOut } = useAuth();
   const pathname = usePathname() ?? "";
-  const isAuthPage = pathname.startsWith("/auth");
+  const isAuthPage = isAuthPath(pathname);
 
   const isTutorActive = pathname.startsWith("/teach");
-  const isInstitutionActive = pathname.startsWith("/auth") || pathname.startsWith("/institution");
+  const isInstitutionActive = isAuthPath(pathname) || pathname.startsWith("/institution");
   const isNexusActive = pathname.startsWith("/courses");
   const isStudentActive = !isTutorActive && !isInstitutionActive && !isNexusActive;
 
@@ -170,8 +171,8 @@ const LandingHeader = () => {
             <div className="ml-4 flex shrink-0 items-center gap-3 xl:ml-6 xl:gap-4">
               {!isAuthenticated ? (
                 <div className="flex items-center gap-2 xl:gap-3">
-                  <Link href="/auth/signin" className={AUTH_LOGIN_CLASS}>Log in</Link>
-                  <Link href="/auth/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
+                  <Link href="/login" className={AUTH_LOGIN_CLASS}>Log in</Link>
+                  <Link href="/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
                 </div>
               ) : (
                 <>
@@ -301,8 +302,8 @@ const Header = () => {
             <div className="ml-4 flex shrink-0 items-center gap-4 text-[24px] text-[#202127] xl:ml-6 xl:gap-6">
               {!isAuthenticated ? (
                 <div className="flex items-center gap-4">
-                  <Link href="/auth/signin" className={AUTH_LOGIN_CLASS}>Log in</Link>
-                  <Link href="/auth/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
+                  <Link href="/login" className={AUTH_LOGIN_CLASS}>Log in</Link>
+                  <Link href="/signup" className={AUTH_SIGNUP_CLASS}>Sign up</Link>
                 </div>
               ) : (
                 <>
@@ -390,9 +391,9 @@ const Header = () => {
 const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
   const { isAuthenticated, authenticatedUser, handleLogout, isLoggingOut } = authProps;
   const pathname = usePathname() ?? "";
-  const isAuthPage = pathname.startsWith("/auth");
+  const isAuthPage = isAuthPath(pathname);
   const isTutorActive = pathname.startsWith("/teach");
-  const isInstitutionActive = pathname.startsWith("/auth") || pathname.startsWith("/institution");
+  const isInstitutionActive = isAuthPath(pathname) || pathname.startsWith("/institution");
   const isNexusActive = pathname.startsWith("/courses");
   const isStudentActive = !isTutorActive && !isInstitutionActive && !isNexusActive;
   const isLanding = pathname === "/" || pathname === "/teach";
@@ -551,8 +552,8 @@ const HeaderMobile = ({ isOpen, setIsOpen, authProps }: any) => {
         <div className="shrink-0 border-t border-[#efeff5] bg-white px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4">
           {!isAuthenticated ? (
             <div className="flex gap-3">
-              <Link href="/auth/signin" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]">Log in</Link>
-              <Link href="/auth/signup" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]">Sign up</Link>
+              <Link href="/login" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]">Log in</Link>
+              <Link href="/signup" onClick={close} className="flex h-[46px] flex-1 items-center justify-center rounded-full bg-[#0B1F4D] text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(11,31,77,0.25)] transition-colors hover:bg-[#13306f]">Sign up</Link>
             </div>
           ) : (
             <button

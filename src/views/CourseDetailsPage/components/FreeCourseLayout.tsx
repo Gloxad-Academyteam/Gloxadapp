@@ -79,7 +79,7 @@ const FreeCourseLayout = ({ course }: TProps) => {
   const handleEnrollClick = useCallback(() => {
     if (!authenticatedUser) {
       const returnTo = `${coursePath}?enrol=1`;
-      router.push(`/auth/signin?redirect=${encodeURIComponent(returnTo)}`);
+      router.push(`/login?redirect=${encodeURIComponent(returnTo)}`);
       return;
     }
 

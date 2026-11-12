@@ -32,7 +32,7 @@ const ForgetPasswdPage = () => {
             <div className="w-full">
               <Button
                 text="Check your email"
-                onClick={() => router.push(`/auth/verify-otp?email=${encodeURIComponent(getValues("email"))}&type=reset`)}
+                onClick={() => router.push(`/verify-otp?email=${encodeURIComponent(getValues("email"))}&type=reset`)}
                 isBlock
                 className="!h-[48px] !rounded-full !border-transparent !text-[15px] !font-semibold enabled:!bg-[#0B1F4D] enabled:!text-white enabled:shadow-[0_2px_8px_rgba(11,31,77,0.25)] enabled:hover:!bg-[#13306f] focus-visible:!ring-2 focus-visible:!ring-[#0B1F4D]/40 focus-visible:!ring-offset-2"
               />
@@ -75,7 +75,7 @@ const ForgetPasswdPage = () => {
           />
 
           <div className="text-center">
-            <TextLink text="Back to login" to="/auth/signin" className="text-[13px] font-bold text-[#07004d]" />
+            <TextLink text="Back to login" to="/login" className="text-[13px] font-bold text-[#07004d]" />
           </div>
         </div>
       </form>

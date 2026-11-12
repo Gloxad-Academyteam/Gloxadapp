@@ -107,7 +107,7 @@ const NormalCourseLayout = ({ course }: TProps) => {
 
     if (!authenticatedUser) {
       toast.info("Please log in to enroll.");
-      router.push("/auth/signin");
+      router.push("/login");
       return;
     }
 

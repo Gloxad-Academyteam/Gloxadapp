@@ -29,7 +29,7 @@ const BecomeATutor = () => {
           </div>
 
           <div className="flex gap-[16px] flex-shrink-0">
-            <Link to="/auth/signup?role=tutor">
+            <Link to="/signup?role=tutor">
               <Button text="Become a Tutor" width="200px" />
             </Link>
             <Link to="/how-it-works">

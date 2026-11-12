@@ -8,6 +8,17 @@ const nextConfig = {
   eslint: {
     dirs: ["src"],
   },
+  // Old addresses still work: they go to the short ones
+  async redirects() {
+    return [
+      { source: "/auth/signin", destination: "/login", permanent: true },
+      { source: "/auth/signup", destination: "/signup", permanent: true },
+      { source: "/auth/signup/:role", destination: "/signup/:role", permanent: true },
+      { source: "/auth/forgot-password", destination: "/forgot-password", permanent: true },
+      { source: "/auth/reset-password", destination: "/reset-password", permanent: true },
+      { source: "/auth/verify-otp", destination: "/verify-otp", permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       {

@@ -28,7 +28,7 @@ const FutureStartsHere = () => {
           </p>
           <button
             type="button"
-            onClick={() => router.push("/auth/signup")}
+            onClick={() => router.push("/signup")}
             className="btn-interactive mt-8 h-[46px] rounded-full bg-white px-8 text-[14px] font-semibold text-[#181C7B] transition hover:scale-105 hover:bg-gray-100 shadow-md"
           >
             Get Started Now

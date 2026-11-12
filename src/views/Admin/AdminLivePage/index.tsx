@@ -79,9 +79,18 @@ const AdminLivePage = () => {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className={`${card} p-5`}>
           <p className="text-[13px] text-[#6b7087]">Online in the last 5 minutes</p>
-          <p className="mt-2 text-[34px] font-semibold leading-none tracking-tight">{online.now.total}</p>
-          <p className="mt-3 text-[12.5px] text-[#8a90a8]">{online.now.student} students · {online.now.instructor} tutors · {online.now.admin} admins</p>
-          <p className="mt-1 text-[12px] text-[#9aa0b8]">{online.last60m.total} in the last hour</p>
+          {online ? (
+            <>
+              <p className="mt-2 text-[34px] font-semibold leading-none tracking-tight">{online.now.total}</p>
+              <p className="mt-3 text-[12.5px] text-[#8a90a8]">{online.now.student} students · {online.now.instructor} tutors · {online.now.admin} admins</p>
+              <p className="mt-1 text-[12px] text-[#9aa0b8]">{online.last60m.total} in the last hour</p>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 text-[34px] font-semibold leading-none tracking-tight text-[#b3b8cf]">-</p>
+              <p className="mt-3 text-[12.5px] text-[#8a90a8]">Starts counting after the next server update</p>
+            </>
+          )}
         </div>
         <div className={`${card} p-5`}>
           <p className="text-[13px] text-[#6b7087]">Live classes running</p>
@@ -136,6 +145,7 @@ const AdminLivePage = () => {
             )}
           </Panel>
 
+          {traffic && (
           <Panel title="Traffic" subtitle="Requests to the app in the last 30 minutes">
             <div className="mb-4 flex flex-wrap gap-x-8 gap-y-2 text-[13.5px] text-[#4a4f6b]">
               <span><b className="text-[#12142b]">{traffic.perMinute}</b> requests a minute</span>
@@ -160,6 +170,7 @@ const AdminLivePage = () => {
               </ResponsiveContainer>
             </div>
           </Panel>
+          )}
 
           <Panel title="Activity" subtitle="Latest things that happened on the platform" action={<Link href="/admin/activity" className="text-[13px] font-medium text-[#5d5fef] hover:underline">See everything</Link>}>
             {recent.length === 0 ? (
@@ -196,6 +207,7 @@ const AdminLivePage = () => {
             </ul>
           </Panel>
 
+          {system && (
           <Panel title="System" subtitle="This server right now">
             <dl className="space-y-3 text-[13.5px]">
               <div className="flex items-center justify-between"><dt className="flex items-center gap-2 text-[#6b7087]"><FiDatabase size={15} /> Database</dt><dd className={`font-semibold ${system.database === "connected" ? "text-[#13804d]" : "text-[#b42323]"}`}>{system.database === "connected" ? "Connected" : "Disconnected"}</dd></div>
@@ -205,6 +217,7 @@ const AdminLivePage = () => {
             </dl>
             <p className="mt-4 text-[12px] leading-relaxed text-[#9aa0b8]">Online numbers count people who used the app recently on this server. They start again at zero after a restart.</p>
           </Panel>
+          )}
         </div>
       </div>
     </div>

@@ -136,7 +136,7 @@ const AdminLoginPage = () => {
             <Link href="/" className="inline-flex items-center gap-1.5 hover:text-[#12142b]">
               <FiArrowLeft size={14} /> Back to the site
             </Link>
-            <Link href="/auth/forgot-password" className="hover:text-[#12142b]">Forgot password?</Link>
+            <Link href="/forgot-password" className="hover:text-[#12142b]">Forgot password?</Link>
           </div>
         </div>
       </section>

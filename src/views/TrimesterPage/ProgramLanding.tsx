@@ -65,7 +65,7 @@ export const ProgramLanding = ({ trimester }: { trimester: TPublicTrimester }) =
   } else if (trimester.enrolmentState === "upcoming") {
     cta = <span className={inactive}>Enrolment opens {formatDay(trimester.enrollmentOpensAt)}</span>;
   } else if (!authenticatedUser) {
-    cta = <Link href="/auth/signin?redirect=/trimester" className={primary}>Sign in to enrol</Link>;
+    cta = <Link href="/login?redirect=/trimester" className={primary}>Sign in to enrol</Link>;
   } else if (authenticatedUser.role !== "student") {
     cta = <span className={inactive}>Only students can enrol</span>;
   } else {

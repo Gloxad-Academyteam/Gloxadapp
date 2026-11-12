@@ -56,7 +56,7 @@ const SignInPage = () => {
             />
             <span className="text-[#717480]">Remember me</span>
           </label>
-          <TextLink text="Forgot password?" to="/auth/forgot-password" className="font-bold text-[#07004d]" />
+          <TextLink text="Forgot password?" to="/forgot-password" className="font-bold text-[#07004d]" />
         </div>
 
         <div className="mt-1 flex flex-col gap-4">
@@ -70,7 +70,7 @@ const SignInPage = () => {
           />
 
           <div className="text-center text-[13px] text-[#717480]">
-            Don't have an account? <TextLink text="Sign up" to={redirectUrl === "/dashboard" ? "/auth/signup" : `/auth/signup?redirect=${encodeURIComponent(redirectUrl)}`} className="font-bold text-[#07004d]" />
+            Don't have an account? <TextLink text="Sign up" to={redirectUrl === "/dashboard" ? "/signup" : `/signup?redirect=${encodeURIComponent(redirectUrl)}`} className="font-bold text-[#07004d]" />
           </div>
 
         </div>

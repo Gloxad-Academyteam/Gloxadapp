@@ -19,9 +19,9 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const title = "Gloxad Academy | Premium Online Learning & Tutoring";
+const title = "Gloxad Academy | Online Learning Platform";
 const description =
-  "Join Gloxad Academy to learn from industry experts or build your influence as a tutor. Create, publish, and profit from your courses on a premium platform.";
+  "Join Gloxad Academy to learn from industry experts or build your influence as a tutor. Create, publish, and earn from your courses on an online learning platform.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.gloxadacademy.com"),

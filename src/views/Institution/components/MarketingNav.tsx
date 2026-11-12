@@ -34,7 +34,7 @@ const MarketingNav = () => {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            href="/auth/signin"
+            href="/login"
             className="inline-flex h-[40px] items-center justify-center rounded-full border border-[#cfd6ea] bg-white px-5 text-[14px] font-semibold text-[#0B1F4D] transition-colors hover:border-[#0B1F4D] hover:bg-[#f4f6fb]"
           >
             Log in
@@ -74,7 +74,7 @@ const MarketingNav = () => {
           </nav>
           <div className="mt-3 flex gap-3 border-t border-[#efeff5] pt-4">
             <Link
-              href="/auth/signin"
+              href="/login"
               onClick={() => setIsOpen(false)}
               className="flex h-[46px] flex-1 items-center justify-center rounded-full border border-[#cfd6ea] bg-white text-[14px] font-semibold text-[#0B1F4D] hover:border-[#0B1F4D]"
             >

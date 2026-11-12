@@ -81,7 +81,7 @@ const ScholarshipCard = ({ scholarship }: { scholarship: TPublicScholarship }) =
   } else if (scholarship.state === "closed") {
     action = <p className="rounded-full bg-[#f4f5fa] px-5 py-2.5 text-[13px] font-medium text-[#5b5e6b]">Closed on {formatDay(scholarship.closesAt)}</p>;
   } else if (!authenticatedUser) {
-    action = <Link href="/auth/signin?redirect=/scholarships" className="inline-flex h-[44px] items-center rounded-full bg-[#07004d] px-7 text-[14px] font-semibold text-white hover:bg-[#111456]">Sign in to apply</Link>;
+    action = <Link href="/login?redirect=/scholarships" className="inline-flex h-[44px] items-center rounded-full bg-[#07004d] px-7 text-[14px] font-semibold text-white hover:bg-[#111456]">Sign in to apply</Link>;
   } else {
     action = (
       <button type="button" onClick={() => setApplying((open) => !open)} className="h-[44px] rounded-full bg-[#07004d] px-7 text-[14px] font-semibold text-white hover:bg-[#111456]">

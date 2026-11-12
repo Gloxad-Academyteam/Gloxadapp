@@ -96,7 +96,7 @@ const VerifyOtpPage = () => {
                     </button>
                   </p>
                 )}
-                <TextLink text="Back to login" to="/auth/signin" className="font-bold text-[#07004d]" />
+                <TextLink text="Back to login" to="/login" className="font-bold text-[#07004d]" />
               </div>
             </div>
           </>

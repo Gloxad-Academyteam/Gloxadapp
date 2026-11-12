@@ -21,7 +21,7 @@ const useResetPasswdPage = () => {
   useEffect(() => {
     if (!email || !otp) {
       toast.error("Invalid session. Please start over.");
-      router.push("/auth/forgot-password");
+      router.push("/forgot-password");
     }
   }, [email, otp, router]);
 

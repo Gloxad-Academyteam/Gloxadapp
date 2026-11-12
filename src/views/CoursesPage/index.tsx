@@ -33,7 +33,7 @@ const CoursesPageGate = () => {
   useEffect(() => {
     if (!needsSignIn) return;
     const query = searchParams?.toString();
-    router.replace(`/auth/signin?redirect=${encodeURIComponent(query ? `${pathname}?${query}` : pathname)}`);
+    router.replace(`/login?redirect=${encodeURIComponent(query ? `${pathname}?${query}` : pathname)}`);
   }, [needsSignIn, pathname, router, searchParams]);
 
   if ((isLoading && !hasStoredSession) || needsSignIn) {

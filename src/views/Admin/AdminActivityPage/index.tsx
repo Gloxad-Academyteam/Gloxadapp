@@ -6,7 +6,7 @@ import { FiAlertTriangle, FiBookOpen, FiChevronLeft, FiChevronRight, FiCreditCar
 import { getActivity, type TActivityCategory, type TActivityItem } from "@services/admin/metrics";
 import { ListSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
-import { card, Empty, ErrorBox, timeAgo } from "../shared";
+import { card, Empty, timeAgo } from "../shared";
 
 const CATEGORIES: { value: "" | TActivityCategory; label: string }[] = [
   { value: "", label: "Everything" },
@@ -140,7 +140,11 @@ const AdminActivityPage = () => {
       {isLoading ? (
         <ListSkeleton rows={8} />
       ) : isError || !data ? (
-        <ErrorBox onRetry={() => refetch()} />
+        <div className={`${card} p-10 text-center`}>
+          <p className="text-[16px] font-semibold">The activity log is not available yet</p>
+          <p className="mx-auto mt-1 max-w-[420px] text-[14px] text-[#6b7087]">It starts recording once the server has its latest update. Nothing is lost: every sign-in and change from then on will appear here.</p>
+          <button type="button" onClick={() => refetch()} className="mt-5 h-10 rounded-lg bg-[#12142b] px-5 text-[14px] font-semibold text-white">Check again</button>
+        </div>
       ) : (
         <section className={`${card} overflow-hidden ${isFetching ? "opacity-90" : ""}`}>
           {data.items.length === 0 ? (

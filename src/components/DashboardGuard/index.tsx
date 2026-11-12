@@ -15,7 +15,7 @@ const DashboardGuard = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (isLoading) return;
     if (!isAuthenticated) {
-      router.replace("/auth/signin");
+      router.replace("/login");
     } else if (mustVerify) {
       router.replace(verifyEmailRoute(authenticatedUser?.email || ""));
     }

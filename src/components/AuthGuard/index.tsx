@@ -21,7 +21,7 @@ const AuthGuard = ({ children }: { children: ReactNode }) => {
 
     // A freshly signed-up user is signed in but must stay on the verify page to enter the code
     // and see the success screen; the page itself routes them onward afterwards.
-    if (pathname === "/auth/verify-otp") return;
+    if (pathname === "/verify-otp") return;
 
     // Keep ?redirect= (e.g. /courses) so this doesn't race the sign-in form's own redirect to /dashboard
     const redirect = new URLSearchParams(window.location.search).get("redirect");

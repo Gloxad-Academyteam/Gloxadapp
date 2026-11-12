@@ -15,7 +15,7 @@ const RoleGuard = ({
   children,
   allowedRoles,
   returnAfterLogin = false,
-  loginPath = "/auth/signin",
+  loginPath = "/login",
 }: {
   children: ReactNode;
   allowedRoles?: string[];
