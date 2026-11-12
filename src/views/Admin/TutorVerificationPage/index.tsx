@@ -1,6 +1,6 @@
 "use client";
 
-import { BlockSkeleton, CardGridSkeleton, DetailSkeleton, ListSkeleton, Skeleton, TableRowsSkeleton } from "@components/Skeleton";
+import { DetailSkeleton } from "@components/Skeleton";
 import UserAvatar from "@components/Avatar";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -78,10 +78,20 @@ const TutorVerificationPage = () => {
   }
 
   const tutor = data;
-  const fullName = `${tutor.firstName} ${tutor.lastName}`;
-  const status = tutor.approvalStatus || tutor.instructorStatus || "pending";
-  const certifications: string[] = tutor.certifications || [];
-  const experienceProofs: string[] = tutor.experienceProofs || [];
+  const fullName = `${tutor.firstName || ""} ${tutor.lastName || ""}`.trim() || tutor.name || "Tutor";
+  const status: string = String(tutor.approvalStatus || tutor.instructorStatus || "pending");
+  // The API sends these as arrays of links, but older records can hold a single link or objects, so accept all of them
+  const toList = (value: unknown): string[] =>
+    (Array.isArray(value) ? value : value ? [value] : [])
+      .map((item: any) => (typeof item === "string" ? item : item?.url || item?.link || ""))
+      .filter((item: string) => typeof item === "string" && item.trim() !== "");
+  const certificationLinks = [...toList(tutor.certifications), ...toList(tutor.certificationsUrl)];
+  const certifications: string[] = certificationLinks.filter((url, index) => certificationLinks.indexOf(url) === index);
+  const experienceProofs: string[] = toList(tutor.experienceProofs);
+  const skills: string[] = (Array.isArray(tutor.skills) ? tutor.skills : typeof tutor.skills === "string" ? tutor.skills.split(",") : [])
+    .map((skill: unknown) => String(skill).trim())
+    .filter(Boolean);
+  const bio: string = String(tutor.teachingExperienceBio || tutor.expertiseBio || tutor.biography || "");
   const allDocs = [
     ...certifications.map((url: string, i: number) => ({ label: `Certification ${i + 1}`, url, type: "cert" })),
     ...experienceProofs.map((url: string, i: number) => ({ label: `Experience Proof ${i + 1}`, url, type: "proof" }))
@@ -157,17 +167,17 @@ const TutorVerificationPage = () => {
                 )}
               </div>
 
-              {tutor.areaOfExpertise && (
+              {typeof tutor.areaOfExpertise === "string" && tutor.areaOfExpertise && (
                 <>
                   <h3 className="text-[12px] font-bold text-[#A0AEC0] uppercase tracking-wider mb-2">Area of Expertise</h3>
                   <p className="text-[#717480] text-[13px] leading-relaxed mb-6">{tutor.areaOfExpertise}</p>
                 </>
               )}
 
-              {tutor.teachingExperienceBio && (
+              {bio && (
                 <>
                   <h3 className="text-[12px] font-bold text-[#A0AEC0] uppercase tracking-wider mb-2">Teaching Bio</h3>
-                  <p className="text-[#717480] text-[13px] leading-relaxed">{tutor.teachingExperienceBio}</p>
+                  <p className="text-[#717480] text-[13px] leading-relaxed">{bio}</p>
                 </>
               )}
             </div>
@@ -179,7 +189,7 @@ const TutorVerificationPage = () => {
             <div className="space-y-3 text-[13px]">
               <div className="flex justify-between border-b border-[#f1f5f9] pb-2">
                 <span className="text-[#717480]">Joined</span>
-                <span className="text-[#202127] font-medium">{new Date(tutor.createdAt).toLocaleDateString()}</span>
+                <span className="text-[#202127] font-medium">{tutor.createdAt ? new Date(tutor.createdAt).toLocaleDateString() : "Unknown"}</span>
               </div>
               <div className="flex justify-between border-b border-[#f1f5f9] pb-2">
                 <span className="text-[#717480]">Role</span>
@@ -240,13 +250,13 @@ const TutorVerificationPage = () => {
           </div>
 
           {/* Skills & Expertise */}
-          {tutor.skills && (
+          {skills.length > 0 && (
             <div className="bg-white border border-[#e2e8f0] rounded-[12px] p-6 shadow-sm">
               <h3 className="font-bold text-[18px] text-[#202127] mb-4">Skills & Expertise</h3>
               <div className="flex flex-wrap gap-2">
-                {tutor.skills.split(",").map((s: string, i: number) => (
+                {skills.map((skill, i) => (
                   <span key={i} className="bg-[#f0f4f8] text-[#181C7B] text-[12px] font-bold px-3 py-1.5 rounded-full">
-                    {s.trim()}
+                    {skill}
                   </span>
                 ))}
               </div>
@@ -261,8 +271,8 @@ const TutorVerificationPage = () => {
                 { label: "Documents Uploaded", value: allDocs.length },
                 { label: "Certifications", value: certifications.length },
                 { label: "Experience Proofs", value: experienceProofs.length },
-                { label: "Application Date", value: new Date(tutor.createdAt).toLocaleDateString() },
-                { label: "Has Bio", value: tutor.teachingExperienceBio ? "Yes" : "No" },
+                { label: "Application Date", value: tutor.createdAt ? new Date(tutor.createdAt).toLocaleDateString() : "Unknown" },
+                { label: "Has Bio", value: bio ? "Yes" : "No" },
                 { label: "Has Expertise", value: tutor.areaOfExpertise ? "Yes" : "No" },
               ].map(item => (
                 <div key={item.label} className="bg-[#f8fafc] rounded-[8px] p-4 text-center border border-[#e2e8f0]">

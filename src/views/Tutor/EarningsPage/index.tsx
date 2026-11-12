@@ -98,7 +98,7 @@ export default function EarningsPage() {
           </div>
           <div>
             <p className="text-[13px] text-[#717480] font-medium mb-1">Total Balance</p>
-            <h3 className="text-[24px] font-bold text-[#07006f]">${totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
+            <h3 className="text-[24px] font-bold text-[#07006f]">₦{totalBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
           </div>
         </div>
 
@@ -111,7 +111,7 @@ export default function EarningsPage() {
           </div>
           <div>
             <p className="text-[13px] text-[#717480] font-medium mb-1">Available for Withdrawal</p>
-            <h3 className="text-[24px] font-bold text-[#07006f]">${availableForWithdrawal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
+            <h3 className="text-[24px] font-bold text-[#07006f]">₦{availableForWithdrawal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export default function EarningsPage() {
           </div>
           <div>
             <p className="text-[13px] text-[#717480] font-medium mb-1">Earnings This Month</p>
-            <h3 className="text-[24px] font-bold text-[#07006f]">${earningsThisMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
+            <h3 className="text-[24px] font-bold text-[#07006f]">₦{earningsThisMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function EarningsPage() {
           </div>
           <div>
             <p className="text-[13px] text-[#717480] font-medium mb-1">Lifetime Earnings</p>
-            <h3 className="text-[24px] font-bold text-[#07006f]">${lifetimeEarnings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
+            <h3 className="text-[24px] font-bold text-[#07006f]">₦{lifetimeEarnings.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h3>
           </div>
         </div>
 

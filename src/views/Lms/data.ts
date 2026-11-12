@@ -388,7 +388,7 @@ export const ROSTER = ROSTER_SEED;
 
 /* ---------- Admin analytics ---------- */
 export const ADMIN_STATS = [
-  { label: "Total Revenue", value: "$124.5K", note: "+12% from last trimester", tone: "up", icon: "chart" },
+  { label: "Total Revenue", value: "₦124.5K", note: "+12% from last trimester", tone: "up", icon: "chart" },
   { label: "Enrollment Counts", value: "3,492", note: "+5.4% new students", tone: "up", icon: "users" },
   { label: "Completion Rates", value: "87%", note: "Steady across cohorts", tone: "flat", icon: "cap" },
   { label: "Platform Health", value: "99.9%", note: "Uptime this month", tone: "ok", icon: "shield" },

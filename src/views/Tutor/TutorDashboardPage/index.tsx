@@ -65,7 +65,7 @@ const TutorDashboardPage = () => {
   const totalCourses = stats?.metrics?.totalCoursesUploaded ?? 0;
   const activeCourses = stats?.metrics?.activeCourses ?? 0;
   const completedCourses = stats?.metrics?.completedCourses ?? 0;
-  const totalEarnings = stats?.metrics?.totalEarnings ? `$${Number(stats.metrics.totalEarnings).toLocaleString()}` : "$0";
+  const totalEarnings = stats?.metrics?.totalEarnings ? `₦${Number(stats.metrics.totalEarnings).toLocaleString()}` : "₦0";
 
   const metrics = [
     {
