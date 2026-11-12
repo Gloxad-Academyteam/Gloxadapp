@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { FiArrowUpRight, FiBook, FiCheckCircle, FiChevronLeft, FiChevronRight, FiDollarSign, FiShoppingBag, FiUser, FiUsers } from "react-icons/fi";
-import { getDashboardStats } from "@services/admin/dashboard";
+import { getDashboardStats, type TDashboardStats } from "@services/admin/dashboard";
 import useAuth from "@hooks/useAuth";
 import axiosInstance from "@utils/axiosInstance";
 import { Skeleton } from "../../../components/Skeleton";
@@ -36,7 +36,7 @@ const roleStyle = (role: string) =>
 
 const AdminDashboardPage = () => {
   const { authenticatedUser } = useAuth();
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<TDashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const [registrations, setRegistrations] = useState<any[]>([]);
@@ -109,7 +109,7 @@ const AdminDashboardPage = () => {
     );
   }
 
-  const m = stats.metrics || {};
+  const m = stats.metrics;
   const statCards: TStat[] = [
     { label: "Students", value: `${m.totalStudents || 0}`, href: "/admin/students", icon: FiUsers, tint: "bg-[#e9eaff] text-[#4a4cd6]" },
     { label: "Tutors", value: `${m.totalTutors || 0}`, href: "/admin/tutors", icon: FiUser, tint: "bg-[#e1f1ff] text-[#1f6fc4]" },
@@ -119,6 +119,11 @@ const AdminDashboardPage = () => {
     { label: "Total revenue", value: naira(m.totalRevenue), href: "/admin/finance", icon: FiDollarSign, tint: "bg-[#efe9ff] text-[#6a3fd0]" },
   ];
 
+  const attention = [
+    { count: m.pendingTutors || 0, text: "tutor applications to review", href: "/admin/tutors" },
+    { count: m.pendingCourses || 0, text: "courses waiting for approval", href: "/admin/courses" },
+  ].filter((item) => item.count > 0);
+
   const totalUsers = Math.max(1, (m.activeStudents || 0) + (m.activeTutors || 0) + (m.passiveStudents || 0) + (m.passiveTutors || 0));
   const activity = [
     { label: "Active students", count: m.activeStudents || 0, color: "#5d5fef" },
@@ -127,12 +132,24 @@ const AdminDashboardPage = () => {
     { label: "Passive tutors", count: m.passiveTutors || 0, color: "#a9cdf6" },
   ];
   const activeShare = Math.round((((m.activeStudents || 0) + (m.activeTutors || 0)) / totalUsers) * 100);
-  const revenue = stats.revenueAnalytics || [];
-  const tutors = stats.topTutors || [];
+  const revenue = stats.revenueAnalytics;
+  const tutors = stats.topTutors;
 
   return (
     <div className="mx-auto w-full max-w-[1400px] pb-10">
       {header}
+
+      {attention.length > 0 && (
+        <div className="mb-4 flex flex-wrap gap-3">
+          {attention.map((item) => (
+            <Link key={item.href} href={item.href} className="inline-flex items-center gap-2.5 rounded-xl border border-[#f3dfb3] bg-[#fff8e8] px-4 py-2.5 text-[13.5px] text-[#7a5200] transition hover:bg-[#fff3d6]">
+              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#f5b942] px-1.5 text-[12px] font-bold text-[#4d3300]">{item.count}</span>
+              {item.text}
+              <FiArrowUpRight size={15} />
+            </Link>
+          ))}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
         {statCards.map((stat) => <StatCard key={stat.label} stat={stat} />)}
@@ -179,6 +196,10 @@ const AdminDashboardPage = () => {
         <section className={`${card} flex flex-col p-6`}>
           <h3 className="text-[16px] font-semibold tracking-tight">User activity</h3>
           <p className="text-[13px] text-[#6b7087]">Last 30 days</p>
+          {activity.every((item) => item.count === 0) ? (
+            <p className="mt-6 text-[14px] leading-relaxed text-[#8a90a8]">Activity numbers appear here once learners and tutors start using the platform.</p>
+          ) : (
+            <>
           <div className="mt-5 flex items-end gap-2">
             <span className="text-[34px] font-semibold leading-none tracking-tight">{activeShare}%</span>
             <span className="pb-1 text-[13px] text-[#6b7087]">of users are active</span>
@@ -196,6 +217,8 @@ const AdminDashboardPage = () => {
               </li>
             ))}
           </ul>
+            </>
+          )}
         </section>
       </div>
 
@@ -209,7 +232,7 @@ const AdminDashboardPage = () => {
             <p className="text-[14px] text-[#8a90a8]">No tutor activity yet.</p>
           ) : (
             <ul className="space-y-4">
-              {tutors.map((tutor: any, index: number) => (
+              {tutors.map((tutor, index) => (
                 <li key={`${tutor.name}-${index}`} className="flex items-center gap-3">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#e9eaff] text-[14px] font-semibold text-[#3f41c4]">
                     {tutor.img ? <img src={tutor.img} alt="" className="h-full w-full object-cover" /> : tutor.name?.charAt(0)}

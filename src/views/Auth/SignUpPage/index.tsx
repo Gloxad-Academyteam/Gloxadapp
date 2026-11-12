@@ -9,29 +9,14 @@ import AuthCard from "@components/AuthCard";
 import SocialAuthButtons from "@components/AuthCard/SocialAuthButtons";
 import { FiMail } from "react-icons/fi";
 import useSignUpPage from "./hooks/useSignUpPage";
-import SignupHeroImage from "@assets/images/Frame 2147227544.png";
+import SignupHeroImage from "@assets/images/student-login-portrait.png";
 import TutorSignupImage from "@assets/images/Rectangle 4239.png";
-import StudentImage3 from "@assets/images/student-learning-3.png";
-import StudentImage4 from "@assets/images/student-learning-4.png";
 
+// The student side uses the same photo as the sign-in page
 const STUDENT_IMAGES = [
   {
     image: SignupHeroImage,
-    alt: "Student Learning 1",
-    fit: "object-cover object-center",
-    bg: "bg-gradient-to-br from-[#126888] to-[#1a90bc]",
-    hideText: false,
-  },
-  {
-    image: StudentImage3,
-    alt: "Student Learning 2",
-    fit: "object-cover object-center",
-    bg: "bg-gradient-to-br from-[#126888] to-[#1a90bc]",
-    hideText: true,
-  },
-  {
-    image: StudentImage4,
-    alt: "Student Learning 3",
+    alt: "Student smiling while learning",
     fit: "object-cover object-center",
     bg: "bg-gradient-to-br from-[#126888] to-[#1a90bc]",
     hideText: false,
