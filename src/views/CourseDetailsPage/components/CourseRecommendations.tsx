@@ -1,20 +1,22 @@
 import React from "react";
 import Link from "next/link";
 import { youtubeFreeCatalogCourses } from "@services/catalog";
+import { getCategoryName } from "@utils/courseSource";
 
 type TProps = { course: any };
 
 // Other courses from our own catalogue in the same category (never another institution's)
 const CourseRecommendations = ({ course }: TProps) => {
+  const categoryName = getCategoryName(course?.category);
   const related = youtubeFreeCatalogCourses
-    .filter((item) => item.category === course?.category && item.slug !== course?.slug)
+    .filter((item) => item.category === categoryName && item.slug !== course?.slug)
     .slice(0, 4);
 
   if (related.length === 0) return null;
 
   return (
     <div className="w-full mt-16 max-w-[1100px]">
-      <h2 className="text-[24px] font-bold text-[#202127] mb-6">More in {course.category}</h2>
+      <h2 className="text-[24px] font-bold text-[#202127] mb-6">More in {categoryName}</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {related.map((item) => (
@@ -39,8 +41,8 @@ const CourseRecommendations = ({ course }: TProps) => {
       </div>
 
       <div className="mt-8">
-        <Link href={`/courses?category=${encodeURIComponent(course.category.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""))}`} className="inline-block border border-[#0a1b56] text-[#0a1b56] font-bold text-[14px] px-6 py-2 rounded-[4px] hover:bg-gray-50 transition">
-          Browse all {course.category} courses
+        <Link href={`/courses?category=${encodeURIComponent(categoryName.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""))}`} className="inline-block border border-[#0a1b56] text-[#0a1b56] font-bold text-[14px] px-6 py-2 rounded-[4px] hover:bg-gray-50 transition">
+          Browse all {categoryName} courses
         </Link>
       </div>
     </div>

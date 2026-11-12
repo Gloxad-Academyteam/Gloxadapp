@@ -8,7 +8,8 @@ import { FiAward, FiBarChart2, FiCheck, FiClock, FiLayers, FiPlayCircle } from "
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import { enrollInFreeCourse, getMyEnrollment } from "@services/enrollments";
-import { getYouTubeSourceName, getYouTubeSourceUrl, isYouTubeCourse } from "@utils/courseSource";
+import { getCategoryName, getYouTubeSourceName, getYouTubeSourceUrl, isYouTubeCourse } from "@utils/courseSource";
+import { OWNERSHIP_TEXT, providersApi, TProvider } from "@services/providers";
 import LessonVideo from "@components/LessonVideo";
 import FullscreenButton from "@components/FullscreenButton";
 import { toggleFullscreen } from "@utils/fullscreen";
@@ -112,8 +113,14 @@ const FreeCourseLayout = ({ course }: TProps) => {
     { icon: FiPlayCircle, label: `${lessons.length} ${lessons.length === 1 ? "chapter" : "chapters"}` },
     ...(hoursText ? [{ icon: FiClock, label: hoursText }] : []),
   ];
-  const sourceName = getYouTubeSourceName(course);
-  const sourceUrl = getYouTubeSourceUrl(course);
+  // The shared provider record: it arrives filled in, or as an id that is looked up
+  const providerRef = course.provider;
+  const providerId = typeof providerRef === "string" ? providerRef : null;
+  const providerQuery = useQuery({ queryKey: ["provider", providerId], queryFn: () => providersApi.get(providerId as string), enabled: !!providerId, staleTime: 5 * 60_000, retry: false });
+  const provider: TProvider | null = providerRef && typeof providerRef === "object" ? (providerRef as TProvider) : providerQuery.data ?? null;
+  const ownership = OWNERSHIP_TEXT[provider?.ownershipClass ?? "externally_curated"];
+  const sourceName = getYouTubeSourceName({ ...course, provider: provider ?? course.provider });
+  const sourceUrl = getYouTubeSourceUrl({ ...course, provider: provider ?? course.provider });
   const isExternalYouTubeCourse = isYouTubeCourse(course);
   const quizCandidates = modules.flatMap((module) => [
     ...(Array.isArray(module.quizzes) ? module.quizzes : []),
@@ -150,10 +157,10 @@ const FreeCourseLayout = ({ course }: TProps) => {
           <div>
             <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-2 text-[13px] text-[#717480]">
               <Link href="/free" className="hover:text-[#07004d]">Free courses</Link>
-              {course.category && (
+              {getCategoryName(course.category) && (
                 <>
                   <span>/</span>
-                  <span>{course.category}</span>
+                  <span>{getCategoryName(course.category)}</span>
                 </>
               )}
             </nav>
@@ -344,17 +351,16 @@ const FreeCourseLayout = ({ course }: TProps) => {
               </button>
             </div>
 
-            {isExternalYouTubeCourse && (
+            {(isExternalYouTubeCourse || provider) && (
               <div className="rounded-2xl bg-[#f7f8fc] p-6">
-                <h3 className="text-[14px] font-bold">External learning resource</h3>
+                <h3 className="text-[14px] font-bold">{provider ? "Content provider" : "External learning resource"}</h3>
+                {provider && <p className="mt-2 inline-flex rounded-full bg-[#e8edf9] px-2.5 py-0.5 text-[11px] font-semibold text-[#1d3a8a]">{ownership.label}</p>}
                 <p className="mt-2 text-[13px] leading-[1.65] text-[#5b5e6b]">
-                  Creator/channel: {sourceName}. Source: YouTube, where each lesson plays in its original player.
+                  Creator/channel: {sourceName}.{isExternalYouTubeCourse ? " Source: YouTube, where each lesson plays in its original player." : ""}
                 </p>
-                <p className="mt-2 text-[12px] leading-[1.65] text-[#717480]">
-                  This content is created and owned by its respective creator. Gloxad Academy links to the original YouTube player and does not claim authorship or ownership.
-                </p>
-                <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[13px] font-semibold text-[#07004d] hover:underline">
-                  Original source: {sourceName} on YouTube
+                <p className="mt-2 text-[12px] leading-[1.65] text-[#717480]">{ownership.note}</p>
+                <a href={provider?.originalUrl || sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[13px] font-semibold text-[#07004d] hover:underline">
+                  Original source: {sourceName}{!provider?.originalUrl && isExternalYouTubeCourse ? " on YouTube" : ""}
                 </a>
               </div>
             )}

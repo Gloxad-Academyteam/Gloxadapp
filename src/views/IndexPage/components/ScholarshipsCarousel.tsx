@@ -4,12 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { FiCheckCircle } from "react-icons/fi";
-import ScholarshipGrant from "@assets/images/scholarship-grant.png";
-import ScholarshipTech from "@assets/images/scholarship-tech.png";
 import { formatDay } from "@components/Landing";
 import { lmsPublicApi, type TPublicScholarship } from "@services/lmsPublic";
 
-const IMAGES = [ScholarshipTech, ScholarshipGrant];
+// Real learners, not illustrations
+const IMAGES = ["/images/trimester/photos/week-1.webp", "/images/trimester/photos/week-3.webp"];
 
 const HOW_IT_WORKS = [
   "Free access to the course or program the scholarship covers",
@@ -22,7 +21,7 @@ const stateLabel = (item: TPublicScholarship) => (item.state === "open" ? "Open 
 // One scholarship: the picture, what it is, who can apply, when, and a way in
 const ScholarshipCard = ({ item, index }: { item: TPublicScholarship; index: number }) => (
   <article className="flex w-[290px] shrink-0 flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,77,0.14)] sm:w-auto">
-    <img src={IMAGES[index % IMAGES.length].src} alt="" className="h-[170px] w-full object-cover" />
+    <img src={IMAGES[index % IMAGES.length]} alt="" className="h-[170px] w-full object-cover" />
     <div className="flex flex-1 flex-col p-5">
       <span className={`mb-2 inline-flex w-fit rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${item.state === "open" ? "bg-[#e6f6ec] text-[#15803d]" : "bg-[#fff3e0] text-[#b45309]"}`}>
         {stateLabel(item)}
@@ -104,7 +103,7 @@ export const ScholarshipsCarousel: React.FC = () => {
           <div className="grid gap-4 sm:grid-cols-2">
             {IMAGES.map((image, index) => (
               <div key={index} className="overflow-hidden rounded-[18px] bg-white shadow-[0_10px_30px_rgba(11,31,77,0.14)]">
-                <img src={image.src} alt="" className="h-[190px] w-full object-cover" />
+                <img src={image} alt="" className="h-[190px] w-full object-cover" />
                 <div className="p-5">
                   <p className="text-[15px] font-bold text-[#202127]">{index === 0 ? "New scholarships are announced here" : "Applications open for a limited time"}</p>
                   <p className="mt-1.5 text-[13px] leading-[1.55] text-[#5b5e6b]">

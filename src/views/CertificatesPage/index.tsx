@@ -55,7 +55,7 @@ export default function CertificatesPage() {
         <h2 className="mb-2 text-[18px] font-bold text-[#202127]">No certificates yet</h2>
         <p className="text-[14px] text-[#717480]">Complete a course 100% to earn your first certificate.</p>
         <button
-          onClick={() => router.push("/dashboard/courses")}
+          onClick={() => router.push("/free")}
           className="mt-6 h-[44px] rounded-full bg-[#07004d] px-8 text-[13px] font-semibold text-white hover:bg-[#111456]"
         >
           Go to My Courses

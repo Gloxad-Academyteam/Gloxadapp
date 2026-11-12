@@ -14,6 +14,9 @@ type TCourseSourceCandidate = {
   creatorName?: string | null;
   youtubeChannelName?: string | null;
   youtubeChannelUrl?: string | null;
+  // The API's own attribution: `source` carries the platform and creator, `provider` links the shared provider record
+  source?: { platform?: string | null; creatorName?: string | null; channelUrl?: string | null; url?: string | null } | null;
+  provider?: { name?: string | null; channelUrl?: string | null; platform?: string | null } | string | null;
   lessons?: TVideoSourceEntry[] | null;
   videos?: TVideoSourceEntry[] | null;
   modules?: { lessons?: TVideoSourceEntry[] | null }[] | null;
@@ -46,7 +49,11 @@ export const isYouTubeCourse = (course: TCourseSourceCandidate) => {
   if (videoEntries.length) {
     return videoEntries.every((entry) => Boolean(entry.youtubeId) || isYouTubeUrl(entry.videoUrl || entry.url));
   }
-  return course.videoSource?.trim().toLowerCase() === "youtube" || /youtube/i.test(course.videoCredit ?? "");
+  return (
+    course.videoSource?.trim().toLowerCase() === "youtube" ||
+    course.source?.platform?.trim().toLowerCase() === "youtube" ||
+    /youtube/i.test(course.videoCredit ?? "")
+  );
 };
 
 export const isFreeYouTubeCourse = (course: TCourseSourceCandidate) =>
@@ -57,7 +64,8 @@ export const isCourseVisible = (course: TCourseSourceCandidate) =>
   !isFreeCourse(course) || isFreeYouTubeCourse(course);
 
 export const getYouTubeSourceName = (course: TCourseSourceCandidate) => {
-  const suppliedName = course.youtubeChannelName || course.sourceName || course.creatorName || "";
+  const provider = typeof course.provider === "object" ? course.provider : null;
+  const suppliedName = provider?.name || course.source?.creatorName || course.youtubeChannelName || course.sourceName || course.creatorName || "";
   const credit = course.videoCredit || "";
   if (/freecodecamp/i.test(`${suppliedName} ${credit}`)) return "freeCodeCamp.org";
   if (suppliedName.trim()) return suppliedName.trim();
@@ -66,6 +74,9 @@ export const getYouTubeSourceName = (course: TCourseSourceCandidate) => {
 };
 
 export const getYouTubeSourceUrl = (course: TCourseSourceCandidate) => {
+  const provider = typeof course.provider === "object" ? course.provider : null;
+  if (isYouTubeUrl(provider?.channelUrl)) return provider!.channelUrl!;
+  if (isYouTubeUrl(course.source?.channelUrl)) return course.source!.channelUrl!;
   if (isYouTubeUrl(course.youtubeChannelUrl)) return course.youtubeChannelUrl!;
   const credit = course.videoCredit || "";
   if (/freecodecamp/i.test(credit)) return "https://www.youtube.com/@freecodecamp";
@@ -73,4 +84,11 @@ export const getYouTubeSourceUrl = (course: TCourseSourceCandidate) => {
   if (!match) return "https://www.youtube.com/";
   const url = match[0];
   return url.startsWith("http") ? url : `https://${url.replace(/^www\./i, "")}`;
+};
+
+// A course's category is a name in older data and a { _id, name, slug } object in the current API
+export const getCategoryName = (category: unknown): string => {
+  if (typeof category === "string") return category;
+  if (category && typeof category === "object" && typeof (category as { name?: unknown }).name === "string") return (category as { name: string }).name;
+  return "";
 };

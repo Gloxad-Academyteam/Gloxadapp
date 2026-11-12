@@ -15,6 +15,7 @@ import {
   TSubCategory,
   createCategory,
   deleteCategory,
+  setCategoryActive,
   getCategories,
   updateCategory,
 } from "@services/categories";
@@ -41,7 +42,7 @@ const CourseManagementPage = () => {
 
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery({
     queryKey: ["categories"],
-    queryFn: async () => (await getCategories()).data,
+    queryFn: async () => (await getCategories({ includeInactive: true })).data,
   });
 
   // Look the category up on every render so the sub-category modal shows saved changes
@@ -89,6 +90,15 @@ const CourseManagementPage = () => {
       setEditingCategory(null);
     },
     onError: (error) => toast.error(getErrorMessage(error, "Failed to update category")),
+  });
+
+  const activeMutation = useMutation({
+    mutationFn: ({ id, isActive }: { id: string; isActive: boolean }) => setCategoryActive(id, isActive),
+    onSuccess: (result) => {
+      toast.success(result.data?.isActive === false ? "Category hidden from the public site." : "Category is visible again.");
+      refreshCategories();
+    },
+    onError: (error) => toast.error(getErrorMessage(error, "Failed to change the category")),
   });
 
   const deleteMutation = useMutation({
@@ -217,6 +227,7 @@ const CourseManagementPage = () => {
               onViewSubCategories={(cat) => setViewingCategoryId(cat._id)}
               onEdit={setEditingCategory}
               onDelete={handleDeleteCategory}
+              onToggleActive={(cat) => activeMutation.mutate({ id: cat._id, isActive: cat.isActive === false })}
             />
           ))}
         </div>

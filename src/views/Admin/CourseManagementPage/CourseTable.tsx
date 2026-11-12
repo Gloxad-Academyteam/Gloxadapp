@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { getCategoryName } from "@utils/courseSource";
 
 export interface Course {
   id: string;
@@ -58,7 +59,7 @@ const CourseTable: React.FC<CourseTableProps> = ({ courses, activeTab }) => {
                 </td>
                 <td className="py-4 px-6 whitespace-nowrap">
                   <span className="bg-[#f0f4f8] text-[#4e515c] font-bold text-[12px] px-3 py-1 rounded-full">
-                    {course.category}
+                    {getCategoryName(course.category)}
                   </span>
                 </td>
                 <td className="py-4 px-6 whitespace-nowrap text-[#717480]">

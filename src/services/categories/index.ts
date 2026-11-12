@@ -16,6 +16,12 @@ export type TCategory = {
   icon?: string;
   imageUrl?: string;
   order?: number;
+  // Search tags, cross-category learning pathways (e.g. "AI for Agriculture"), and older names that still find this category
+  tags?: string[];
+  pathways?: string[];
+  aliases?: string[];
+  // Deactivated categories are hidden from public pages but keep their courses and history
+  isActive?: boolean;
   subCategories: TSubCategory[];
 };
 
@@ -41,9 +47,18 @@ export const isImageIcon = (icon?: string) => !!icon && /^(https?:)?\/\//.test(i
 export const getCategoryImage = (category?: Pick<TCategory, "imageUrl" | "icon"> | null) =>
   category?.imageUrl || (isImageIcon(category?.icon) ? category?.icon : undefined);
 
-export async function getCategories(): Promise<TService<TCategory[]>> {
+export const isCategoryActive = (category: Pick<TCategory, "isActive">) => category.isActive !== false;
+
+// Public pages only ever see active categories; the admin screen asks for all of them so it can switch one back on
+export async function getCategories(options: { includeInactive?: boolean } = {}): Promise<TService<TCategory[]>> {
   const { data } = await axiosInstance.get("/categories");
-  return { data: data?.categories ?? [] };
+  const all: TCategory[] = data?.categories ?? [];
+  return { data: options.includeInactive ? all : all.filter(isCategoryActive) };
+}
+
+export async function setCategoryActive(id: string, isActive: boolean): Promise<TService<TCategory>> {
+  const { data } = await axiosInstance.put(`/admin/categories/${id}/status`, { isActive });
+  return { data: data.category };
 }
 
 export async function createCategory(payload: TCategoryPayload): Promise<TService<TCategory>> {

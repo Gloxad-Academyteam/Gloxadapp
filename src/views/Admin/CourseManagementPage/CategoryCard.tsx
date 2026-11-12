@@ -1,5 +1,5 @@
 import React from "react";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiEye, FiEyeOff, FiTrash2 } from "react-icons/fi";
 import { TCategory } from "@services/categories";
 import CategoryIcon from "./CategoryIcon";
 
@@ -8,11 +8,12 @@ interface CategoryCardProps {
   onViewSubCategories: (category: TCategory) => void;
   onEdit: (category: TCategory) => void;
   onDelete: (category: TCategory) => void;
+  onToggleActive?: (category: TCategory) => void;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ category, onViewSubCategories, onEdit, onDelete }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ category, onViewSubCategories, onEdit, onDelete, onToggleActive }) => {
   return (
-    <div className="bg-white border border-[#e2e8f0] rounded-[12px] flex flex-col overflow-hidden">
+    <div className={`bg-white border border-[#e2e8f0] rounded-[12px] flex flex-col overflow-hidden ${category.isActive === false ? "opacity-70" : ""}`}>
       {/* Top Section */}
       <div className="p-5 flex items-start justify-between">
         <div className="flex items-start gap-4">
@@ -22,11 +23,27 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onViewSubCategori
             <p className="text-[13px] text-[#3b82f6] font-medium mt-1">
               {category.subCategories.length} Sub-categories
             </p>
+            {category.isActive === false && (
+              <span className="mt-2 inline-flex rounded-full bg-[#fff3e0] px-2.5 py-0.5 text-[11px] font-semibold text-[#b45309]">Hidden from the public site</span>
+            )}
+            {!!category.pathways?.length && (
+              <p className="mt-2 text-[12px] leading-[1.5] text-[#717480]">Pathways: {category.pathways.join(", ")}</p>
+            )}
           </div>
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-3 text-[#A0AEC0]">
+          {onToggleActive && (
+            <button
+              onClick={() => onToggleActive(category)}
+              title={category.isActive === false ? "Show on the public site" : "Hide from the public site"}
+              aria-label={category.isActive === false ? "Show category" : "Hide category"}
+              className="hover:text-[#3b82f6] transition-colors"
+            >
+              {category.isActive === false ? <FiEyeOff className="text-[16px]" /> : <FiEye className="text-[16px]" />}
+            </button>
+          )}
           <button onClick={() => onEdit(category)} className="hover:text-[#3b82f6] transition-colors">
             <FiEdit2 className="text-[16px]" />
           </button>

@@ -17,6 +17,7 @@ import { PiStack } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../../utils/axiosInstance";
 import { TableSkeleton, Skeleton } from "../../../components/Skeleton";
+import { getCategoryName } from "@utils/courseSource";
 
 // Vector Clipboard Illustration matching Figma design
 const ClipboardIllustration = () => (
@@ -269,7 +270,7 @@ export default function MyCoursesPage() {
               {/* Category */}
               <div className="col-span-1 lg:col-span-2">
                 <span className="inline-block px-3.5 py-1 bg-[#e0f2fe] text-[#0284c7] text-[12px] font-semibold rounded-full">
-                  {course.category}
+                  {getCategoryName(course.category)}
                 </span>
               </div>
 
